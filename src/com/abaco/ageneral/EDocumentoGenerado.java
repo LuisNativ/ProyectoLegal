@@ -1,0 +1,243 @@
+package com.abaco.ageneral;
+
+import java.util.Date;
+import java.util.List;
+
+import lombok.Data;
+
+import com.abaco.entidad.EUsuario;
+
+public @Data class EDocumentoGenerado {
+	
+	/*Data de F7420*/
+	private int tipoPlantilla;
+	private int monedaPlantilla;
+	private int tipoVariante;
+	private long numeroDocumento;
+	private int secuenciaRenovacion;
+	private String simboloMoneda;
+	private double importeDocumento;
+	private String importeEnNumeroAlfa;
+	private String importeEnLetras;
+	private double importeDocumento2;
+	private String importeEnNumeroAlfa2;
+	private String importeEnLetras2;
+	private double tasaEnNumero;
+	private String tasaEnNumeroAlfa;
+	private int plazoEnNumeros;
+	private String plazoEnNumeroAlfa;
+	private int periodoEnNumeros;
+	private String periodoEnLetras;
+	private Date fechaEmisionNumero;
+	private String AnioEmisionNroAlfa;
+	private String AnioEmisionEnLetras;
+	private String MesEmisionNroAlfa;
+	private String MesEmisionEnLetras;
+	private String DiaEmisionNroAlfa;
+	private String DiaEmisionEnLetras;
+	private int codigoPiePagina;
+	private int codigoCIA;
+	private String nombreCooperativa;
+	private String direccionCooperativa;
+	private String distritoCooperativa;
+	private long rucCooperativaEnNumero;
+	private String rucCooperativaNroAlfa;
+	//Representantes Cooperativa
+	private String fichaInscripPodReprCoop0;
+	private String registroInscripPodReprCoop0;
+	private String inscripcionPoderesReprCoop0;
+	private long codigoRepresentanteCoop1;
+	private String nombreRepresentanteCoop1;
+	private String nominativoRepresentanteCoop1;
+	private String fichaInscripPodRepCoop1;
+	private String inscripcionPoderesRepCoop1;
+	private String tipoDocumentoIDRepCoop1;
+	private String descripcionDocumentoIDRepCoop1;
+	private String registroPodRepCoop1;
+	private String cargoRepCoop1;
+	private String numeroDocumentoIDRepCoop1;
+	private String nacionalidadRepCoop1;
+	private String poderesUnaLinaRepCoop1;
+	private Date fechaFirmaRepCoop1;
+	private String horaFirmaRepCoop1;
+	private String usuarioRegistoRepCoop1;
+	private int flagFirmadoRepCoop1;
+	private long codigoRepresentanteCoop2;
+	private String nombreRepresentanteCoop2;
+	private String nominativoRepresentanteCoop2;
+	private String fichaInscripPodRepCoop2;
+	private String inscripcionPoderesRepCoop2;
+	private String tipoDocumentoIDRepCoop2;
+	private String descripcionDocumentoIDRepCoop2;
+	private String registroPodRepCoop2;
+	private String cargoRepCoop2;
+	private String numeroDocumentoIDRepCoop2;
+	private String nacionalidadRepCoop2;
+	private String poderesUnaLinaRepCoop2;
+	private Date fechaFirmaRepCoop2;
+	private String horaFirmaRepCoop2;
+	private String usuarioRegistoRepCoop2;
+	private int flagFirmadoRepCoop2;
+	//Datos Socio
+	private String tipoSocio;
+	private long codigoSocioTitular;
+	private String pronombreSocioTitular;
+	private String nominativoSocioTitular;
+	private String nombreSocioTitular;
+	private String direccionSocioTitular;
+	private String distritoDireccionSocioTitular;
+	private String tipoDocumentoIDSocioTitular;
+	private String descripcionDocumentoIDSocioTitular;
+	private String numeroDocumentoIDSocioTitular;
+	private String tipoDocumentoIDSocio2Titular;
+	private String descripcionDocumentoIDSocio2Titular;
+	private String numeroDocumentoIDSocio2Titular;
+	private String cargoSocioTitular;
+	private String fichaInscripPodSocioTitular;
+	private long numeroRucSocioTitular;
+	private String numeroRucSocioTitularEnAlfa;
+	private String estadoCivilSocioTitular;
+	private int paisNacimientoSocioTitular;
+	private String nacionalidadSocioTitular;
+	private String tipoOcupacionSocioTitular;
+	private String descripcionTipoOcupacionSocioTitular;
+	private String numeroCavalSocioTitular;
+	private Date fechaFirmaSocioTitular;
+	private String horaRegistroSocioTitular;
+	private String usuarioRegistroSocioTitular;
+	private int flagFirmadoSocioTitular;
+	private String domicioComunSocioTitular;
+	private String tipoSocio2;
+	private long codigoSocio2;
+	private String pronombreSocio2;
+	private String nominativoSocio2;
+	private String nombreSocio2;
+	private String direccionSocio2;
+	private String distritoDireccionSocio2;
+	private String tipoDocumentoIDSocio2;
+	private String descripcionDocumentoIDSocio2;
+	private String numeroDocumentoIDSocio2;
+	private String tipoDocumentoID2Socio2;
+	private String descripcionDocumentoID2Socio2;
+	private String numeroDocumentoID2Socio2;
+	private String cargoSocio2;
+	private String fichaInscripPodSocio2;
+	private long numeroRucSocio2;
+	private String numeroRucSocioEnAlfa2;
+	private String estadoCivilSocio2;
+	private int paisNacimientoSocio2;
+	private String nacionalidadSocio2;
+	private String tipoOcupacionSocio2;
+	private String descripcionTipoOcupacionSocio2;
+	private String numeroCavalSocio2;
+	private Date fechaFirmaSocio2;
+	private String horaRegistroSocio2;
+	private String usuarioRegistroSocio2;
+	private int flagFirmadoSocio2;
+	private String domicioComunSocio2;
+	//Datos Conyugue
+	private long codigoConyugue;
+	private String nombreConyugue;
+	private String direccionConyugueConyugue;
+	private String distritoDireccionConyugue;
+	private String tipoDocumentoIDConyugue;
+	private String descripcionDocumentoIDConyugue;
+	private String numeroDocumentoIDConyugue;
+	private String tipoDocumentoID2Conyugue;
+	private String descripcionDocumentoID2Conyugue;
+	private String numeroDocumentoID2Conyugue;
+	private int paisNacimientoConyugue;
+	private String nacionalidadConyugue;
+	private String pronombreConyugue;
+	private String nominativoConyugue;
+	private String tipoOcupacionConyugue;
+	private String descripcionTipoOcupacionConyugue;
+	private String estadoCivilConyugue;
+	private Date fechaFirmaConyugue;
+	private String horaRegistroConyugue;
+	private String usuarioRegistroConyugue;
+	private int flagFirmadoConyugue;
+	private long codigoConyugue2;
+	private String nombreConyugue2;
+	private String direccionConyugueConyugue2;
+	private String distritoDireccionConyugue2;
+	private String tipoDocumentoIDConyugue2;
+	private String descripcionDocumentoIDConyugue2;
+	private String numeroDocumentoIDConyugue2;
+	private String tipoDocumentoID2Conyugue2;
+	private String descripcionDocumentoID2Conyugue2;
+	private String numeroDocumentoID2Conyugue2;
+	private int paisNacimientoConyugue2;
+	private String nacionalidadConyugue2;
+	private String pronombreConyugue2;
+	private String nominativoConyugue2;
+	private String tipoOcupacionConyugue2;
+	private String descripcionTipoOcupacionConyugue2;
+	private String estadoCivilConyugue2;
+	private Date fechaFirmaConyugue2;
+	private String horaRegistroConyugue2;
+	private String usuarioRegistroConyugue2;
+	private int flagFirmadoConyugue2;
+	//Datos de Depositario
+	private String descripcionPrenda;
+	private long codigoDepositario;
+	private String nombreDepositario;
+	private String tipoDocumentoIDDepositario;
+	private String numeroDocumentoIDDepositario;
+	private String lugarDeposito;
+	private String direccionLugarDepositario;
+	private String distritoDireccionDepositario;
+
+	//Representantes del Socio
+	private String fichaPoderesRep0;
+	private String registroPoderesRep0;
+	private String inscripcionPoderesRep0;
+	private long codigoRep1;
+	private String nombreRep1;
+	private String nominativoRep1;
+	private String poderesPiePaginaRep1;
+	private String poderes1eraPaginaRep1;
+	private String cargoRep1;
+	private String direccionRep1;
+	private String distritoRep1;
+	private String nacionalidadRep1;
+	private String fichaPoderesRep1;
+	private String tipoDocumentoIDRep1;
+	private String descripcionDocumentoIDRep1;
+	private String numeroDocumentoIDRep1;
+	private Date fechaFirmaRep1;
+	private String horaRegistroRep1;
+	private String usuarioRegistroRep1;
+	private int flagFirmadoRep1;
+	private long codigoRep2;
+	private String nombreRep2;
+	private String nominativoRep2;
+	private String poderesPiePaginaRep2;
+	private String poderes2eraPaginaRep2;
+	private String cargoRep2;
+	private String direccionRep2;
+	private String distritoRep2;
+	private String nacionalidadRep2;
+	private String fichaPoderesRep2;
+	private String tipoDocumentoIDRep2;
+	private String descripcionDocumentoIDRep2;
+	private String numeroDocumentoIDRep2;
+	private Date fechaFirmaRep2;
+	private String horaRegistroRep2;
+	private String usuarioRegistroRep2;
+	private int flagFirmadoRep2;
+
+	//Datos de Impresion
+	private Date fechaImpresion;
+	private String horaImpresion;
+	private String usuarioRegistroImpresion;
+	private int flagImpresion;
+	private int flagFirmado;
+	
+	
+	
+	
+	
+	
+
+}

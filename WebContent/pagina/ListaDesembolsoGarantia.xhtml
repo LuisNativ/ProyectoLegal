@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui"
+	  template="/pagina/maestra.xhtml">
+<ui:define name="contenido">
+<h:head>
+<style>
+</style>
+</h:head> 
+<f:view>
+	<h:form id="form">
+    
+	<div class="ui-g ui-fluid">
+        <div class="dsCuadrarCentroInicio tituloIzquieda">
+            <h4><i class="fa fa-folder-open"></i> M&#243;dulo : Garantías <small> > Desembolso Garantía </small></h4>
+        </div>
+    </div>				
+		
+	<p:panel styleClass="dsPanel2" widgetVar="pnl2" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+		    <f:facet name="header" >
+		        <i class="fa fa-table"></i> Lista de Garantías con Desembolso
+		    </f:facet>
+		    <div class="ui-g ui-fluid ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+					<p:outputLabel value="Tipo de Búsqueda" styleClass="dsLabel1"/>				
+					<p:selectOneMenu value="#{mblistadesembolsogarantia.codigoBuscar}">
+		            	<f:selectItem itemLabel="[Seleccione]" itemValue="0" />
+		            	<f:selectItem itemLabel="Nro. Solicitud" itemValue="1" />
+		            	<f:selectItem itemLabel="Nro. Garantía" itemValue="2" />
+		            	<f:selectItem itemLabel="Estado" itemValue="3" />
+		            </p:selectOneMenu>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+					<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
+					<p:inputText type="text" styleClass="dsInput1" value="#{mblistadesembolsogarantia.descripcionBuscar}" autocomplete="off" maxlength="50">
+					</p:inputText>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+					<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Buscar" onclick="PF('dlgPreload').show();" 
+					oncomplete="PF('dlgPreload').hide();" action="#{mblistadesembolsogarantia.buscarDocumentoGarantia()}" 
+					update="form:tblSolicitudDesembolso"></p:commandButton>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid ui-g-nopad">
+				<div class="ui-g-12 ui-md-12 ui-lg-12">
+					<p:dataTable id="tblSolicitudDesembolso" value="#{mblistadesembolsogarantia.lstOperacionDocumentoDesembolso}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"
+								 rowKey="#{item.codigoDocumento}" reflow="true" >
+					    <p:column headerText="Sol. Cred" styleClass="dsTextoCentro" visible="true" >
+							<h:outputText value="#{item.codigoSolicitudCredito}"/>
+					    </p:column>
+					    <p:column headerText="Nro. Garantía" styleClass="dsTextoCentro" visible="true" >
+							<h:outputText value="#{item.codigoGarantia}"/>
+						</p:column>
+						<p:column headerText="Socio" width="250px;">
+						    <div class="dsTextoCorto">
+							    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
+						    </div>
+						</p:column>
+						<p:column headerText="Estado" styleClass="dsTextoCentro" >
+							<h:outputText value="#{item.descripcionEstadoDesembolso}"/>
+						</p:column>
+						<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" >
+							<h:outputText value="#{item.usuarioRegist}"/>
+						</p:column>
+						<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" >
+							<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
+						</p:column>
+					</p:dataTable>
+				</div>
+			</div>		
+		</p:panel>
+	</h:form>
+
+	<p:dialog widgetVar="dlgMensajeOperacionAjax" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgMensajeOperacionAjax">
+		<div class="dsDlgMensajeOperacion dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="Mensaje de Operación"/>
+				</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="contenido">
+				<div class="mensaje">
+					<p:outputLabel value="#{mblistaconstituciongarantia.oEMensaje.descMensaje}" styleClass="dsLabel3"/>
+				</div>
+			</div>
+			<div class="pie">
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.actualizarDatosAjax()}" update=":form:tblSolicitudDocumento,:frmDlgDocumentacion:tblOperacionDocumentoLegal,:frmDlgDocumentacion:tblOperacionDocumentoNegocios"></p:commandButton> 
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+
+
+</f:view>
+</ui:define>
+</ui:composition>

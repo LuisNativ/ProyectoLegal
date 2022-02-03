@@ -1,0 +1,328 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui"
+	  template="/pagina/maestra.xhtml">
+<ui:define name="contenido">
+<h:head>
+<style>
+</style>
+</h:head> 
+<f:view>
+	<h:form id="form">
+    
+	<div class="ui-g ui-fluid">
+        <div class="dsCuadrarCentroInicio tituloIzquieda">
+            <h4><i class="fa fa-folder-open"></i> M&#243;dulo : Operaciones <small> > Mantenimiento Cliente</small></h4>
+        </div>
+    </div>				
+		
+	<p:panel styleClass="dsPanel2" widgetVar="pnl2" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+		    <f:facet name="header" >
+		        <i class="fa fa-table"></i> Lista de Solicitudes de Documentos de Garantías
+		    </f:facet>
+		    <div class="ui-g ui-fluid ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+					<p:outputLabel value="Tipo de Búsqueda" styleClass="dsLabel1"/>				
+					<p:selectOneMenu value="#{mblistaconstituciongarantia.codigoBuscar}">
+		            	<f:selectItem itemLabel="[Seleccione]" itemValue="0" />
+		            	<f:selectItem itemLabel="Nro. Solicitud" itemValue="1" />
+		            	<f:selectItem itemLabel="Nro. Garantía" itemValue="2" />
+		            	<f:selectItem itemLabel="Estado" itemValue="3" />
+		            </p:selectOneMenu>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+					<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
+					<p:inputText type="text" styleClass="dsInput1" value="#{mblistaconstituciongarantia.descripcionBuscar}" autocomplete="off" maxlength="50">
+					</p:inputText>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+					<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Buscar" onclick="PF('dlgPreload').show();" 
+					oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.buscarDocumentoGarantia()}" 
+					update="form:tblSolicitudDocumento"></p:commandButton>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid ui-g-nopad">
+				<div class="ui-g-12 ui-md-12 ui-lg-12">
+					<p:dataTable id="tblSolicitudDocumento" value="#{mblistaconstituciongarantia.lstDocumentoGarantia}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom" 
+						 rowKey="#{item.codigoSolicitud}" reflow="false" >
+		                <p:column headerText="Nro" styleClass="dsTextoCentro" visible="true" priority="3" width="30px;">
+							<h:outputText value="#{item.codigoSolicitud}"/>
+						</p:column>
+						<p:column headerText="Sol. Cred." styleClass="dsTextoCentro" visible="true" priority="3" width="80px;">
+							<h:outputText value="#{item.codigoSolicitudCredito}"/>
+						</p:column>
+						 <p:column headerText="Nro. Garant." styleClass="dsTextoCentro" visible="true" priority="3">
+							<h:outputText value="#{item.codigoGarantia}"/>
+						</p:column>
+						<p:column headerText="Socio" priority="1" width="200px;">
+						    <div class="dsTextoCorto">
+							    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
+						    </div>
+						</p:column>
+						<p:column headerText="Estado" styleClass="dsTextoCentro" priority="1">
+							<h:outputText value="#{item.descripcionEstadoDocumento}"/>
+						</p:column>
+						<p:column headerText="Negocios" styleClass="dsTextoCentro" priority="6">
+							<h:outputText value="#{item.descripcionEstadoDocumentoNegocio}"/>
+						</p:column>
+						<p:column headerText="Legal" styleClass="dsTextoCentro" priority="6">
+							<h:outputText value="#{item.descripcionEstadoDocumentoLegal}"/>
+						</p:column>
+						<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" priority="6">
+							<h:outputText value="#{item.usuarioRegist}"/>
+						</p:column>
+						<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" priority="6">
+							<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
+						</p:column>
+						<p:column headerText="Acciones" styleClass="dsTextoCentro" priority="4">
+					      <p:commandButton styleClass="dsBoton5 green" icon="#{item.estadoDocumento eq 60 ? 'fa fa-eye': 'fa fa-pencil'}" title="#{item.estadoDocumento eq 60 ? 'Visualizar': 'Evaluar'}" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.evaluarDocumentoSolicitud(item)}" update=":frmDlgDocumentacion">
+					      	</p:commandButton>
+				      	 <p:commandButton styleClass="dsBoton5 orange" icon="fa fa-handshake" title="Confirmación Firma" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.visualizarConfirmarFirmaDocumento(item)}"
+						  rendered="#{item.indicadorConfirmarNegocios eq 1 ? true : false}"
+				      	  update=":frmDlgDocumentacion">
+				      	</p:commandButton>
+		     	        </p:column>
+					</p:dataTable>
+				</div>
+			</div>		
+		</p:panel>
+	</h:form>
+
+
+	 <p:dialog widgetVar="dlgDocumentacion" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">	
+	<h:form id="frmDlgDocumentacion">
+		<div class="dsDlgDocumentacion dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="#{mblistaconstituciongarantia.indicadorTituloDocumento? 'Nueva Solicitud de Documento':'Lista de Documentos'}"/>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid contenido">
+				<div class="ui-g-12 ui-md-12 ui-lg-12">
+					<p:dataTable id="tblOperacionDocumentoLegal" value="#{mblistaconstituciongarantia.lstOperacionDocumentoLegalFiltro}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"
+					 rowKey="#{item.codigoDocumento}" reflow="true">
+					 	<f:facet name="header">
+				           Lista de Documentos de Legal
+				        </f:facet>
+						<p:column headerText="Nombre Doc." width="150px;">
+						    <div class="dsTextoCorto">
+							    <h:outputText value="#{item.nombreDocumentoOriginal}"/>
+						    </div>
+						</p:column>
+						<p:column headerText="¿Tiene Firma?" styleClass="dsTextoCentro" width="50px;">
+							<h:outputText value="#{item.firmaDocumento}"/>
+						</p:column>
+						<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" width="80px;">
+							<h:outputText value="#{item.usuarioRegist}"/>
+						</p:column>
+						<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" width="80px;">
+							<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
+						</p:column>
+						<p:column headerText="Acciones" styleClass="dsTextoCentro" width="50px;">
+							<p:commandButton styleClass="dsBoton5 green" icon="fa fa-download" title="Descargar" actionListener="#{mblistaconstituciongarantia.descargarDocumento(item)}" ajax="false" immediate="true">
+			      				<p:fileDownload value="#{mblistaconstituciongarantia.fileDownload}"/>
+			      			</p:commandButton>
+			      			<p:commandButton styleClass="dsBoton5 green" icon="#{item.validarObservacion ? 'fa fa-eye' : 'fa fa-envelope' }" title="Observación" actionListener="#{mblistaconstituciongarantia.visualizarObservacionDocumento(item)}" 
+			      			rendered="#{item.validarObservacion}"
+			      			update=":frmDlgObservacionDocumento">
+			      			</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</div>
+				<div class="ui-g-12 ui-md-12 ui-lg-12">
+					<p:dataTable id="tblOperacionDocumentoNegocios" value="#{mblistaconstituciongarantia.lstOperacionDocumentoNegociosFiltro}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"
+					 rowKey="#{item.codigoDocumento}" reflow="true">
+					  	<f:facet name="header">
+				            Lista de Documentos de Negocios
+				        </f:facet>
+						<p:column headerText="Nombre Doc." width="150px;">
+						    <div class="dsTextoCorto">
+							    <h:outputText value="#{item.nombreDocumentoOriginal}"/>
+						    </div>
+						</p:column>
+						<p:column headerText="¿Tiene Firma?" styleClass="dsTextoCentro" width="50px;">
+							<h:outputText value="#{item.firmaDocumento}"/>
+						</p:column>
+						<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" width="80px;">
+							<h:outputText value="#{item.usuarioRegist}"/>
+						</p:column>
+						<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" width="80px;">
+							<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
+						</p:column>
+						<p:column headerText="Acciones" styleClass="dsTextoCentro" width="50px;">
+							<p:commandButton styleClass="dsBoton5 green" icon="fa fa-download" title="Descargar" actionListener="#{mblistaconstituciongarantia.descargarDocumento(item)}" ajax="false" immediate="true">
+			      				<p:fileDownload value="#{mblistaconstituciongarantia.fileDownload}"/>
+			      			</p:commandButton>
+			      			<p:commandButton styleClass="dsBoton5 green" icon="#{item.validarObservacion ? 'fa fa-eye' : 'fa fa-envelope' }" title="Observación" actionListener="#{mblistaconstituciongarantia.visualizarObservacionDocumento(item)}" update=":frmDlgObservacionDocumento">
+			      			</p:commandButton>
+			      			<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-check" title="Actualizar Firma" actionListener="#{mblistaconstituciongarantia.visualizarFirmaDocumento(item)}" update=":frmDlgFirma">
+			      			</p:commandButton>
+			      			<p:commandButton styleClass="dsBoton5 red" icon="fa fa-trash" title="Eliminar Documento" actionListener="#{mblistaconstituciongarantia.visualizarEliminarDocumento(item)}" 
+			      			rendered="#{mblistaconstituciongarantia.visualizarEliminarDocumentoGarantia}"
+			      			update=":frmDlgFirma">
+			      			</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</div>
+				<div class="ui-g-12" style="#{mblistaconstituciongarantia.deshabilitarAdjuntaDocumento ? 'display: none;' : 'display:block;'}">
+					<p:outputLabel value="Adjuntar documentos" styleClass="dsLabel1"/>
+		       		<!-- Agregar Documento Carga Simple con descripcion -->
+					<p:fileUpload
+							value="#{mblistaconstituciongarantia.files}"
+							style="font-size:11px;"
+				       		sizeLimit="15728640"
+				       		allowTypes="/(\.|\/)(jpe?g|png|pdf|doc|docx|xls|xlsx)$/"
+							accept=".jpg, .jpeg, .png, .pdf, .doc, .docx, .xls, .xlsx"
+							fileUploadListener="#{mblistaconstituciongarantia.agregarDocumentoCarga}"
+							mode="advanced"
+				       		auto="true" 
+				       		multiple="false"
+				       		dragDropSupport="true"
+				       		label="Adjuntar"
+				       		uploadLabel="Cargar"
+				       		cancelLabel="Cancelar"
+				       		invalidFileMessage="Tipo de archivo incorrecto, archivos permitidos jpg, png, jpeg, pdf, docx, xls, xlsx"
+				       		invalidSizeMessage="Tamaño del archivo excede el límite de 15Mbs"
+				       		
+				       		update="frmDlgDocumentacion:tblDocumentoCarga,frmDlgDocumentacion:btnGuardarDocumento"
+				       		previewWidth= "20">
+				    </p:fileUpload>
+					<p:dataTable id="tblDocumentoCarga" value="#{mblistaconstituciongarantia.lstDocumentoCarga}" var="item" styleClass="dsTabla2"
+									 rowKey="#{item.data}" reflow="true" emptyMessage="">
+							<p:column headerText="" styleClass="dsTextoCentro">
+								<div class="contenedorFila">
+								<div>
+								<h:outputText value="#{item.nombre}"/>
+								</div>
+								<div>
+								<h:outputText value="#{item.descripcionSize}"/>
+								</div>
+								<div>
+								<p:commandButton styleClass="dsBoton3" icon="fa fa-remove" process="@this" action="#{mblistaconstituciongarantia.eliminarDocumentoCarga(item)}" update="tblDocumentoCarga,frmDlgDocumentacion:btnGuardarDocumento">
+				      			</p:commandButton>
+				      			</div>
+				      			</div>
+							</p:column>
+					</p:dataTable>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid pie">
+				<p:commandButton styleClass="dsBoton1 secundario" value="Volver" onclick="PF('dlgDocumentacion').hide();"></p:commandButton>
+				<p:commandButton id="btnGuardarDocumento" styleClass="dsBoton1 tamanio3 principal" 
+				    value="Grabar" 
+					icon="fa fa-cloud-upload"  iconPos="right" 
+					style="#{mblistaconstituciongarantia.visualizarGrabarDocumento ? 'display: inline-block;' : 'display:none;'}"
+					action="#{mblistaconstituciongarantia.grabarDocumento()}"
+					onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
+					update="frmDlgDocumentacion:tblDocumentoCarga,frmDlgDocumentacion:btnGuardarDocumento,:frmDlgMensajeOperacionAjax">
+				</p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+	<p:dialog widgetVar="dlgFirma" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgFirma">
+		<div class="dsDlgDescripcionDocumentoCarga dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="¿Tiene Firma?"/>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid contenido">
+				<div class="ui-g-12 ui-md-12 ui-lg-12">
+					<p:outputLabel value="Firma" styleClass="dsLabel1"/>
+					<p:selectOneMenu   value="#{mblistaconstituciongarantia.codigoFirmaSiNo}">
+						<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+						<f:selectItems value="#{mblistaconstituciongarantia.lstValorSiNo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+			        </p:selectOneMenu>
+								       
+				</div>
+			</div>
+			<div class="ui-g ui-fluid pie">
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgFirma').hide();"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Grabar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgFirma').hide();PF('dlgPreload').hide();" actionListener="#{mblistaconstituciongarantia.procesarFirmaDocumento()}" update=":frmDlgMensajeOperacionAjax"></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+
+	<p:dialog widgetVar="dlgObservacionDocumento" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgObservacionDocumento">
+		<div class="dsDlgObservacionDocumento dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="Observación Documento"/>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid contenido">
+				<div class="ui-g-12 ui-md-12 ui-lg-12">
+					<p:outputLabel  value="Observación" styleClass="dsLabel1"/>
+					<p:inputTextarea type="text" id="txtObservacionDocumento"  styleClass="dsInput1" value="#{mblistaconstituciongarantia.oEOperacionDocumentoDetalle.obervacionDocumento}" autocomplete="off" disabled="#{mblistaconstituciongarantia.deshabilitarObservacionDocumento}" counter="displayObsDoc" maxlength="400" counterTemplate="{0} caracteres restantes" ></p:inputTextarea>
+					<p:outputLabel id="displayObsDoc" styleClass="dsLabel1" />
+				</div>
+			</div>
+			<div class="ui-g ui-fluid pie">
+				<p:commandButton styleClass="dsBoton1 secundario" value="#{mblistaconstituciongarantia.deshabilitarObservacionDocumento ? 'Aceptar' : 'Cancelar'}" onclick="PF('dlgObservacionDocumento').hide();"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" id="idSolicitarFirma" value="Aceptar"  onclick="PF('dlgPreload').show();" oncomplete="PF('dlgObservacionDocumento').hide();PF('dlgPreload').hide();" actionListener="#{mblistaconstituciongarantia.procesarObservacionDocumento()}" update=":frmDlgMensajeOperacionAjax"
+				style="#{mblistaconstituciongarantia.deshabilitarObservacionDocumento ? 'display: none;':'display: block;'}"></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+
+
+	<p:dialog widgetVar="dlgMensajeOperacionAjax" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgMensajeOperacionAjax">
+		<div class="dsDlgMensajeOperacion dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="Mensaje de Operación"/>
+				</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="contenido">
+				<div class="mensaje">
+					<p:outputLabel value="#{mblistaconstituciongarantia.oEMensaje.descMensaje}" styleClass="dsLabel3"/>
+				</div>
+			</div>
+			<div class="pie">
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.actualizarDatosAjax()}" update=":form:tblSolicitudDocumento,:frmDlgDocumentacion:tblOperacionDocumentoLegal,:frmDlgDocumentacion:tblOperacionDocumentoNegocios"></p:commandButton> 
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+	<p:dialog widgetVar="dlgConfirmacionDocumentoFirma" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">	
+	<h:form id="frmDlgMensajeConfirmacion">
+		<div class="dsDlgMensajeConfirmacion dsDialogo4">
+	 		<div class="cabecera">
+	 			<div class="dlgIzquierda">
+	 				<p:outputLabel styleClass="dsLabel2" value="Mensaje de Confirmación"/>
+	 			</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="ui-g ui-fluid contenido">
+				<div class="mensaje">
+					<p:outputLabel value="¿Está seguro de Confirmar la Firma de Esta Solicitud de Documento? " styleClass="dsLabel3"/>
+					<br/>
+					<p:outputLabel value="Recuerde solo aceptar si está seguro de este proceso." styleClass="dsLabel3"/>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid pie">
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgConfirmacionDocumentoFirma').hide();"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" action="#{mblistaconstituciongarantia.procesarConfirmarFirmaDocumento()}" oncomplete="PF('dlgConfirmacionDocumentoFirma').hide();PF('dlgPreload').hide();" update=":frmDlgMensajeOperacionAjax"></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+
+</f:view>
+</ui:define>
+</ui:composition>

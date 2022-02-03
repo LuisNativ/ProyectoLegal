@@ -1,0 +1,1120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui"
+	  template="/pagina/maestra.xhtml">
+<ui:define name="contenido">
+<h:head>
+</h:head>
+<f:view>
+	<h:form id="form" enctype="multipart/form-data">
+	
+	<div class="ui-g ui-fluid">
+		<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+	        <div class="dsCuadrarCentroInicio tituloIzquieda">
+				<h4><i class="fa fa-folder-open"></i> M&#243;dulo : Garantías <small> > Trámite Operativo Solicitud Legal</small></h4>
+	        </div>
+	    </div>
+	    
+	    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad dsCuadrarCentroFin">
+	    
+		<p:commandButton styleClass="dsBoton1 tamanio1 secundario" value="Volver" icon="fa fa-arrow-left" 
+		onclick="PF('dlgSalir').show();"
+		rendered="#{mbregistrotramiteoperativosolicitud.indicadorSalir eq '1' ? true : false}"/>
+
+		<p:commandButton id="btnNoConforme" styleClass="dsBoton1 tamanio4 principal" 
+		value="NO CONFORME" 
+		icon="fa fa-arrow-right"  iconPos="right" 
+		onclick="PF('dlgObservacionSolicitud').show();"> 
+		</p:commandButton>
+
+	    </div>
+
+	    
+
+    </div>
+	<p:tabView id="tabView1" dynamic="true" widgetVar="tabs1" activeIndex="0">
+	   <p:tab id="tab1-1" title="Condiciones Desembolso">
+	      <div class="ui-g ui-fluid ui-g-nopad">
+	      	   <div class="ui-g-12">
+			    	<p:panel styleClass="dsPanel2" widgetVar="pnl1" toggleable="false" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px" >
+						<f:facet name="header" >
+						    <i class="fas fa-money"></i> Condiciones Necesarias para Desembolso
+						</f:facet>
+						<div class="ui-g ui-fluid ui-g-nopad">
+							<div class="ui-g-12 ui-md-3 ui-lg-3">
+								<p:outputLabel value="Nro. Solicitud" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.codigoSolicitud}" disabled="true"></p:inputText>
+							</div>
+							<div class="ui-g-12 ui-md-6 ui-lg-6">
+								<p:outputLabel value="Socio" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.codigoClientePersona}, #{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.nombrePersona}" disabled="true"></p:inputText>
+							</div>
+							<div class="ui-g-12 ui-md-3 ui-lg-3">
+								<p:outputLabel value="Monto Aprobado" styleClass="dsLabel1"/>
+								<p:inputNumber type="text" styleClass="dsInput1" value=" #{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.montoSolicitado}" disabled="true" symbol="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.abreviacionMoneda}" decimalSeparator="." thousandSeparator=","></p:inputNumber>
+							</div>
+							<div class="ui-g-12 ui-md-8 ui-lg-8">
+								<p:outputLabel value="Tipo Producto" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.descripcionTipoProducto}" disabled="true"></p:inputText>
+							</div>
+							<div class="ui-g-12 ui-md-4 ui-lg-4">
+								<p:outputLabel value="Moneda" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.descripcionMoneda}" disabled="true"></p:inputText>
+							</div>
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:dataTable id="tblCondicionDesembolso" value="#{mbregistrotramiteoperativosolicitud.lstDetalleFlagsSolCredito}" var="item" styleClass="dsTabla1" paginator="false" rows="10" paginatorPosition="bottom"
+								 rowKey="#{row}" reflow="true" rowIndexVar="row" >
+								    <p:column headerText="N°" styleClass="dsTextoCentro"  width="5%">
+											<h:outputText value="#{row+1}" style="font-size: 13px !important;"/>
+									</p:column>
+									<p:column headerText="Descripción" styleClass="dsTextoCentro" width="50%">
+									    <div class="dsTextoCorto">
+										    <h:outputText value="#{item.descripcionFlag}" style="font-size: 13px !important;"/>
+									    </div>
+									</p:column>
+									<p:column headerText="Tipo" styleClass="dsTextoCentro" width="25%">
+									    <div class="dsTextoCorto">
+										    <h:outputText value="#{item.descripcionValorFlag}" style="font-size: 13px !important;"/>
+									    </div>
+									</p:column>
+									<p:column headerText="Status" styleClass="dsTextoCentro" width="20%">
+									    <div class="dsTextoCorto">
+										    <h:outputText value="#{item.descripcionActualizacionFlag}" style="font-size: 13px !important;"
+										    styleClass="#{item.actualizacionFlag eq 0 ? 'dsText3 orange'
+												:item.actualizacionFlag eq 3 ? 'dsText3 green'
+												:item.actualizacionFlag eq 1 ? 'dsText3 red'
+												:'dsText3 blue'}"/>
+									    </div>
+									</p:column>
+								</p:dataTable>
+							</div>
+
+						</div>
+			    	</p:panel>
+				</div>
+				<div class="ui-g-12">
+					<p:panel styleClass="dsPanel2" widgetVar="pnl1" toggleable="false" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px" >
+						<f:facet name="header" >
+						    <i class="fas fa-comments"></i> Observaciones
+						</f:facet>
+						<div class="ui-g ui-fluid ui-g-nopad">
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:dataTable id="tblObservacionSolicitud" value="#{mbregistrotramiteoperativosolicitud.lstObservacionTramiteOperativoSolicitud}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"
+											 rowKey="#{item.secuenciaSolicitud}" reflow="true" >
+									<p:column headerText="Nro. Sol." styleClass="dsTextoCentro" visible="true" width="10%">
+										<h:outputText value="#{item.codigoSolicitud}"/>
+								    </p:column>
+								    <p:column headerText="Sec." styleClass="dsTextoCentro" visible="true" width="10%">
+										<h:outputText value="#{item.secuenciaSolicitud}"/>
+								    </p:column>
+									<p:column headerText="Usuario Reg."  styleClass="dsTextoCentro" width="40%">
+									    <div class="dsTextoCorto">
+										    <h:outputText value="#{item.usuarioRegistro.nombreUsuario}"/>
+									    </div>
+									</p:column>				    
+								    <p:column headerText="Fecha Registro" styleClass="dsTextoCentro" visible="true" width="30%">
+										<h:outputText value="#{item.fechaRegistro} #{item.horaRegistroObservacion}"/>
+								    </p:column>
+									<p:column headerText="Acciones" styleClass="dsTextoCentro" priority="4" width="10%">
+								      	<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-search" title="Visualizar Observación" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
+								      	   action="#{mbregistrotramiteoperativosolicitud.consultarObservacionSolicitud(item)}"
+								      	   update="form:tabView1:txtObservacionConformidad">
+								      	</p:commandButton>
+					     	        </p:column>
+								</p:dataTable>
+							</div>
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:outputLabel  value="Observación" styleClass="dsLabel1"/>
+								<p:inputTextarea type="text" id="txtObservacionConformidad"  styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.observacionSolicitud}" autocomplete="off" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarObservacionConformidad}"></p:inputTextarea>
+							</div>
+						</div>
+					</p:panel>
+				</div>
+	      </div>
+	   </p:tab>
+	   <p:tab id="tab1-2" title="Firmantes">
+	   		<div class="ui-g ui-fluid ui-g-nopad">
+	   			<div class="ui-g-12">
+	   				<p:panel styleClass="dsPanel2" widgetVar="pnl2" toggleable="true" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px" >
+	   					<f:facet name="header" >
+						    <i class="fas fa-users"></i> Relación de Firmantes de Documentos
+						</f:facet>
+						<div class="ui-g ui-fluid ui-g-nopad">
+							<div class="ui-g-12 ui-md-2 ui-lg-2">
+								<p:outputLabel value="Nro. Solicitud" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.codigoSolicitud} - #{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.numeroRevision}" disabled="true"></p:inputText>
+							</div>
+							<div class="ui-g-12 ui-md-6 ui-lg-6">
+								<p:outputLabel value="Socio" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.codigoClientePersona}, #{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.nombrePersona}" disabled="true"></p:inputText>
+							</div>
+							<div class="ui-g-12 ui-md-4 ui-lg-4">
+								<p:outputLabel value="Tipo Crédito" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.codigoTipoCredito} #{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.descripcionTipoCredito}" disabled="true"></p:inputText>
+							</div>
+							<div class="ui-g-12 ui-md-8 ui-lg-8 ui-g-nopad">
+								<div class="ui-g-8">
+									<p:outputLabel value="Tipo Producto" styleClass="dsLabel1"/>
+									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.codigoTipoProducto} #{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.descripcionTipoProducto}" disabled="true"></p:inputText>
+								</div>
+								<div class="ui-g-4">
+									<p:outputLabel value="Destino" styleClass="dsLabel1"/>
+									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.codigoDestinoCredito} #{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.descripcionDestinoCredito}" disabled="true"></p:inputText>
+								</div>
+							</div>
+							<div class="ui-g-12 ui-md-4 ui-lg-4 ui-g-nopad">
+								<div class="ui-g-6">
+									<p:outputLabel value="Monto Solicitado" styleClass="dsLabel1"/>
+									<p:inputNumber type="text" styleClass="dsInput1" value=" #{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.montoSolicitado}" disabled="true" symbol="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.abreviacionMoneda}" decimalSeparator="." thousandSeparator=","></p:inputNumber>
+								</div>
+								<div class="ui-g-6">
+									<p:outputLabel value="Moneda" styleClass="dsLabel1"/>
+									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.descripcionMoneda}" disabled="true"></p:inputText>
+								</div>
+							</div>
+						
+							
+							
+							
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:dataTable id="tblListaFirmantes" value="#{mbregistrotramiteoperativosolicitud.lstFirmanteSolicitud}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom"
+								 rowKey="#{row}" reflow="true" rowIndexVar="row" >
+									<p:column headerText="Tipo Firmante" styleClass="dsTextoCentro" width="25%">
+									    <div class="dsTextoCorto">
+										    <h:outputText value="#{item.codigoTipoFirmante} #{item.descripcionTipoFirmante}"/>
+									    </div>
+									</p:column>
+									<p:column headerText="N°" styleClass="dsTextoCentro" width="5%">
+										    <h:outputText value="#{item.secuenciaFirmante}"/>
+									</p:column>						
+									<p:column headerText="Código" styleClass="dsTextoCentro" width="10%">
+										    <h:outputText value="#{item.codigoSocioFirmante}"/>
+									</p:column>
+									<p:column headerText="Nombre" styleClass="dsTextoCentro" width="30%">
+									    <div class="dsTextoCorto">
+										    <h:outputText value="#{item.nombreFirmante}" />
+									    </div>
+									</p:column>
+									<p:column headerText="Ok" styleClass="dsTextoCentro" width="5%">
+										    <h:outputText value="#{item.okFirma}"/>
+									</p:column>
+									<p:column headerText="Firma" styleClass="dsTextoCentro" width="5%">
+										    <h:outputText value="#{item.siFirma}"/>
+									</p:column>
+									<p:column headerText="Fecha" styleClass="dsTextoCentro" width="15%">
+										    <h:outputText value="#{item.fechaFirmaSocio} #{item.horaReg}"/>
+									</p:column>
+									<p:column headerText="" styleClass="dsTextoCentro" width="5%">
+										<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-group" title="Conformidad Firmantes" 
+										onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
+										action="#{mbregistrotramiteoperativosolicitud.visualizarDetalleFirmanteSolicitud(item)}" 
+										update=":frmDlgMantenimientoFirmantes" immediate="true">
+								      	</p:commandButton>
+								      	<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-edit" title="Actualizar Firma" 
+										onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
+										action="#{mbregistrotramiteoperativosolicitud.visualizarDetalleFirmanteFirma(item)}" 
+										update=":frmDlgFirmaFirmantes" immediate="true">
+								      	</p:commandButton>
+									</p:column>
+								</p:dataTable>
+							</div>
+
+						</div>
+	   				</p:panel>
+	   			</div>
+	   		</div>
+	   </p:tab>
+	   <p:tab id="tab1-3" title="Firma Contrato" rendered="false">
+	   		<div class="ui-g ui-fluid ui-g-nopad">
+	   			<div class="ui-g-12">
+	   				<p:panel styleClass="dsPanel2" widgetVar="pnl3" toggleable="true" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px" >
+	   					<f:facet name="header" >
+						    <i class="fas fa-users"></i> Relación de Firmantes de Documentos
+						</f:facet>
+						<div class="ui-g ui-fluid ui-g-nopad">
+							<div class="ui-g-12 ui-md-3 ui-lg-3">
+								<p:outputLabel value="Nro. Solicitud" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.codigoSolicitud} - #{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.numeroRevision}" disabled="true"></p:inputText>
+							</div>
+							<div class="ui-g-12 ui-md-6 ui-lg-6">
+								<p:outputLabel value="Socio" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.codigoClientePersona}, #{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.nombrePersona}" disabled="true"></p:inputText>
+							</div>
+							<div class="ui-g-12 ui-md-3 ui-lg-3">
+								<p:outputLabel value="Tipo Crédito" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.codigoTipoCredito} #{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.descripcionTipoCredito}" disabled="true"></p:inputText>
+							</div>
+							<div class="ui-g-12 ui-md-8 ui-lg-8">
+								<p:outputLabel value="Tipo Producto" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.codigoTipoProducto} #{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.descripcionTipoProducto}" disabled="true"></p:inputText>
+							</div>
+							
+							<div class="ui-g-12 ui-md-4 ui-lg-4">
+								<p:outputLabel value="Destino" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.codigoDestinoCredito} #{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.descripcionDestinoCredito}" disabled="true"></p:inputText>
+							</div>
+							<div class="ui-g-12 ui-md-4 ui-lg-4">
+								<p:outputLabel value="Monto Solicitado" styleClass="dsLabel1"/>
+								<p:inputNumber type="text" styleClass="dsInput1" value=" #{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.montoSolicitado}" disabled="true" symbol="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.abreviacionMoneda}" decimalSeparator="." thousandSeparator=","></p:inputNumber>
+							</div>
+							<div class="ui-g-12 ui-md-4 ui-lg-4">
+								<p:outputLabel value="Moneda" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.descripcionMoneda}" disabled="true"></p:inputText>
+							</div>
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:dataTable id="tblListaFirmantesContrato" value="#{mbregistrotramiteoperativosolicitud.lstFirmanteSolicitud}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom"
+								 rowKey="#{row}" reflow="true" rowIndexVar="row" >
+									<p:column headerText="Tipo Firmante" styleClass="dsTextoCentro" width="20%">
+									    <div class="dsTextoCorto">
+										    <h:outputText value="#{item.codigoTipoFirmante} #{item.descripcionTipoFirmante}"/>
+									    </div>
+									</p:column>
+									<p:column headerText="N°" styleClass="dsTextoCentro" width="5%">
+										    <h:outputText value="#{item.secuenciaFirmante}"/>
+									</p:column>						
+									<p:column headerText="Código" styleClass="dsTextoCentro" width="10%">
+										    <h:outputText value="#{item.codigoSocioFirmante}"/>
+									</p:column>
+									<p:column headerText="Nombre" styleClass="dsTextoCentro" width="40%">
+									    <div class="dsTextoCorto">
+										    <h:outputText value="#{item.nombreFirmante}" />
+									    </div>
+									</p:column>
+									<p:column headerText="Firma" styleClass="dsTextoCentro" width="5%">
+										    <h:outputText value="#{item.siFirma}"/>
+									</p:column>
+									<p:column headerText="Fecha" styleClass="dsTextoCentro" width="15%">
+										    <h:outputText value="#{item.fechaFirmaSocio} #{item.horaReg}"/>
+									</p:column>
+									<p:column headerText="" styleClass="dsTextoCentro" width="5%">
+										<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-search" title="Visualizar Firmante" 
+										onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
+										action="#{mbregistrotramiteoperativosolicitud.visualizarDetalleFirmanteFirma(item)}" 
+										update=":frmDlgFirmaFirmantes" immediate="true">
+								      	</p:commandButton>
+									</p:column>
+								</p:dataTable>
+							</div>
+
+						</div>
+	   				</p:panel>
+	   			</div>
+	   		</div>
+	   </p:tab>
+	   <p:tab id="tab1-4" title="Garantía">
+	   		<div class="ui-g ui-fluid ui-g-nopad">
+	   	 		<div class="ui-g-12">
+	   	 			<p:panel styleClass="dsPanel2" widgetVar="pnl5" toggleable="true" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+	   	 				<f:facet name="header">
+						    <i class="fas fa-bank"></i> Relación de Garantías Asociadas a la Solicitud
+						</f:facet>
+						<div class="ui-g ui-fluid ui-g-nopad">
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:dataTable id="tblGarantia" value="#{mbregistrotramiteoperativosolicitud.lstGarantiaSolicitud}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"
+								 rowKey="#{row}" reflow="true" rowIndexVar="row" >
+									<p:column headerText="N°" styleClass="dsTextoCentro" width="5%">
+										    <h:outputText value="#{item.secuenciaGarantia}"/>
+									</p:column>
+									<p:column headerText="Clase" styleClass="dsTextoCentro" width="25%">
+									    <div class="dsTextoCorto">
+										    <h:outputText value="#{item.descripcionTipoGarantia}"/>
+									    </div>
+									</p:column>
+									<p:column headerText="Descripción" styleClass="dsTextoCentro" width="50%">
+									    <div class="dsTextoCorto">
+										    <h:outputText value=" #{item.descripcionTipoGarantiaReal} - #{item.descripcionGarantiaReal}"/>
+									    </div>
+									</p:column>	
+									<p:column headerText="Mon." styleClass="dsTextoCentro" width="5%">
+										<h:outputText value="#{item.abreviacionMonedaGarantia}" />
+									</p:column>			
+									<p:column headerText="Importe" styleClass="dsTextoCentro" width="10%">
+										<h:outputText value="#{item.montoGarantia}">
+											<f:convertNumber type="currency" currencySymbol="#{item.abreviacionMonedaGarantia}" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="" styleClass="dsTextoCentro" width="5%">
+										<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-search" title="Visualizar Garantia" 
+										onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
+										actionListener="#{mbregistrotramiteoperativosolicitud.visualizarDetalleGarantiaAsociada(item)}" 
+										update="form:tabView1:tabView2:panelGarVeh,form:tabView1:tabView2:panelComprobantes,form:tabView1:idBtnConfirmaDato">
+								      	</p:commandButton>
+									</p:column>
+								</p:dataTable>
+							</div>
+						</div>
+	   	 			</p:panel>
+	   	 		</div>
+	   	 		<div class="ui-g-12">
+	   	 			<p:panel styleClass="dsPanel2" widgetVar="pnl6" toggleable="true" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+	   	 				<f:facet name="header">   	 				
+		   	 					<i class="fas fa-bank"></i> Detalle de Garantía Asociada
+								<p:commandButton id="idBtnConfirmaDato" styleClass="dsBoton1 tamanio4 terciario" value="Confirmar Datos" 
+									onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
+									actionListener="#{mbregistrotramiteoperativosolicitud.procesarConfirmacionDatosGarantiaSolicitud()}" 
+									style="#{mbregistrotramiteoperativosolicitud.renderizarBotonConfirmaDatoGarantia ? 'display: inline-block;' : 'display:none;'}"
+									update=":frmDlgMensajeOperacionAjax,form:tabView1:tabView2:panelGarVeh,form:tabView1:tabView2:panelComprobantes,form:tabView1:idBtnConfirmaDato"/>
+						</f:facet>
+						<p:tabView id="tabView2" dynamic="true" widgetVar="tabs2" activeIndex="0">
+							<p:tab id="tab1-1" title="Garantía">
+								<h:panelGroup id="panelGarVeh" layout="block">
+									<div class="ui-g ui-fluid ui-g-nopad">
+										<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+									    	<div class="ui-g-4">
+												<p:outputLabel for="txtPlacaVehicular" value="Placa" styleClass="dsLabel1"/>
+												<p:inputText id="txtPlacaVehicular" type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEGarantiaSolicitudData.placa}" autocomplete="off" maxlength="10" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetGenGarantia}"></p:inputText>
+												<h:message for="txtPlacaVehicular" styleClass="dsMessage1"/>
+											</div>
+											<div class="ui-g-4">
+												<p:outputLabel for="txtMotorVehicular" value="Nro. Motor" styleClass="dsLabel1"/>
+												<p:inputText id="txtMotorVehicular" type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEGarantiaSolicitudData.motor}" autocomplete="off" maxlength="25" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetGenGarantia}"></p:inputText>
+												<h:message for="txtMotorVehicular" styleClass="dsMessage1"/>
+											</div>
+											<div class="ui-g-4">
+												<p:outputLabel for="cbMarcaVehicular" value="Marca" styleClass="dsLabel1"/>
+												<p:selectOneMenu id="cbMarcaVehicular"  value="#{mbregistrotramiteoperativosolicitud.oEGarantiaSolicitudData.codigoMarca}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetGenGarantia}">
+													<p:ajax event="change" update="@this"/>
+													<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+													<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstMarcaVehiculo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+									            </p:selectOneMenu>
+									            <h:message for="cbMarcaVehicular" styleClass="dsMessage1"/>
+											</div>
+									    </div>
+									    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+									    	 <div class="ui-g-4">
+												<p:outputLabel for="txtChasisVehicular" value="Chasis" styleClass="dsLabel1"/>
+												<p:inputText id="txtChasisVehicular" type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEGarantiaSolicitudData.serie}" autocomplete="off" maxlength="25" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetGenGarantia}"></p:inputText>
+												<h:message for="txtChasisVehicular" styleClass="dsMessage1"/>
+											</div>
+											<div class="ui-g-8">
+												<p:outputLabel for="cbModeloVehicular" value="Modelo" styleClass="dsLabel1"/>
+												<p:selectOneMenu id="cbModeloVehicular" value="#{mbregistrotramiteoperativosolicitud.oEGarantiaSolicitudData.codigoModelo}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetGenGarantia}">
+													<p:ajax event="change" update="@this"/>
+													<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+													<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstModeloVehiculo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+									            </p:selectOneMenu>
+									            <h:message for="cbModeloVehicular" styleClass="dsMessage1"/>
+											</div>
+									    </div>
+										<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+											<div class="ui-g-4">
+												<p:outputLabel value="Año Fabricación" styleClass="dsLabel1"/>
+												<p:inputNumber type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEGarantiaSolicitudData.anioFabricacion}" autocomplete="off" decimalPlaces="0" decimalSeparator="" thousandSeparator="" maxValue="9999" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetGenGarantia}"></p:inputNumber>
+											</div>
+											<div class="ui-g-4">
+												<p:outputLabel for="cbCombustibleVehicular" value="Tipo Combustible" styleClass="dsLabel1"/>
+												<p:selectOneMenu id="cbCombustibleVehicular" value="#{mbregistrotramiteoperativosolicitud.oEGarantiaSolicitudData.codigoCombustible}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetGenGarantia}">
+													<p:ajax event="change" update="@this"/>
+													<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+													<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstCombustibleVehiculo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
+									            </p:selectOneMenu>
+									            <h:message for="cbCombustibleVehicular" styleClass="dsMessage1"/>
+											</div>
+											<div class="ui-g-4">
+												<p:outputLabel for="cbClaseVehicular" value="Clase" styleClass="dsLabel1"/>
+												<p:selectOneMenu id="cbClaseVehicular" value="#{mbregistrotramiteoperativosolicitud.oEGarantiaSolicitudData.codigoClase}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetGenGarantia}">
+													<p:ajax event="change" update="@this"/>
+													<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+													<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstClaseVehiculo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+									            </p:selectOneMenu>
+									            <h:message for="cbClaseVehicular" styleClass="dsMessage1"/>
+											</div>
+										</div>
+										<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+											<div class="ui-g-9">
+												<p:outputLabel for="cbRiesgoVehicular" value="Riesgo" styleClass="dsLabel1"/>
+												<p:selectOneMenu id="cbRiesgoVehicular" value="#{mbregistrotramiteoperativosolicitud.oEGarantiaSolicitudData.codigoNivelRiesgo}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetGenGarantia}">
+													<p:ajax event="change" update="@this"/>
+													<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+													<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstRiesgoVehiculo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
+									            </p:selectOneMenu>
+									            <h:message for="cbRiesgoVehicular" styleClass="dsMessage1"/>
+											</div>
+											<div class="ui-g-3">
+												<p:outputLabel for="cbNuevoVehicular" value="Nuevo?" styleClass="dsLabel1"/>
+												<p:selectOneMenu id="cbNuevoVehicular" value="#{mbregistrotramiteoperativosolicitud.oEGarantiaSolicitudData.indicadorNuevo}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetGenGarantia}">
+													<p:ajax event="change" update="@this"/>
+													<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+													<f:selectItem itemLabel="No" itemValue="S" />
+													<f:selectItem itemLabel="Si" itemValue="N" />
+									            </p:selectOneMenu>
+									            <h:message for="cbNuevoVehicular" styleClass="dsMessage1"/>
+											</div>
+										</div>
+										<div class="ui-g-4">
+											<p:outputLabel value="Valorización" styleClass="dsLabel1"/>
+											<p:inputNumber type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEGarantiaSolicitudData.montoValorizacion}" autocomplete="off" decimalSeparator="." thousandSeparator="," disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetGenGarantia}"></p:inputNumber>
+										</div>
+										<div class="ui-g-4">
+											<p:outputLabel for="txtCarroceriaVehicular" value="Carroceria" styleClass="dsLabel1"/>
+											<p:inputText id="txtCarroceriaVehicular" type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEGarantiaSolicitudData.carroceria}" autocomplete="off" maxlength="20" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetGenGarantia}"></p:inputText>
+											<h:message for="txtCarroceriaVehicular" styleClass="dsMessage1"/>
+										</div>
+										<div class="ui-g-4">
+											<p:outputLabel for="txtColorVehicular" value="Color" styleClass="dsLabel1"/>
+											<p:inputText id="txtColorVehicular" type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEGarantiaSolicitudData.color}" autocomplete="off" maxlength="20" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetGenGarantia}"></p:inputText>
+											<h:message for="txtColorVehicular" styleClass="dsMessage1"/>
+										</div>
+									</div>
+							    </h:panelGroup>
+							</p:tab>
+							<p:tab id="tab1-2" title="Comprobantes">
+								<h:panelGroup id="panelComprobantes" layout="block">
+									<div class="ui-g ui-fluid ui-g-nopad">
+										<div class="ui-g-12 ui-md-12 ui-lg-12">
+											<p:dataTable id="tblComprobante" value="#{mbregistrotramiteoperativosolicitud.lstComprobanteGarantia}" var="item" styleClass="dsTabla1" paginator="true" rows="5" paginatorPosition="bottom"
+											 rowKey="#{row}" reflow="true" rowIndexVar="row" >
+												<p:column headerText="N°" styleClass="dsTextoCentro" width="5%">
+														    <h:outputText value="#{item.secuenciaDetalle}"/>
+												</p:column>	
+												<p:column headerText="Nro. Documento" styleClass="dsTextoCentro" width="20%">
+													    <h:outputText value="#{item.numeroComprobantePago}"/>
+												</p:column>
+												<p:column headerText="Fecha" styleClass="dsTextoCentro" width="20%">
+													    <h:outputText value="#{item.fechaComprobantePago}"/>
+												</p:column>
+												<p:column headerText="Detalle" styleClass="dsTextoCentro" width="35%">
+												    <div class="dsTextoCorto">
+													    <h:outputText value="#{item.descripcionComprobantePago}"/>
+												    </div>
+												</p:column>
+												<p:column headerText="Mon." styleClass="dsTextoCentro" width="5%">
+													<h:outputText value="#{item.abreviacionMonedaComprobante}" />
+												</p:column>	
+												<p:column headerText="Importe" styleClass="dsTextoCentro" width="10%">
+													<h:outputText value="#{item.importeComprobantePago}">
+														<f:convertNumber type="currency" currencySymbol="#{item.abreviacionMonedaComprobante}" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
+													</h:outputText>
+												</p:column>
+												<p:column headerText="" styleClass="dsTextoCentro" width="5%">
+													<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-search" title="Visualizar Firmante" 
+													onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
+													action="#{mbregistrotramiteoperativosolicitud.visualizarDetalleComprobante(item)}" 
+													update=":frmDlgMantenimientoFirmantes" immediate="true">
+											      	</p:commandButton>
+												</p:column>
+											</p:dataTable>
+										</div>
+									</div>
+								</h:panelGroup>
+							</p:tab>
+						</p:tabView>
+	   	 			</p:panel>
+	   	 		</div>
+	   		</div>
+	   </p:tab>
+	   <p:tab id="tab1-5" title="Generar Contrato">
+	   	 	<div class="ui-g ui-fluid ui-g-nopad">
+	   	 		<div class="ui-g-12">
+	   	 			<p:panel styleClass="dsPanel2" widgetVar="pnl4" toggleable="false" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+	   	 				<f:facet name="header">
+						    <i class="fas fa-book"></i> Contrato Garantía  
+							<p:commandButton styleClass="dsBoton1 tamanio2 terciario" value="Grabar" icon="fa fa-save" 
+							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.guardarContratoGarantia()}" update="form:tabView1,:frmDlgMensaje" rendered="#{mbregistrotramiteoperativosolicitud.renderizarBotonGrabarContrato}"/>
+							<p:commandButton styleClass="dsBoton1 tamanio2 terciario2" value="Imprimir" icon="fa fa-file" 
+							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.generarContratoGarantia()}" update="form:tabView1,:frmDlgMensajeConfirmacionImpresion" rendered="#{mbregistrotramiteoperativosolicitud.renderizarBotonGenerarContrato}"/>
+							<p:commandButton styleClass="dsBoton1 tamanio2 terciario3" value="Cancelar" icon="fa fa-file" 
+							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.cancelarGenerarContratoGarantia()}" update="form:tabView1" rendered="#{mbregistrotramiteoperativosolicitud.renderizarBotonGenerarContrato}"/>
+						</f:facet>
+						<h:panelGroup id="panelContratoGarantia" layout="block">
+						<div class="ui-g ui-fluid ui-g-nopad">
+							
+							<div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+								<div class="ui-g-4">
+									<p:outputLabel value="Nro. Contrato" styleClass="dsLabel1"/>
+									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEContratoData.numeroContrato}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoContrato}"></p:inputText>
+								</div>
+								<div class="ui-g-4">
+									<p:outputLabel value="Nro. Solicitud" styleClass="dsLabel1"/>
+									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEOperacionSolicitudData.codigoSolicitud} - #{mbregistrotramiteoperativosolicitud.ultimaRevisionSolicitud}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoContrato}"></p:inputText>
+								</div>
+								<div class="ui-g-4">
+									<p:outputLabel value="Asociado" styleClass="dsLabel1"/>
+									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEContratoData.codigoAsociado}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoContrato}"></p:inputText>
+								</div>
+							</div>
+							<div class="ui-g-12 ui-md-3 ui-lg-6">
+								<p:outputLabel value="Titular" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEContratoData.codigoCliente} - #{mbregistrotramiteoperativosolicitud.oEContratoData.nombreSocioCorto}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoContrato}"></p:inputText>
+							</div>
+							<div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+								<div class="ui-g-4">
+									<p:outputLabel  value="Tipo Contrato" styleClass="dsLabel1"/>
+									<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEContratoData.codigoTipoContrato}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoContrato}">
+										<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+										<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstTipoContrato}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
+					            	</p:selectOneMenu>
+								</div>
+								<div class="ui-g-8">
+									<p:outputLabel  value="Tipo Aplicación" styleClass="dsLabel1"/>
+									<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEContratoData.codigoServicio}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoContrato}">
+										<f:selectItem itemLabel="-Seleccione-" itemValue="0" />
+										<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstTipoAplicacion}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+					            	</p:selectOneMenu>
+								</div>
+								
+							</div>
+							<div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+								<div class="ui-g-4">
+									<p:outputLabel  value="Moneda" styleClass="dsLabel1"/>
+									<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEContratoData.codigoMonedaPagare}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoContrato}">
+										<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+										<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstTipoMoneda}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+					            	</p:selectOneMenu>
+								</div>
+								<div class="ui-g-4">
+									<p:outputLabel value="Tanomoshi Grupo" styleClass="dsLabel1"/>
+									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEContratoData.numeroOperacion}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoContrato}"></p:inputText>
+								</div>
+								<div class="ui-g-4">
+									<p:outputLabel value="Lista" styleClass="dsLabel1"/>
+									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEContratoData.numeroLista}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoContrato}"></p:inputText>
+								</div>
+								
+							</div>
+							<div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+								<div class="ui-g-4">
+									<p:outputLabel  value="Importe Crédito" styleClass="dsLabel1"/>
+									<p:inputNumber  styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEContratoData.importeAprobado}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoContrato}">
+									</p:inputNumber>
+						   		</div>
+								<div class="ui-g-4">
+									<p:outputLabel  value="Tasa" styleClass="dsLabel1"/>
+									<p:inputNumber  styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEContratoData.tasaInteresMostrada}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoContrato}">
+									</p:inputNumber>
+						   		</div>
+								<div class="ui-g-4">
+									<p:outputLabel  value="Período" styleClass="dsLabel1"/>
+									<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEContratoData.codigoPeriodo}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoContrato}">
+										<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+										<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstTipoPeriodo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+					            	</p:selectOneMenu>
+								</div>
+								
+							</div>
+							<div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+								<div class="ui-g-4">
+									<p:outputLabel  value="Firma Conyugue" styleClass="dsLabel1"/>
+									<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEContratoData.firmaConyugue}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoContrato}">
+										<f:selectItem itemLabel="SI" itemValue="S" />
+										<f:selectItem itemLabel="NO" itemValue="N" />
+					            	</p:selectOneMenu>
+								</div>
+								<div class="ui-g-4">
+									<p:outputLabel  value="Plazo Días" styleClass="dsLabel1"/>
+									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEContratoData.plazoDias}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoContrato}"></p:inputText>
+						   		</div>
+							</div>
+							<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad dsCuadrarCentro">
+								<div class="ui-g-8">
+									<p:dataTable id="tblRepresentantesCIAContrato" value="#{mbregistrotramiteoperativosolicitud.lstRepresentanteCIAContratoFiltro}" var="item" styleClass="dsTabla1" paginator="true" rows="2" paginatorPosition="bottom"
+									 	rowKey="#{item.codigoRepresentante}" reflow="false">
+							            <f:facet name="header">
+							                <div class="dsCuadrarCentroEspacioentre">
+							                    <p:outputLabel value="Lista de Representantes Cooperativa" styleClass="dsLabel1"/>
+									        	<p:commandLink styleClass="dsCmdlink2" onclick="PF('dlgPreload').show()" 
+												oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbregistrotramiteoperativosolicitud.buscarRepresentantesCooperativa()}"  update=":frmDlgRepresentanteCIA" rendered="#{mbregistrotramiteoperativosolicitud.visualizarBotonAñadir}">
+									        		<i class="fas fa-plus"></i>
+									        	</p:commandLink>
+							                </div>
+							            </f:facet>
+							            <p:column headerText="N° Código" style="width: 90px" styleClass="dsTextoCentro">
+											<h:outputText value="#{item.codigoRepresentante}"/>
+										</p:column>
+										<p:column headerText="Nombre" styleClass="dsTextoCentro">
+											<div class="dsTextoCorto">
+												<h:outputText value="#{item.nombreRepresentante}"/>
+											</div>
+										</p:column>
+										<p:column headerText="" style="width: 90px">
+								     		<p:commandButton styleClass="dsBoton5 red" icon="fa fa-trash" title="Eliminar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" process="@this" 
+                                            action="#{mbregistrotramiteoperativosolicitud.eliminarRepresentanteCIAContrato(item)}" update="form:tabView1:tblRepresentantesCIAContrato"
+                                            rendered="#{mbregistrotramiteoperativosolicitud.visualizarBotonEliminar}">
+                                            </p:commandButton>
+								     	</p:column>
+									</p:dataTable>
+								</div>
+								
+							</div>
+							
+						</div>
+						</h:panelGroup>
+	   	 			</p:panel>
+	   	 		</div>
+	   	 	</div>
+	   </p:tab>
+	   
+	</p:tabView>
+    
+	</h:form>
+	
+	<p:dialog widgetVar="dlgMantenimientoFirmantes" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgMantenimientoFirmantes">
+		<div class="dsDlgMantenimientoFirmantes dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="Datos del Firmante"/>
+				</div>
+				<div class="dlgDerecha">
+	 				<p:commandLink styleClass="dsCmdlink5" onclick="PF('dlgMantenimientoFirmantes').hide();"><i class="fas fa-times"></i></p:commandLink>
+	 			</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="ui-g ui-fluid contenido">
+				<h:panelGroup layout="block">
+					<div class="ui-g ui-fluid ui-g-nopad">				
+						<div class="ui-g-6 ui-md-4 ui-lg-4">
+							<p:outputLabel  value="Tipo Firmante" styleClass="dsLabel1"/>
+							<p:inputText type="text" styleClass="dsInput1" 
+							value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.descripcionTipoFirmanteLargo}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}"></p:inputText>
+					   	</div>
+					   	<div class="ui-g-6 ui-md-5 ui-lg-5">
+							<p:outputLabel  value="Socio Firmante" styleClass="dsLabel1"/>
+							<p:inputText  type="text" styleClass="dsInput1" 
+							value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.nombreFirmante}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}"></p:inputText>
+					   	</div>
+					   	<div class="ui-g-6 ui-md-1 ui-lg-1">
+							<p:outputLabel  value="Sec." styleClass="dsLabel1"/>
+							<p:inputText  type="text" styleClass="dsInput1" 
+							value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.secuenciaFirmante}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}"   autocomplete="off"></p:inputText>
+					   	</div>
+					   	<div class="ui-g-6 ui-md-2 ui-lg-2">
+							<p:outputLabel  value="Relacionado" styleClass="dsLabel1"/>
+							<p:inputText  type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.codigoRepresentanteFirmante}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}"  maxlength="120" autocomplete="off" ></p:inputText>
+					   	</div>
+					   	<div class="ui-g-12 ui-md-6 ui-lg-6">
+							<p:outputLabel  value="Dirección" styleClass="dsLabel1"/>
+							<p:inputText  type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.direccionFirmante}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}"  autocomplete="off" ></p:inputText>
+					   	</div>
+					    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+							<div class="ui-g-4">
+								<p:outputLabel  value="Departamento" styleClass="dsLabel1"/>
+								<p:selectOneMenu  value="#{mbregistrotramiteoperativosolicitud.codigoDepartamentoFirmante}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}">
+									<p:ajax event="change" listener="#{mbregistrotramiteoperativosolicitud.obtenerDepartamentoFirmante()}" update="frmDlgMantenimientoFirmantes:cbProvinciaFirmante" />
+									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+									<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstDepartamentoFirmante}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+					            </p:selectOneMenu>
+							</div>				
+							<div class="ui-g-4">
+								<p:outputLabel  value="Provincia" styleClass="dsLabel1"/>
+								<p:selectOneMenu id="cbProvinciaFirmante" value="#{mbregistrotramiteoperativosolicitud.codigoProvinciaFirmante}"  disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}"> 
+									<p:ajax event="change" listener="#{mbregistrotramiteoperativosolicitud.obtenerProvinciaFirmante()}" update="frmDlgMantenimientoFirmantes:cbDistritoFirmante" />
+									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+									<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstProvinciaFirmante}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+					            </p:selectOneMenu>
+							</div>					
+							<div class="ui-g-4">
+								<p:outputLabel  value="Distrito" styleClass="dsLabel1"/>
+								<p:selectOneMenu id="cbDistritoFirmante" value="#{mbregistrotramiteoperativosolicitud.codigoDistritoFirmante}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}">
+									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+									<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstDistritoFirmante}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+					            </p:selectOneMenu>
+							</div>
+					    </div>
+					    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+					    	<div class="ui-g-6">
+								<p:outputLabel  value="Tipo Doc." styleClass="dsLabel1"/>
+								<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.tipoDocumentoFirmante}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}">
+									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+									<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstTipoDocumento}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
+				            	</p:selectOneMenu>
+							</div>	
+							<div class="ui-g-6">
+								<p:outputLabel  value="Documento:" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.numeroDocumentoFirmante}" autocomplete="off" maxlength="11" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}"></p:inputText>
+					   		</div>
+					   		
+						</div>
+						<div class="ui-g-12 ui-md-6 ui-lg-6">
+							<p:outputLabel  value="Inscripción Poderes" styleClass="dsLabel1"/>
+							<p:inputText  type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.inscripcionPoderesFirmante}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}"  autocomplete="off" ></p:inputText>
+					   	</div>
+					   	<div class="ui-g-12 ui-md-6 ui-lg-6">
+							<p:outputLabel  value="Nombre Conyugue" styleClass="dsLabel1"/>
+							<p:inputText  type="text" styleClass="dsInput1" 
+							value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.nombreConyugue}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}"  autocomplete="off" ></p:inputText>
+					   	</div>
+					   	<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+					   		<div class="ui-g-4">
+								<p:outputLabel  value="Firma?" styleClass="dsLabel1"/>
+								<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.codigoFirmaConyugue}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}"  >
+									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+									<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstValorSiNo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+				            	</p:selectOneMenu>
+							</div>
+					    	<div class="ui-g-4">
+								<p:outputLabel  value="Tip. Doc. Cony." styleClass="dsLabel1"/>
+								<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.tipoDocumentoIDConyugue}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}" >
+									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+									<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstTipoDocumento}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
+				            	</p:selectOneMenu>
+							</div>	
+							<div class="ui-g-4">
+								<p:outputLabel  value="Doc. Conyugue:" styleClass="dsLabel1"/>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.numeroDocumentoIDConyugue}" autocomplete="off" maxlength="11" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}" ></p:inputText>
+					   		</div>
+						</div>
+						<div class="ui-g-12 ui-md-6 ui-lg-6">
+							<p:outputLabel  value="Dirección Conyugue" styleClass="dsLabel1"/>
+							<p:inputText  type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.direccionConyugue}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}"  autocomplete="off" ></p:inputText>
+					   	</div>
+					   	<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+							<div class="ui-g-4">
+								<p:outputLabel  value="Depart. Cony." styleClass="dsLabel1"/>
+								<p:selectOneMenu  value="#{mbregistrotramiteoperativosolicitud.codigoDepartamentoConyugue}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}">
+									<p:ajax event="change" listener="#{mbregistrotramiteoperativosolicitud.obtenerDepartamentoConyugue()}" update="frmDlgMantenimientoFirmantes:cbProvinciaConyugue" />
+									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+									<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstDepartamentoConyugue}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+					            </p:selectOneMenu>
+							</div>				
+							<div class="ui-g-4">
+								<p:outputLabel  value="Prov. Cony." styleClass="dsLabel1"/>
+								<p:selectOneMenu id="cbProvinciaConyugue" value="#{mbregistrotramiteoperativosolicitud.codigoProvinciaConyugue}"  disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}"> 
+									<p:ajax event="change" listener="#{mbregistrotramiteoperativosolicitud.obtenerProvinciaConyugue()}" update="frmDlgMantenimientoFirmantes:cbDistritoConyugue" />
+									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+									<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstProvinciaConyugue}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+					            </p:selectOneMenu>
+							</div>					
+							<div class="ui-g-4">
+								<p:outputLabel  value="Dist. Cony." styleClass="dsLabel1"/>
+								<p:selectOneMenu id="cbDistritoConyugue" value="#{mbregistrotramiteoperativosolicitud.codigoDistritoConyugue}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmante}">
+									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+									<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstDistritoConyugue}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+					            </p:selectOneMenu>
+							</div>
+					    </div>
+					</div>
+				</h:panelGroup>
+			</div>
+			<div class="ui-g ui-fluid pie">
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgMantenimientoFirmantes').hide();"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Conforme" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();PF('dlgMantenimientoFirmantes').hide();" actionListener="#{mbregistrotramiteoperativosolicitud.procesarConformidadFirma(1)}" update=":frmDlgMensajeOperacionAjax"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="No Conforme" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();PF('dlgMantenimientoFirmantes').hide();" actionListener="#{mbregistrotramiteoperativosolicitud.procesarConformidadFirma(2)}" update=":frmDlgMensajeOperacionAjax"></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	<p:blockUI block="frmDlgMantenimientoFirmantes" widgetVar="blkDlgMantenimientoFirmantes"></p:blockUI>
+	</p:dialog>
+
+	<p:dialog widgetVar="dlgRegistroFirmaFirmante" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgFirmaFirmantes">
+		<div class="dsDlgMantenimientoFirmantes dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="Datos del Firmante"/>
+				</div>
+				<div class="dlgDerecha">
+	 				<p:commandLink styleClass="dsCmdlink5" onclick="PF('dlgRegistroFirmaFirmante').hide();"><i class="fas fa-times"></i></p:commandLink>
+	 			</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="ui-g ui-fluid contenido">
+				<h:panelGroup layout="block">
+					<div class="ui-g ui-fluid ui-g-nopad">				
+						<div class="ui-g-12 ui-md-6 ui-lg-6">
+							<p:outputLabel  value="Tipo Firmante" styleClass="dsLabel1"/>
+							<p:inputText type="text" styleClass="dsInput1" 
+							value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.descripcionTipoFirmanteLargo}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmaContrato}"></p:inputText>
+					   	</div>
+					   	<div class="ui-g-12 ui-md-6 ui-lg-6">
+							<p:outputLabel  value="Socio Firmante" styleClass="dsLabel1"/>
+							<p:inputText  type="text" styleClass="dsInput1" 
+							value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.nombreFirmante}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmaContrato}"></p:inputText>
+					   	</div>
+					   	<div class="ui-g-12 ui-md-4 ui-lg-4">
+							<p:outputLabel  value="Firma" styleClass="dsLabel1"/>
+							<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.flagFirmado}" >
+								<f:selectItem itemLabel="NO" itemValue="0" />
+								<f:selectItem itemLabel="SI" itemValue="1" />
+			            	</p:selectOneMenu>
+					   	</div>
+				   	    <div class="ui-g-12 ui-md-4 ui-lg-4">
+			           	   <p:outputLabel value="Fecha Firma" styleClass="dsLabel1"/>
+							<p:calendar value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.fechaFirmaSocio}" navigator="true" pattern="dd-MM-yyyy"  autocomplete="off" placeholder="dd-mm-yyyy"></p:calendar>
+					    </div>
+					    <div class="ui-g-12 ui-md-4 ui-lg-4">
+			           	   <p:outputLabel value="Hora Firma" styleClass="dsLabel1"/>
+							<p:calendar value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.horaRegistroFirmaSocio}" navigator="true" 
+							pattern="HH:mm:ss" timeOnly="true" autocomplete="off" placeholder="HH:mm:ss"></p:calendar>
+					    </div>
+					  
+						<div class="ui-g-12 ui-md-8 ui-lg-8">
+							<p:outputLabel  value="Nombre Conyugue" styleClass="dsLabel1"/>
+							<p:inputText  type="text" styleClass="dsInput1" 
+							value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.nombreConyugue}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmaContrato}" autocomplete="off" ></p:inputText>
+					   	</div>
+					   	<div class="ui-g-12 ui-md-4 ui-lg-4">
+							<p:outputLabel  value="Firma?" styleClass="dsLabel1"/>
+							<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.codigoFirmaConyugue}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmaContrato}">
+								<f:selectItem itemLabel="NO" itemValue="0" />
+								<f:selectItem itemLabel="SI" itemValue="1" />
+			            	</p:selectOneMenu>
+						</div>
+						<div class="ui-g-12 ui-md-4 ui-lg-4">
+							<p:outputLabel  value="Firma Cony." styleClass="dsLabel1"/>
+							<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.flagFirmadoConyugue}" >
+								<f:selectItem itemLabel="NO" itemValue="0" />
+								<f:selectItem itemLabel="SI" itemValue="1" />
+			            	</p:selectOneMenu>
+					   	</div>
+						<div class="ui-g-12 ui-md-4 ui-lg-4">
+			           	   <p:outputLabel value="Fecha Firma Cony." styleClass="dsLabel1"/>
+							<p:calendar value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.fechaFirmaConyugue}" navigator="true" pattern="dd-MM-yyyy"  autocomplete="off" placeholder="dd-mm-yyyy"></p:calendar>
+					    </div>
+					    <div class="ui-g-12 ui-md-4 ui-lg-4">
+			           	   <p:outputLabel value="Hora Firma Cony." styleClass="dsLabel1"/>
+							<p:calendar value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.horaRegistroFirmaConyugue}" navigator="true" 
+							pattern="HH:mm:ss" timeOnly="true" autocomplete="off" placeholder="HH:mm:ss"></p:calendar>
+					    </div>
+					  
+					 
+					</div>
+				</h:panelGroup>
+			</div>
+			<div class="ui-g ui-fluid pie">
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgRegistroFirmaFirmante').hide();"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Confirmar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();PF('dlgRegistroFirmaFirmante').hide();" actionListener="#{mbregistrotramiteoperativosolicitud.procesarFirmaContrato()}" update=":frmDlgMensajeOperacionAjax"></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	<p:blockUI block="frmDlgFirmaFirmantes" widgetVar="blkDlgFirmaFirmantes"></p:blockUI>
+	</p:dialog>
+
+	<p:dialog widgetVar="dlgDetalleComprobante" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgDetalleComprobante">
+		<div class="dsDlgDetalleComprobante dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="Detalle Comprobante"/>
+				</div>
+				<div class="dlgDerecha">
+	 				<p:commandLink styleClass="dsCmdlink5" onclick="PF('dlgDetalleComprobante').hide();"><i class="fas fa-times"></i></p:commandLink>
+	 			</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="ui-g ui-fluid contenido">
+				<h:panelGroup layout="block">
+					<div class="ui-g ui-fluid ui-g-nopad">				
+						<div class="ui-g-12 ui-md-3 ui-lg-3">
+							<p:outputLabel  value="Secuencia" styleClass="dsLabel1"/>
+							<p:inputText type="text" styleClass="dsInput1" 
+							value="#{mbregistrotramiteoperativosolicitud.oEComprobanteGarantiaData.secuenciaDetalle}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleComprobante}"></p:inputText>
+					   	</div>
+					   	<div class="ui-g-12 ui-md-3 ui-lg-3">
+							<p:outputLabel  value="N° Comprobante" styleClass="dsLabel1"/>
+							<p:inputText type="text" styleClass="dsInput1" 
+							value="#{mbregistrotramiteoperativosolicitud.oEComprobanteGarantiaData.numeroComprobantePago}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleComprobante}" maxlength="12"></p:inputText>
+					   	</div>
+					   	<div class="ui-g-12 ui-md-3 ui-lg-3">
+			           	   <p:outputLabel value="Fecha" styleClass="dsLabel1"/>
+							<p:calendar value="#{mbregistrotramiteoperativosolicitud.oEComprobanteGarantiaData.fechaComprobantePago}" navigator="true" 
+							pattern="dd-MM-yyyy" autocomplete="off" placeholder="dd-mm-yyyy" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleComprobante}"></p:calendar>
+					    </div>
+					    <div class="ui-g-12 ui-md-3 ui-lg-3">
+							<p:outputLabel   value="Moneda" styleClass="dsLabel1"/>
+							<p:selectOneMenu   value="#{mbregistrotramiteoperativosolicitud.oEComprobanteGarantiaData.codigoMonedaComprobantePago}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleComprobante}">
+								<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+								<f:selectItems value="#{mbregistrotramiteoperativosolicitud.lstTipoMoneda}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+					        </p:selectOneMenu>
+				   		</div>
+				   		<div class="ui-g-12 ui-md-3 ui-lg-3">
+							<p:outputLabel value="Importe" styleClass="dsLabel1"/>
+							<p:inputNumber type="text" styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.oEComprobanteGarantiaData.importeComprobantePago}" autocomplete="off" decimalSeparator="." thousandSeparator="," disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleComprobante}"></p:inputNumber>
+						</div>
+					   	<div class="ui-g-12 ui-md-9 ui-lg-9">
+							<p:outputLabel  value="Detalle" styleClass="dsLabel1"/>
+							<p:inputText  type="text" styleClass="dsInput1" 
+							value="#{mbregistrotramiteoperativosolicitud.oEComprobanteGarantiaData.descripcionComprobantePago}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleComprobante}" maxlength="50"></p:inputText>
+					   	</div>
+					  			 
+					</div>
+				</h:panelGroup>
+			</div>
+			<div class="ui-g ui-fluid pie">
+				<p:commandButton styleClass="dsBoton1 secundario" value="Aceptar" onclick="PF('dlgDetalleComprobante').hide();"></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	<p:blockUI block="frmDlgFirmaFirmantes" widgetVar="blkDlgFirmaFirmantes"></p:blockUI>
+	</p:dialog>
+
+	<p:dialog widgetVar="dlgRepresentanteCIA" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">
+	<h:form id="frmDlgRepresentanteCIA">
+		<div class="dsDlgRepresentanteCIA dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="Buscar Representante Cooperativa"/>
+				</div>
+	 			<div class="dlgDerecha">
+	 				<p:commandLink styleClass="dsCmdlink5" onclick="PF('dlgRepresentanteCIA').hide();"><i class="fas fa-times"></i></p:commandLink>
+	 			</div>	
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="ui-g ui-fluid contenido">
+				
+				<div class="ui-g-12 ui-md-12 ui-lg-12">
+					<p:dataTable id="tblRepresentantesCIA" value="#{mbregistrotramiteoperativosolicitud.lstRepresentanteCIA}" var="item" styleClass="dsTabla1" paginator="true" rows="4" paginatorPosition="bottom" selectionMode="single"
+						selection="#{mbregistrotramiteoperativosolicitud.oERepresentanteCIASelected}"  rowKey="#{item.codigoRepresentante}" reflow="false" >
+						<p:ajax event="rowDblselect" listener="#{mbregistrotramiteoperativosolicitud.asignarRepresentanteContrato()}" 
+						update="form:tabView1:tblRepresentantesCIAContrato" oncomplete="PF('dlgRepresentanteCIA').hide()"/> 
+						<p:column headerText="Código" styleClass="dsTextoCentro" visible="true" width="20%">
+							<h:outputText value="#{item.codigoRepresentante}"/> 
+						</p:column>
+						<p:column headerText="Nombre" styleClass="dsTextoCentro" visible="true" width="80%">
+						    <div class="dsTextoCorto">
+							   <h:outputText value="#{item.nombreRepresentante}"/>
+						    </div>
+						</p:column> 			
+					</p:dataTable>
+				</div>
+			</div>
+		</div>
+	</h:form>
+	<p:blockUI block="frmDlgRepresentanteCIA" widgetVar="blkDlgRepresentanteCIA"></p:blockUI>
+	</p:dialog>
+
+	<p:dialog widgetVar="dlgConfirmacion" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">	
+	<h:form id="frmDlgMensajeConfirmacion">
+		<div class="dsDlgMensajeConfirmacion dsDialogo4">
+	 		<div class="cabecera">
+	 			<div class="dlgIzquierda">
+	 				<p:outputLabel styleClass="dsLabel2" value="Mensaje de Confirmación"/>
+	 			</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="ui-g ui-fluid contenido">
+				<div class="mensaje">
+					<p:outputLabel value="¿Está seguro de dar NO CONFORME a la Información de los Firmantes o la Garantía? Este proceso retornará la solicitud a NEGOCIOS para su subsanación." styleClass="dsLabel3 dsTextoCentro" style="text-align: justify-all;"/>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid pie">
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgConfirmacion').hide();"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" action="#{mbregistrotramiteoperativosolicitud.grabarNoConformidadDatos()}" oncomplete="PF('dlgConfirmacion').hide();PF('dlgPreload').hide();" update=":frmDlgMensajeOperacion"></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+	<p:dialog widgetVar="dlgObservacionSolicitud" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgObservacionSolicitud">
+		<div class="dsDlgObservacionSolicitud dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="No Conformidad"/>
+				</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="ui-g ui-fluid contenido">
+				<div class="ui-g-12 ui-md-12 ui-lg-12 dsTextoCentro">
+					<p:outputLabel value="¿Está seguro de dar NO CONFORME a la Información de los Firmantes o la Garantía? Este proceso retornará la solicitud a NEGOCIOS para su subsanación." styleClass="dsLabel1" style="text-align: center;"/>
+				</div>
+				<div class="ui-g-12 ui-md-12 ui-lg-12">
+					<p:outputLabel  for="txtObservacionNoConforme" value="Observación" styleClass="dsLabel1"/>
+					<p:inputTextarea type="text" id="txtObservacionNoConforme"  styleClass="dsInput1" value="#{mbregistrotramiteoperativosolicitud.observacionConformidad}" autocomplete="off" placeholder="Ingrese Observación" counter="displayObsSol" maxlength="500" counterTemplate="{0} caracteres restantes" required="true" requiredMessage="Campo Obligatorio"></p:inputTextarea>
+					<p:outputLabel id="displayObsSol" styleClass="dsLabel1" />
+					<p:message for="txtObservacionNoConforme"/>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid pie">
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgObservacionSolicitud').hide();"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" id="idBtnGrabarObservacion" value="Aceptar"  onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" process="@form" 
+				    action="#{mbregistrotramiteoperativosolicitud.grabarNoConformidadDatos()}" 
+				    update=":frmDlgMensajeOperacion,frmDlgObservacionSolicitud"
+				></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+	
+	<p:dialog widgetVar="dlgMensajeOperacion" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgMensajeOperacion">
+		<div class="dsDlgMensajeOperacion dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="Mensaje de Operación"/>
+				</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="contenido">
+				<div class="mensaje">
+					<p:outputLabel value="#{mbregistrotramiteoperativosolicitud.oEMensaje.descMensaje}" styleClass="dsLabel3"/>
+				</div>
+			</div>
+			<div class="pie">
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacion').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.salir()}"></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+	<p:dialog widgetVar="dlgMensajeOperacionAjax" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgMensajeOperacionAjax">
+		<div class="dsDlgMensajeOperacion dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="Mensaje de Operación"/>
+				</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="contenido">
+				<div class="mensaje">
+					<p:outputLabel value="#{mbregistrotramiteoperativosolicitud.oEMensaje.descMensaje}" styleClass="dsLabel3"/>
+				</div>
+			</div>
+			<div class="pie">
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.actualizarDatosAjax()}" update=":form:tabView1:tblCondicionDesembolso,:form:tabView1:tblListaFirmantes,:form:tabView1:tblListaFirmantesContrato,:form:tabView1:tblRepresentantesCIAContrato,:form:tabView1:panelContratoGarantia"></p:commandButton> 
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+	<p:dialog widgetVar="dlgConfirmacionImpresion" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">	
+	<h:form id="frmDlgMensajeConfirmacionImpresion">
+		<div class="dsDlgMensajeConfirmacion dsDialogo4">
+	 		<div class="cabecera">
+	 			<div class="dlgIzquierda">
+	 				<p:outputLabel styleClass="dsLabel2" value="Mensaje de Confirmación"/>
+	 			</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="ui-g ui-fluid contenido">
+				<div class="mensaje">
+					<p:outputLabel value="Se realizará la generación del contrato de garantía mobiliaria de vehículo. ¿Desea Continuar?" styleClass="dsLabel3 dsTextoCentro" style="text-align: justify-all;"/>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid pie">
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgConfirmacionImpresion').hide();"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@none" onclick="PF('dlgConfirmacionImpresion').hide();"  action="#{mbregistrotramiteoperativosolicitud.generarDocumentoGarantiaMobiliaria()}"  ajax="false"></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+	<p:dialog widgetVar="dlgMensaje" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgMensaje">
+		<div class="dsDlgMensajeOperacion dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="Mensaje de Sistema"/>
+				</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="contenido">
+				<div class="mensaje">
+					<p:outputLabel value="#{mbregistrotramiteoperativosolicitud.oEMensaje.descMensaje}" styleClass="dsLabel3"/>
+				</div>
+			</div>
+			<div class="pie">
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar"  onclick="PF('dlgMensaje').hide();" ></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+
+</f:view>
+</ui:define>
+</ui:composition>
