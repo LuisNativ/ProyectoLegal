@@ -2808,6 +2808,7 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantia.setCodigoEstado(oResultSet.getInt("ESTADO"));
 					oEGarantia.setDescripcionEstadoGarantia(UFuncionesGenerales.revisaCadena(oResultSet.getString("ESTADOGARANT")));
 					oEGarantia.setNumeroRegistro(oResultSet.getInt("REGIST"));
+					oEGarantia.setDescripcionGarantia(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESSER")));
 					lstGarantia.add(oEGarantia);
 				}								
 			}						

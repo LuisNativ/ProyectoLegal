@@ -40,7 +40,6 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 	private EPoliza oEPolizaData;
 	private BOGarantia oBOGarantia;
 	private BOCliente oBOCliente;
-	private BOSolicitudCredito oBOSolicitudCredito;
 	private UManejadorListaDesplegable oUManejadorListaDesplegable;
 	
 	@Getter @Setter private List<EGarantiaSolicitud> lstGarantiaSolicitudNueva;
@@ -69,6 +68,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 	@Getter @Setter private boolean deshabilitarCampoPoliza;
 	@Getter @Setter private int indicadorActualizador;
 	@Getter @Setter private boolean visualizar1eraDescripcion,visualizar2daDescripcion;
+	@Getter @Setter private boolean visualizarCampo1,visualizarCampo2;
 	@Getter @Setter private int indicadorTituloDescripcionPoliza;
 
 
@@ -79,7 +79,6 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 
 		oBOGarantia = new BOGarantia();
 		oBOCliente = new BOCliente();
-		oBOSolicitudCredito = new BOSolicitudCredito();
 		oEPolizaData = new EPoliza();
 		oEPersonaSelected = new EPersona();
 		oUManejadorListaDesplegable = new UManejadorListaDesplegable();
@@ -114,6 +113,8 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 		codigoTabviewIndex = 0;
 		codigoGarantia = 0;
 		deshabilitarCampoPoliza = false;
+		visualizarCampo1 = true;
+		visualizarCampo2 = false;
 	}
 	
 	public void listarDesplegable(){
@@ -131,6 +132,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 	
 	//Listado de Solicitudes con Garantia Real Nueva
 	public void listarGarantiaSolicitudNueva() {
+		
 		List<EGarantiaSolicitud> lstGarantiaSol = oBOGarantia.listarSolicitudAsociadaGarantia(0, "");
 		if(lstGarantiaSol != null){
 			for(EGarantiaSolicitud obj: lstGarantiaSol){
@@ -145,7 +147,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 	//Listado de Solicitudes con Garantia Real Existente
 	public void listarGarantiaSolicitudExistente() {
 		List<EGarantiaSolicitud> lstGarantiaSol = oBOGarantia.listarSolicitudAsociadaGarantia(0, "");
-		EEvaluacionSolicitudCreditoLegal evaluacion = null;
+	
 		if(lstGarantiaSol != null){
 			for(EGarantiaSolicitud obj: lstGarantiaSol){
 				if(obj.getCodigoEstadoGarantiaSolicitud() != UEstado.REGISTRADOGARANTIAPENDIENTE && 
@@ -159,6 +161,9 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 	
 	//Buscar Solicitudes según Codigo y Descripcion
 	public void buscarGarantiaSolicitud(){
+		
+		if(codigoBuscar == 5 ) descripcionBuscar = codigoEstadoGarSolicitud+"";
+		
 		List<EGarantiaSolicitud> lstGarantiaSol = oBOGarantia.listarSolicitudAsociadaGarantia(codigoBuscar, descripcionBuscar);
 		if(codigoTabviewIndex == 0){
 			lstGarantiaSolicitudNueva = new ArrayList<EGarantiaSolicitud>();
@@ -193,7 +198,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 				listarGarantiaSolicitudNueva();
 			}else{
 				lstGarantiaSolicitudNueva = new ArrayList<EGarantiaSolicitud>();
-				List<EGarantiaSolicitud> lstGarantiaSol = oBOGarantia.listarSolicitudAsociadaGarantia(2, codigoEstadoGarSolicitud+"");
+				List<EGarantiaSolicitud> lstGarantiaSol = oBOGarantia.listarSolicitudAsociadaGarantia(5, codigoEstadoGarSolicitud+"");
 				if(lstGarantiaSol != null){
 					for(EGarantiaSolicitud obj: lstGarantiaSol){
 						if(obj.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS){
@@ -208,7 +213,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 				listarGarantiaSolicitudExistente();
 			}else{
 				lstGarantiaSolicitudExistente = new ArrayList<EGarantiaSolicitud>();
-				List<EGarantiaSolicitud> lstGarantiaSol = oBOGarantia.listarSolicitudAsociadaGarantia(2, codigoEstadoGarSolicitud+"");
+				List<EGarantiaSolicitud> lstGarantiaSol = oBOGarantia.listarSolicitudAsociadaGarantia(5, codigoEstadoGarSolicitud+"");
 				if(lstGarantiaSol != null){
 					for(EGarantiaSolicitud obj: lstGarantiaSol){
 						if(obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES){
@@ -314,6 +319,26 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 		 default:
 			 visualizar1eraDescripcion = true; 
 			 visualizar2daDescripcion = false; 
+		}
+	}
+	
+	public void validarCriterioBusquedaSolicitud(){
+		descripcionBuscar = "";
+		switch(codigoBuscar){
+		 case 1: 
+		 case 2:
+		 case 3:
+		 case 4:
+			 visualizarCampo1 = true; 
+			 visualizarCampo2 = false; 
+			 break;
+		 case 5:
+			 visualizarCampo1 = false; 
+			 visualizarCampo2 = true; 
+			 break;
+		 default:
+			 visualizarCampo1 = true; 
+			 visualizarCampo2 = false; 
 		}
 	}
 		

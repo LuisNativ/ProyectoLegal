@@ -2836,7 +2836,11 @@ public class CGarantia {
 				default:
 				}
 			
-				if(resultado.getCodigoTipoGarantia()>21 && resultado.getCodigoTipoGarantia()!=88){
+				if((resultado.getCodigoTipoGarantia()>21 && resultado.getCodigoTipoGarantia()!=88) ||
+						resultado.getCodigoTipoGarantia() == UTipoGarantia.FIDEICOMISO_BIENES ||
+						resultado.getCodigoTipoGarantia() == UTipoGarantia.SALDOCUENTA ||
+						resultado.getCodigoTipoGarantia() == UTipoGarantia.FLUJOS ||
+						resultado.getCodigoTipoGarantia() == UTipoGarantia.INVENTARIO){
 					resultado.setObervacionGarantia
 				       (UFuncionesGenerales.revisaCadena(resultado.getUbicacion2())+
 						UFuncionesGenerales.revisaCadena(resultado.getDescripcionB())+

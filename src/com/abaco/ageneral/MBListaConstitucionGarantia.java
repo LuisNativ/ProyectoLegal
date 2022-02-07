@@ -272,6 +272,14 @@ public class MBListaConstitucionGarantia implements Serializable {
 		eGarantia.setTipoDocumento(UTipoDocumentoGarantia.CONSTITUCION);
 		lstDocumentoGarantia = oBOGarantia.listarSolicitudDocumentoGarantia(0,"",eGarantia);
 	}
+	public void buscarSolicitudDocumento(){
+		EGarantia eGarantia = new EGarantia();
+		eGarantia.setUsuarioRegistro(oEUsuario);
+		eGarantia.setTipoDocumento(UTipoDocumentoGarantia.CONSTITUCION);
+		lstDocumentoGarantia = oBOGarantia.listarSolicitudDocumentoGarantia(codigoBuscar, descripcionBuscar, eGarantia);
+
+
+	}
 		
 	public void listarSolicitudDetalleDocumento(EOperacionDocumento eOperacionDocumento){
 		if(eOperacionDocumento != null){

@@ -197,6 +197,7 @@ public @Data class EGarantia {
 	private int condicionDesembolso2;
 	private int condicionDesembolso3;
 	private int condicionDesembolso4;
+	private String descripcionGarantia;
 	
 	//Adicional Inmuebles
 	private int tipoInmueble;

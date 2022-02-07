@@ -254,6 +254,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	@Getter @Setter private boolean visualizarBotonAnadirCondicionLegal;
 	@Getter @Setter private boolean deshabilitarCampoFlagReqLeg;
 	@Getter @Setter private boolean visualizarBotonEditarEliminarReqLegal;
+	@Getter @Setter private boolean visualizarTabCumplimiento;
 	@Getter @Setter private int accionInternaInmueble;
 	
 	//Para Tercero
@@ -341,7 +342,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				oEGarantiaData.setLstPropietario(new ArrayList<EPersona>());
 				oEGarantiaData.setFechaGravamen(new Date());
 				visualizarTabDocumento = false;
-				visualizarTabPrestamos= true;
+				visualizarTabPrestamos= false;
+				visualizarTabCumplimiento= false;
 				visualizarBotonIrTramite = true;
 				visualizarBtnAgregarPropietario = true;
 				visualizarBtnEliminarPropietario = true;
@@ -467,6 +469,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				}
 				visualizarTabDocumento = true;
 				visualizarTabPrestamos = true;
+				visualizarTabCumplimiento = true;
 				listarDesplegable();
 				listarSolicitudDocumento();
 				listarInmueblesAdicionales();
@@ -804,7 +807,11 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	    }
 		
 		
-		if(eGarantia.getCodigoTipoGarantia()>21 && eGarantia.getCodigoTipoGarantia()!=88){
+		if((eGarantia.getCodigoTipoGarantia()>21 && eGarantia.getCodigoTipoGarantia()!=88) ||
+				eGarantia.getCodigoTipoGarantia() == UTipoGarantia.FIDEICOMISO_BIENES ||
+				eGarantia.getCodigoTipoGarantia() == UTipoGarantia.SALDOCUENTA ||
+				eGarantia.getCodigoTipoGarantia() == UTipoGarantia.FLUJOS ||
+				eGarantia.getCodigoTipoGarantia() == UTipoGarantia.INVENTARIO){
 			if(cantCaracteresObservacion <= 0){
 				eGarantia.setUbicacion2("");
 				eGarantia.setDescripcionB("");
@@ -988,6 +995,35 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			
 		}
 	}
+	public void asignarPersona(EPersona ePersonaItem){
+		if(ePersonaItem != null){						
+			switch (indicadorPersona) {
+			case 1:
+				oEGarantiaData.setCodigoTasador(ePersonaItem.getCodigo());
+				oEGarantiaData.setDescripcionTasador(ePersonaItem.getNombreCorte());
+				break;
+			case 2:
+				oEGarantiaData.getLstPropietario().add(ePersonaItem);			
+				visualizarBtnAgregarPropietario = oEGarantiaData.getLstPropietario().size() >= 6 ? false: true;
+				break;
+			case 3:
+				oEGarantiaData.setDepositario(ePersonaItem.getCodigo());
+				oEGarantiaData.setDescripcionDepositario(ePersonaItem.getNombreCorte());
+				break;
+			case 4:
+				oEGarantiaData.setCodigoPropietario(ePersonaItem.getCodigo());
+				oEGarantiaData.setDescripcionPropietario(ePersonaItem.getNombreCorte());
+				oEGarantiaData.getLstPropietario().add(ePersonaItem);	
+				break;
+			default:
+				oEGarantiaData.setCodigoCliente(ePersonaItem.getCodigo());
+				oEGarantiaData.setNombreCorto(ePersonaItem.getNombreCorte());
+				break;
+			}
+			
+			
+		}
+	}
 	public void obtenerEliminarPropietario(EPersona oEPersonaItem){
 		if(oEPersonaItem != null){
 			indexPropietario = oEGarantiaData.getLstPropietario().indexOf(oEPersonaItem);			
@@ -1021,6 +1057,24 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				oEGarantiaData.setCodigoCiaSeguro(oEPolizaSelected.getCodigoCiaSeguro());
 				oEGarantiaData.setDescripcionCiaSeguro(oEPolizaSelected.getDescripcionCiaSeguro());
 				oEGarantiaData.setPoliza(oEPolizaSelected.getNumeroPoliza());
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			default:
+			}
+			
+		}
+	}
+	public void asignarPoliza(EPoliza ePolizaItem){
+		if(ePolizaItem != null){
+			switch (indicadorCiaSeguro) {
+			case 1:
+				oEGarantiaData.setCodigoCiaSeguro(ePolizaItem.getCodigoCiaSeguro());
+				oEGarantiaData.setDescripcionCiaSeguro(ePolizaItem.getDescripcionCiaSeguro());
+				oEGarantiaData.setPoliza(ePolizaItem.getNumeroPoliza());
+				oEGarantiaData.setCodigoInspector(ePolizaItem.getCorrelativoPoliza());
 				break;
 			case 2:
 				break;

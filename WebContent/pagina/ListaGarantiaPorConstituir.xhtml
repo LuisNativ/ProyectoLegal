@@ -28,8 +28,11 @@
 						<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 							<p:outputLabel value="Tipo de Búsqueda" styleClass="dsLabel1"/>				
 							<p:selectOneMenu value="#{mblistagarantiaporconstituir.codigoBuscarSolicitud}">
-				            	<f:selectItem itemLabel="Nro Solicitud" itemValue="0" />
-				            	<f:selectItem itemLabel="Nombre Socio" itemValue="1" />
+							    <f:selectItem itemLabel="[Seleccione]" itemValue="0" />
+				            	<f:selectItem itemLabel="Nro Solicitud" itemValue="1" />
+				            	<f:selectItem itemLabel="Codigo Socio" itemValue="2" />
+				            	<f:selectItem itemLabel="Nombre Socio" itemValue="3" />
+				            	<f:selectItem itemLabel="Tipo Garantía" itemValue="4" />
 				            </p:selectOneMenu>
 						</div>
 						<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
@@ -249,9 +252,9 @@
 				<p:column headerText="Nro. Garantía" styleClass="dsTextoCentro" responsivePriority="2" width="10%">
 					<h:outputText value="#{item.codigoGarantia}"/>
 				</p:column>
-				<p:column headerText="Socio" styleClass="dsTextoCentro" responsivePriority="3" width="30%">
+				<p:column headerText="Descripcion" styleClass="dsTextoCentro" responsivePriority="3" width="30%">
 				    <div class="dsTextoCorto">
-						<h:outputText value="#{item.nombreCorto}"/>
+						<h:outputText value="#{item.descripcionGarantia}"/>
 				    </div>
 				</p:column>
 				<p:column headerText="Tipo" styleClass="dsTextoCentro" responsivePriority="4" width="20%">
@@ -312,36 +315,37 @@
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
 					<p:dataTable id="tblSolicitudDocumento" value="#{mblistagarantiaporconstituir.lstDocumentoGarantia}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom" 
 						 rowKey="#{item.codigoSolicitud}" reflow="true" >
-		                <p:column headerText="Nro" styleClass="dsTextoCentro" visible="true" priority="3" width="30px;">
-							<h:outputText value="#{item.codigoSolicitud}"/>
-						</p:column>
-						<p:column headerText="Sol. Cred." styleClass="dsTextoCentro" visible="true" priority="3" width="80px;">
+						<p:column headerText="Sol." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
 							<h:outputText value="#{item.codigoSolicitudCredito}"/>
 						</p:column>
-						 <p:column headerText="Nro. Garant." styleClass="dsTextoCentro" visible="true" priority="3">
+						 <p:column headerText="Garant." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
 							<h:outputText value="#{item.codigoGarantia}"/>
 						</p:column>
-						<p:column headerText="Socio" priority="1" width="200px;">
+						<p:column headerText="Socio" priority="1" width="25%">
 						    <div class="dsTextoCorto">
 							    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
 						    </div>
 						</p:column>
-						<p:column headerText="Estado" styleClass="dsTextoCentro" >
+						<p:column headerText="Estado" styleClass="dsTextoCentro" width="10%">
 							<h:outputText value="#{item.descripcionEstadoDocumento}"/>
 						</p:column>
-						<p:column headerText="Negocios" styleClass="dsTextoCentro" >
+						<p:column headerText="Negocios" styleClass="dsTextoCentro" width="10%">
 							<h:outputText value="#{item.descripcionEstadoDocumentoNegocio}"/>
 						</p:column>
-						<p:column headerText="Legal" styleClass="dsTextoCentro" >
+						<p:column headerText="Legal" styleClass="dsTextoCentro" width="10%">
 							<h:outputText value="#{item.descripcionEstadoDocumentoLegal}"/>
 						</p:column>
-						<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" >
-							<h:outputText value="#{item.usuarioRegist}"/>
+						<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" width="10%">
+							<div class="dsTextoCorto">
+								<h:outputText value="#{item.usuarioRegist}"/>
+							</div>	
 						</p:column>
-						<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" >
-							<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
+						<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" width="15%">
+							<div class="dsTextoCorto">
+								<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
+							</div>	
 						</p:column>
-						<p:column headerText="Acciones" styleClass="dsTextoCentro">
+						<p:column headerText="Acciones" styleClass="dsTextoCentro" width="10%">
 					      <p:commandButton styleClass="dsBoton5 green" icon="fa fa-search" title="Visualizar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.visualizarDocumentoSolicitud(item)}" update=":frmDlgDocumentacion">
 					      </p:commandButton>
 					      <p:commandButton styleClass="dsBoton5 blue" icon="fa fa-arrow-right" title="Ir a Mantenimiento" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.evaluarSolicitudDocumento(item)}">

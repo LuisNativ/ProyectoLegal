@@ -40,7 +40,7 @@
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 					<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Buscar" onclick="PF('dlgPreload').show();" 
-					oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.buscarDocumentoGarantia()}" 
+					oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.buscarSolicitudDocumento()}" 
 					update="form:tblSolicitudDocumento"></p:commandButton>
 				</div>
 			</div>
@@ -48,36 +48,33 @@
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
 					<p:dataTable id="tblSolicitudDocumento" value="#{mblistaconstituciongarantia.lstDocumentoGarantia}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom" 
 						 rowKey="#{item.codigoSolicitud}" reflow="false" >
-		                <p:column headerText="Nro" styleClass="dsTextoCentro" visible="true" priority="3" width="30px;">
-							<h:outputText value="#{item.codigoSolicitud}"/>
-						</p:column>
-						<p:column headerText="Sol. Cred." styleClass="dsTextoCentro" visible="true" priority="3" width="80px;">
+						<p:column headerText="Sol." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
 							<h:outputText value="#{item.codigoSolicitudCredito}"/>
 						</p:column>
-						 <p:column headerText="Nro. Garant." styleClass="dsTextoCentro" visible="true" priority="3">
+						 <p:column headerText="Garant." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
 							<h:outputText value="#{item.codigoGarantia}"/>
 						</p:column>
-						<p:column headerText="Socio" priority="1" width="200px;">
+						<p:column headerText="Socio" priority="1" width="25%">
 						    <div class="dsTextoCorto">
 							    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
 						    </div>
 						</p:column>
-						<p:column headerText="Estado" styleClass="dsTextoCentro" priority="1">
+						<p:column headerText="Estado" styleClass="dsTextoCentro" priority="1" width="10%">
 							<h:outputText value="#{item.descripcionEstadoDocumento}"/>
 						</p:column>
-						<p:column headerText="Negocios" styleClass="dsTextoCentro" priority="6">
+						<p:column headerText="Negocios" styleClass="dsTextoCentro" priority="6" width="10%">
 							<h:outputText value="#{item.descripcionEstadoDocumentoNegocio}"/>
 						</p:column>
-						<p:column headerText="Legal" styleClass="dsTextoCentro" priority="6">
+						<p:column headerText="Legal" styleClass="dsTextoCentro" priority="6" width="10%">
 							<h:outputText value="#{item.descripcionEstadoDocumentoLegal}"/>
 						</p:column>
-						<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" priority="6">
+						<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" priority="6" width="10%">
 							<h:outputText value="#{item.usuarioRegist}"/>
 						</p:column>
-						<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" priority="6">
+						<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" priority="6" width="15%">
 							<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
 						</p:column>
-						<p:column headerText="Acciones" styleClass="dsTextoCentro" priority="4">
+						<p:column headerText="Acciones" styleClass="dsTextoCentro" priority="4" width="10%">
 					      <p:commandButton styleClass="dsBoton5 green" icon="#{item.estadoDocumento eq 60 ? 'fa fa-eye': 'fa fa-pencil'}" title="#{item.estadoDocumento eq 60 ? 'Visualizar': 'Evaluar'}" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.evaluarDocumentoSolicitud(item)}" update=":frmDlgDocumentacion">
 					      	</p:commandButton>
 				      	 <p:commandButton styleClass="dsBoton5 orange" icon="fa fa-handshake" title="Confirmación Firma" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.visualizarConfirmarFirmaDocumento(item)}"

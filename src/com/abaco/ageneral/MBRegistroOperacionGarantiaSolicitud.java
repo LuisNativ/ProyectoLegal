@@ -129,6 +129,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	@Getter @Setter private boolean renderizarTab1;
 	@Getter @Setter private boolean renderizarTab2;
 	@Getter @Setter private boolean renderizarTab3;
+	@Getter @Setter private boolean visualizarBotonInfFinanciera;
+	@Getter @Setter private boolean visualizarBtnBuscarPoliza;
 	@Getter @Setter private double montoAcumuladoSaldoCredito;
 	
 	@Getter @Setter private boolean colapsarPanel;
@@ -243,8 +245,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 					if(oEUsuario.getCodigoArea() == UArea.CREDITOS){
 						
 						renderizarTab3 = false;
-						
-						
+						visualizarBotonInfFinanciera = true;
+						visualizarBtnBuscarPoliza = true;
 						visualizarFrmdeCredito = true;
 						deshabilitarPorcentaje = true;
 						if(oEGarantiaSolicitudLoad.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS){
@@ -293,7 +295,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 						//ACCIONES PARA EL AREA LEGAL
 					}else if(oEUsuario.getCodigoArea() == UArea.LEGAL){
 						renderizarTab2 = true;
-						
+						visualizarBotonInfFinanciera = false;
+						visualizarBtnBuscarPoliza = false;
 						if(oEGarantiaSolicitudLoad.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS){
 							renderizarTab3 = false;
 							indicadorBoton = 3;
@@ -307,6 +310,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 							oEGarantiaData.setCodigoInspector(oEGarantiaAsociadaSolicitudData.getCorrelativoPoliza());
 							oEGarantiaData.setFechaComercial(oEGarantiaAsociadaSolicitudData.getFechaComercial());
 							oEGarantiaData.setMontoComercial(oEGarantiaAsociadaSolicitudData.getMontoComercial());
+							oEGarantiaData.setMontoGravamen(oEGarantiaAsociadaSolicitudData.getMontoGravamen());
+							oEGarantiaData.setMontoEjecucion(oEGarantiaAsociadaSolicitudData.getMontoValorRealizacion());
 							oEGarantiaData.setLstPropietario(new ArrayList<EPersona>());
 							deshabilitarCampo = false;
 						}
@@ -1101,6 +1106,35 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 			
 		}
 	}	
+	public void asignarPersona(EPersona ePersonaItem){
+		if(ePersonaItem != null){
+			switch (indicadorPersona) {
+			case 1:
+				oEGarantiaData.setCodigoTasador(ePersonaItem.getCodigo());
+				oEGarantiaData.setDescripcionTasador(ePersonaItem.getNombreCorte());
+				break;
+			case 2:
+				oEGarantiaData.getLstPropietario().add(ePersonaItem);			
+				visualizarBtnAgregarPropietario = oEGarantiaData.getLstPropietario().size() >= 6 ? false: true;
+				break;
+			case 3:
+				oEGarantiaData.setDepositario(ePersonaItem.getCodigo());
+				oEGarantiaData.setDescripcionDepositario(ePersonaItem.getNombreCorte());
+				break;
+			case 4:
+				oEGarantiaTramiteData.setCodigoNotario(ePersonaItem.getCodigo());
+				oEGarantiaTramiteData.setDescripcionNotario(ePersonaItem.getNombreCorte());
+				break;
+
+			default:
+				oEGarantiaData.setCodigoCliente(ePersonaItem.getCodigo());
+				oEGarantiaData.setNombreCorto(ePersonaItem.getNombreCorte());
+				break;
+			}
+			
+			
+		}
+	}	
 	public void obtenerEliminarPropietario(EPersona oEPersonaItem){
 		if(oEPersonaItem != null){
 			indexPropietario = oEGarantiaData.getLstPropietario().indexOf(oEPersonaItem);			
@@ -1174,6 +1208,32 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 				oEGarantiaAsociadaSolicitudData.setTipoPoliza(oEPolizaSelected.getTipoPoliza());
 				oEGarantiaAsociadaSolicitudData.setFechaVencimientoPoliza(oEPolizaSelected.getFechaVencimientoPoliza());
 				oEGarantiaAsociadaSolicitudData.setValorPoliza(oEPolizaSelected.getValorPoliza());
+				break;
+			case 3:
+				break;
+			default:
+				break;
+			}
+			
+		}
+	}
+	public void asignarPoliza(EPoliza ePolizaItem){
+		if(ePolizaItem != null){
+			switch (indicadorCiaSeguro) {
+			case 1:
+				oEGarantiaData.setCodigoCiaSeguro(ePolizaItem.getCodigoCiaSeguro());
+				oEGarantiaData.setDescripcionCiaSeguro(ePolizaItem.getDescripcionCiaSeguro());
+				oEGarantiaData.setPoliza(ePolizaItem.getNumeroPoliza());
+				oEGarantiaData.setCodigoInspector(ePolizaItem.getCorrelativoPoliza());
+				break;
+			case 2:
+				oEGarantiaAsociadaSolicitudData.setCodigoCiaSeguro(ePolizaItem.getCodigoCiaSeguro());
+				oEGarantiaAsociadaSolicitudData.setDescripcionCiaSeguro(ePolizaItem.getDescripcionCiaSeguro());
+				oEGarantiaAsociadaSolicitudData.setPoliza(ePolizaItem.getNumeroPoliza());
+				oEGarantiaAsociadaSolicitudData.setCorrelativoPoliza(ePolizaItem.getCorrelativoPoliza());
+				oEGarantiaAsociadaSolicitudData.setTipoPoliza(ePolizaItem.getTipoPoliza());
+				oEGarantiaAsociadaSolicitudData.setFechaVencimientoPoliza(ePolizaItem.getFechaVencimientoPoliza());
+				oEGarantiaAsociadaSolicitudData.setValorPoliza(ePolizaItem.getValorPoliza());
 				break;
 			case 3:
 				break;

@@ -513,11 +513,11 @@
 	   	 				<f:facet name="header">
 						    <i class="fas fa-book"></i> Contrato Garantía  
 							<p:commandButton styleClass="dsBoton1 tamanio2 terciario" value="Grabar" icon="fa fa-save" 
-							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.guardarContratoGarantia()}" update="form:tabView1,:frmDlgMensaje" rendered="#{mbregistrotramiteoperativosolicitud.renderizarBotonGrabarContrato}"/>
+							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.guardarContratoGarantia()}" update="form:tabView1,:frmDlgMensaje,form:tabView1:tblRepresentantesCIAContrato" rendered="#{mbregistrotramiteoperativosolicitud.renderizarBotonGrabarContrato}"/>
 							<p:commandButton styleClass="dsBoton1 tamanio2 terciario2" value="Imprimir" icon="fa fa-file" 
-							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.generarContratoGarantia()}" update="form:tabView1,:frmDlgMensajeConfirmacionImpresion" rendered="#{mbregistrotramiteoperativosolicitud.renderizarBotonGenerarContrato}"/>
+							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.generarContratoGarantia()}" update="form:tabView1,:frmDlgMensajeConfirmacionImpresion,form:tabView1:tblRepresentantesCIAContrato" rendered="#{mbregistrotramiteoperativosolicitud.renderizarBotonGenerarContrato}"/>
 							<p:commandButton styleClass="dsBoton1 tamanio2 terciario3" value="Cancelar" icon="fa fa-file" 
-							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.cancelarGenerarContratoGarantia()}" update="form:tabView1" rendered="#{mbregistrotramiteoperativosolicitud.renderizarBotonGenerarContrato}"/>
+							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.cancelarGenerarContratoGarantia()}" update="form:tabView1,form:tabView1:tblRepresentantesCIAContrato" rendered="#{mbregistrotramiteoperativosolicitud.renderizarBotonGenerarContrato}"/>
 						</f:facet>
 						<h:panelGroup id="panelContratoGarantia" layout="block">
 						<div class="ui-g ui-fluid ui-g-nopad">
@@ -610,7 +610,7 @@
 							</div>
 							<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad dsCuadrarCentro">
 								<div class="ui-g-8">
-									<p:dataTable id="tblRepresentantesCIAContrato" value="#{mbregistrotramiteoperativosolicitud.lstRepresentanteCIAContratoFiltro}" var="item" styleClass="dsTabla1" paginator="true" rows="2" paginatorPosition="bottom"
+									<p:dataTable id="tblRepresentantesCIAContrato" value="#{mbregistrotramiteoperativosolicitud.lstRepresentanteCIAContratoFiltro}" var="item" styleClass="dsTabla1" paginator="true" rows="4" paginatorPosition="bottom"
 									 	rowKey="#{item.codigoRepresentante}" reflow="false">
 							            <f:facet name="header">
 							                <div class="dsCuadrarCentroEspacioentre">
@@ -956,18 +956,22 @@
 			<div class="ui-g ui-fluid contenido">
 				
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
-					<p:dataTable id="tblRepresentantesCIA" value="#{mbregistrotramiteoperativosolicitud.lstRepresentanteCIA}" var="item" styleClass="dsTabla1" paginator="true" rows="4" paginatorPosition="bottom" selectionMode="single"
-						selection="#{mbregistrotramiteoperativosolicitud.oERepresentanteCIASelected}"  rowKey="#{item.codigoRepresentante}" reflow="false" >
-						<p:ajax event="rowDblselect" listener="#{mbregistrotramiteoperativosolicitud.asignarRepresentanteContrato()}" 
-						update="form:tabView1:tblRepresentantesCIAContrato" oncomplete="PF('dlgRepresentanteCIA').hide()"/> 
+					<p:dataTable id="tblRepresentantesCIA" value="#{mbregistrotramiteoperativosolicitud.lstRepresentanteCIA}" var="item" styleClass="dsTabla1" paginator="true" rows="4" paginatorPosition="bottom" rowKey="#{item.codigoRepresentante}" 
+					reflow="false" >
 						<p:column headerText="Código" styleClass="dsTextoCentro" visible="true" width="20%">
 							<h:outputText value="#{item.codigoRepresentante}"/> 
 						</p:column>
-						<p:column headerText="Nombre" styleClass="dsTextoCentro" visible="true" width="80%">
+						<p:column headerText="Nombre" styleClass="dsTextoCentro" visible="true" width="70%">
 						    <div class="dsTextoCorto">
 							   <h:outputText value="#{item.nombreRepresentante}"/>
 						    </div>
-						</p:column> 			
+						</p:column> 
+						<p:column headerText="" styleClass="dsTextoCentro" visible="true" width="10%">
+							 <p:commandButton styleClass="dsBoton5 green" icon="fa fa-check" title="Seleccionar" oncomplete="PF('dlgRepresentanteCIA').hide()" 
+							 action="#{mbregistrotramiteoperativosolicitud.asignarRepresentanteContrato(item)}" 
+							 update="form:tabView1:tblRepresentantesCIAContrato">
+							</p:commandButton>
+						</p:column>			
 					</p:dataTable>
 				</div>
 			</div>
@@ -1082,6 +1086,8 @@
 			<div class="dsLineaHorizontal"></div>
 			<div class="ui-g ui-fluid contenido">
 				<div class="mensaje">
+					<p:outputLabel value="Información Procesada Correctamente." styleClass="dsLabel3 dsTextoCentro" style="text-align:center;"/>
+					<br/>
 					<p:outputLabel value="Se realizará la generación del contrato de garantía mobiliaria de vehículo. ¿Desea Continuar?" styleClass="dsLabel3 dsTextoCentro" style="text-align: justify-all;"/>
 				</div>
 			</div>

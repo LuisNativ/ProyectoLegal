@@ -236,7 +236,7 @@
         </div>
 		
      </p:tab>
-      <p:tab id="tab1-2" title="Asientos">
+    <p:tab id="tab1-2" title="Asientos">
         <div class="ui-g ui-fluid ui-g-nopad">
         	<!--Panel Asiento Tramite Garantia-->
 			<div class="ui-g-12">
@@ -248,9 +248,10 @@
 							icon="fa fa-file-text"  iconPos="right" 
 							action="#{mbregistrooperaciontramitegarantia.generarNuevoAsientoTramite()}"
 							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
-							update=":form:tabView1:panelModifHipoteca,:form:tabView1:panelTramiteAsiento,:form:tabView1:panelBloqueoAsiento,:form:tabView1:panelHipotecaAsiento">
+							update=":form:tabView1:panelModifHipoteca,:form:tabView1:panelTramiteAsiento,:form:tabView1:panelBloqueoAsiento,:form:tabView1:panelHipotecaAsiento"
+							 rendered="#{mbregistrooperaciontramitegarantia.indicadorBotonNuevoAsiento}">
 						  </p:commandButton>
-						  <p:commandButton id="GuardarAsiento" styleClass="dsBoton1 tamanio3 green" 
+						  <p:commandButton id="GuardarAsiento" styleClass="dsBoton1 tamanio3 terciario" 
 						    rendered="#{mbregistrooperaciontramitegarantia.indicadorBotonGrabarAsiento}"
 						    value="Grabar Asiento" 
 							icon="fa fa-file-text"  iconPos="right" 
@@ -258,7 +259,7 @@
 							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
 							update=":form:tabView1:panelModifHipoteca,:form:tabView1:panelTramiteAsiento,:form:tabView1:panelBloqueoAsiento,:form:tabView1:panelHipotecaAsiento">
 						  </p:commandButton>
-						  	 <p:commandButton id="btnCancelar" styleClass="dsBoton1 tamanio3 alert" 
+						  	 <p:commandButton id="btnCancelar" styleClass="dsBoton1 tamanio3 terciario3" 
 						  	 rendered="#{mbregistrooperaciontramitegarantia.indicadorBotonCancelar}"
 						    value="Cancelar" 
 							icon="fa fa-arrow-right"  iconPos="right" 
@@ -473,7 +474,7 @@
         </div>
 		
      </p:tab>
-     <p:tab id="tab1-3" title="Histórico">
+    <p:tab id="tab1-3" title="Histórico">
         <div class="ui-g ui-fluid ui-g-nopad">
         	<!--Panel Historico Tramite Garantia-->
 			<div class="ui-g-12">
@@ -677,7 +678,6 @@
 			</div>	
         </div>	
      </p:tab>
-    
     </p:tabView>
 	  	
 	</h:form>	
@@ -745,23 +745,23 @@
 					</div>
 				</div>
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
-					<p:dataTable id="tblNotario" value="#{mbregistrooperaciontramitegarantia.lstNotario}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom" selectionMode="single"
-						selection="#{mbregistrooperaciontramitegarantia.oETerceroSelected}"  rowKey="#{item.codigoCliente}" reflow="false" >
-						<p:ajax event="rowDblselect" listener="#{mbregistrooperaciontramitegarantia.asignarPersona()}" update="form:tabView1:idDescripcionNotario,form:tabView1:idDescripcionNotarioA" oncomplete="PF('dlgBuscarNotario').hide()"/> 
-						<p:column headerText="Código" styleClass="dsTextoCentro" visible="true" width="80px;">
+					<p:dataTable id="tblNotario" value="#{mbregistrooperaciontramitegarantia.lstNotario}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom" rowKey="#{item.codigoCliente}" reflow="false" >
+						<p:column headerText="Código" styleClass="dsTextoCentro" visible="true" width="15%">
 							<h:outputText value="#{item.codigoCliente}"/> 
 						</p:column>
-						<p:column headerText="Nombre" styleClass="dsTextoCentro" visible="true">
+						<p:column headerText="Nombre" styleClass="dsTextoCentro" visible="true" width="60%">
 						    <div class="dsTextoCorto">
 							   <h:outputText value="#{item.nombreLargo}"/> 
 						    </div>
 						</p:column>
-						<p:column headerText="Documento" styleClass="dsTextoCentro" visible="true">
+						<p:column headerText="Documento" styleClass="dsTextoCentro" visible="true" width="15%">
 							   <h:outputText value="#{item.documento}"/>
 						</p:column>	
-						<p:column headerText="" style="width: 80px">
-							<p:commandButton styleClass="dsBoton5 green" icon="fa fa-pencil" title="Editar Notario" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperaciontramitegarantia.modificarNotario(item)}" update=":frmDlgMantenimientoNotario">
+						<p:column headerText="" width="10%">
+							<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-pencil" title="Editar Notario" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperaciontramitegarantia.modificarNotario(item)}" update=":frmDlgMantenimientoNotario">
 								
+							</p:commandButton>
+							<p:commandButton styleClass="dsBoton5 green" icon="fa fa-check" title="Seleccionar"  action="#{mbregistrooperaciontramitegarantia.asignarPersona(item)}" update="form:tabView1:idDescripcionNotario,form:tabView1:idDescripcionNotarioA" oncomplete="PF('dlgBuscarNotario').hide()">
 							</p:commandButton>
 				     	</p:column>	 			
 					</p:dataTable>

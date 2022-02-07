@@ -66,7 +66,7 @@
 										<br />
 										<div class="dsCuadrarCentro">
 										  <p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
-													oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(4)}" immediate="true"
+													oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(10)}" immediate="true"
 													update=":frmDlgBuscarSocio" disabled="#{mbmantenimientooperaciongarantia.deshabilitarBusqueda}"><i class="fas fa-search" ></i></p:commandLink>
 										</div>
 
@@ -107,8 +107,7 @@
 			    <div class="ui-g-12">
 			    	<p:panel styleClass="dsPanel2" widgetVar="pnl2" toggleable="true" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
 			    	    <f:facet name="header" >
-				            <i class="fas fa-bank"></i> Detalle de la Garantía
-				            
+				            <i class="fas fa-bank"></i> Detalle de la Garantía 
 				        </f:facet>
 				        <!--TIPO DE GARANTÍA: PREDIO-->
 				        <h:panelGroup layout="block" rendered="#{mbmantenimientooperaciongarantia.indicadorPnlDetalleGarantiaPredio}">
@@ -304,7 +303,7 @@
 							   		</div>					   		
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Correl. Poli" styleClass="dsLabel1"/>
-										<p:inputNumber id="idCorrelPoliPredio"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoInspector}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="999">
+										<p:inputNumber id="idCorrelPoliPredio"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoInspector}" disabled="true" autocomplete="off" minValue="0" maxValue="999">
 									     </p:inputNumber>
 							   	    </div>
 
@@ -586,7 +585,7 @@
 				    	 <!--TIPO DE GARANTÍA: ACCIONES-->
 				    	<h:panelGroup layout="block" rendered="#{mbmantenimientooperaciongarantia.indicadorPnlDetalleGarantiaAcciones}">
 				    		<div class="ui-g ui-fluid ui-g-nopad">		          				   
-								<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-8">
 										<p:outputLabel for="idEmpresaAcc" value="Empresa" styleClass="dsLabel1"/>
 										<p:inputText id="idEmpresaAcc" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionA}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
@@ -598,7 +597,7 @@
 										 <p:message for="idCertificadoAcc"/>
 							   		</div>
 								</div>
-								<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel for="idCantidadAcciones" value="Cant. Acciones" styleClass="dsLabel1"/>
 										<p:inputNumber id="idCantidadAcciones" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable3}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999" thousandSeparator="" ></p:inputNumber>
@@ -616,7 +615,7 @@
 								         <p:message for="idMonedaAcc"/>
 							   		</div>					   		
 								</div>
-								<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Informe Tasación" styleClass="dsLabel1"/>
 										<p:inputNumber id="idInfTasAcc" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator=""></p:inputNumber>
@@ -632,7 +631,7 @@
 										</p:inputNumber>
 							   		</div>					   		
 								</div>
-								<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Total Val. Nom." styleClass="dsLabel1"/>
 										<p:inputNumber id="idTotalValNomAcc" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
@@ -648,7 +647,7 @@
 										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
 							   		</div>					   		
 								</div>
-								<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Valor Actual" styleClass="dsLabel1"/>
 										<p:inputNumber id="idValorActAcc" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
@@ -663,7 +662,7 @@
 								         <p:message for="idTipPrendAcc"/>
 							   		</div>									 				
 								</div>
-								<div class="ui-g-12 ui-md-6 ui-lg-4">							
+								<div class="ui-g-12 ui-md-6 ui-lg-6">							
 									<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
 							    		<p:inputText id="idCodigoPropietarioBienA" type="hidden" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoPropietario}"></p:inputText>		
 										<p:outputLabel value="Propietario Bien" styleClass="dsLabel1"/>
@@ -673,13 +672,13 @@
 										<br />
 										<div class="dsCuadrarCentro">
 										  <p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
-													oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(2)}" immediate="true"
+													oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(4)}" immediate="true"
 													update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
 										</div>
 
 									</div>
 							   	</div>	
-							    <div class="ui-g-12 ui-md-6 ui-lg-4">
+							    <div class="ui-g-12 ui-md-6 ui-lg-6">
 									<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
 							    		<p:inputText id="idCodigoDepositarioA" type="hidden" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.depositario}"></p:inputText>		
 										<p:outputLabel value="Depositario" styleClass="dsLabel1"/>
@@ -695,14 +694,17 @@
 
 									</div>
 							    </div>
-								<div class="ui-g-12 ui-md-6 ui-lg-2">
+							    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+							    	<div class="ui-g-4">
 										<p:outputLabel value="Clase" styleClass="dsLabel1"/>
 										<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.clase}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="15"></p:inputText>
-							   	</div>
-								<div class="ui-g-12 ui-md-6 ui-lg-6">
-										<p:outputLabel value="Serie" styleClass="dsLabel1"/>
-										<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionB}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60"></p:inputText>
-							   	</div>	 		  			 		
+								   	</div>
+									<div class="ui-g-8">
+											<p:outputLabel value="Serie" styleClass="dsLabel1"/>
+											<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionB}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60"></p:inputText>
+								   	</div>	
+							    </div>
+								 		  			 		
 				            </div> 
 				        </h:panelGroup>
 				        <!--TIPO DE GARANTÍA: FIANZAS-->
@@ -824,12 +826,12 @@
 										<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionB}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60"></p:inputText>
 							   		</div>					   		
 								</div>		   
-								<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
-									<div class="ui-g-4">
+								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+									<div class="ui-g-6">
 										<p:outputLabel value="Nro. Motor" styleClass="dsLabel1"/>
 										<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionA}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60"></p:inputText>
 							        </div>	
-									<div class="ui-g-8">
+									<div class="ui-g-6">
 										<p:outputLabel for="idTipPrendMaq" value="Tipo de Prenda" styleClass="dsLabel1"/>
 										<p:selectOneMenu id="idTipPrendMaq" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoTipoBien}" required="true" requiredMessage="Campo Obligatorio">
 											<f:selectItem itemLabel="-Seleccione-" itemValue="" />
@@ -838,7 +840,7 @@
 								         <p:message for="idTipPrendMaq"/>
 							   		</div>
 								</div>
-								<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Cantidad" styleClass="dsLabel1"/>
 										<p:inputNumber id="idCantidadMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable2}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="999999" thousandSeparator=""></p:inputNumber>
@@ -856,7 +858,7 @@
 										<p:inputNumber id="idInfTasMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator=""></p:inputNumber>
 							   		</div>						   		
 								</div>	
-								<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Valor de Gravamen" styleClass="dsLabel1"/>
 										<p:inputNumber id="idValGravMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
@@ -909,23 +911,8 @@
 										</p:inputNumber>
 							   		</div>				   						   		
 								</div>	
-								<div class="ui-g-12 ui-md-12 ui-lg-4">
-									<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
-							    		<p:inputText id="idCodigoPropietarioBienM" type="hidden" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoPropietario}"></p:inputText>		
-										<p:outputLabel value="Propietario Bien" styleClass="dsLabel1"/>
-										<p:inputText id="idDescripcionPropietarioBienM" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionPropietario}" disabled="true" autocomplete="off"></p:inputText>
-									</div>												
-									<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
-										<br />
-										<div class="dsCuadrarCentro">
-										  <p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
-													oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(2)}" immediate="true"
-													update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
-										</div>
-
-									</div>
-							   	</div>	
-								<div class="ui-g-12 ui-md-12 ui-lg-4">
+								
+								<div class="ui-g-12 ui-md-12 ui-lg-6">
 									<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
 							    		<p:inputText id="idCodigoDepositarioM" type="hidden" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.depositario}"></p:inputText>		
 										<p:outputLabel value="Depositario" styleClass="dsLabel1"/>
@@ -941,13 +928,13 @@
 
 									</div>
 							   	</div>	
-							   	<div class="ui-g-12 ui-md-12 ui-lg-4">
-									<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
+							   	<div class="ui-g-12 ui-md-12 ui-lg-6">
+									<div class="ui-g-7 ui-md-7 ui-lg-7 ui-g-nopad">
 										<p:outputLabel value="Cia. De Seguros" styleClass="dsLabel1"/>
 										<p:inputText id="idCodigoCiaSeguroM" type="hidden" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoCiaSeguro}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:inputText>		
 										<p:inputText id="idDescripcionCiaSeguroM" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionCiaSeguro}" disabled="true" autocomplete="off"></p:inputText>
 							   		</div>
-							   		<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
+							   		<div class="ui-g-1 ui-md-1 ui-lg-1 ui-g-nopad">
 										<br />
 										<div class="dsCuadrarCentro">
 										  <p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
@@ -955,23 +942,54 @@
 													update=":frmDlgBuscarCiaSeguro"><i class="fas fa-search"></i></p:commandLink>
 										</div>
 									</div>	
-							   	</div>	
-							   	<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
-									<div class="ui-g-6">
+									<div class="ui-g-4 ui-md-4 ui-lg-4 ui-g-nopad">
 										<p:outputLabel value="Nro. Poliza" styleClass="dsLabel1"/>
 										<p:inputText id="idCodigoNumeroPolizaM" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.poliza}" disabled="true">
 										</p:inputText>
 							   		</div>	
-									<div class="ui-g-6">
+							   	</div>	
+							   	<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+									
+									<div class="ui-g-3">
 										<p:outputLabel value="Correlativo Poli." styleClass="dsLabel1"/>
-										<p:inputNumber id="idCorrelPolMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoInspector}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="999" thousandSeparator=""></p:inputNumber>
+										<p:inputNumber id="idCorrelPolMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoInspector}"  disabled="true" autocomplete="off" minValue="0" maxValue="999" thousandSeparator=""></p:inputNumber>
 							   		</div>	
+							   		<div class="ui-g-9">
+							   			<p:outputLabel value="Cobertura" styleClass="dsLabel1"/>
+										<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.comentario}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60"></p:inputText>
+							   		</div>
 							   						   						   		
 								</div>	
-								<div class="ui-g-12 ui-md-6 ui-lg-6">
-										<p:outputLabel value="Cobertura" styleClass="dsLabel1"/>
-										<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.comentario}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60"></p:inputText>
-							   	</div>							   		  			 		
+							   	<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+									<div class="ui-g-12">
+										<p:dataTable id="tblPropietarioMaq" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.lstPropietario}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"
+										 	rowKey="#{item.codigo}" reflow="false">
+								            <f:facet name="header">
+								                <div class="dsCuadrarCentroEspacioentre">
+								                    <p:outputLabel value="Lista de Propietarios Bienes" styleClass="dsLabel1"/>
+										        	<p:commandLink styleClass="dsCmdlink2" onclick="PF('dlgPreload').show()" 
+													oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(2)}" immediate="true" update=":frmDlgBuscarSocio" rendered="#{mbmantenimientooperaciongarantia.visualizarBtnAgregarPropietario}">
+										        		<i class="fas fa-plus"></i>
+										        	</p:commandLink>
+								                </div>
+								            </f:facet>
+								            <p:column headerText="N° Código" style="width: 90px" styleClass="dsTextoCentro">
+												<h:outputText value="#{item.codigo}"/>
+											</p:column>
+											<p:column headerText="Nombre" styleClass="dsTextoCentro">
+												<div class="dsTextoCorto">
+													<h:outputText value="#{item.nombreCorte}"/>
+												</div>
+											</p:column>
+											<p:column headerText="" style="width: 90px">
+									     		<p:commandButton styleClass="dsBoton5 red" icon="fa fa-trash" title="Eliminar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" process="@this" 
+                                                    action="#{mbmantenimientooperaciongarantia.obtenerEliminarPropietario(item)}" 
+									     		    update=":form:tabView1:tblPropietarioMaq" rendered="#{mbmantenimientooperaciongarantia.visualizarBtnEliminarPropietario}"></p:commandButton>
+									     	</p:column>
+										</p:dataTable>
+									</div>
+								</div>
+							   								   		  			 		
 				           </div>
 				        </h:panelGroup>
 				        <!--TIPO DE GARANTÍA: MERCADERIA-->
@@ -1060,26 +1078,8 @@
 										<p:outputLabel value="Valor Actual" styleClass="dsLabel1"/>
 										<p:inputNumber id="idValActualMer" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
 										</p:inputNumber>
-							   		</div>		
+							   		</div>	
 							   		<div class="ui-g-6">
-										<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
-								    		<p:inputText id="idCodigoPropietarioBienME" type="hidden" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoPropietario}"></p:inputText>		
-											<p:outputLabel value="Propietario Bien" styleClass="dsLabel1"/>
-											<p:inputText id="idDescripcionPropietarioBienME" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionPropietario}" disabled="true" autocomplete="off"></p:inputText>
-										</div>												
-										<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
-											<br />
-											<div class="dsCuadrarCentro">
-											  <p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
-														oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(2)}" immediate="true"
-														update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
-											</div>
-
-										</div>
-							   	    </div>		   						   		
-								</div>	
-								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
-									<div class="ui-g-6">
 										<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
 							    		<p:inputText id="idCodigoDepositarioME" type="hidden" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.depositario}"></p:inputText>		
 										<p:outputLabel value="Depositario" styleClass="dsLabel1"/>
@@ -1095,7 +1095,10 @@
 
 										</div>
 								   	</div>	
-								   	<div class="ui-g-6">
+							   		   						   		
+								</div>	
+								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">								
+								   	<div class="ui-g-8">
 											<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
 												<p:outputLabel value="Cia. De Seguros" styleClass="dsLabel1"/>
 												<p:inputText id="idCodigoCiaSeguroME" type="hidden" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoCiaSeguro}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"></p:inputText>		
@@ -1110,22 +1113,51 @@
 												</div>
 											</div>	
 								   	</div>	
-								</div>												
-							   	<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
-									<div class="ui-g-4">
+								   	<div class="ui-g-4">
 										<p:outputLabel value="Nro. Poliza" styleClass="dsLabel1"/>
 										<p:inputText id="idCodigoNumeroPolizaME" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.poliza}" disabled="true" autocomplete="off">
 										</p:inputText>
 							   		</div>	
+								</div>												
+							   	<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Correlativo Poli." styleClass="dsLabel1"/>
 										<p:inputNumber id="idCorrelPolMer" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoInspector}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="999"></p:inputNumber>
 							   		</div>	
-							   		<div class="ui-g-4">
+							   		<div class="ui-g-8">
 										<p:outputLabel value="Cobertura" styleClass="dsLabel1"/>
 										<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.comentario}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60"></p:inputText>
 							   		</div>				   						   		
-								</div>								   		  			 		
+								</div>	
+								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+									<div class="ui-g-12">
+										<p:dataTable id="tblPropietarioMer" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.lstPropietario}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"
+										 	rowKey="#{item.codigo}" reflow="false">
+								            <f:facet name="header">
+								                <div class="dsCuadrarCentroEspacioentre">
+								                    <p:outputLabel value="Lista de Propietarios Bienes" styleClass="dsLabel1"/>
+										        	<p:commandLink styleClass="dsCmdlink2" onclick="PF('dlgPreload').show()" 
+													oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(2)}" immediate="true" update=":frmDlgBuscarSocio" rendered="#{mbmantenimientooperaciongarantia.visualizarBtnAgregarPropietario}">
+										        		<i class="fas fa-plus"></i>
+										        	</p:commandLink>
+								                </div>
+								            </f:facet>
+								            <p:column headerText="N° Código" style="width: 90px" styleClass="dsTextoCentro">
+												<h:outputText value="#{item.codigo}"/>
+											</p:column>
+											<p:column headerText="Nombre" styleClass="dsTextoCentro">
+												<div class="dsTextoCorto">
+													<h:outputText value="#{item.nombreCorte}"/>
+												</div>
+											</p:column>
+											<p:column headerText="" style="width: 90px">
+									     		<p:commandButton styleClass="dsBoton5 red" icon="fa fa-trash" title="Eliminar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" process="@this" 
+                                                    action="#{mbmantenimientooperaciongarantia.obtenerEliminarPropietario(item)}" 
+									     		    update=":form:tabView1:tblPropietarioMer" rendered="#{mbmantenimientooperaciongarantia.visualizarBtnEliminarPropietario}"></p:commandButton>
+									     	</p:column>
+										</p:dataTable>
+									</div>
+								</div>							   		  			 		
 				           </div>
 				        </h:panelGroup>
 				        <!--TIPO DE GARANTÍA: WARRANT-->
@@ -1256,7 +1288,7 @@
 											<br />
 											<div class="dsCuadrarCentro">
 												<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
-															oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(2)}" immediate="true"
+															oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(4)}" immediate="true"
 															update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
 											</div>
 										</div>					
@@ -1357,10 +1389,11 @@
 										</p:inputNumber>
 							   		</div>
 							    </div>
-							    <div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
+							    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-12"> 
 										<p:outputLabel value="Observación" styleClass="dsLabel1"/> 
-										<p:inputTextarea id="idObservacionFID" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.obervacionGarantia}"    styleClass="dsInput1" autocomplete="off" maxlength="500" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"></p:inputTextarea>
+										<p:inputTextarea id="idObservacionFID" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.obervacionGarantia}"    styleClass="dsInput1" autocomplete="off" counter="displayFID" maxlength="500" counterTemplate="{0} caracteres restantes" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" ></p:inputTextarea>
+										<p:outputLabel id="displayFID" styleClass="dsLabel1" />
 									</div>
 								</div>								    	
 				           </div>
@@ -1373,22 +1406,6 @@
 									<p:outputLabel  value="Descripción" styleClass="dsLabel1"/>
 									<p:inputText  type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionA}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60"></p:inputText>
 							    </div>	
-							    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
-							    	<div class="ui-g-12">
-							    		<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">	
-											<p:outputLabel  value="Propietario Bien" styleClass="dsLabel1"/>
-											<p:inputText id="idDescripcionPropietarioBienOT" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionPropietario}" disabled="true" autocomplete="off"></p:inputText>	
-							    		</div>
-							    		<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
-											<br />
-											<div class="dsCuadrarCentro">
-												<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
-															oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(2)}" immediate="true"
-															update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
-											</div>
-										</div>					
-									</div>																					
-							    </div>
 							    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 							    	<div class="ui-g-4">
 										<p:outputLabel  value="Moneda" styleClass="dsLabel1"/>
@@ -1483,17 +1500,40 @@
 										</p:inputNumber>
 							   		</div>
 							    </div>
-							    <div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
-									<div class="ui-g-12"> 
-										<p:outputLabel value="Observación" styleClass="dsLabel1"/> 
-										<p:inputTextarea id="idObservacion" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.obervacionGarantia}" styleClass="dsInput1" autocomplete="off" maxlength="500" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"></p:inputTextarea>
+								<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
+									<div class="ui-g-6">
+										<p:dataTable id="tblPropietarioOtros" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.lstPropietario}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"
+										 	rowKey="#{item.codigo}" reflow="false">
+								            <f:facet name="header">
+								                <div class="dsCuadrarCentroEspacioentre">
+								                    <p:outputLabel value="Lista de Propietarios Bienes" styleClass="dsLabel1"/>
+										        	<p:commandLink styleClass="dsCmdlink2" onclick="PF('dlgPreload').show()" 
+													oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(2)}" immediate="true" update=":frmDlgBuscarSocio" rendered="#{mbmantenimientooperaciongarantia.visualizarBtnAgregarPropietario}">
+										        		<i class="fas fa-plus"></i>
+										        	</p:commandLink>
+								                </div>
+								            </f:facet>
+								            <p:column headerText="N° Código" style="width: 90px" styleClass="dsTextoCentro">
+												<h:outputText value="#{item.codigo}"/>
+											</p:column>
+											<p:column headerText="Nombre" styleClass="dsTextoCentro">
+												<div class="dsTextoCorto">
+													<h:outputText value="#{item.nombreCorte}"/>
+												</div>
+											</p:column>
+											<p:column headerText="" style="width: 90px">
+									     		<p:commandButton styleClass="dsBoton5 red" icon="fa fa-trash" title="Eliminar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" process="@this" 
+                                                    action="#{mbmantenimientooperaciongarantia.obtenerEliminarPropietario(item)}" 
+									     		    update=":form:tabView1:tblPropietarioOtros" rendered="#{mbmantenimientooperaciongarantia.visualizarBtnEliminarPropietario}"></p:commandButton>
+									     	</p:column>
+										</p:dataTable>
 									</div>
-								</div>
-			
-							   
-
-							  
-														    	
+									<div class="ui-g-6"> 
+										<p:outputLabel value="Observación" styleClass="dsLabel1"/> 
+										<p:inputTextarea id="idObservacion" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.obervacionGarantia}" styleClass="dsInput1" autocomplete="off" counter="displayOtros" maxlength="500" counterTemplate="{0} caracteres restantes" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"></p:inputTextarea>
+										<p:outputLabel id="displayOtros" styleClass="dsLabel1" />
+									</div>		
+								</div>						    	
 				           </div>
 				        </h:panelGroup>
 			    	</p:panel>
@@ -1933,7 +1973,7 @@
 				</div>
 	 	    </div>
 	 	</p:tab>
-	 	<p:tab id="tab1-4" title="Cumplimiento Requisitos Legal" rendered="#{mbmantenimientooperaciongarantia.visualizarTabPrestamos}">
+	 	<p:tab id="tab1-4" title="Cumplimiento Requisitos Legal" rendered="#{mbmantenimientooperaciongarantia.visualizarTabCumplimiento}">
 	 		<div class="ui-g-12">
 		 		<p:panel styleClass="dsPanel2" widgetVar="pnl1" toggleable="true" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px" >
 		 			<f:facet name="header" >
@@ -2254,32 +2294,34 @@
 						</p:inputText>
 					</div>
 					<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-4">
-						<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Buscar" onclick="PF('blkDlgBuscarSocio').show();" 
-						oncomplete="PF('blkDlgBuscarSocio').hide();" action="#{mbmantenimientooperaciongarantia.buscarSocio()}" 
+						<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Buscar" onclick="PF('dlgPreload').show();" 
+						oncomplete="PF('dlgPreload').hide();" action="#{mbmantenimientooperaciongarantia.buscarSocio()}" 
 						update=":frmDlgBuscarSocio:tblSocio"></p:commandButton>
 					</div>
 				</div>
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
-					<p:dataTable id="tblSocio" value="#{mbmantenimientooperaciongarantia.lstPersona}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom" selectionMode="single"
-						selection="#{mbmantenimientooperaciongarantia.oEPersonaSelected}"  rowKey="#{item.codigo}" reflow="false" >
-						<p:ajax event="rowDblselect" listener="#{mbmantenimientooperaciongarantia.asignarPersona()}" update="form:tabView1:idCodigoTasador,form:tabView1:idDescripcionTasador,form:tabView1:idCodigoTasadorV,form:tabView1:idDescripcionTasadorV,form:tabView1:idCodigoDepositarioV,form:tabView1:idDescripcionDepositarioV,form:tabView1:idCodigoPropietarioBienA,form:tabView1:idDescripcionPropietarioBienA,form:tabView1:idCodigoDepositarioA,form:tabView1:idDescripcionDepositarioA,form:tabView1:idCodigoPropietarioBienF,form:tabView1:idDescripcionPropietarioBienF,form:tabView1:idCodigoTasadorM,form:tabView1:idDescripcionTasadorM,form:tabView1:idCodigoPropietarioBienM,form:tabView1:idDescripcionPropietarioBienM,form:tabView1:idCodigoDepositarioM,form:tabView1:idDescripcionDepositarioM,form:tabView1:idCodigoTasadorME,form:tabView1:idDescripcionTasadorME,form:tabView1:idCodigoPropietarioBienME,form:tabView1:idDescripcionPropietarioBienME,form:tabView1:idCodigoDepositarioME,form:tabView1:idDescripcionDepositarioME,form:tabView1:idDescripcionSocio,form:tabView1:idDescripcionPropietarioBienOT,form:tabView1:idDescripcionTasadorOT,form:tabView1:idDescripcionDepositarioOT,form:tabView1:idDescripcionTasadorWA,form:tabView1:idDescripcionFideicomitente,form:tabView1:idDescripcionFiduciario,form:tabView1:idDescripcionTasadorFID,:form:tabView1:tblPropietarioP,:form:tabView1:tblPropietarioV" oncomplete="PF('dlgBuscarSocio').hide()"/> 
-						<p:column headerText="Código" styleClass="dsTextoCentro" visible="true" width="80px;">
+					<p:dataTable id="tblSocio" value="#{mbmantenimientooperaciongarantia.lstPersona}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom" rowKey="#{item.codigo}" reflow="false" >
+						<p:column headerText="Código" styleClass="dsTextoCentro" visible="true" width="15%">
 							<h:outputText value="#{item.codigo}"/> 
 						</p:column>
-						<p:column headerText="Nombre" styleClass="dsTextoCentro" visible="true">
+						<p:column headerText="Nombre" styleClass="dsTextoCentro" visible="true" width="60%">
 						    <div class="dsTextoCorto">
 							   <h:outputText value="#{item.nombreCorte}"/>
 						    </div>
 						</p:column>
-						<p:column headerText="Documento" styleClass="dsTextoCentro" visible="true">
+						<p:column headerText="Documento" styleClass="dsTextoCentro" visible="true" width="15%">
 							   <h:outputText value="#{item.documentoIdentidad.documento}"/>
-						</p:column>		 			
+						</p:column>	
+						<p:column headerText="" styleClass="dsTextoCentro"  width="10%">
+							<p:commandButton styleClass="dsBoton5 green" icon="fa fa-check" title="Seleccionar" oncomplete="PF('dlgBuscarSocio').hide()" action="#{mbmantenimientooperaciongarantia.asignarPersona(item)}" update="form:tabView1:idCodigoTasador,form:tabView1:idDescripcionTasador,form:tabView1:idCodigoTasadorV,form:tabView1:idDescripcionTasadorV,form:tabView1:idCodigoDepositarioV,form:tabView1:idDescripcionDepositarioV,form:tabView1:idCodigoPropietarioBienA,form:tabView1:idDescripcionPropietarioBienA,form:tabView1:idCodigoDepositarioA,form:tabView1:idDescripcionDepositarioA,form:tabView1:idCodigoPropietarioBienF,form:tabView1:idDescripcionPropietarioBienF,form:tabView1:idCodigoTasadorM,form:tabView1:idDescripcionTasadorM,form:tabView1:idCodigoDepositarioM,form:tabView1:idDescripcionDepositarioM,form:tabView1:idCodigoTasadorME,form:tabView1:idDescripcionTasadorME,form:tabView1:idCodigoDepositarioME,form:tabView1:idDescripcionDepositarioME,form:tabView1:idDescripcionSocio,form:tabView1:idDescripcionTasadorOT,form:tabView1:idDescripcionDepositarioOT,form:tabView1:idDescripcionTasadorWA,form:tabView1:idDescripcionFideicomitente,form:tabView1:idDescripcionFiduciario,form:tabView1:idDescripcionTasadorFID,:form:tabView1:tblPropietarioP,:form:tabView1:tblPropietarioV,:form:tabView1:tblPropietarioMaq,:form:tabView1:tblPropietarioMer,:form:tabView1:tblPropietarioOtros">
+							</p:commandButton>
+						</p:column>	 			
 					</p:dataTable>
 				</div>
 			</div>
 		</div>
 	</h:form>
-	<p:blockUI block="frmDlgBuscarSocio" widgetVar="blkDlgBuscarSocio"></p:blockUI>
+
 	</p:dialog>
 
 	<p:dialog widgetVar="dlgMantenimientoTercero" style="overflow:auto;max-height: 100%;" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">
@@ -2570,25 +2612,31 @@
 					</div>
 				</div>
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
-					<p:dataTable id="tblPoliza" value="#{mbmantenimientooperaciongarantia.lstPolizaSeguro}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom" selectionMode="single"
-						selection="#{mbmantenimientooperaciongarantia.oEPolizaSelected}"  rowKey="#{item.numeroPoliza}" reflow="false" >
-						<p:ajax event="rowDblselect" listener="#{mbmantenimientooperaciongarantia.asignarPoliza()}" update="form:tabView1:idCodigoCiaSeguro,form:tabView1:idDescripcionCiaSeguro,form:tabView1:idCodigoNumeroPoliza,form:tabView1:idCodigoCiaSeguroV,form:tabView1:idDescripcionCiaSeguroV,form:tabView1:idCodigoNumeroPolizaV,form:tabView1:idCodigoCiaSeguroM,form:tabView1:idDescripcionCiaSeguroM,form:tabView1:idCodigoNumeroPolizaM,form:tabView1:idCodigoCiaSeguroME,form:tabView1:idDescripcionCiaSeguroME,form:tabView1:idCodigoNumeroPolizaME,form:tabView1:idDescripcionCiaSeguroOT,form:tabView1:idCodigoNumeroPolizaOT,form:tabView1:idDescripcionCiaSeguroFID,form:tabView1:idCodigoNumeroPolizaFID" oncomplete="PF('dlgBuscarCiaSeguro').hide()"/>
-						<p:column headerText="Código" styleClass="dsTextoCentro" visible="true" width="80px;">
+					<p:dataTable id="tblPoliza" value="#{mbmantenimientooperaciongarantia.lstPolizaSeguro}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"  rowKey="#{item.numeroPoliza}" reflow="false" >
+						<p:column headerText="Código" styleClass="dsTextoCentro" visible="true" width="10%">
 							<h:outputText value="#{item.codigoCiaSeguro}"/> 
 						</p:column>
-						<p:column headerText="Descripción" styleClass="dsTextoCentro" visible="true">
+						<p:column headerText="Descripción" styleClass="dsTextoCentro" visible="true" width="45%">
 						    <div class="dsTextoCorto">
 							   <h:outputText value="#{item.descripcionCiaSeguro}"/>
 						    </div>
 						</p:column>
-						<p:column headerText="Numero Poliza" styleClass="dsTextoCentro" visible="true">
+						<p:column headerText="Corr" styleClass="dsTextoCentro" visible="true" width="10%">
+							<h:outputText value="#{item.correlativoPoliza}"/> 
+						</p:column>
+						<p:column headerText="Numero Poliza" styleClass="dsTextoCentro" visible="true" width="15%">
 						    <div class="dsTextoCorto">
 							   <h:outputText value="#{item.numeroPoliza}"/>
 						    </div>
 						</p:column>
-						<p:column headerText="Valor Poliza" styleClass="dsTextoCentro" visible="true">
+						<p:column headerText="Valor Poliza" styleClass="dsTextoCentro" visible="true" width="15%">
 							   <h:outputText value="#{item.valorPoliza}"/>
-						</p:column>		 			
+							   
+						</p:column>	
+						<p:column headerText="" styleClass="dsTextoCentro" visible="true" width="5%">
+							<p:commandButton styleClass="dsBoton5 green" icon="fa fa-check" title="Seleccionar" oncomplete="PF('dlgBuscarCiaSeguro').hide()" action="#{mbmantenimientooperaciongarantia.asignarPoliza(item)}" update=":form:tabView1:idCodigoCiaSeguro,:form:tabView1:idDescripcionCiaSeguro,:form:tabView1:idCodigoNumeroPoliza,:form:tabView1:idCodigoCiaSeguroV,:form:tabView1:idDescripcionCiaSeguroV,:form:tabView1:idCodigoNumeroPolizaV,:form:tabView1:idCodigoCiaSeguroM,:form:tabView1:idDescripcionCiaSeguroM,:form:tabView1:idCodigoNumeroPolizaM,:form:tabView1:idCodigoCiaSeguroME,:form:tabView1:idDescripcionCiaSeguroME,:form:tabView1:idCodigoNumeroPolizaME,:form:tabView1:idDescripcionCiaSeguroOT,:form:tabView1:idCodigoNumeroPolizaOT,:form:tabView1:idDescripcionCiaSeguroFID,:form:tabView1:idCodigoNumeroPolizaFID,:form:tabView1:idCorrelPoliPredio">
+							</p:commandButton>
+						</p:column>	 			
 					</p:dataTable>
 				</div>
 			</div>
@@ -2803,7 +2851,7 @@
 			</div>
 			<div class="ui-g ui-fluid pie">
 				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgConfirmacion').hide();"></p:commandButton>
-				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" action="#{mbmantenimientooperaciongarantia.eliminarPropietario()}" oncomplete="PF('dlgConfirmacion').hide();PF('dlgPreload').hide();" update=":form:tabView1:tblPropietarioP"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" action="#{mbmantenimientooperaciongarantia.eliminarPropietario()}" oncomplete="PF('dlgConfirmacion').hide();PF('dlgPreload').hide();" update=":form:tabView1:tblPropietarioP,:form:tabView1:tblPropietarioV,:form:tabView1:tblPropietarioMaq,:form:tabView1:tblPropietarioOtros"></p:commandButton>
 			</div>
 		</div>
 	</h:form>

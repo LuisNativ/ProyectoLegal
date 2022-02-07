@@ -101,7 +101,7 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 	@Getter @Setter private boolean deshabilitarHipoteca;
 	@Getter @Setter private boolean colapsarPanel;
 	@Getter @Setter private boolean tooglePanel;
-	@Getter @Setter private boolean indicadorBotonCancelar,indicadorBotonGrabarAsiento;
+	@Getter @Setter private boolean indicadorBotonCancelar,indicadorBotonGrabarAsiento,indicadorBotonNuevoAsiento;
 	@Getter @Setter private boolean visualizarDatosPN,visualizarDatosPJ;
 	
 	@Getter @Setter private int codigoDepartamentoGarantia,codigoDepartamentoGarantiaPostal;
@@ -170,8 +170,7 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 		oETerceroData = new ETercero();
 		colapsarPanel = true;
 		tooglePanel = false;
-		indicadorBotonCancelar = false;
-		indicadorBotonGrabarAsiento = false;
+		
 		inicializar();
 		if (UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.ACCION_EXTERNA) != null) {
 			accionExterna = (Integer) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.ACCION_EXTERNA);
@@ -183,13 +182,11 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 				if(oEGarantiaData.getCodigoTipoGarantia()== UTipoGarantia.PREDIO){
 					indicadorPnlBloqueoReq = true; 
 					deshabilitarHipoteca=false;
-					oEGarantiaTramiteData.setFechaVigenciaAsientoB(new Date());
 				}
 				if(oEGarantiaData.getCodigoTipoGarantia() == UTipoGarantia.VEHICULAR || oEGarantiaData.getCodigoTipoGarantia()== UTipoGarantia.ACCIONES 
 						|| oEGarantiaData.getCodigoTipoGarantia()== UTipoGarantia.MERCADERIAS){
 					indicadorLegalFirma = true;
-				}			
-				oEGarantiaTramiteData.setFechaVigenciaAsiento(new Date());			
+				}						
 			}else if(UAccionExterna.EDITAR == accionExterna){
 				oEGarantiaLoad = (EGarantia) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.FICHA_PARAMETRO);
 				oEGarantiaData = oEGarantiaLoad;		
@@ -219,6 +216,9 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 	private void inicializar(){
 		indicadorPnlBloqueoReq = false;
 		deshabilitarHipoteca=true;
+		indicadorBotonCancelar = false;
+		indicadorBotonGrabarAsiento = false;
+		indicadorBotonNuevoAsiento = true;
 	}
 	
 	public void guardar(){
@@ -412,7 +412,7 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 	
 	
 	public void buscarSocio(){
-		lstNotario = oBOCliente.listarNotarios(codigoBuscar,descripcionBuscar);
+		lstNotario = oBOCliente.listarNotarios(codigoBuscar,descripcionBuscar.trim());
 	}
 	
 	public void nuevoNotario(){
@@ -490,6 +490,20 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 			
 		}
 	}
+	public void asignarPersona(ETercero eTerceroItem){
+		if(eTerceroItem != null){
+			if(indicadorDialogNotario ==1){
+				oEGarantiaTramiteData.setCodigoNotario(eTerceroItem.getCodigoCliente());	
+				oEGarantiaTramiteData.setDescripcionNotario(eTerceroItem.getNombreLargo());
+			}else if(indicadorDialogNotario ==2){
+				oEGarantiaTramiteAsientoData.setCodigoNotario(eTerceroItem.getCodigoCliente());
+				oEGarantiaTramiteAsientoData.setDescripcionNotario(eTerceroItem.getNombreLargo());
+			}
+			
+
+			
+		}
+	}
 	
 	public void validarClasePersona(){
 		if(oETerceroData.getCodigoTipoPersona().equals("N")){
@@ -507,6 +521,7 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 		tooglePanel = true;
 		indicadorBotonCancelar = true;
 		indicadorBotonGrabarAsiento = true;
+		indicadorBotonNuevoAsiento = false;
 		deshabilitarCampoAsientoTramiteGarantia = false;
 	}
 	
@@ -515,6 +530,7 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 		tooglePanel = false;
 		indicadorBotonCancelar = false;
 		indicadorBotonGrabarAsiento = false;
+		indicadorBotonNuevoAsiento = true;
 	}
 	
 	public void listarAsientoTramiteGarantia(){

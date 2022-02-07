@@ -19,7 +19,7 @@
 	<p:tabView id="tabView1" dynamic="true" widgetVar="tabs1" activeIndex="0">
 	    <p:tab id="tab1-1" title="Pendiente de Registro">
 	        
-			<p:panel styleClass="dsPanel2" widgetVar="pnl1" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+			<p:panel styleClass="dsPanel2" id="idPanel1" widgetVar="pnl1" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
 			    <f:facet name="header" >
 			        <i class="fa fa-table"></i> Solicitudes Asociadas a una Garantía
 			    </f:facet>
@@ -28,19 +28,24 @@
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 					<p:outputLabel value="Tipo de Búsqueda" styleClass="dsLabel1"/>				
 					<p:selectOneMenu value="#{mblistagarantiaporconstituircredito.codigoBuscar}">
-		            	<f:selectItem itemLabel="Nro Solicitud" itemValue="0" />
-		            	<f:selectItem itemLabel="Nombre Socio" itemValue="1" />
+						<p:ajax event="change" listener="#{mblistagarantiaporconstituircredito.validarCriterioBusquedaSolicitud()}" update="tabView1:idPanel1" />
+		            	<f:selectItem itemLabel="[Seleccione]" itemValue="0" />
+		            	<f:selectItem itemLabel="Nro Solicitud" itemValue="1" />
+		            	<f:selectItem itemLabel="Codigo Socio" itemValue="2" />
+		            	<f:selectItem itemLabel="Nombre Socio" itemValue="3" />
+		            	<f:selectItem itemLabel="Tipo Garantía" itemValue="4" />
+		            	<f:selectItem itemLabel="Estado" itemValue="5" />
 		            </p:selectOneMenu>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3" style="#{mblistagarantiaporconstituircredito.visualizarCampo1 ? 'display:inline-block;' : 'display:none;'}">
 					<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
 					<p:inputText type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituircredito.descripcionBuscar}" autocomplete="off" maxlength="50">
 					</p:inputText>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3" style="#{mblistagarantiaporconstituircredito.visualizarCampo2 ? 'display:inline-block;' : 'display:none;'}">
 					<p:outputLabel value="Estado" styleClass="dsLabel1"/>				
 		            <p:selectOneMenu  value="#{mblistagarantiaporconstituircredito.codigoEstadoGarSolicitud}">
-		            	<p:ajax event="change"  listener="#{mblistagarantiaporconstituircredito.listarSolicitudPorEstado()}" update=":tabView1:form:tabView2:tblGarantia,:tabView1:form:tabView2:tblGarantiaExistente"/>
+		            	
 						<!--<p:ajax event="change" update="@this"/>-->
 						<f:selectItem itemLabel="-Seleccione-" itemValue="0" />
 						<f:selectItems value="#{mblistagarantiaporconstituircredito.lstEstadoGarantiaSolicitud}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
@@ -253,7 +258,7 @@
 					update=":tabView1:formPoliza:tblGarantiaPoliza"></p:commandButton>
 				</div>
 				</div>
-				<p:dataTable id="tblGarantiaPoliza" value="#{mblistagarantiaporconstituircredito.lstGarantiaPoliza}" var="item" styleClass="dsTabla3" paginator="true" rows="5" paginatorPosition="bottom" 
+				<p:dataTable id="tblGarantiaPoliza" value="#{mblistagarantiaporconstituircredito.lstGarantiaPoliza}" var="item" styleClass="dsTabla3" paginator="true" rows="10" paginatorPosition="bottom" 
 							 rowKey="#{item.codigoGarantia}" reflow="true" resizableColumns="true" resizeMode="expand">
 					<p:column headerText="Nro. Garantía" styleClass="dsTextoCentro" width="70px;">
 						<h:outputText value="#{item.codigoGarantia}"/>

@@ -113,6 +113,7 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 	@Getter @Setter private int indicadorBoton;
 	@Getter @Setter private int indicadorSalir;
 	@Getter @Setter private int codigoBuscar;
+	@Getter @Setter private boolean habilitarAccionGuardarContrato;
 	@Getter @Setter private String descripcionBuscar;
 	@Getter @Setter private String observacionSolicitud,observacionConformidad;
 		
@@ -241,6 +242,7 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 		renderizarBotonConfirmaDatoGarantia = false;
 		indicadorSalir = 0;
 		deshabilitarObservacionConformidad = true;
+		habilitarAccionGuardarContrato = false;
 	
 	}
 	
@@ -287,7 +289,7 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 			lstRepresentanteCIAContrato.get(i).setCodigoTipoContrato(18);
 		}
 		listarRepresentantesCIAContratoFiltro();
-		visualizarBotonAñadir = lstRepresentanteCIAContrato.size() > 2 ? false : true;
+		visualizarBotonAñadir = lstRepresentanteCIAContratoFiltro.size() >= 2 ? false : true;
 	}
 	
 	public void listarRepresentantesCIAContratoFiltro(){
@@ -298,11 +300,10 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 	
 	public void listarRepresentantesCompania(){
 		lstRepresentanteCIA = oBOGarantia.listarMaestroRepresentantesCompania();
-		if(lstRepresentanteCIAContrato.size() > 0 && lstRepresentanteCIA.size()>0){
+		if(lstRepresentanteCIAContratoFiltro.size() > 0 && lstRepresentanteCIA.size()>0){
 			for(int i=0;i<lstRepresentanteCIA.size();i++){
-				for(int j=0;j<lstRepresentanteCIAContrato.size();j++){
-					if(lstRepresentanteCIA.get(i).getCodigoRepresentante() == lstRepresentanteCIAContrato.
-							get(j).getCodigoRepresentante()){
+				for(int j=0;j<lstRepresentanteCIAContratoFiltro.size();j++){
+					if(lstRepresentanteCIAContratoFiltro.get(j).getCodigoRepresentante() ==  lstRepresentanteCIA.get(i).getCodigoRepresentante()){
 						lstRepresentanteCIA.remove(i);
 					}
 				}
@@ -343,9 +344,38 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 			}else{
 				lstRepresentanteCIAContrato.add(eRepContrato);
 			}
-			
-			visualizarBotonAñadir = lstRepresentanteCIAContrato.size() > 2 ? false : true;
 			listarRepresentantesCIAContratoFiltro();
+			visualizarBotonAñadir = lstRepresentanteCIAContratoFiltro.size() >= 2 ? false : true;
+			
+			
+		}
+	}
+	
+	public void asignarRepresentanteContrato(ERepresentanteCIA eRepresentanteCIAItem){
+		ERepresentanteCIAContrato eRepContrato = new ERepresentanteCIAContrato();
+		if(eRepresentanteCIAItem != null){	
+			eRepContrato.setNumeroContrato(oEContratoData.getNumeroContrato());
+			eRepContrato.setCodigoTipoContrato(18);
+			eRepContrato.setCodigoAccion(UAccionTabla.INSERTAR);
+			eRepContrato.setCodigoRepresentante(eRepresentanteCIAItem.getCodigoRepresentante());
+			eRepContrato.setNombreRepresentante(eRepresentanteCIAItem.getNombreCortoRepresentante());
+			if(lstRepresentanteCIAContrato.size()>0){
+				for(ERepresentanteCIAContrato obj : lstRepresentanteCIAContrato){
+					if(obj.getCodigoRepresentante() != eRepresentanteCIAItem.getCodigoRepresentante()){
+						lstRepresentanteCIAContrato.add(eRepContrato);
+						break;
+					}else{
+						oEMensaje.setDescMensaje("El Representante Ya Existe");
+						RequestContext.getCurrentInstance().execute("PF('dlgMensaje').show();");
+						break;
+					}
+				}
+			}else{
+				lstRepresentanteCIAContrato.add(eRepContrato);
+			}
+			listarRepresentantesCIAContratoFiltro();
+			visualizarBotonAñadir = lstRepresentanteCIAContratoFiltro.size() >= 2 ? false : true;
+			
 			
 		}
 	}
@@ -355,7 +385,12 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 			for(int i=0;i<lstRepresentanteCIAContrato.size();i++){
 				if(eRepCIAContratoItem.getCodigoRepresentante() == lstRepresentanteCIAContrato.get(i).getCodigoRepresentante()){
 					if(eRepCIAContratoItem.getNumeroContrato() > 0 ){
-						lstRepresentanteCIAContrato.get(i).setCodigoAccion(UAccionTabla.ELIMINAR);
+						if(lstRepresentanteCIAContrato.get(i).getCodigoAccion() == UAccionTabla.INSERTAR){
+							lstRepresentanteCIAContrato.remove(i);
+						}else{
+							lstRepresentanteCIAContrato.get(i).setCodigoAccion(UAccionTabla.ELIMINAR);
+						}
+						
 					}else{
 						lstRepresentanteCIAContrato.remove(i);
 					}
@@ -363,6 +398,7 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 				}
 			}
 			listarRepresentantesCIAContratoFiltro();
+			visualizarBotonAñadir = lstRepresentanteCIAContratoFiltro.size() >= 2 ? false : true;
 		}
 	}
 	
@@ -577,10 +613,19 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 						oEMensaje = oBOGarantia.registrarContratoyRepresentanteGarantia(oEContrato,lstRepresentanteCIAContrato);
 					}
 			
-					renderizarBotonGenerarContrato = true;
-					renderizarBotonGrabarContrato = false;
-					visualizarBotonAñadir = false;
-					visualizarBotonEliminar = false;
+					if(oEMensaje.getIdMensaje() == 0){
+						renderizarBotonGenerarContrato = true;
+						renderizarBotonGrabarContrato = false;
+						visualizarBotonAñadir = false;
+						visualizarBotonEliminar = false;
+						habilitarAccionGuardarContrato = true;
+					}else{
+						renderizarBotonGenerarContrato = false;
+						renderizarBotonGrabarContrato = true;
+						visualizarBotonAñadir = true;
+						visualizarBotonEliminar = true;
+					}
+					
 					UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 					RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
 				}else{
@@ -607,13 +652,30 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 			eContrato.setIndicadorConsulta(1);
 			oEMensaje = oBOGarantia.modificarImpresionContratoGarantia(eContrato);
 			
-			renderizarBotonGenerarContrato = false;
-			renderizarBotonGrabarContrato = true;
-			
 			listarDetalleFlagsSolicitudCredito();
+			if(oEMensaje.getIdMensaje() == 0){
+				renderizarBotonGenerarContrato = false;
+				renderizarBotonGrabarContrato = true;
+				visualizarBotonAñadir = true;
+				visualizarBotonEliminar = true;
+				listarRepresentantesCIAContrato();
+				UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
+				RequestContext.getCurrentInstance().execute("PF('dlgConfirmacionImpresion').show();");
+			}else{
+				renderizarBotonGenerarContrato = false;
+				renderizarBotonGrabarContrato = true;
+				visualizarBotonAñadir = true;
+				visualizarBotonEliminar = true;
+				listarRepresentantesCIAContrato();
+				UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
+				RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
+			}
 			
-			UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
-			RequestContext.getCurrentInstance().execute("PF('dlgConfirmacionImpresion').show();");
+			
+			
+			
+			
+			
 		}
 
 
@@ -626,6 +688,7 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 			visualizarBotonEliminar = true;
 			renderizarBotonGenerarContrato = false;
 			renderizarBotonGrabarContrato = true;
+			listarRepresentantesCIAContrato();
 		}
 		
 	}
@@ -681,6 +744,11 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 			
 		}
 		listarRepresentantesCIAContrato();
+		if(habilitarAccionGuardarContrato){
+			visualizarBotonAñadir = false;
+			visualizarBotonEliminar = false;
+			habilitarAccionGuardarContrato = false;
+		}
 	}
 	
 	public void salir() {
