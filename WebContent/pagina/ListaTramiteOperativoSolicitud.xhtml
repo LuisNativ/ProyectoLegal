@@ -51,7 +51,7 @@
 						<p:column headerText="Nro. Sol." styleClass="dsTextoCentro" visible="true" width="10%">
 							<h:outputText value="#{item.codigoSolicitud}"/>
 					    </p:column>
-						<p:column headerText="Socio" width="40%">
+						<p:column headerText="Socio" width="40%" styleClass="dsTextoCentro">
 						    <div class="dsTextoCorto">
 							    <h:outputText value="#{item.codigoClientePersona} #{item.nombrePersona}"/>
 						    </div>
@@ -96,7 +96,7 @@
 				</div>
 			</div>
 			<div class="pie">
-				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistatramiteoperativosolicitud.actualizarDatosAjax()}"></p:commandButton> 
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistatramiteoperativosolicitud.actualizarDatosAjax()}" update=":frmDlgObservacionSolicitud"></p:commandButton> 
 			</div>
 		</div>
 	</h:form>
@@ -108,8 +108,12 @@
 	 		<div class="cabecera">
 				<div class="dlgIzquierda">
 					<p:outputLabel styleClass="dsLabel2" value="Observaciones"/>
+					<p:commandLink styleClass="dsCmdlink4" title="Nueva Observación" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistatramiteoperativosolicitud.nuevaObservacionSolicitud}" update=":frmDlgObservacionSolicitud">
+						<i class="fas fa-plus-circle"></i>
+					</p:commandLink>
 				</div>
 			</div>
+			<div class="dsLineaHorizontal"></div>
 			<div class="ui-g ui-fluid contenido">
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
 					<p:dataTable id="tblObservacionSolicitud" value="#{mblistatramiteoperativosolicitud.lstObservacionTramiteOperativoSolicitud}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"
@@ -138,13 +142,17 @@
 				</div>
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
 					<p:outputLabel  value="Observación" styleClass="dsLabel1"/>
-					<p:inputTextarea type="text" id="txtObservacionConformidad"  styleClass="dsInput1" value="#{mblistatramiteoperativosolicitud.observacionSolicitud}" autocomplete="off" disabled="#{mblistatramiteoperativosolicitud.deshabilitarObservacionConformidad}"></p:inputTextarea>
+					<p:inputTextarea type="text" id="txtObservacionConformidad"  styleClass="dsInput1" value="#{mblistatramiteoperativosolicitud.observacionSolicitud}" autocomplete="off"  disabled="#{mblistatramiteoperativosolicitud.deshabilitarObservacionConformidad}" counter="displayObsSol" maxlength="500" counterTemplate="{0} caracteres restantes" required="true" requiredMessage="Campo Obligatorio"></p:inputTextarea>
+					<p:outputLabel id="displayObsSol" styleClass="dsLabel1" />
+					<p:message for="txtObservacionConformidad"/>
 				</div>
 			</div>
 			<div class="ui-g ui-fluid pie">
-				<p:commandButton styleClass="dsBoton1 secundario" value="#{mblistatramiteoperativosolicitud.deshabilitarObservacionConformidad ? 'Aceptar' : 'Cancelar'}" onclick="PF('dlgObservacionSolicitud').hide();"></p:commandButton>
-				<p:commandButton styleClass="dsBoton1 principal" id="idBtnGrabarObservacion" value="Grabar"  onclick="PF('dlgPreload').show();" oncomplete="PF('dlgObservacionSolicitud').hide();PF('dlgPreload').hide();" actionListener="#{mblistatramiteoperativosolicitud.procesarObservacionSolicitud()}" update=":frmDlgMensajeOperacionAjax"
-				style="#{mblistatramiteoperativosolicitud.deshabilitarObservacionConformidad ? 'display: none;':'display: block;'}"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 secundario" value="Aceptar" onclick="PF('dlgObservacionSolicitud').hide();" rendered="#{mblistatramiteoperativosolicitud.renderizarBotonAceptar}"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" id="idBtnGrabarObservacion" value="Grabar"  onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mblistatramiteoperativosolicitud.procesarObservacionSolicitud()}" process="@form"  update="frmDlgObservacionSolicitud"
+				rendered="#{mblistatramiteoperativosolicitud.renderizarBotonGrabarObservacion}"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mblistatramiteoperativosolicitud.cancelarObservacionSolicitud()}" update=":frmDlgObservacionSolicitud" rendered="#{mblistatramiteoperativosolicitud.renderizarBotonGrabarObservacion}"></p:commandButton>
+				
 			</div>
 		</div>
 	</h:form>

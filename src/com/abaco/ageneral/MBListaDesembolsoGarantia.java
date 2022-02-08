@@ -69,6 +69,7 @@ public class MBListaDesembolsoGarantia implements Serializable {
 	
 	@Getter @Setter private List<EEvaluacionSolicitudCreditoLegal> lstEvaluacionSolicitudCreditoLegal;
 	@Getter @Setter private List<EOperacionDocumento> lstSolicitudDocumento;
+	@Getter @Setter private List<EFlagReqLegal> lstDetalleFlagsReqLegal;
 	
 	/* Variables Interfaz */
 	@Getter @Setter private int codigoBuscar,codigoBuscarDocumento;
@@ -97,8 +98,11 @@ public class MBListaDesembolsoGarantia implements Serializable {
 	@Getter @Setter private boolean indicadorTituloDocumento;
 	@Getter @Setter private boolean deshabilitarAdjuntaDocumento;
 	@Getter @Setter private boolean visualizarEliminarDocumentoGarantia;
+	@Getter @Setter private boolean visualizarCampo1,visualizarCampo2;
+	@Getter @Setter private int codigoEstadoDesembolsoGarantia;
 
 	@Getter @Setter private List<EGeneral> lstValorSiNo;
+	@Getter @Setter private List<EGeneral> lstEstadoDesembolsoGarantia;
 	@Getter @Setter private List<EOperacionDocumento> lstOperacionDocumentoLegalFiltro;
 	@Getter @Setter private List<EOperacionDocumento> lstOperacionDocumentoNegociosFiltro;
 	@Getter @Setter private List<EOperacionDocumento> lstOperacionDocumentoDesembolso;
@@ -120,6 +124,7 @@ public class MBListaDesembolsoGarantia implements Serializable {
 		oEOperacionDocumentoDetalle = new EOperacionDocumento();
 		
 		lstValorSiNo = new ArrayList<EGeneral>();
+		lstEstadoDesembolsoGarantia = new ArrayList<EGeneral>();
 		lstDocumentoCarga = new ArrayList<EDocumentoCarga>();
 		files = new ArrayList<UploadedFile>(); 
 		lstOperacionDocumento = new ArrayList<EOperacionDocumento>();
@@ -130,11 +135,13 @@ public class MBListaDesembolsoGarantia implements Serializable {
 		lstOperacionDocumentoLegalFiltro = new ArrayList<EOperacionDocumento>();
 		lstOperacionDocumentoNegociosFiltro = new ArrayList<EOperacionDocumento>();
 		lstOperacionDocumentoDesembolso = new ArrayList<EOperacionDocumento>();
+		lstDetalleFlagsReqLegal = new ArrayList<EFlagReqLegal>();
 		
 		oEUsuario = (EUsuario) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.USUARIO);
+		inicializar();
 		listarDesplegable();
 		listarSolicitudDesembolsoGarantia();
-		inicializar();
+		
 	}
 	
 	public void inicializar(){
@@ -145,10 +152,13 @@ public class MBListaDesembolsoGarantia implements Serializable {
 	    deshabilitarObservacionDocumento = false;
 	    deshabilitarAdjuntaDocumento = false;
 	    visualizarEliminarDocumentoGarantia = true;
+	    visualizarCampo1 = true;
+	    visualizarCampo2 = false;
 	}
 	
 	public void listarDesplegable(){
 		lstValorSiNo = oUManejadorListaDesplegable.obtieneValorSiNo();
+		lstEstadoDesembolsoGarantia = oUManejadorListaDesplegable.obtieneEstadoDesembolsoGarantia();
 
 	}
 	
@@ -171,7 +181,41 @@ public class MBListaDesembolsoGarantia implements Serializable {
 		eGarantia.setTipoDocumento(UTipoDocumentoGarantia.CONSTITUCION);
 		lstOperacionDocumentoDesembolso = oBOGarantia.listarSolicitudDesembolsoGarantia(0, "", eGarantia);
 	}
+	
+	public void buscarSolicitudDesembolsoGarantia(){
+		EGarantia eGarantia = new EGarantia();
+		eGarantia.setUsuarioRegistro(oEUsuario);
+		eGarantia.setTipoDocumento(UTipoDocumentoGarantia.CONSTITUCION);
+		if(codigoBuscar == 3 ) {
+			descripcionBuscar = codigoEstadoDesembolsoGarantia+"";
+		}
+		lstOperacionDocumentoDesembolso = oBOGarantia.listarSolicitudDesembolsoGarantia(codigoBuscar,descripcionBuscar, eGarantia);
+	}
 
+	public void visualizarDetalleCumplimientoReqLegal(EOperacionDocumento eOperacionDocumentoItem){
+		if(eOperacionDocumentoItem != null){
+			lstDetalleFlagsReqLegal = oBOGarantia.listarDetalleFlagRequisitoLegal(eOperacionDocumentoItem.getCodigoSolicitudCredito());
+			RequestContext.getCurrentInstance().execute("PF('dlgCondicionDesembolso').show();");
+		}
+	}
+	
+	public void validarCriterioBusquedaSolicitud(){
+		descripcionBuscar = "";
+		switch(codigoBuscar){
+		 case 1: 
+		 case 2:
+			 visualizarCampo1 = true; 
+			 visualizarCampo2 = false; 
+			 break;
+		 case 3:
+			 visualizarCampo1 = false; 
+			 visualizarCampo2 = true; 
+			 break;
+		 default:
+			 visualizarCampo1 = true; 
+			 visualizarCampo2 = false; 
+		}
+	}
 
 	public EGarantia getoEGarantiaData() {
 		return oEGarantiaData;
@@ -213,8 +257,8 @@ public class MBListaDesembolsoGarantia implements Serializable {
 			EOperacionDocumento oEOperacionDocumentoDetalle) {
 		this.oEOperacionDocumentoDetalle = oEOperacionDocumentoDetalle;
 	}
-		
-		
+
+
 		
 		
 	

@@ -1840,6 +1840,7 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEOperacionSolicitud.setAbreviacionMoneda(UFuncionesGenerales.revisaCadena(oResultSet.getString("ABRVMON")));
 					oEOperacionSolicitud.setDescripcionMoneda(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCMON")));
 					oEOperacionSolicitud.setMontoAprobado(oResultSet.getDouble("MTOAPR"));
+					oEOperacionSolicitud.setCodigoMoneda(oResultSet.getInt("MONSOL"));
 					lstOperacionSolicitud.add(oEOperacionSolicitud);
 				}								
 			}						

@@ -63,7 +63,9 @@
 				<p:dataTable id="tblGarantia" value="#{mblistagarantiaporconstituircredito.lstGarantiaSolicitudNueva}" var="item" styleClass="dsTabla3" paginator="true" rows="12" paginatorPosition="bottom"
 							 rowKey="#{item.numeroSolicitud}" reflow="true" tableStyle="table-layout:auto">
 					<p:column headerText="N°Sol" width="10%">
-						<h:outputText value="#{item.numeroSolicitud}"/>
+						<div class="dsTextoCentro">
+							<h:outputText value="#{item.numeroSolicitud}"/>
+						</div>	
 					</p:column>
 					<p:column headerText="Nombre del Socio" width="25%">
 						<div class="dsTextoCorto">

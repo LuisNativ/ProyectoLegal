@@ -379,9 +379,13 @@ public class UManejadorListaDesplegable {
 	public List<EGeneral> obtieneEstadoGarantiaSolicitud() {
 		return obtieneListaDesplegableData(UData.ESTADOSOLICITUDGARANTIA, 2);
 	}
-	
+		
 	public List<EGeneral> obtieneEstadoLevantamientoGarantia() {
 		return obtieneListaDesplegableData(UData.ESTADOLEVANTAMIENTO, 2);
+	}
+	
+	public List<EGeneral> obtieneEstadoDesembolsoGarantia() {
+		return obtieneListaDesplegableData(UData.ESTADODESEMBOLSOGARANTIA, 2);
 	}
 	
 	public List<EGeneral> obtieneUsuario(int indicadorEstado){

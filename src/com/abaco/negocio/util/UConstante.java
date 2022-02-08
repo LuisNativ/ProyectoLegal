@@ -226,6 +226,7 @@ public class UConstante {
 		int TIPOGARANTIANUEVO=16;
 		int OFICINAREGISTRAL=17;
 		int ZONAGEO = 18;
+		int ESTADODESEMBOLSOGARANTIA = 19;
 	}
 	
 	public static interface UGeneral2 {

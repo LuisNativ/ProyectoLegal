@@ -15,58 +15,73 @@
     
 	<div class="ui-g ui-fluid">
         <div class="dsCuadrarCentroInicio tituloIzquieda">
-            <h4><i class="fa fa-folder-open"></i> M&#243;dulo : Garantías <small> > Desembolso Garantía </small></h4>
+            <h4><i class="fa fa-folder-open"></i> M&#243;dulo : Garantías <small> > Cumplimiento Requisitos Legal </small></h4>
         </div>
     </div>				
 		
-	<p:panel styleClass="dsPanel2" widgetVar="pnl2" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+	<p:panel id="idPanel1" styleClass="dsPanel2" widgetVar="pnl2" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
 		    <f:facet name="header" >
-		        <i class="fa fa-table"></i> Lista de Garantías con Desembolso
+		        <i class="fa fa-table"></i> Cumplimiento de Requisitos Legales de Garantía
 		    </f:facet>
 		    <div class="ui-g ui-fluid ui-g-nopad">
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 					<p:outputLabel value="Tipo de Búsqueda" styleClass="dsLabel1"/>				
 					<p:selectOneMenu value="#{mblistadesembolsogarantia.codigoBuscar}">
+						<p:ajax event="change" listener="#{mblistadesembolsogarantia.validarCriterioBusquedaSolicitud()}" update="form:idPanel1" />
 		            	<f:selectItem itemLabel="[Seleccione]" itemValue="0" />
 		            	<f:selectItem itemLabel="Nro. Solicitud" itemValue="1" />
 		            	<f:selectItem itemLabel="Nro. Garantía" itemValue="2" />
 		            	<f:selectItem itemLabel="Estado" itemValue="3" />
 		            </p:selectOneMenu>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3" style="#{mblistadesembolsogarantia.visualizarCampo1 ? 'display:inline-block;' : 'display:none;'}">
 					<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
 					<p:inputText type="text" styleClass="dsInput1" value="#{mblistadesembolsogarantia.descripcionBuscar}" autocomplete="off" maxlength="50">
 					</p:inputText>
 				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3" style="#{mblistadesembolsogarantia.visualizarCampo2 ? 'display:inline-block;' : 'display:none;'}">
+					<p:outputLabel value="Estado" styleClass="dsLabel1"/>				
+		            <p:selectOneMenu  value="#{mblistadesembolsogarantia.codigoEstadoDesembolsoGarantia}">
+						<f:selectItem itemLabel="-Seleccione-" itemValue="0" />
+						<f:selectItems value="#{mblistadesembolsogarantia.lstEstadoDesembolsoGarantia}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+				    </p:selectOneMenu>
+				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 					<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Buscar" onclick="PF('dlgPreload').show();" 
-					oncomplete="PF('dlgPreload').hide();" action="#{mblistadesembolsogarantia.buscarDocumentoGarantia()}" 
+					oncomplete="PF('dlgPreload').hide();" action="#{mblistadesembolsogarantia.buscarSolicitudDesembolsoGarantia()}" 
 					update="form:tblSolicitudDesembolso"></p:commandButton>
 				</div>
 			</div>
 			<div class="ui-g ui-fluid ui-g-nopad">
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
-					<p:dataTable id="tblSolicitudDesembolso" value="#{mblistadesembolsogarantia.lstOperacionDocumentoDesembolso}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"
+					<p:dataTable id="tblSolicitudDesembolso" value="#{mblistadesembolsogarantia.lstOperacionDocumentoDesembolso}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom"
 								 rowKey="#{item.codigoDocumento}" reflow="true" >
-					    <p:column headerText="Sol. Cred" styleClass="dsTextoCentro" visible="true" >
+					    <p:column headerText="Sol. Cred" styleClass="dsTextoCentro" visible="true" width="10%">
 							<h:outputText value="#{item.codigoSolicitudCredito}"/>
 					    </p:column>
-					    <p:column headerText="Nro. Garantía" styleClass="dsTextoCentro" visible="true" >
+					    <p:column headerText="Nro. Garantía" styleClass="dsTextoCentro" visible="true" width="10%">
 							<h:outputText value="#{item.codigoGarantia}"/>
 						</p:column>
-						<p:column headerText="Socio" width="250px;">
+						<p:column headerText="Socio" width="30%">
 						    <div class="dsTextoCorto">
 							    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
 						    </div>
 						</p:column>
-						<p:column headerText="Estado" styleClass="dsTextoCentro" >
+						<p:column headerText="Estado" styleClass="dsTextoCentro" width="15%">
 							<h:outputText value="#{item.descripcionEstadoDesembolso}"/>
 						</p:column>
-						<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" >
+						<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" width="10%" >
 							<h:outputText value="#{item.usuarioRegist}"/>
 						</p:column>
-						<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" >
-							<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
+						<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" width="15%">
+						 	<div class="dsTextoCorto">
+							   <h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
+						    </div>	
+						</p:column>
+						<p:column headerText="" styleClass="dsTextoCentro" width="10%">
+							  <p:commandButton styleClass="dsBoton5 green" icon="fa fa-search" title="Consultar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistadesembolsogarantia.visualizarDetalleCumplimientoReqLegal(item)}" update=":frmDlgCondicionDesembolso"
+							  rendered="#{item.estadoDesembolso eq 57 ? true : false }">
+						      	</p:commandButton>
 						</p:column>
 					</p:dataTable>
 				</div>
@@ -90,6 +105,56 @@
 			</div>
 			<div class="pie">
 				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.actualizarDatosAjax()}" update=":form:tblSolicitudDocumento,:frmDlgDocumentacion:tblOperacionDocumentoLegal,:frmDlgDocumentacion:tblOperacionDocumentoNegocios"></p:commandButton> 
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+	<p:dialog widgetVar="dlgCondicionDesembolso" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgCondicionDesembolso">
+		<div class="dsDlgDocumentacion dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="Condiciones de Requisitos de Legal"/>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid contenido">
+				<div class="ui-g-12 ui-md-12 ui-lg-12">
+					<p:dataTable id="tblDetalleFlgReqLegal" value="#{mblistadesembolsogarantia.lstDetalleFlagsReqLegal}" var="item" styleClass="dsTabla1" paginator="false" rows="6" paginatorPosition="bottom"
+							 rowKey="#{row}" reflow="true" rowIndexVar="row" >
+					 	<f:facet name="header">
+			                <div class="dsCuadrarCentroEspacioentre">
+			                	 <p:outputLabel value="Detalle Flags Requisitos Legal" styleClass="dsLabel1"/>	
+			                </div>
+			            </f:facet>
+					    <p:column headerText="N°" styleClass="dsTextoCentro"  width="5%">
+								<h:outputText value="#{row+1}" style="font-size: 13px !important;"/>
+						</p:column>
+						<p:column headerText="Descripción" styleClass="dsTextoCentro" width="40%">
+						    <div class="dsTextoCorto">
+							    <h:outputText value="#{item.descripcionFlag}" style="font-size: 13px !important;"/>
+						    </div>
+						</p:column>
+						<p:column headerText="Modo" styleClass="dsTextoCentro" width="25%">
+						    <div class="dsTextoCorto">
+							    <h:outputText value="#{item.descripcionModoIngresoFlag}" style="font-size: 13px !important;"/>
+						    </div>
+						</p:column>
+						<p:column headerText="Status" styleClass="dsTextoCentro" width="20%">
+						    <div class="dsTextoCorto">
+							    <h:outputText value="#{item.descripcionActualizacionFlag}" style="font-size: 13px !important;"
+							    styleClass="#{item.actualizacionFlag eq 0 ? 'dsText3 orange'
+									:item.actualizacionFlag eq 3 ? 'dsText3 green'
+									:item.actualizacionFlag eq 1 ? 'dsText3 red'
+									:'dsText3 blue'}"/>
+						    </div>
+						</p:column>
+						
+					</p:dataTable>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid pie">
+				<p:commandButton styleClass="dsBoton1 secundario" value="Aceptar" onclick="PF('dlgCondicionDesembolso').hide();"></p:commandButton>
 			</div>
 		</div>
 	</h:form>

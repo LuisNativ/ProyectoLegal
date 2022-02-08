@@ -59,6 +59,7 @@ public class MBListaTramiteOperativoSolicitud implements Serializable {
 	private EMensaje oEMensaje;
 	private EGarantia oEGarantiaData;
 	private EUsuario oEUsuario;
+	private EOperacionSolicitud oEOperacionSolicitudData;
 	private BOOperacion oBOOperacion;
 	private BOGarantia oBOGarantia;
 	
@@ -97,6 +98,8 @@ public class MBListaTramiteOperativoSolicitud implements Serializable {
 	@Getter @Setter private boolean renderizarBotonEvaluacionSolicitud;
 	@Getter @Setter private boolean renderizarBotonObservacion;
 	@Getter @Setter private boolean deshabilitarObservacionConformidad;
+	@Getter @Setter private boolean renderizarBotonAceptar;
+	@Getter @Setter private boolean renderizarBotonGrabarObservacion;
 
 	@Getter @Setter private List<EGeneral> lstValorSiNo;
 
@@ -115,6 +118,7 @@ public class MBListaTramiteOperativoSolicitud implements Serializable {
 		oBOSolicitudCredito = new BOSolicitudCredito();
 		oEGarantiaSelected = new EGarantia();
 		oEGarantiaData = new EGarantia();
+		oEOperacionSolicitudData = new EOperacionSolicitud();
 		oUManejadorListaDesplegable = new UManejadorListaDesplegable();
 		
 		oEOperacionDocumento = new EOperacionDocumento();
@@ -158,6 +162,8 @@ public class MBListaTramiteOperativoSolicitud implements Serializable {
 	    deshabilitarAdjuntaDocumento = false;
 	    visualizarEliminarDocumentoGarantia = true;
 	    deshabilitarObservacionConformidad = true;
+	    renderizarBotonAceptar = true;
+	    renderizarBotonGrabarObservacion = false;
 	}
 	
 	public void listarDesplegable(){
@@ -206,8 +212,12 @@ public class MBListaTramiteOperativoSolicitud implements Serializable {
 	
 	public void visualizarObservacionesSolicitud(EOperacionSolicitud oEOperacionSolicitudItem){
 		if(oEOperacionSolicitudItem != null){
+			oEOperacionSolicitudData = oEOperacionSolicitudItem;
 			listarObservacionSolicitudTramiteOperativo(oEOperacionSolicitudItem);
-			
+			deshabilitarObservacionConformidad = true;
+			observacionSolicitud = "";
+			renderizarBotonAceptar = true;
+			renderizarBotonGrabarObservacion = false;
 			RequestContext.getCurrentInstance().execute("PF('dlgObservacionSolicitud').show();");
 		}
 	}
@@ -216,8 +226,50 @@ public class MBListaTramiteOperativoSolicitud implements Serializable {
 		if(oEOperacionSolicitudItem != null){
 			observacionSolicitud = oEOperacionSolicitudItem.getObservacionConformidad();
 			deshabilitarObservacionConformidad = true;
+			
 		}
 	}
+	public void nuevaObservacionSolicitud(){
+		observacionSolicitud = "";
+		renderizarBotonAceptar = false;
+		renderizarBotonGrabarObservacion = true;
+		deshabilitarObservacionConformidad = false;
+	}
+	
+	public void cancelarObservacionSolicitud(){
+		observacionSolicitud = "";
+		renderizarBotonAceptar = true;
+		renderizarBotonGrabarObservacion = false;
+		deshabilitarObservacionConformidad = true;
+	}
+	
+	public void procesarObservacionSolicitud(){
+		if(oEOperacionSolicitudData.getCodigoSolicitud()!= 0){
+			if(!observacionSolicitud.equals("")){
+				EOperacionSolicitud eOperacionSolicitud =  oEOperacionSolicitudData;
+				eOperacionSolicitud.setObservacionConformidad(observacionSolicitud);
+				eOperacionSolicitud.setUsuarioRegistro(oEUsuario);
+				oEMensaje = oBOGarantia.agregarObservacionTramiteOperativoSolicitud(eOperacionSolicitud);
+				
+				deshabilitarObservacionConformidad = true;
+				observacionSolicitud = "";
+				renderizarBotonAceptar = true;
+				renderizarBotonGrabarObservacion = false;
+				UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
+				RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
+			}
+		}
+		
+		
+	}
+	
+	public void actualizarDatosAjax(){
+		if(oEOperacionSolicitudData.getCodigoSolicitud()!=0){
+			listarObservacionSolicitudTramiteOperativo(oEOperacionSolicitudData);
+		}
+		
+	}
+	
 
 	public EGarantia getoEGarantiaData() {
 		return oEGarantiaData;
