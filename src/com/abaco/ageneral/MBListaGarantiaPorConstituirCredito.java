@@ -136,7 +136,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 		List<EGarantiaSolicitud> lstGarantiaSol = oBOGarantia.listarSolicitudAsociadaGarantia(0, "");
 		if(lstGarantiaSol != null){
 			for(EGarantiaSolicitud obj: lstGarantiaSol){
-				if(obj.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS && obj.getCodigoEstadoEvaluacionLegal() == 1){
+				if(obj.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS && obj.getCodigoEstadoEvaluacionLegal().equals("1")){
 					lstGarantiaSolicitudNueva.add(obj);
 				}
 			}
@@ -151,7 +151,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 		if(lstGarantiaSol != null){
 			for(EGarantiaSolicitud obj: lstGarantiaSol){
 				if(obj.getCodigoEstadoGarantiaSolicitud() != UEstado.REGISTRADOGARANTIAPENDIENTE && 
-				   obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES && obj.getCodigoEstadoEvaluacionLegal() == 1){
+				   obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES && obj.getCodigoEstadoEvaluacionLegal().equals("1")){
 					    	lstGarantiaSolicitudExistente.add(obj);			
 				}
 			}
@@ -169,7 +169,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 			lstGarantiaSolicitudNueva = new ArrayList<EGarantiaSolicitud>();
 			if(lstGarantiaSol != null){
 				for(EGarantiaSolicitud obj: lstGarantiaSol){
-					if(obj.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS && obj.getCodigoEstadoEvaluacionLegal() == 1){
+					if(obj.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS && obj.getCodigoEstadoEvaluacionLegal().equals("1")){
 						lstGarantiaSolicitudNueva.add(obj);
 					}
 				}
@@ -178,7 +178,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 			lstGarantiaSolicitudExistente = new ArrayList<EGarantiaSolicitud>();
 			if(lstGarantiaSol != null){
 				for(EGarantiaSolicitud obj: lstGarantiaSol){
-					if(obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES && obj.getCodigoEstadoEvaluacionLegal() == 1){
+					if(obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES && obj.getCodigoEstadoEvaluacionLegal().equals("1")){
 						lstGarantiaSolicitudExistente.add(obj);
 					}
 				}

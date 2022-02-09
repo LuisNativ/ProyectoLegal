@@ -113,7 +113,8 @@ public @Data class EGarantiaSolicitud {
 	private double valorPoliza;
 	private int codigoCiaSeguro;
 	private String descripcionCiaSeguro;
-	private int codigoEstadoEvaluacionLegal;
+	//private int codigoEstadoEvaluacionLegal;
+	private String codigoEstadoEvaluacionLegal;
 	private double saldoDisponible;
 	private String tipoIngreso; //Manual/Automático
 	private Date fechaComercial;

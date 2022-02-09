@@ -205,7 +205,7 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 			if(lstGarantiaSol != null){
 				for(EGarantiaSolicitud obj: lstGarantiaSol){
 					if(obj.getCodigoEstadoGarantiaSolicitud() != UEstado.PENDIENTEGARANTIAREGISTRO &&
-					   obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES && obj.getCodigoEstadoEvaluacionLegal() == 6){
+					   obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES){
 						lstGarantiaSolicitudExistente.add(obj);
 					}
 				}

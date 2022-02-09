@@ -2721,7 +2721,7 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantia.setCodigoNroIngresoGarantia(oResultSet.getInt("GARANI"));
 					oEGarantia.setAbreviacionMonedaSolicitud(oResultSet.getString("ABRVMON"));
 					oEGarantia.setDescripcionMonedaSolicitud(oResultSet.getString("DESCMON"));
-					oEGarantia.setCodigoEstadoEvaluacionLegal(oResultSet.getInt("STALEG"));
+					oEGarantia.setCodigoEstadoEvaluacionLegal(UFuncionesGenerales.revisaCadena(oResultSet.getString("STALEG")));
 					//oEGarantia.setObservacion(oResultSet.getString("OBSERV"));
 					
 					lstGarantia.add(oEGarantia);
