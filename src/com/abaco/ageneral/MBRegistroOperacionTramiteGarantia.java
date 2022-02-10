@@ -244,13 +244,10 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 	
 	
 		
-		if(UAccionExterna.NUEVO == accionExterna){
-			//oEMensaje = oBOGarantia.agregarGarantiaTramite(oEGarantiaTramite);
+		if(UAccionExterna.NUEVO == accionExterna){			
 			oEMensaje = oBOGarantia.agregarModificarGarantiaTramite(oEGarantiaTramite,oEGarantiaAsientoTramite);
 		}else if(UAccionExterna.EDITAR == accionExterna){
-			oEMensaje = oBOGarantia.agregarModificarGarantiaTramite(oEGarantiaTramite,oEGarantiaAsientoTramite);
-			//oEMensaje = oBOGarantia.modificarGarantiaTramite(oEGarantiaTramite);
-			
+			oEMensaje = oBOGarantia.agregarModificarGarantiaTramite(oEGarantiaTramite,oEGarantiaAsientoTramite);			
 		}
 		
      	UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());

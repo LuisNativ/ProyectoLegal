@@ -1246,26 +1246,6 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	//End: Para Dialog: dlgBuscarCiaSeguro
 	
 	//Begin: Para Dialog: dlgBuscarGarantia
-	public void buscarGarantiaVinculada(){
-		oEGarantiaData.setCodigoUbigeo(UFuncionesGenerales.convierteCadenaAEntero(
-				UFuncionesGenerales.convertirEnteroACadenaUbigeo(codigoDepartamentoGarantia) + 
-				UFuncionesGenerales.convertirEnteroACadenaUbigeo(codigoProvinciaGarantia) + 
-				UFuncionesGenerales.convertirEnteroACadenaUbigeo(codigoDistritoGarantia)));
-		if(oEGarantiaSolicitudLoad.getNumeroGarantiaReal() != 0){
-			oEGarantiaData.setCodigoGarantia(oEGarantiaSolicitudLoad.getNumeroGarantiaReal());
-		}
-		
-		lstGarantiaVinculada = oBOGarantia.listarGarantiaVinculada(oEGarantiaData);
-		
-		if( lstGarantiaVinculada!= null && !lstGarantiaVinculada.isEmpty()){
-			//lstGarantiaDetalle = oBOGarantia.listarGarantiaDetalle(lstGarantiaVinculada.get(0));
-			lstGarantiaDetalle = oBOGarantia.listarClientesGarantizados(lstGarantiaVinculada.get(0));
-		}else{
-			lstGarantiaDetalle = new ArrayList<EAsignacionContratoGarantia>();
-		}
-		
-		RequestContext.getCurrentInstance().execute("PF('dlgBuscarGarantia').show();");
-	}
 	
 	public void solicitarNuevoAsiento(){
 

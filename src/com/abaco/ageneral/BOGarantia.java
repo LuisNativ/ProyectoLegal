@@ -24,10 +24,6 @@ public class BOGarantia {
 		return resultado;
 	}
 	
-	public EMensaje agregarGarantiaDetalle(EGarantia eGarantia){
-		EMensaje resultado=oCGarantia.agregarGarantiaDetalle(eGarantia);
-		return resultado;
-	}
 	
 	public EMensaje registrarGarantiaSolicitudAnexoF7325(){
 		EMensaje resultado=oCGarantia.registrarGarantiaSolicitudAnexoF7325();
@@ -128,10 +124,6 @@ public class BOGarantia {
 		EMensaje resultado=oCGarantia.modificarDocumentoGarantia(eGarantia) ;
 		return resultado;
 	}
-	public EMensaje agregarGarantiaTramite(EGarantiaTramite eGarantiaTramite) {
-		EMensaje resultado=oCGarantia.agregarGarantiaTramite(eGarantiaTramite);
-		return resultado;
-	}
 	public EMensaje agregarModificarGarantiaTramite(EGarantiaTramite eGarantiaTramite,EGarantiaTramite eGarantiaTramiteAsiento) {
 		EMensaje resultado=oCGarantia.agregarModificarGarantiaTramite(eGarantiaTramite,eGarantiaTramiteAsiento);
 		return resultado;
@@ -223,11 +215,7 @@ public class BOGarantia {
 		EMensaje resultado=oCGarantia.actualizarGarantiaSolicitud(eGarantiaSolicitud,eGarantiaDetalleSolicitud,oEGarantiaAsociadaSolicitud);
 		return resultado;
 	}
-	
-	public EMensaje modificarGarantiaTramite(EGarantiaTramite eGarantiaTramite) {
-		EMensaje resultado=oCGarantia.modificarGarantiaTramite(eGarantiaTramite);
-		return resultado;
-	}
+
 	public List<EGarantiaSolicitud> listarGarantiaPorLiberar(int codigo, String descripcion){					
 		List<EGarantiaSolicitud> lista=oCGarantia.listarGarantiaPorLiberar(codigo, descripcion);
 		return lista;
@@ -325,14 +313,6 @@ public class BOGarantia {
 		List<EGarantiaSolicitud> lista=oCGarantia.listarGarantiaConCreditoVigente(codigo, descripcion);
 		return lista;
 	}
-	public List<EGarantia> listarGarantiaVinculada(EGarantia eGarantia){					
-		List<EGarantia> lista=oCGarantia.listarGarantiaVinculada(eGarantia);
-		return lista;
-	}
-	public List<EGarantia> listarGarantiaDetalle(EGarantia eGarantia ) {					
-		List<EGarantia> lista=oCGarantia.listarGarantiaDetalle(eGarantia);
-		return lista;
-	}
 	public List<EAsignacionContratoGarantia> listarCreditosAsociadosGarantia(long codigoGarantia) {					
 		List<EAsignacionContratoGarantia> lista=oCGarantia.listarCreditosAsociadosGarantia(codigoGarantia);
 		return lista;
@@ -340,10 +320,6 @@ public class BOGarantia {
 	public EMensaje eliminarPoliza(EPoliza ePoliza) {
 		EMensaje resultado=oCGarantia.eliminarPoliza(ePoliza);
 		return resultado;
-	}
-	public List<EAsignacionContratoGarantia> listarClientesGarantizados(EGarantia eGarantia ) {					
-		List<EAsignacionContratoGarantia> lista=oCGarantia.listarClientesGarantizados(eGarantia);
-		return lista;
 	}
 	public List<EGarantiaTramite> listarHistoricoTramiteGarantia(long codigoGarantia){					
 		List<EGarantiaTramite> lista=oCGarantia.listarHistoricoTramiteGarantia(codigoGarantia);
@@ -360,10 +336,6 @@ public class BOGarantia {
 	public List<EGarantiaSolicitud> listarHistoricoGarantiaSolicitud(int codigo, String descripcion){					
 		List<EGarantiaSolicitud> lista=oCGarantia.listarHistoricoGarantiaSolicitud(codigo, descripcion);
 		return lista;
-	}
-	public EMensaje agregaGarantiaPendienteRegistro(EGarantiaSolicitud eOGarantiaSolicitud){					
-		EMensaje resultado=oCGarantia.agregaGarantiaPendienteRegistro(eOGarantiaSolicitud);
-		return resultado;
 	}
 	
 	public List<EGarantiaSolicitud> listarSolicitudAsociadaGarantia(int codigo, String descripcion){					
@@ -408,10 +380,6 @@ public class BOGarantia {
 	}
 	public  EGarantiaTramite buscarUltimoAsientoGarantiaTramite(long codigoGarantia){					
 		EGarantiaTramite lista=oCGarantia.buscarUltimoAsientoGarantiaTramite(codigoGarantia);
-		return lista;
-	}
-	public  EOperacionDocumento buscarSolicitudDesembolsoGarantia(EGarantia eGarantia){					
-		EOperacionDocumento lista=oCGarantia.buscarSolicitudDesembolsoGarantia(eGarantia);
 		return lista;
 	}
 	public  EGarantia buscarCaracteristicaInmueblePredio(int nroSolicitud){					

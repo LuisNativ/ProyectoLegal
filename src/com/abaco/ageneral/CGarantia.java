@@ -151,36 +151,6 @@ public class CGarantia {
 		return mensaje;
 	}
 	
-	public EMensaje agregarGarantiaDetalle(EGarantia eGarantia){
-		IConexion oIConexion = null;
-		EMensaje mensaje = new EMensaje();
-		DAOGarantia oDAOGarantia= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();
-			oIConexion.iniciaTransaccion();
-			oDAOGarantia= new DAOGarantia(oIConexion);
-			
-			mensaje = oDAOGarantia.agregarGarantiaDetalle(eGarantia);
-			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-				throw new Exception(mensaje.getDescMensaje());
-			}
-			
-			oIConexion.ejecutaCommit();
-		} catch (Exception e) {
-			if (oIConexion != null) {
-				oIConexion.ejecutaRollback();
-			}
-			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
-			UManejadorLog.error("Control: Error al agregar detalle garantía : " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return mensaje;
-	}
-	
-	
 	public EMensaje registrarGarantiaSolicitudAnexoF7325(){
 		IConexion oIConexion = null;
 		EMensaje mensaje = new EMensaje();
@@ -398,24 +368,6 @@ public class CGarantia {
 			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
 				throw new Exception(mensaje.getDescMensaje());
 			}
-			/*
-			oEOperacionDocumento = oDAOGarantia.buscarSolicitudDesembolsoGarantia(eGarantia);
-			
-			if(oEOperacionDocumento != null){
-				eGarantia.setNumeroSolicitud(oEOperacionDocumento.getCodigoSolicitud());
-				eGarantia.setCodigoGarantia(oEOperacionDocumento.getCodigoGarantia());
-				eGarantia.setTipoDocumento(oEOperacionDocumento.getTipoDocumento());
-				eGarantia.setEstadoDesembolso(oEOperacionDocumento.getEstadoDesembolso());
-				eGarantia.setCondicionDesembolso1(UEstado.FIRMACONFIRMADA);
-				eGarantia.setCondicionDesembolso2(oEOperacionDocumento.getCondicionDesembolso2());
-				eGarantia.setCondicionDesembolso3(oEOperacionDocumento.getCondicionDesembolso3());
-				eGarantia.setCondicionDesembolso4(oEOperacionDocumento.getCondicionDesembolso4());
-				mensaje = oDAOGarantia.modificarSolicitudDesembolsoGarantia(eGarantia) ;
-				if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-					throw new Exception(mensaje.getDescMensaje());
-				}
-			}
-			*/
 			
 			oIConexion.ejecutaCommit();
 		} catch (Exception e) {
@@ -446,24 +398,6 @@ public class CGarantia {
 			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
 				throw new Exception(mensaje.getDescMensaje());
 			}
-			/*
-			oEOperacionDocumento = oDAOGarantia.buscarSolicitudDesembolsoGarantia(eGarantia);
-			
-			if(oEOperacionDocumento != null){
-				eGarantia.setNumeroSolicitud(oEOperacionDocumento.getCodigoSolicitud());
-				eGarantia.setCodigoGarantia(oEOperacionDocumento.getCodigoGarantia());
-				eGarantia.setTipoDocumento(oEOperacionDocumento.getTipoDocumento());
-				eGarantia.setEstadoDesembolso(oEOperacionDocumento.getEstadoDesembolso());
-				eGarantia.setCondicionDesembolso1(oEOperacionDocumento.getCondicionDesembolso1());
-				eGarantia.setCondicionDesembolso2(oEOperacionDocumento.getCondicionDesembolso2());
-				eGarantia.setCondicionDesembolso3(UEstado.FIRMACONFIRMADA);
-				eGarantia.setCondicionDesembolso4(oEOperacionDocumento.getCondicionDesembolso4());
-				mensaje = oDAOGarantia.modificarSolicitudDesembolsoGarantia(eGarantia) ;
-				if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-					throw new Exception(mensaje.getDescMensaje());
-				}
-			}*/
-			
 			
 			oIConexion.ejecutaCommit();
 		} catch (Exception e) {
@@ -951,34 +885,6 @@ public class CGarantia {
 		return mensaje;
 	} 
 	
-	public EMensaje agregarGarantiaTramite(EGarantiaTramite eGarantiaTramite) {
-		IConexion oIConexion = null;
-		EMensaje mensaje = new EMensaje();
-		DAOGarantia oDAOGarantia= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();
-			oIConexion.iniciaTransaccion();
-			oDAOGarantia= new DAOGarantia(oIConexion);
-			
-			mensaje = oDAOGarantia.agregarGarantiaTramite(eGarantiaTramite);
-			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-				throw new Exception(mensaje.getDescMensaje());
-			}
-			
-			oIConexion.ejecutaCommit();
-		} catch (Exception e) {
-			if (oIConexion != null) {
-				oIConexion.ejecutaRollback();
-			}
-			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
-			UManejadorLog.error("Control CGarantia: Error al agregar garantía : " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return mensaje;
-	}
 	
 	public EMensaje agregarModificarGarantiaTramite(EGarantiaTramite eGarantiaTramite,EGarantiaTramite eGarantiaTramiteAsiento) {
 		IConexion oIConexion = null;
@@ -1525,34 +1431,6 @@ public class CGarantia {
 		return mensaje;
 	}
 	
-	public EMensaje modificarGarantiaTramite(EGarantiaTramite eGarantiaTramite) {
-		IConexion oIConexion = null;
-		EMensaje mensaje = new EMensaje();
-		DAOGarantia oDAOGarantia= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();
-			oIConexion.iniciaTransaccion();
-			oDAOGarantia= new DAOGarantia(oIConexion);
-			
-			mensaje = oDAOGarantia.modificarGarantiaTramite(eGarantiaTramite);
-			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-				throw new Exception(mensaje.getDescMensaje());
-			}
-			
-			oIConexion.ejecutaCommit();
-		} catch (Exception e) {
-			if (oIConexion != null) {
-				oIConexion.ejecutaRollback();
-			}
-			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
-			UManejadorLog.error("Control CGarantia: Error al Modificar Trámite garantía : " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return mensaje;
-	}
 	
 	public EMensaje modificarGarantiaSolicitud(EGarantiaSolicitud eGarantiaSolicitud){
 		IConexion oIConexion = null;
@@ -2156,42 +2034,6 @@ public class CGarantia {
 		return resultado;
 	}
 	
-	public List<EGarantia> listarGarantiaVinculada(EGarantia eGarantia){
-		IConexion oIConexion = null;
-		List<EGarantia> resultado = null;
-		DAOGarantia oDAOGarantia= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOGarantia = new DAOGarantia(oIConexion);
-			resultado = oDAOGarantia.listarGarantiaVinculada(eGarantia);			
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al listar  " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
-	public List<EGarantia> listarGarantiaDetalle(EGarantia eGarantia ) {
-		IConexion oIConexion = null;
-		List<EGarantia> resultado = null;
-		DAOGarantia oDAOGarantia= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOGarantia = new DAOGarantia(oIConexion);
-			resultado = oDAOGarantia.listarGarantiaDetalle(eGarantia);			
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al listar  " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
 	public List<EAsignacionContratoGarantia> listarCreditosAsociadosGarantia(long codigoGarantia){
 		IConexion oIConexion = null;
 		List<EAsignacionContratoGarantia> resultado = null;
@@ -2240,23 +2082,6 @@ public class CGarantia {
 		return mensaje;
 	}
 	
-	public List<EAsignacionContratoGarantia> listarClientesGarantizados(EGarantia eGarantia ) {
-		IConexion oIConexion = null;
-		List<EAsignacionContratoGarantia> resultado = null;
-		DAOGarantia oDAOGarantia= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOGarantia = new DAOGarantia(oIConexion);
-			resultado = oDAOGarantia.listarClientesGarantizados(eGarantia);			
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al listar  " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
 	
 	public List<EGarantiaTramite> listarHistoricoTramiteGarantia(long codigoGarantia){
 		IConexion oIConexion = null;
@@ -2330,34 +2155,6 @@ public class CGarantia {
 		return resultado;
 	}
 	
-	public EMensaje agregaGarantiaPendienteRegistro(EGarantiaSolicitud eOGarantiaSolicitud) {
-		IConexion oIConexion = null;
-		EMensaje mensaje = new EMensaje();
-		DAOGarantia oDAOGarantia= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();
-			oIConexion.iniciaTransaccion();
-			oDAOGarantia= new DAOGarantia(oIConexion);
-			
-			mensaje = oDAOGarantia.agregaGarantiaPendienteRegistro(eOGarantiaSolicitud);
-			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-				throw new Exception(mensaje.getDescMensaje());
-			}
-			
-			oIConexion.ejecutaCommit();
-		} catch (Exception e) {
-			if (oIConexion != null) {
-				oIConexion.ejecutaRollback();
-			}
-			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
-			UManejadorLog.error("Control CGarantia: Error al agregar Garantía Pendiente de Registro : " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return mensaje;
-	}
 	
 	public List<EGarantia> listarGarantiaVigente(int codigo, String descripcion){
 		IConexion oIConexion = null;
@@ -2584,24 +2381,6 @@ public class CGarantia {
 		return resultado;
 	}
 	
-	public EOperacionDocumento buscarSolicitudDesembolsoGarantia(EGarantia eGarantia){
-		IConexion oIConexion = null;
-		EOperacionDocumento resultado = null;
-		DAOGarantia oDAOGarantia= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOGarantia = new DAOGarantia(oIConexion);
-			resultado = oDAOGarantia.buscarSolicitudDesembolsoGarantia(eGarantia);	
-			
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al obtener: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
 	
 	public EGarantia buscarCaracteristicaInmueblePredio(int nroSolicitud){
 		IConexion oIConexion = null;
