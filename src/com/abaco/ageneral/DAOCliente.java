@@ -31,12 +31,10 @@ import com.abaco.persistencia.interfaces.IConexion;
 
 public class DAOCliente extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_INS_TERCERO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_TERCERO("+parametrosSP(29)+") }";
-	//private static final String SP_ABACOINLEGAL_INS_OPERACION_HISTORICO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OPERACION_HISTORICO("+parametrosSP(65)+") }";
-	private static final String SP_ABACOINLEGAL_INS_OPERACION_HISTORICO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OPERACION_HISTORICO("+parametrosSP(122)+") }";
+	private static final String SP_ABACOINLEGAL_INS_CLIENTE_HISTORICO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_CLIENTE_HISTORICO("+parametrosSP(122)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_SOCIO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_SOCIO("+parametrosSP(14)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_POSTULANTE="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_POSTULANTE("+parametrosSP(14)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_TERCERO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_TERCERO("+parametrosSP(30)+") }";
-	private static final String FICHA_SEL_SOCIO = "{ CALL INTRANET.FICHA_SEL_SOCIO(?,?) }";
 	private static final String SP_ABACOINLEGAL_SEL_SOCIO = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_SOCIO(?,?) }";
 	private static final String SP_ABACOINLEGAL_SEL_POSTULANTE = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_POSTULANTE(?,?) }";
 	private static final String SP_ABACOINLEGAL_SEL_TERCERO = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_TERCERO(?,?,?) }";
@@ -53,7 +51,6 @@ public class DAOCliente extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_BUS_USUARIO_DETALLE ="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_USUARIO_DETALLE("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_SOCIO_CONSTITUCIONEMPRESA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_SOCIO_CONSTITUCIONEMPRESA("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_CLIENTE_ADICIONAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_CLIENTE_ADICIONAL("+parametrosSP(2)+") }";
-	private static final String SP_ABACOINLEGAL_BUS_AUTONOMIA_USUARIO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_AUTONOMIA_USUARIO("+parametrosSP(1)+") }";
 
 	
 	private static String parametrosSP(int numeroDeParametros) {
@@ -73,7 +70,7 @@ public class DAOCliente extends InstanciaAcceso{
 		super(objConexion);
 	}
 	
-	public EMensaje agregarHistoricoCliente(EEvaluacionSolicitudCreditoLegal eEvaluacionSolicitudCreditoLegal, EInformeLegalAdicional eEInformeLegalAdicional, ECliente eCliente, EClienteConstitucionEmpresa eClienteConstitucionEmpresa, EClienteAdicional eClienteAdicional) {
+	public EMensaje agregarClienteHistorico(EEvaluacionSolicitudCreditoLegal eEvaluacionSolicitudCreditoLegal, EInformeLegalAdicional eEInformeLegalAdicional, ECliente eCliente, EClienteConstitucionEmpresa eClienteConstitucionEmpresa, EClienteAdicional eClienteAdicional) {
 		EMensaje mensaje = new EMensaje();
 		List<Object> lstParametrosEntrada;
 		SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
@@ -213,7 +210,7 @@ public class DAOCliente extends InstanciaAcceso{
 			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getFechaRegistro());
 			lstParametrosEntrada.add(formato.format(eEvaluacionSolicitudCreditoLegal.getFechaRegistro()));
 			
-			mensaje = objConexion.ejecutaTransaccion(SP_ABACOINLEGAL_INS_OPERACION_HISTORICO, lstParametrosEntrada);
+			mensaje = objConexion.ejecutaTransaccion(SP_ABACOINLEGAL_INS_CLIENTE_HISTORICO, lstParametrosEntrada);
 		} catch(Exception objEx) {
 			mensaje.setIdMensaje(-1);
 			mensaje.setDescMensaje(objEx.getMessage());
@@ -382,54 +379,6 @@ public class DAOCliente extends InstanciaAcceso{
 		}
 		return mensaje;
 	}
-	
-	/*
-	public List<EPersona> listarSocio(EPersonaParametro objEPersonaParam) {
-		List<EPersona> lstPersona = new ArrayList<EPersona>();
-		EPersona objEPersona = null;
-		EDocumentoIdentidad objEDocumentoIdentidad = null;
-		ETipoDocumentoPersona objETipoDocumentoPersona = null;
-		List<Object> lstParametrosEntrada = null;
-
-		try {
-
-			lstParametrosEntrada = new ArrayList<Object>();
-			lstParametrosEntrada.add(objEPersonaParam.getCodPersona());
-			lstParametrosEntrada.add(UFuncionesGenerales
-					.convierteCadenaMayuscula(objEPersonaParam
-							.getNombrePersona()));
-
-			ResultSet objResultSet = objConexion.ejecutaConsulta(
-					FICHA_SEL_SOCIO, lstParametrosEntrada, null);
-
-			if (objResultSet != null) {
-				while (objResultSet.next()) {
-					objEPersona = new EPersona();
-					objETipoDocumentoPersona = new ETipoDocumentoPersona();
-					objEDocumentoIdentidad = new EDocumentoIdentidad();
-					objEPersona.setCodigo(objResultSet.getInt("CODCLI"));
-					objETipoDocumentoPersona.setCodigo(UFuncionesGenerales.revisaCadena(objResultSet.getString("TIPDOC")));
-					objETipoDocumentoPersona.setNombreCorto(UFuncionesGenerales.convierteCadenaMayuscula(objResultSet.getString("DESTIPDOC")));
-					objETipoDocumentoPersona.setDescripcion(UFuncionesGenerales.convierteCadenaMayuscula(objResultSet.getString("DESTIPDOC")));
-					objEDocumentoIdentidad.setTipoDocumento(objETipoDocumentoPersona);
-					objEDocumentoIdentidad.setDocumento(UFuncionesGenerales.revisaCadena(objResultSet.getString("DOCUME")));
-					objEPersona.setDocumentoIdentidad(objEDocumentoIdentidad);
-					objEPersona.setNombre(UFuncionesGenerales.convierteCadenaMayuscula(objResultSet.getString("NOMBCL")));
-					objEPersona.setClasePersona(UFuncionesGenerales.revisaCadena(objResultSet.getString("CLAPER")));
-					objEPersona.setCodigoEstado(UFuncionesGenerales.revisaCadena(objResultSet.getString("CLAESP")));
-					objEPersona.setDescripcionEstado(UFuncionesGenerales.revisaCadena(objResultSet.getString("STATE")));
-
-					lstPersona.add(objEPersona);
-				}
-				objConexion.cierraConsulta(objResultSet);
-			}
-		} catch (Exception objEx) {
-			UManejadorLog.error(
-					"Acceso: Error al obtener el listado de Socio: ", objEx);
-		}
-		return lstPersona;
-	}
-	*/
 	
 	public List<EPersona> listarSocio(EPersonaParametro objEPersonaParam) {
 		List<EPersona> lstPersona = new ArrayList<EPersona>();
@@ -1261,32 +1210,4 @@ public class DAOCliente extends InstanciaAcceso{
 		}
 		return oEClienteAdicional;
 	}
-	
-	public EUsuario buscarPermisoUsuario(String nombreUsuario) {
-		List<Object> lstParametrosEntrada = null;
-		ResultSet objResultSet = null;
-		EUsuario oEUsuario = null;
-
-		try {
-			lstParametrosEntrada = new ArrayList<Object>();
-			lstParametrosEntrada.add(nombreUsuario);
-			objResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_BUS_AUTONOMIA_USUARIO, lstParametrosEntrada, null);
-			if (objResultSet != null) {
-				if (objResultSet.next()) {
-					oEUsuario = new EUsuario();
-					oEUsuario.setCodigoCliente(objResultSet.getInt("CODUSU"));
-					oEUsuario.setIdUsuario(objResultSet.getInt("CODUSU"));
-					oEUsuario.setCodigoAutonomia(objResultSet.getInt("CODAUT"));
-					oEUsuario.setCodigoArea(objResultSet.getInt("CODAREA"));
-
-				}
-				objConexion.cierraConsulta(objResultSet);
-			}
-		} catch (Exception objEx) {
-			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
-		}
-		return oEUsuario;
-	}
-	
-	
 }

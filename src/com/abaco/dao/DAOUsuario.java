@@ -32,7 +32,7 @@ public class DAOUsuario extends InstanciaAcceso {
 	private static final String SP_GET_MENU = "{ CALL APP_WEBSI.SP_GET_MENU(?) }";
 	private static final String SP_GET_PERMISOS = "{ CALL APP_WEBSI.SP_GET_PERMISOS(?,?) }";
 	private static final String SP_ABACOINLEGAL_SEL_MENU_USUARIO = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_MENU_USUARIO(?,?) }";
-	private static final String SP_ABACOINLEGAL_BUS_USUARIO = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_USUARIO2(?) }"; //BDLOCAL
+	private static final String SP_ABACOINLEGAL_BUS_USUARIO = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_USUARIO(?) }";
 	
 	public DAOUsuario(IConexion objConexion) {
 		super(objConexion);
@@ -288,8 +288,7 @@ public class DAOUsuario extends InstanciaAcceso {
 					objEUsuario.setNombreCompleto(UFuncionesGenerales.revisaCadena(objResultSet.getString("A015_NOMBRECOMPLETO")));
 					objEUsuario.setNombreUsuarioSIAF(UFuncionesGenerales.revisaCadena(objResultSet.getString("A015_USUARI")));
 					objEUsuario.setCodigoArea(objResultSet.getInt("CODAREA"));
-					objEUsuario.setIndicadorJefeInmediato(objResultSet.getInt("INDJEFINM"));
-					objEUsuario.setCodigoUbicacion(objResultSet.getInt("CODUBI"));
+					objEUsuario.setCodigoAutonomia(objResultSet.getInt("CODAUT"));
 					
 				}
 				objConexion.cierraConsulta(objResultSet);
@@ -367,7 +366,7 @@ public class DAOUsuario extends InstanciaAcceso {
 					objEUsuario.setNombreCompleto(UFuncionesGenerales.revisaCadena(objResultSet.getString("A015_NOMBRECOMPLETO")));
 					objEUsuario.setNombreUsuarioSIAF(UFuncionesGenerales.revisaCadena(objResultSet.getString("A015_USUARI")));
 					objEUsuario.setCodigoArea(objResultSet.getInt("CODAREA"));
-
+					objEUsuario.setCodigoAutonomia(objResultSet.getInt("CODAUT"));
 				}
 				objConexion.cierraConsulta(objResultSet);
 			}
@@ -433,6 +432,7 @@ public class DAOUsuario extends InstanciaAcceso {
 					objEUsuario.setNombreCompleto(UFuncionesGenerales.revisaCadena(objResultSet.getString("A015_NOMBRECOMPLETO")));
 					objEUsuario.setNombreUsuarioSIAF(UFuncionesGenerales.revisaCadena(objResultSet.getString("A015_USUARI")));
 					objEUsuario.setCodigoArea(objResultSet.getInt("CODAREA"));
+					objEUsuario.setCodigoAutonomia(objResultSet.getInt("CODAUT"));
 				}
 				objConexion.cierraConsulta(objResultSet);
 			}

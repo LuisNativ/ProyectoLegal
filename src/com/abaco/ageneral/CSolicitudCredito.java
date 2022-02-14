@@ -22,24 +22,6 @@ import com.abaco.servicio.laserfiche.Mensaje;
 
 public class CSolicitudCredito {
 	
-	public List<EEvaluacionSolicitudCreditoLegal> listarInformeLegalPorRegistrar(){
-		IConexion oIConexion = null;
-		List<EEvaluacionSolicitudCreditoLegal> resultado = null;
-		DAOSolicitudCredito oDAOSolicitudCredito= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOSolicitudCredito = new DAOSolicitudCredito(oIConexion);
-			resultado = oDAOSolicitudCredito.listarInformeLegalPorRegistrar();			
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al listar solicitud de credito " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
 	public List<EDeudor> listarDeudor(int codigoCliente, long numeroSolicitud){
 		IConexion oIConexion = null;
 		List<EDeudor> resultado = null;
@@ -230,43 +212,6 @@ public class CSolicitudCredito {
 			resultado = oDAOSolicitudCredito.listarClienteSuscripcion(numeroDocumento);			
 		} catch (Exception e) {
 			UManejadorLog.error("Control: Error al listar Suscripcion " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
-	public ECredito buscarCredito(long numeroSolicitud){
-		IConexion oIConexion = null;
-		ECredito resultado = null;
-		DAOSolicitudCredito oDAOSolicitudCredito= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOSolicitudCredito = new DAOSolicitudCredito(oIConexion);
-			resultado = oDAOSolicitudCredito.buscarCredito(numeroSolicitud);			
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al obtener credito " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
-	
-	public EEvaluacionSolicitudCreditoLegal buscarEvaluacionSolicitudCreditoLegal(long numeroSolicitud, int codigoCliente){
-		IConexion oIConexion = null;
-		EEvaluacionSolicitudCreditoLegal resultado = null;
-		DAOSolicitudCredito oDAOSolicitudCredito= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOSolicitudCredito = new DAOSolicitudCredito(oIConexion);
-			resultado = oDAOSolicitudCredito.buscarEvaluacionSolicitudCreditoLegal(numeroSolicitud, codigoCliente);			
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al obtener solicitud de credito " + e.getMessage());
 		} finally {
 			if (oIConexion != null) {
 				oIConexion.cierraConexion();

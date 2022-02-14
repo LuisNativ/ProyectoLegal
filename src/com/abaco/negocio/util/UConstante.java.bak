@@ -1021,11 +1021,25 @@ public class UConstante {
 		int INDIVIDUAL = 0;
 		int CONJUNTO = 1;
 	}
-
+	
 	public static interface UTipoTerceroPersona {
 		int NOTARIO = 1;
 		int TASADOR = 2;
 		int DEPOSITARIO = 3;
+	}
+	
+	public static interface UModoIngreso {
+		int AUTOMATICO = 1;
+		int MANUAL = 2;
+	}
+	
+	public static interface UActualizacionFlag {
+		int PENDIENTE = 1;
+		int CUMPLIDOPARCIAL = 2;
+		int CUMPLIDOTOTAL = 3;
+		int AUTORIZAJEFE = 4;
+		int CUMPLIDOALINGRESO = 5;
+		int AUTORIZADEFINITIVOJEFE = 6;
 	}
 	
 	public static interface UDatePattern {

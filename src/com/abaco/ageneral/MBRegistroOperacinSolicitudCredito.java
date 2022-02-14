@@ -80,6 +80,7 @@ import com.abaco.negocio.util.UConstante.UMoneda;
 import com.abaco.negocio.util.UConstante.URutaCarpetaCompartida;
 import com.abaco.negocio.util.UConstante.USistemaOperativo;
 import com.abaco.negocio.util.UConstante.UTipoArchivo;
+import com.abaco.negocio.util.UConstante.UTipoAutonomia;
 import com.abaco.negocio.util.UConstante.UTipoCliente;
 import com.abaco.negocio.util.UConstante.UTipoClienteSolicitudCredito;
 import com.abaco.negocio.util.UConstante.UTipoPersona;
@@ -197,8 +198,8 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 	//@Getter @Setter private List<EOperacionDocumento> lstOperacionDocumentoFiltro;
 	//@Getter @Setter private List<EOperacionDocumentoRevision> lstOperacionDocumentoRevision;
 	@Getter @Setter private List<EDocumentoCarga> lstDocumentoCarga;
-	@Getter @Setter private List<EDocumentoRequerido> lstDocumentoRequerido;
-	@Getter @Setter private List<EDocumentoRequerido> lstDocumentoRequeridoFiltro;
+	@Getter @Setter private List<EOperacionSolicitudCreditoDocumentoRequerido> lstOperacionSolicitudCreditoDocumentoRequerido;
+	@Getter @Setter private List<EOperacionSolicitudCreditoDocumentoRequerido> lstOperacionSolicitudCreditoDocumentoRequeridoFiltro;
 	@Getter @Setter private List<ERepresentanteLegal> lstRepresentanteLegal;
 	@Getter @Setter private List<ERepresentanteLegal> lstRepresentanteLegalRelacion;
 	@Getter @Setter private List<ERepresentanteLegal> lstRepresentanteLegalAval;
@@ -225,6 +226,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 	@Getter @Setter private List<EClienteHistorico> lstClienteHistorico;
 	//@Getter @Setter private List<EEstado> lstEstado;
 	@Getter @Setter private List<EGeneral> lstEstado;
+	@Getter @Setter private List<EGeneral> lstEstadoFiltro;
 	@Getter @Setter private List<EGeneral> lstNivel;
 	@Getter @Setter private List<EGeneral> lstMotivo;
 	@Getter @Setter private List<EGeneral> lstDOI;
@@ -482,8 +484,9 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 	
 	//Indicadores
 	//@Getter @Setter private int indicadorDigitalizacion;
-	private int indicadorTemporal;
-	@Getter @Setter private int indicadorGuardar;
+	//private int indicadorTemporal;
+	//@Getter @Setter private int indicadorGuardar;
+	private int indicadorMdlAutorizacion;
 	@Getter @Setter private int indicadorTabSeleccion;
 	@Getter @Setter private int indicadorTabSeleccionRepresentante;
 	@Getter @Setter private int indicadorTblSeleccionRepresentante;
@@ -629,8 +632,8 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 		//lstOperacionDocumentoFiltro = new ArrayList<EOperacionDocumento>();
 		//lstOperacionDocumentoRevision = new ArrayList<EOperacionDocumentoRevision>();
 		lstDocumentoCarga = new ArrayList<EDocumentoCarga>();
-		lstDocumentoRequerido = new ArrayList<EDocumentoRequerido>();
-		lstDocumentoRequeridoFiltro = new ArrayList<EDocumentoRequerido>();
+		lstOperacionSolicitudCreditoDocumentoRequerido = new ArrayList<EOperacionSolicitudCreditoDocumentoRequerido>();
+		lstOperacionSolicitudCreditoDocumentoRequeridoFiltro = new ArrayList<EOperacionSolicitudCreditoDocumentoRequerido>();
 		lstRepresentanteLegal = new ArrayList<ERepresentanteLegal>();
 		lstRepresentanteLegalRelacion = new ArrayList<ERepresentanteLegal>();
 		lstRepresentanteLegalAval = new ArrayList<ERepresentanteLegal>();
@@ -654,6 +657,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 		lstClienteHistorico = new ArrayList<EClienteHistorico>();
 		lstNotario = new ArrayList<ETercero>();
 		lstEstado = new ArrayList<EGeneral>();
+		lstEstadoFiltro = new ArrayList<EGeneral>();
 		lstNivel = new ArrayList<EGeneral>();
 		lstMotivo = new ArrayList<EGeneral>();
 		lstDOI = new ArrayList<EGeneral>();
@@ -750,6 +754,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 			if(UAccionExterna.EDITAR == accionExterna){
 				if (UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.FICHA_PARAMETRO) != null) {
 					oEOperacionSolicitudCreditoLoad = (EOperacionSolicitudCredito) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.FICHA_PARAMETRO);
+					indicadorMdlAutorizacion = oEOperacionSolicitudCreditoLoad.getIndicadorMdlAutorizacion();
 					//oEOpcionLoad = oBOOperacion.buscarOpcionPorSolicitud(oEOperacionSolicitudLoad.getCodigoSolicitud(), oEOperacionSolicitudLoad.getCodigoTipoEvaluacion(), oEUsuario);
 					oEOperacionSolicitudCreditoLoad = oBOOperacion.buscarEvaluacionSolicitudCredito(oEOperacionSolicitudCreditoLoad.getNumeroSolicitud(), oEOperacionSolicitudCreditoLoad.getCodigoTipoCliente(), oEOperacionSolicitudCreditoLoad.getCodigoCliente());
 					oEOperacionSolicitudCreditoData = oBOOperacion.buscarEvaluacionSolicitudCredito(oEOperacionSolicitudCreditoLoad.getNumeroSolicitud(), oEOperacionSolicitudCreditoLoad.getCodigoTipoCliente(), oEOperacionSolicitudCreditoLoad.getCodigoCliente());
@@ -839,7 +844,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 					}
 					
 					if(oEUsuario.getCodigoArea() == UArea.LEGAL){
-						codigoEstado = oEOperacionSolicitudCreditoLoad.getCodigoEstadoActual();
+						//codigoEstado = oEOperacionSolicitudCreditoLoad.getCodigoEstadoActual();
 						deshabilitarObservacionSolicitud = false;
 						deshabilitarObservacionLegal = false;
 						deshabilitarEstado = false;
@@ -877,24 +882,37 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 						}
 						*/
 						visualizarBtnGrabar = true;
-						codigoEstado = UEstadoLegal.ENEVALUACION;
+						//codigoEstado = UEstadoLegal.ENEVALUACION;
 						
-						//Si es Ejecutivo
+						/*
 						if(oEUsuario.getIndicadorJefeInmediato() == 0){
 							if(oEOperacionSolicitudCreditoLoad.getCodigoAutorizacion() == UEstadoAutorizacionJefe.NINGUNO && oEOperacionSolicitudCreditoLoad.getCodigoEstadoActual().equals(UEstadoLegal.OBSERVADO)){
 								visualizarBtnSolicitarAutorizacion = true;
 							}
-						//Si es Cargo Superior
 						}else if(oEUsuario.getIndicadorJefeInmediato() > 0){
 							if(oEOperacionSolicitudCreditoLoad.getCodigoAutorizacion() == UEstadoAutorizacionJefe.SOLICITADO){
 								visualizarBtnRechazarAutorizacion = true;
 								visualizarBtnConfirmarAutorizacionPendiente = true;
 								visualizarBtnGrabar = false;
-								codigoEstado = oEOperacionSolicitudCreditoLoad.getCodigoEstadoActual();
 							}else if(oEOperacionSolicitudCreditoLoad.getCodigoAutorizacion() == UEstadoAutorizacionJefe.AUTORIZADO){
 								visualizarBtnConfirmarAutorizacionCompletado = true;
 								visualizarBtnGrabar = false;
-								codigoEstado = oEOperacionSolicitudCreditoLoad.getCodigoEstadoActual();
+							}
+						}
+						*/
+						
+						if(oEUsuario.getCodigoAutonomia() == UTipoAutonomia.GERENCIAL || oEUsuario.getCodigoAutonomia() == UTipoAutonomia.JEFE){
+							if(oEOperacionSolicitudCreditoLoad.getCodigoAutorizacion() == UEstadoAutorizacionJefe.SOLICITADO){
+								visualizarBtnRechazarAutorizacion = true;
+								visualizarBtnConfirmarAutorizacionPendiente = true;
+								visualizarBtnGrabar = false;
+							}else if(oEOperacionSolicitudCreditoLoad.getCodigoAutorizacion() == UEstadoAutorizacionJefe.AUTORIZADO){
+								visualizarBtnConfirmarAutorizacionCompletado = true;
+								visualizarBtnGrabar = false;
+							}
+						}else {
+							if(oEOperacionSolicitudCreditoLoad.getCodigoAutorizacion() == UEstadoAutorizacionJefe.NINGUNO && oEOperacionSolicitudCreditoLoad.getCodigoEstadoActual().equals(UEstadoLegal.OBSERVADO)){
+								visualizarBtnSolicitarAutorizacion = true;
 							}
 						}
 						
@@ -933,9 +951,13 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 					visualizarBtnAgregarDocumentoRevision = true;
 					visualizarBtnEliminarDocumentoRevision = true;
 					
-					if (oEOperacionSolicitudCreditoLoad.getCodigoEstadoActual().equals(UEstadoLegal.OBSERVADO)) {
-						visualizarObservacionNegocios = true;
+					if(indicadorMdlAutorizacion == 1){
 						visualizarBtnAdjuntar = true;
+					}else{
+						if (oEOperacionSolicitudCreditoLoad.getCodigoEstadoActual().equals(UEstadoLegal.OBSERVADO)) {
+							visualizarObservacionNegocios = true;
+							visualizarBtnAdjuntar = true;
+						}
 					}
 
 					if(oEOperacionSolicitudCreditoLoad.getCodigoAutorizacion() == UEstadoAutorizacionJefe.AUTORIZADO ||
@@ -1004,7 +1026,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 			listarMensaje();
 			//listarMensajeTemporal();
 			listarDocumento();
-			listarDocumentoTemporal();
+			//listarDocumentoTemporal();
 			listarDocumentoRevision();
 			//filtrarDocumento();
 			listarRepresentanteLegal();
@@ -1044,28 +1066,27 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 		}
 	}
 	
-	public void obtenerEstado(int ind){
+	public void obtenerAutorizacion(int ind){
 		if(validar()){
 			if(ind == 1){
 				codigoAutorizaJefe = UEstadoAutorizacionJefe.SOLICITADO;
-				//oEOperacionSolicitudData.setCodigoAutorizaJefe(UEstadoAutorizacionJefe.SOLICITADO);
 				guardar();
 			}else if(ind == 2){
 				codigoAutorizaJefe = UEstadoAutorizacionJefe.RECHAZADO;
-				//oEOperacionSolicitudData.setCodigoAutorizaJefe(UEstadoAutorizacionJefe.RECHAZADO);
 				RequestContext.getCurrentInstance().execute("PF('dlgConfirmarAutorizacion').show();");
 			}else if(ind == 3){
 				codigoAutorizaJefe = UEstadoAutorizacionJefe.AUTORIZADO;
-				//oEOperacionSolicitudData.setCodigoAutorizaJefe(UEstadoAutorizacionJefe.AUTORIZADO);
 				RequestContext.getCurrentInstance().execute("PF('dlgConfirmarAutorizacion').show();");
 			}else if(ind == 4){
 				codigoAutorizaJefe = UEstadoAutorizacionJefe.AUTORIZADOCOMPLETADO;
-				RequestContext.getCurrentInstance().execute("PF('dlgConfirmarAutorizacion').show();");
+				guardar();
+			/*
 			}else{
 				if(codigoEstado.equals(UEstadoLegal.ENEVALUACION) && oEUsuario.getCodigoArea() == UArea.LEGAL){
 					indicadorTemporal = UIndicadorTemporal.SI;
 				}
 				guardar();
+			*/
 			}
 		}else{
 			RequestContext.getCurrentInstance().execute("PF('dlgMensajeValidacion').show();");
@@ -1074,7 +1095,6 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 	
 	public void guardar() {
 		generarCorrelativoDocumentoCarga();
-		//generarLogMovimiento();
 		modificarDocumentoRelacionRepresentanteLegal();
 		EOperacionSolicitudCredito oEOperacionSolicitudCredito = new EOperacionSolicitudCredito();
 		//EOperacionSolicitud oEOperacionSolicitud = new EOperacionSolicitud();
@@ -1084,6 +1104,19 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 		//oEOperacionSolicitud = oEOperacionSolicitudData;
 		oEOperacionSolicitudCredito = oEOperacionSolicitudCreditoData;
 		
+		if(oEUsuario.getCodigoArea() == UArea.LEGAL){
+			codigoEstado = oEOperacionSolicitudCreditoData.getCodigoEstadoActual();
+		}else{
+			if(codigoAutorizaJefe == UEstadoAutorizacionJefe.RECHAZADO ||
+				codigoAutorizaJefe == UEstadoAutorizacionJefe.AUTORIZADO ||
+				codigoAutorizaJefe == UEstadoAutorizacionJefe.AUTORIZADOCOMPLETADO){
+				codigoEstado = "";
+			}else{
+				codigoEstado = UEstadoLegal.ENEVALUACION;;
+			}
+		}
+		
+		//generarLogMovimiento();
 		
 		if(oEUsuario.getCodigoArea() == UArea.LEGAL){
 			oEOperacionSolicitudCredito.setDescripcionMensaje(oEOperacionSolicitudCreditoData.getObservacionLegal());
@@ -1095,11 +1128,13 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 			}
 		}
 		
+		/*
 		if (codigoAutorizaJefe > 0){
 			oEOperacionSolicitudCredito.setCodigoAutorizacion(codigoAutorizaJefe);
 		}
-		
+		*/
 		oEOperacionSolicitudCredito.setCodigoEstadoActual(codigoEstado);
+		oEOperacionSolicitudCredito.setCodigoAutorizacion(codigoAutorizaJefe);
 		//oEOperacionSolicitudCredito.setIndicadorTemporal(indicadorTemporal);
 		//oEOperacionSolicitudCredito.setIndicadorDigitalizacion(indicadorDigitalizacion);
 		//oEOperacionSolicitudCredito.setCodigoTipoEvaluacion(UTipoEvaluacion.SOLICITUDCREDITO);
@@ -1148,7 +1183,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 		oEOperacionSolicitudCredito.setFechaRegistro(oEInformeLegalAdicional.getFechaRegistro());
 		oEOperacionSolicitudCredito.setUsuarioRegistro(oEUsuario);
 		
-		oEMensaje = oBOOperacion.modificarEvaluacionSolicitudCredito2(oEOperacionSolicitudCredito, oEClienteData, oEClienteConstitucionEmpresaData, oEClienteAdicionalData, codigoTipoCliente);
+		oEMensaje = oBOOperacion.modificarEvaluacionSolicitudCredito(oEOperacionSolicitudCredito, oEClienteData, oEClienteConstitucionEmpresaData, oEClienteAdicionalData, codigoTipoCliente);
 		
 		UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 		RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacion').show();");
@@ -1177,22 +1212,52 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 			}
 		}
 		
-		if(codigoEstado.equals(UEstadoLegal.ENEVALUACION) && oEUsuario.getCodigoArea() == UArea.LEGAL){
-			oESolicitudLogMovimiento = new ESolicitudLogMovimiento();
-			oESolicitudLogMovimiento.setCodigoOrden(correlativo +1);
-			oESolicitudLogMovimiento.setCodigoAccion(UTipologMovimiento.ENEVALUACIONDELEGAL);
-			lstSolicitudLogMovimiento.add(oESolicitudLogMovimiento);
-		}else if(codigoEstado.equals(UEstadoLegal.OBSERVADO) && oEUsuario.getCodigoArea() == UArea.LEGAL){
-			oESolicitudLogMovimiento = new ESolicitudLogMovimiento();
-			oESolicitudLogMovimiento.setCodigoOrden(correlativo +1);
-			oESolicitudLogMovimiento.setCodigoAccion(UTipologMovimiento.OBSERVADOPORLEGAL);
-			lstSolicitudLogMovimiento.add(oESolicitudLogMovimiento);
-		}else if (codigoEstado.equals(UEstadoLegal.EVALUADO) && oEUsuario.getCodigoArea() == UArea.LEGAL) {
-			oESolicitudLogMovimiento = new ESolicitudLogMovimiento();
-			oESolicitudLogMovimiento.setCodigoOrden(correlativo +1);
-			oESolicitudLogMovimiento.setCodigoAccion(UTipologMovimiento.EVALUADOPORLEGAL);
-			lstSolicitudLogMovimiento.add(oESolicitudLogMovimiento);
+		if(oEUsuario.getCodigoArea() == UArea.LEGAL){
+			if(codigoEstado.equals(UEstadoLegal.ENEVALUACION)){
+				oESolicitudLogMovimiento = new ESolicitudLogMovimiento();
+				oESolicitudLogMovimiento.setCodigoOrden(correlativo +1);
+				oESolicitudLogMovimiento.setCodigoAccion(UTipologMovimiento.ENEVALUACIONDELEGAL);
+				lstSolicitudLogMovimiento.add(oESolicitudLogMovimiento);
+			}else if(codigoEstado.equals(UEstadoLegal.OBSERVADO)){
+				oESolicitudLogMovimiento = new ESolicitudLogMovimiento();
+				oESolicitudLogMovimiento.setCodigoOrden(correlativo +1);
+				oESolicitudLogMovimiento.setCodigoAccion(UTipologMovimiento.OBSERVADOPORLEGAL);
+				lstSolicitudLogMovimiento.add(oESolicitudLogMovimiento);
+			}else if (codigoEstado.equals(UEstadoLegal.EVALUADO)) {
+				oESolicitudLogMovimiento = new ESolicitudLogMovimiento();
+				oESolicitudLogMovimiento.setCodigoOrden(correlativo +1);
+				oESolicitudLogMovimiento.setCodigoAccion(UTipologMovimiento.EVALUADOPORLEGAL);
+				lstSolicitudLogMovimiento.add(oESolicitudLogMovimiento);
+			}
+		}else {
+			if(codigoEstado.equals(UEstadoLegal.ENEVALUACION)){
+				oESolicitudLogMovimiento = new ESolicitudLogMovimiento();
+				oESolicitudLogMovimiento.setCodigoOrden(correlativo +1);
+				oESolicitudLogMovimiento.setCodigoAccion(UTipologMovimiento.REENVIAPARAEVALUACION);
+				lstSolicitudLogMovimiento.add(oESolicitudLogMovimiento);
+			}
 		}
+		
+		
+		String codigoTipoDocumento = oEOperacionSolicitudCreditoData.getCodigoTipoDocumento();
+		String numeroDocumento = oEOperacionSolicitudCreditoData.getNumeroDocumento();
+		String ruc = oEOperacionSolicitudCreditoData.getRuc();
+		String apellidoPaterno = oEOperacionSolicitudCreditoData.getApellidoPaterno();
+		String apellidoMaterno = oEOperacionSolicitudCreditoData.getApellidoMaterno();
+		String nombre = oEOperacionSolicitudCreditoData.getNombre();
+		String nombreLargoData = (oEOperacionSolicitudCreditoData.getNombreLargo() != null ? oEOperacionSolicitudCreditoData.getNombreLargo():"");
+		//oEOperacionSolicitudCreditoData.getNumeroDocumento();
+		String direccionReal = oEOperacionSolicitudCreditoData.getDireccionReal();
+		String direccionContractual = oEOperacionSolicitudCreditoData.getDireccionContractual();
+		int codigoUbigeoReal = oEOperacionSolicitudCreditoData.getCodigoUbigeoReal();
+		int codigoUbigeoContractual = oEOperacionSolicitudCreditoData.getCodigoUbigeoContractual();
+		String codigoTipoDocumentoConyugue = oEOperacionSolicitudCreditoData.getCodigoTipoDocumentoConyugue();
+		String documentoConyugue = oEOperacionSolicitudCreditoData.getDocumentoConyugue();
+		String apellidoPaternoConyugue = oEOperacionSolicitudCreditoData.getApellidoPaternoConyugue();
+		String apellidoMaternoConyugue = oEOperacionSolicitudCreditoData.getApellidoMaternoConyugue();
+		String nombreConyugue = oEOperacionSolicitudCreditoData.getNombreConyugue();
+		String nombreLargoConyuge = oEOperacionSolicitudCreditoData.getNombreLargoConyuge();
+		String codigoEstadoCivil = oEInformeLegalAdicionalData.getCodigoEstadoCivil();
 		
 		if(!oEOperacionSolicitudCreditoLoad.getNombreLargo().equals(oEOperacionSolicitudCredito.getNombreLargo())
 			){
@@ -1227,11 +1292,16 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 	public void salir() {
 		String ruta = "";
 		
-		if(oEUsuario.getCodigoArea() == UArea.LEGAL){
-			ruta = "ListaOperacionSolicitudCredito.xhtml";
-		}else{
-			ruta = "ListaOperacionSolicitudCreditoOtros.xhtml";
+		if(indicadorMdlAutorizacion == 1){
+			ruta = "ListaOperacionSolicitudCreditoPorAutorizar.xhtml";
+		}else {
+			if(oEUsuario.getCodigoArea() == UArea.LEGAL){
+				ruta = "ListaOperacionSolicitudCredito.xhtml";
+			}else{
+				ruta = "ListaOperacionSolicitudCreditoOtros.xhtml";
+			}
 		}
+
 			
 		inicializar();
 		/*Cerramos Sesion*/
@@ -1273,8 +1343,8 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 		lstCombustibleVehiculo = oUManejadorListaDesplegable.obtieneCombustibleVehiculo();
 		lstRiesgoVehiculo = oUManejadorListaDesplegable.obtieneRiesgoVehiculo();
 		lstTipoNumeracionEstatuto = oUManejadorListaDesplegable.obtieneTipoNumeracionEstatuto();
-		lstDocumentoRequerido = oBOGeneral.listarDocumentoRequeridoSolicitudCredito();
-		lstDocumentoRequeridoFiltro = lstDocumentoRequerido;
+		lstOperacionSolicitudCreditoDocumentoRequerido = oBOOperacion.listarEvaluacionSolicitudCreditoDocumentoRequerido();
+		lstOperacionSolicitudCreditoDocumentoRequeridoFiltro = lstOperacionSolicitudCreditoDocumentoRequerido;
 		lstProveedor =oUManejadorListaDesplegable.obtieneProveedor();
 		lstAceptante =oUManejadorListaDesplegable.obtieneAceptante();
 		lstComunidad = oUManejadorListaDesplegable.obtieneComunidadOrigen();
@@ -1298,19 +1368,25 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 		//lstOperacionDocumento = oBOOperacion.listarDocumento(oEOperacionSolicitudLoad.getCodigoSolicitud());
 	}
 	
+	/*
 	public void listarDocumentoTemporal() {
-		//lstDocumentoCarga = oBOOperacion.listarDocumentoTemporal(oEOperacionSolicitudLoad.getCodigoSolicitud());
+		lstDocumentoCarga = oBOOperacion.listarDocumentoTemporal(oEOperacionSolicitudLoad.getCodigoSolicitud());
 	}
+	*/
 	
 	public void listarDocumentoRevision() {
 		lstOperacionSolicitudCreditoDocumentoRevision = oBOOperacion.listarEvaluacionSolicitudCreditoDocumentoRevision(oEOperacionSolicitudCreditoLoad.getNumeroSolicitud(), oEOperacionSolicitudCreditoLoad.getCodigoTipoCliente(), oEOperacionSolicitudCreditoLoad.getCodigoCliente());
 		if(lstOperacionSolicitudCreditoDocumentoRevision == null){
 			lstOperacionSolicitudCreditoDocumentoRevision = new ArrayList<EOperacionSolicitudCreditoDocumentoRevision>();
 		}
+		filtrarDocumentoRequerido();
 	}
 	
 	public void listarEstado() {
 		lstEstado = oUManejadorListaDesplegable.obtieneEstadoLegal();
+		lstEstadoFiltro = lstEstado.stream()
+				.filter(x -> !x.getCodigo().equals(UEstadoLegal.APROBADO))
+				.collect(Collectors.toList());
 		//lstEstado = oBOOperacion.listarEstadoPorSolicitud(oEOperacionSolicitudLoad.getCodigoSolicitud(), oEUsuario);
 	}
 	
@@ -1377,16 +1453,16 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 		}
 	}
 	
-	public void descargarDocumento(EOperacionDocumento oEOperacionDocumentoItem) {
-		if (oEOperacionDocumentoItem != null) {
+	public void descargarDocumento(EOperacionSolicitudCreditoDocumento oEOperacionSolicitudCreditoDocumentoItem) {
+		if (oEOperacionSolicitudCreditoDocumentoItem != null) {
 			UManejadorArchivo manejoArchivo = new UManejadorArchivo();
-			Documento archivo = manejoArchivo.obtenerDocumento(oEOperacionDocumentoItem.getCodigoDocumentoLaserFiche());
+			Documento archivo = manejoArchivo.obtenerDocumento(oEOperacionSolicitudCreditoDocumentoItem.getCodigoDocumentoLaserFiche());
 			if (archivo != null && archivo.getArchivoBinario() != null && archivo.getArchivoBinario().length > 0) {
 				InputStream stream = new ByteArrayInputStream(archivo.getArchivoBinario());
-				fileDownload = new DefaultStreamedContent(stream, "image/png", oEOperacionDocumentoItem.getNombreDocumento());
+				fileDownload = new DefaultStreamedContent(stream, "image/png", oEOperacionSolicitudCreditoDocumentoItem.getNombreDocumento());
 			} else {
-				if (oEOperacionDocumentoItem.getDataDocumento() != null && oEOperacionDocumentoItem.getDataDocumento().length > 0) {
-					UFuncionesGenerales.descargaArchivo(oEOperacionDocumentoItem.getNombreDocumento(), oEOperacionDocumentoItem.getDataDocumento());
+				if (oEOperacionSolicitudCreditoDocumentoItem.getDataDocumento() != null && oEOperacionSolicitudCreditoDocumentoItem.getDataDocumento().length > 0) {
+					UFuncionesGenerales.descargaArchivo(oEOperacionSolicitudCreditoDocumentoItem.getNombreDocumento(), oEOperacionSolicitudCreditoDocumentoItem.getDataDocumento());
 				}
 			}
 		}
@@ -3357,16 +3433,16 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 		}
 	}
 	
-	public void descargarDocumentoRevision(EOperacionDocumentoRevision oEOperacionDocumentoRevisionItem) {
-		if (oEOperacionDocumentoRevisionItem != null) {
+	public void descargarDocumentoRevision(EOperacionSolicitudCreditoDocumentoRevision oEOperacionSolicitudCreditoDocumentoRevisionItem) {
+		if (oEOperacionSolicitudCreditoDocumentoRevisionItem != null) {
 			UManejadorArchivo manejoArchivo = new UManejadorArchivo();
-			Documento archivo = manejoArchivo.obtenerDocumento(oEOperacionDocumentoRevisionItem.getCodigoDocumentoLaserFiche());
+			Documento archivo = manejoArchivo.obtenerDocumento(oEOperacionSolicitudCreditoDocumentoRevisionItem.getCodigoDocumentoLaserFiche());
 			if (archivo != null && archivo.getArchivoBinario() != null && archivo.getArchivoBinario().length > 0) {
 				InputStream stream = new ByteArrayInputStream(archivo.getArchivoBinario());
-				fileDownload = new DefaultStreamedContent(stream, "image/png", oEOperacionDocumentoRevisionItem.getNombreDocumentoOriginal());
+				fileDownload = new DefaultStreamedContent(stream, "image/png", oEOperacionSolicitudCreditoDocumentoRevisionItem.getNombreDocumentoOriginal());
 			} else {
-				if (oEOperacionDocumentoRevisionItem.getDataDocumento() != null && oEOperacionDocumentoRevisionItem.getDataDocumento().length > 0) {
-					UFuncionesGenerales.descargaArchivo(oEOperacionDocumentoRevisionItem.getNombreDocumentoOriginal(), oEOperacionDocumentoRevisionItem.getDataDocumento());
+				if (oEOperacionSolicitudCreditoDocumentoRevisionItem.getDataDocumento() != null && oEOperacionSolicitudCreditoDocumentoRevisionItem.getDataDocumento().length > 0) {
+					UFuncionesGenerales.descargaArchivo(oEOperacionSolicitudCreditoDocumentoRevisionItem.getNombreDocumentoOriginal(), oEOperacionSolicitudCreditoDocumentoRevisionItem.getDataDocumento());
 				}
 			}
 		}
@@ -3389,9 +3465,9 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 	}
 	
 	public void filtrarDocumentoRequerido(){
-		lstDocumentoRequeridoFiltro = new ArrayList<EDocumentoRequerido>();
-		for(int i=0;i<lstDocumentoRequerido.size();i++){
-			int codigoDocumentoRequerido = lstDocumentoRequerido.get(i).getCodigoDocumentoRequerido();
+		lstOperacionSolicitudCreditoDocumentoRequeridoFiltro = new ArrayList<EOperacionSolicitudCreditoDocumentoRequerido>();
+		for(int i=0;i<lstOperacionSolicitudCreditoDocumentoRequerido.size();i++){
+			int codigoDocumentoRequerido = lstOperacionSolicitudCreditoDocumentoRequerido.get(i).getCodigoDocumentoRequerido();
 			boolean ind = true;
 			for(int x=0;x<lstOperacionSolicitudCreditoDocumentoRevision.size();x++){
 				if(lstOperacionSolicitudCreditoDocumentoRevision.get(x).getCodigoDocumentoRequerido() == codigoDocumentoRequerido && lstOperacionSolicitudCreditoDocumentoRevision.get(x).getCodigoDocumentoRequerido() != UDocumentoRequerido.OTROS){
@@ -3399,10 +3475,10 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 				}
 			}
 			if(ind){
-				EDocumentoRequerido oEDocumentoRequerido = new EDocumentoRequerido();
-				oEDocumentoRequerido.setCodigoDocumentoRequerido(lstDocumentoRequerido.get(i).getCodigoDocumentoRequerido());
-				oEDocumentoRequerido.setDescripcionDocumentoRequerido(lstDocumentoRequerido.get(i).getDescripcionDocumentoRequerido());
-				lstDocumentoRequeridoFiltro.add(oEDocumentoRequerido);
+				EOperacionSolicitudCreditoDocumentoRequerido oEOperacionSolicitudCreditoDocumentoRequerido = new EOperacionSolicitudCreditoDocumentoRequerido();
+				oEOperacionSolicitudCreditoDocumentoRequerido.setCodigoDocumentoRequerido(lstOperacionSolicitudCreditoDocumentoRequerido.get(i).getCodigoDocumentoRequerido());
+				oEOperacionSolicitudCreditoDocumentoRequerido.setDescripcionDocumentoRequerido(lstOperacionSolicitudCreditoDocumentoRequerido.get(i).getDescripcionDocumentoRequerido());
+				lstOperacionSolicitudCreditoDocumentoRequeridoFiltro.add(oEOperacionSolicitudCreditoDocumentoRequerido);
 			}
 		}
 	}
@@ -3447,22 +3523,24 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 				
 				oEOperacionSolicitudCreditoDocumentoRevision.setCodigoDocumento(correlativo+1);
 				oEOperacionSolicitudCreditoDocumentoRevision.setCodigoDocumentoRequerido(oEOperacionSolicitudCreditoDocumentoRevisionData.getCodigoDocumentoRequerido());
+				oEOperacionSolicitudCreditoDocumentoRevision.setNombreDocumentoLaserFiche(oEOperacionSolicitudCreditoDocumentoRevisionData.getNombreDocumentoOriginal());
 				oEOperacionSolicitudCreditoDocumentoRevision.setNombreDocumentoOriginal(oEOperacionSolicitudCreditoDocumentoRevisionData.getNombreDocumentoOriginal());
 				oEOperacionSolicitudCreditoDocumentoRevision.setDataDocumento(oEOperacionSolicitudCreditoDocumentoRevisionData.getDataDocumento());
 				
 				if(oEOperacionSolicitudCreditoDocumentoRevision.getCodigoDocumentoRequerido() != UDocumentoRequerido.OTROS){
-					oEOperacionSolicitudCreditoDocumentoRevision.setNombreDocumento(UFuncionesGenerales.obtieneDescripcionDeValorSeleccionado3(lstDocumentoRequerido, oEOperacionSolicitudCreditoDocumentoRevisionData.getCodigoDocumentoRequerido(), true));
+					oEOperacionSolicitudCreditoDocumentoRevision.setNombreDocumento(UFuncionesGenerales.obtieneDescripcionDeValorSeleccionado4(lstOperacionSolicitudCreditoDocumentoRequerido, oEOperacionSolicitudCreditoDocumentoRevisionData.getCodigoDocumentoRequerido(), true));
 				}else {
 					oEOperacionSolicitudCreditoDocumentoRevision.setNombreDocumento(oEOperacionSolicitudCreditoDocumentoRevisionData.getNombreDocumento());
 				}
 				
 				lstOperacionSolicitudCreditoDocumentoRevision.add(oEOperacionSolicitudCreditoDocumentoRevision);
 				calcularDocumentoRevision();
+				filtrarDocumentoRequerido();
 			}else if(accionInternaDocumentoRevision == UAccionInterna.EDITAR){
 				for(int i=0;i<lstOperacionSolicitudCreditoDocumentoRevision.size();i++){
 					if (lstOperacionSolicitudCreditoDocumentoRevision.get(i).getCodigoDocumento() == oEOperacionSolicitudCreditoDocumentoRevisionData.getCodigoDocumento()){
 						if(lstOperacionSolicitudCreditoDocumentoRevision.get(i).getCodigoDocumentoRequerido() != UDocumentoRequerido.OTROS){
-							lstOperacionSolicitudCreditoDocumentoRevision.get(i).setNombreDocumento(UFuncionesGenerales.obtieneDescripcionDeValorSeleccionado3(lstDocumentoRequerido, oEOperacionSolicitudCreditoDocumentoRevisionData.getCodigoDocumentoRequerido(), true));
+							lstOperacionSolicitudCreditoDocumentoRevision.get(i).setNombreDocumento(UFuncionesGenerales.obtieneDescripcionDeValorSeleccionado4(lstOperacionSolicitudCreditoDocumentoRequerido, oEOperacionSolicitudCreditoDocumentoRevisionData.getCodigoDocumentoRequerido(), true));
 						}else {
 							lstOperacionSolicitudCreditoDocumentoRevision.get(i).setNombreDocumento(oEOperacionSolicitudCreditoDocumentoRevisionData.getNombreDocumento());
 						}
@@ -3860,27 +3938,66 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 		//Listar Avales con sus Representantes
 		List<ERepresentanteLegal> lstObj = new ArrayList<ERepresentanteLegal>();
 		int correlativoAval = 0;
+		String descripcionTipoDocumentoAval = "";
+		String descripcionTipoDocumentoRepresentante = "";
+		
 		for(int i=0;i<lstAval.size();i++){
 			ERepresentanteLegal obj = new ERepresentanteLegal();
-			obj.setCodigoOrden(0);
+			ERepresentanteLegal obj3 = new ERepresentanteLegal();
+			ERepresentanteLegal obj4 = new ERepresentanteLegal();
+			ETercero oTercero =  new ETercero();
+			oTercero = oBOSolicitudCredito.buscarAval(lstAval.get(i).getCodigoAval(), oEOperacionSolicitudCreditoLoad.getNumeroSolicitud());
+			descripcionTipoDocumentoAval = (oTercero.getCodigoTipoDocumento() != null ? UFuncionesGenerales.obtieneDescripcionDeValorSeleccionado(lstDOI, oTercero.getCodigoTipoDocumento(), false):"");
+			
+			//obj3.setCodigoOrden(0);
+			obj3.setNominativo("-");
+			obj3.setCargoLaboral("AVAL");
+			obj3.setDocumento("DOCUMENTO");
+			obj3.setNombreLargo("NOMBRE");
+			obj3.setInscripcionPoder1("DIRECCIÓN");
+			obj3.setDescripcionIndicadorFirma("");
+			lstObj.add(obj3);
+			
+			//obj.setCodigoOrden(0);
+			obj.setNominativo("");
 			correlativoAval = i+1;
-			obj.setCargoLaboral("AVAL "+ correlativoAval);
-			obj.setDocumento("");
+			obj.setCargoLaboral("CODIGO AVAL "+ lstAval.get(i).getCodigoAval());
+			obj.setDocumento(descripcionTipoDocumentoAval +" "+ oTercero.getDocumento());
 			obj.setNombreLargo(lstAval.get(i).getNombreAval());
+			obj.setInscripcionPoder1(oTercero.getDireccion());
 			lstObj.add(obj);
+			
+			//obj4.setCodigoOrden(0);
+			obj4.setNominativo("");
+			obj4.setCargoLaboral("REPRESENTANTE");
+			obj4.setDocumento("DOCUMENTO");
+			obj4.setNombreLargo("NOMBRE");
+			obj4.setInscripcionPoder1("NÚMERO PARTIDA");
+			obj4.setDescripcionIndicadorFirma("FIRMA");
+			lstObj.add(obj4);
+			
+			
 			listarRepresentanteLegalAval(lstAval.get(i).getCodigoAval());
 			for(int x=0;x<lstRepresentanteLegalAval.size();x++){
 				ERepresentanteLegal obj2 = new ERepresentanteLegal();
-				obj2.setCodigoOrden(x+1);
+				descripcionTipoDocumentoRepresentante = (lstRepresentanteLegalAval.get(x).getCodigoTipoDocumento() != null ? UFuncionesGenerales.obtieneDescripcionDeValorSeleccionado(lstDOI, lstRepresentanteLegalAval.get(x).getCodigoTipoDocumento(), false):"");
+				
+				//obj2.setCodigoOrden(x+1);
+				//obj2.setCodigoOrden(0);
+				obj2.setNominativo("");
+				//int correlativoRepresentante = x+1;
+				//obj2.setCargoLaboral("REPRESENANTE " + correlativoRepresentante);
 				obj2.setCargoLaboral(lstRepresentanteLegalAval.get(x).getCargoLaboral());
-				obj2.setDocumento(lstRepresentanteLegalAval.get(x).getDocumento());
+				obj2.setDocumento(descripcionTipoDocumentoRepresentante +" "+ lstRepresentanteLegalAval.get(x).getDocumento());
 				obj2.setNombreLargo(lstRepresentanteLegalAval.get(x).getNombreLargo());
+				obj2.setInscripcionPoder1(lstRepresentanteLegalAval.get(x).getInscripcionPoder1());
+				obj2.setDescripcionIndicadorFirma(UFuncionesGenerales.obtieneDescripcionDeValorIndicador(lstRepresentanteLegalAval.get(x).getIndicadorFirma()));
 				lstObj.add(obj2);
 			}
 		}
 		
 		if (lstObj.size() > 0){
-			UtilPoi.crearTablaRepresentanteLegal(documeWord, "@029", lstObj);
+			UtilPoi.crearTablaRepresentanteLegalAval(documeWord, "@029", lstObj);
 		}else {
 			UtilPoi.reemplazarPalabraenParrafo(documeWord, "@029", "");
 		}
@@ -3917,14 +4034,14 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 			lstOperacionDocumentoRevisionRevisados.add(obj);
 		}
 		
-		lstDocumentoRequeridoFiltro = lstDocumentoRequeridoFiltro.stream()
+		lstOperacionSolicitudCreditoDocumentoRequeridoFiltro = lstOperacionSolicitudCreditoDocumentoRequeridoFiltro.stream()
 				   .filter(x -> x.getCodigoDocumentoRequerido() != UDocumentoRequerido.OTROS)
 				   .collect(Collectors.toList());
-		for(int i=0;i<lstDocumentoRequeridoFiltro.size();i++){
+		for(int i=0;i<lstOperacionSolicitudCreditoDocumentoRequeridoFiltro.size();i++){
 			EOperacionSolicitudCreditoDocumentoRevision obj2 = new EOperacionSolicitudCreditoDocumentoRevision();
 			correlativo2 = correlativo2 + 1;
 			obj2.setCodigoDocumento(correlativo2);
-			obj2.setNombreDocumento(lstDocumentoRequeridoFiltro.get(i).getDescripcionDocumentoRequerido());
+			obj2.setNombreDocumento(lstOperacionSolicitudCreditoDocumentoRequeridoFiltro.get(i).getDescripcionDocumentoRequerido());
 			lstOperacionDocumentoRevisionFaltantes.add(obj2);
 		}
 		
@@ -3934,7 +4051,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 			UtilPoi.reemplazarPalabraenParrafo(documeWord, "@025", "");
 		}
 		
-		if (lstDocumentoRequeridoFiltro.size() > 0){
+		if (lstOperacionSolicitudCreditoDocumentoRequeridoFiltro.size() > 0){
 			UtilPoi.crearTablaDocumentosFaltantes2(documeWord, "@026", lstOperacionDocumentoRevisionFaltantes);
 		}else {
 			UtilPoi.reemplazarPalabraenParrafo(documeWord, "@026", "");
@@ -4060,6 +4177,8 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 	public void inicializar() {
 		deshabilitar = false;
 		visualizar = true;
+		codigoEstado = "";
+		codigoAutorizaJefe = UEstadoAutorizacionJefe.NINGUNO;
 		
 		visualizarTabGarantia = false;
 		visualizarTabCreditos = false;

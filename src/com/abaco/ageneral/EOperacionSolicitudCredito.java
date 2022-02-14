@@ -116,6 +116,7 @@ public @Data class EOperacionSolicitudCredito {
 	private List<EOperacionSolicitudCreditoDocumentoRevision> lstOperacionSolicitudCreditoDocumentoRevision;
 	
 	//Adicional
+	private int indicadorMdlAutorizacion;
 	private String tiempoTranscurridoSolicitud;
 	private int diaTranscurridoSolicitud;
 	private String tiempoTranscurridoAutorizacion;

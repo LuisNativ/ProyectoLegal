@@ -28,39 +28,7 @@ import com.abaco.persistencia.acceso.FabricaConexion;
 import com.abaco.persistencia.interfaces.IConexion;
 import com.abaco.servicio.laserfiche.Mensaje;
 
-public class COperacion {	
-	public EMensaje agregarEvaluacionSolicitudCredito(EOperacionSolicitud eOperacionSolicitud){
-		IConexion oIConexion = null;
-		EMensaje mensaje = new EMensaje();
-		Mensaje mensajeLaserFiche = new Mensaje();
-		UManejadorArchivo oUManejadorArchivo = new UManejadorArchivo();
-		DAOOperacion oDAOOperacion= null;
-		BOGeneral oBOGeneral  = null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();
-			oIConexion.iniciaTransaccion();
-			oDAOOperacion = new DAOOperacion(oIConexion);
-			oBOGeneral = new BOGeneral();
-			
-			mensaje = oDAOOperacion.agregarSolicitud2(eOperacionSolicitud);
-			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-				throw new Exception(mensaje.getDescMensaje());
-			}
-			
-			oIConexion.ejecutaCommit();
-		} catch (Exception e) {
-			if (oIConexion != null) {
-				oIConexion.ejecutaRollback();
-			}
-			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
-			UManejadorLog.error("Control: Error al modificar solicitud: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return mensaje;
-	}
+public class COperacion {
 	
 	public EMensaje agregarDocumentoGarantia(EGarantia eOGarantia, EDocumentoCarga eDocumentoCarga){
 		IConexion oIConexion = null;
@@ -157,501 +125,6 @@ public class COperacion {
 		return mensaje;
 	}
 	
-	public EMensaje modificarEvaluacionSolicitudCredito(EOperacionSolicitud eOperacionSolicitud, EEvaluacionSolicitudCreditoLegal eEvaluacionSolicitudCreditoLegal, ECliente eCliente, EClienteConstitucionEmpresa eClienteConstitucionEmpresa, EClienteAdicional eClienteAdicional, int codigoTipoCliente){
-		IConexion oIConexion = null;
-		EMensaje mensaje = new EMensaje();
-		Mensaje mensajeLaserFiche = new Mensaje();
-		UManejadorArchivo oUManejadorArchivo = new UManejadorArchivo();
-		DAOOperacion oDAOOperacion= null;
-		DAOSolicitudCredito oDAOSolicitudCredito= null;
-		DAORepresentanteLegal oDAORepresentanteLegal= null;
-		DAOCliente oDAOCliente= null;
-		BOGeneral oBOGeneral  = null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();
-			oIConexion.iniciaTransaccion();
-			oDAOOperacion = new DAOOperacion(oIConexion);
-			oDAOSolicitudCredito = new DAOSolicitudCredito(oIConexion);
-			oDAORepresentanteLegal = new DAORepresentanteLegal(oIConexion);
-			oDAOCliente = new DAOCliente(oIConexion);
-			oBOGeneral = new BOGeneral();
-			
-			eOperacionSolicitud.setNumeroMensaje(oBOGeneral.generarCorrelativo(UTipoCorrelativo.OPERACIONMENSAJE, eOperacionSolicitud.getCodigoSolicitud()+"", "", ""));
-			
-			//Agregar Log Movimiento
-			if(eEvaluacionSolicitudCreditoLegal.getLstSolicitudLogMovimiento() != null){
-				Date fecha = new Date();
-				for(ESolicitudLogMovimiento oESolicitudLogMovimiento: eEvaluacionSolicitudCreditoLegal.getLstSolicitudLogMovimiento()){
-					fecha.setSeconds(fecha.getSeconds()+1);
-					oESolicitudLogMovimiento.setNumeroSolicitud(eEvaluacionSolicitudCreditoLegal.getNumeroSolicitud());
-					oESolicitudLogMovimiento.setCodigoAccion(oESolicitudLogMovimiento.getCodigoAccion());
-					oESolicitudLogMovimiento.setUsuarioRegistro(eEvaluacionSolicitudCreditoLegal.getUsuarioRegistro());
-					oESolicitudLogMovimiento.setFechaRegistro(fecha);
-					mensaje = oDAOSolicitudCredito.agregarLogMovimiento(oESolicitudLogMovimiento);
-					if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-						throw new Exception(mensaje.getDescMensaje());
-					}
-					
-					/*
-					if(oESolicitudLogMovimiento.getCodigoAccion() == UTipologMovimiento.CAMBIADTOSOCIO){
-						mensaje = oDAOCliente.agregarHistoricoCliente(eEvaluacionSolicitudCreditoLegal, eEvaluacionSolicitudCreditoLegal.getInformeLegalAdicional(), eCliente, eClienteConstitucionEmpresa, eClienteAdicional);
-						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-							throw new Exception(mensaje.getDescMensaje());
-						}
-					}
-					*/
-				}
-			}
-			
-			mensaje = oDAOSolicitudCredito.modificarSolicitudCredito(eEvaluacionSolicitudCreditoLegal, eOperacionSolicitud);
-			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-				throw new Exception(mensaje.getDescMensaje());
-			}
-			
-			mensaje = oDAOSolicitudCredito.agregarModificarInformeLegalAdicional(eEvaluacionSolicitudCreditoLegal, eEvaluacionSolicitudCreditoLegal.getInformeLegalAdicional());
-			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-				throw new Exception(mensaje.getDescMensaje());
-			}
-			
-			//Eliminar Suscripcion
-			mensaje = oDAOSolicitudCredito.eliminarSuscripcion(eEvaluacionSolicitudCreditoLegal.getNumeroSolicitud(), eEvaluacionSolicitudCreditoLegal.getCodigoCliente(),eEvaluacionSolicitudCreditoLegal.getCodigoTipoCliente());
-			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-				throw new Exception(mensaje.getDescMensaje());
-			}
-			mensaje = oDAOSolicitudCredito.eliminarClienteSuscripcion(eEvaluacionSolicitudCreditoLegal.getNumeroDocumento());
-			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-				throw new Exception(mensaje.getDescMensaje());
-			}
-			
-			//Agregar Suscripcion
-			if(eEvaluacionSolicitudCreditoLegal.getLstSuscripcion() != null){
-			for(ESuscripcion oESuscripcion: eEvaluacionSolicitudCreditoLegal.getLstSuscripcion()){
-				oESuscripcion.setNumeroSolicitud(eEvaluacionSolicitudCreditoLegal.getNumeroSolicitud());
-				oESuscripcion.setCodigoCliente(eEvaluacionSolicitudCreditoLegal.getCodigoCliente());
-				oESuscripcion.setCodigoTipoCliente(eEvaluacionSolicitudCreditoLegal.getCodigoTipoCliente());
-				oESuscripcion.setNumeroDocumento(eEvaluacionSolicitudCreditoLegal.getNumeroDocumento());
-				oESuscripcion.setUsuarioRegistro(eEvaluacionSolicitudCreditoLegal.getUsuarioRegistro());
-				oESuscripcion.setFechaRegistro(eEvaluacionSolicitudCreditoLegal.getFechaRegistro());
-				mensaje = oDAOSolicitudCredito.agregarSuscripcion(oESuscripcion);
-				if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-					throw new Exception(mensaje.getDescMensaje());
-				}
-				mensaje = oDAOSolicitudCredito.agregarClienteSuscripcion(oESuscripcion);
-				if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-					throw new Exception(mensaje.getDescMensaje());
-				}
-			}
-			}
-			
-			if(eOperacionSolicitud.getUsuarioRegistro().getCodigoArea() == UArea.LEGAL){
-				EObservacionLegal oEObservacionLegal = new EObservacionLegal();
-				oEObservacionLegal.setNumeroSolicitud(eEvaluacionSolicitudCreditoLegal.getNumeroSolicitud());
-				oEObservacionLegal.setNombreUsuario(eEvaluacionSolicitudCreditoLegal.getUsuarioRegistro().getNombreUsuario());
-				oEObservacionLegal.setSecuencia(1);
-				oEObservacionLegal.setFechaRegistro(eEvaluacionSolicitudCreditoLegal.getFechaRegistro());
-				
-				//Agregar observacion maestra
-				mensaje = oDAOSolicitudCredito.agregarObservacionMaestra(oEObservacionLegal);
-				if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-					throw new Exception(mensaje.getDescMensaje());
-				}
-				
-				//Eliminar observacion anterior
-				mensaje = oDAOSolicitudCredito.eliminarObservacionDetalle(oEObservacionLegal);
-				if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-					throw new Exception(mensaje.getDescMensaje());
-				}
-				
-				//Agregar observacion linea por linea
-				String mensaje_observacion = eOperacionSolicitud.getDescripcionMensaje();
-				String lista_observacion[] = mensaje_observacion.split("\r\n");
-				
-				for(int i=0;i<lista_observacion.length;i++){
-					oEObservacionLegal.setDescripcionMensaje(lista_observacion[i]);
-					oEObservacionLegal.setLineaObservacion(i+1);
-					mensaje = oDAOSolicitudCredito.agregarObservacionDetalle(oEObservacionLegal);
-					if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-						throw new Exception(mensaje.getDescMensaje());
-					}
-				}
-			}else {
-				if (eEvaluacionSolicitudCreditoLegal.getObservacionNegocios() != null){
-					if (eEvaluacionSolicitudCreditoLegal.getObservacionNegocios() != ""){
-						EObservacionNegocios oEObservacionNegocios = new EObservacionNegocios();
-						oEObservacionNegocios.setNumeroSolicitud(eEvaluacionSolicitudCreditoLegal.getNumeroSolicitud());
-						oEObservacionNegocios.setSecuencia(0);
-						oEObservacionNegocios.setObservacion(eEvaluacionSolicitudCreditoLegal.getObservacionNegocios());
-						oEObservacionNegocios.setNombreUsuario(eEvaluacionSolicitudCreditoLegal.getUsuarioRegistro().getNombreUsuario());
-						oEObservacionNegocios.setFechaEvaluacion(eEvaluacionSolicitudCreditoLegal.getFechaRegistro());
-						
-						//Agregar observacion maestra
-						mensaje = oDAOSolicitudCredito.agregarObservacionNegociosMaestra(oEObservacionNegocios);
-						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-							throw new Exception(mensaje.getDescMensaje());
-						}
-					}
-				}
-			}
-
-			
-			//Agregar, Modificar y Eliminar Representante Legal
-			if(eEvaluacionSolicitudCreditoLegal.getLstRepresentanteLegal() != null){
-				for(ERepresentanteLegal oERepresentanteLegal: eEvaluacionSolicitudCreditoLegal.getLstRepresentanteLegal()){
-					oERepresentanteLegal.setUsuarioRegistro(eEvaluacionSolicitudCreditoLegal.getUsuarioRegistro());
-					oERepresentanteLegal.setFechaRegistro(eEvaluacionSolicitudCreditoLegal.getFechaRegistro());
-					
-					if(oERepresentanteLegal.getCodigoAccion() == UAccionTabla.INSERTAR  && oERepresentanteLegal.getCodigoRepresentante() == 0){
-						//Generar codigo representante
-						oERepresentanteLegal.setCodigoRepresentante(oBOGeneral.generarCorrelativo(UTipoCorrelativo.REPRESENTATELEGAL, "", "", ""));
-						//Setear codigo cliente
-						oERepresentanteLegal.setCodigoTipoCliente(codigoTipoCliente);
-						oERepresentanteLegal.setCodigoCliente(eOperacionSolicitud.getCodigoClientePersona());
-						
-						mensaje = oDAORepresentanteLegal.agregarRepresentanteLegal(oERepresentanteLegal);
-						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-							throw new Exception(mensaje.getDescMensaje());
-						}
-						
-						mensaje = oDAORepresentanteLegal.agregarRepresentanteLegalSolicitudCredito(oERepresentanteLegal,eEvaluacionSolicitudCreditoLegal.getNumeroSolicitud());
-						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-							throw new Exception(mensaje.getDescMensaje());
-							
-						}
-						
-						//Agregar facultad
-						if(oERepresentanteLegal.getLstFacultadPoder() != null){
-						for(EFacultadPoder oEFacultadPoder: oERepresentanteLegal.getLstFacultadPoder()){
-							oEFacultadPoder.setUsuarioRegistro(eEvaluacionSolicitudCreditoLegal.getUsuarioRegistro());
-							oEFacultadPoder.setFechaRegistro(eEvaluacionSolicitudCreditoLegal.getFechaRegistro());
-							mensaje = oDAORepresentanteLegal.agregarFacultadPoder(oERepresentanteLegal, oEFacultadPoder);
-							if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-								throw new Exception(mensaje.getDescMensaje());
-							}
-						}
-						}
-					}else if(oERepresentanteLegal.getCodigoAccion() == UAccionTabla.EDITAR  && oERepresentanteLegal.getCodigoRepresentante() != 0){
-						mensaje = oDAORepresentanteLegal.modificarRepresentanteLegal(oERepresentanteLegal);
-						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-							throw new Exception(mensaje.getDescMensaje());
-						}
-						
-						mensaje = oDAORepresentanteLegal.modificarRepresentanteLegalSolicitudCredito(oERepresentanteLegal,eEvaluacionSolicitudCreditoLegal.getNumeroSolicitud());
-						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-							throw new Exception(mensaje.getDescMensaje());
-							
-						}
-						
-						//Eliminar facultad por representante
-						mensaje = oDAORepresentanteLegal.eliminarFacultadPoder(oERepresentanteLegal);
-						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-							throw new Exception(mensaje.getDescMensaje());
-						}
-						
-						//Agregar facultad
-						if(oERepresentanteLegal.getLstFacultadPoder() != null){
-						for(EFacultadPoder oEFacultadPoder: oERepresentanteLegal.getLstFacultadPoder()){
-							oEFacultadPoder.setUsuarioRegistro(eEvaluacionSolicitudCreditoLegal.getUsuarioRegistro());
-							oEFacultadPoder.setFechaRegistro(eEvaluacionSolicitudCreditoLegal.getFechaRegistro());
-							if(oEFacultadPoder.getCodigoRepresentanteRelacion() == 0){
-								oEFacultadPoder.setCodigoRepresentanteRelacion(oBOGeneral.generarCorrelativo(UTipoCorrelativo.REPRESENTATELEGAL, "", "", ""));
-							}
-							mensaje = oDAORepresentanteLegal.agregarFacultadPoder(oERepresentanteLegal, oEFacultadPoder);
-							if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-								throw new Exception(mensaje.getDescMensaje());
-							}
-						}
-						}
-					}else if(oERepresentanteLegal.getCodigoAccion() == UAccionTabla.ELIMINAR && oERepresentanteLegal.getCodigoRepresentante() != 0){
-						mensaje = oDAORepresentanteLegal.eliminarRepresentanteLegal(oERepresentanteLegal);
-						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-							throw new Exception(mensaje.getDescMensaje());
-						}
-						mensaje = oDAORepresentanteLegal.eliminarRepresentanteLegalSolicitudCredito(oERepresentanteLegal, eEvaluacionSolicitudCreditoLegal.getNumeroSolicitud());
-						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-							throw new Exception(mensaje.getDescMensaje());
-						}
-					}
-				}
-			}
-			
-			//Eliminar Deudor
-			if(eEvaluacionSolicitudCreditoLegal.getLstDeudorRecycle().size() > 0){
-				for(EDeudor oEDeudor: eEvaluacionSolicitudCreditoLegal.getLstDeudorRecycle()){
-					oEDeudor.setCodigoCliente(eEvaluacionSolicitudCreditoLegal.getCodigoCliente());
-					oEDeudor.setNumeroSolicitud(eEvaluacionSolicitudCreditoLegal.getNumeroSolicitud());
-					mensaje = oDAOSolicitudCredito.eliminarDeudor(oEDeudor);
-					if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-						throw new Exception(mensaje.getDescMensaje());
-					}
-				}
-			}
-			
-			//Modificar Deudor
-			if(eEvaluacionSolicitudCreditoLegal.getLstDeudor().size() > 0){
-				for(EDeudor oEDeudor: eEvaluacionSolicitudCreditoLegal.getLstDeudor()){
-					oEDeudor.setCodigoCliente(eEvaluacionSolicitudCreditoLegal.getCodigoCliente());
-					oEDeudor.setNumeroSolicitud(eEvaluacionSolicitudCreditoLegal.getNumeroSolicitud());
-					oEDeudor.setUsuarioRegistro(eEvaluacionSolicitudCreditoLegal.getUsuarioRegistro());
-					oEDeudor.setFechaRegistro(eEvaluacionSolicitudCreditoLegal.getFechaRegistro());
-					mensaje = oDAOSolicitudCredito.modificarDeudor(oEDeudor);
-					if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-						throw new Exception(mensaje.getDescMensaje());
-					}
-				}
-			}
-			
-			/*
-			mensaje = oDAOOperacion.modificarSesion(eOperacionSesion);
-			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-				throw new Exception(mensaje.getDescMensaje());
-			}
-			*/
-			mensaje = oDAOOperacion.modificarSolicitud(eOperacionSolicitud);
-			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-				throw new Exception(mensaje.getDescMensaje());
-			}
-			
-			if(eOperacionSolicitud.getIndicadorTemporal() == UIndicadorTemporal.SI){
-				mensaje = oDAOOperacion.eliminarDocumentoTemporal(eOperacionSolicitud);
-				if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-					throw new Exception(mensaje.getDescMensaje());
-				}
-				
-				if(eOperacionSolicitud.getLstDocumentoCarga().size() > 0){
-					mensaje = oDAOOperacion.agregarDocumentoTemporal(eOperacionSolicitud);
-					if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-						throw new Exception(mensaje.getDescMensaje());
-					}
-				}
-			}else{
-				mensaje = oDAOOperacion.eliminarDocumentoTemporal(eOperacionSolicitud);
-				if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-					throw new Exception(mensaje.getDescMensaje());
-				}
-				
-				if(eOperacionSolicitud.getLstDocumentoCarga().size() > 0){
-					for(EDocumentoCarga oEDocumentoCarga: eOperacionSolicitud.getLstDocumentoCarga()){
-						mensajeLaserFiche = oUManejadorArchivo.guardarDocumentoOperacionSolicitud(eEvaluacionSolicitudCreditoLegal, oEDocumentoCarga);
-						if (!UFuncionesGenerales.validaMensajeLaserFiche(mensajeLaserFiche)) {
-							throw new Exception(mensajeLaserFiche.getDescripcion());
-						}
-						
-						oEDocumentoCarga.setCodigoLaserFiche(mensajeLaserFiche.getDocumentoID());
-						mensaje = oDAOOperacion.agregarDocumento(eOperacionSolicitud, oEDocumentoCarga);
-						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-							throw new Exception(mensaje.getDescMensaje());
-						}
-					}
-				}
-			}
-			
-			if(eOperacionSolicitud.getLstOperacionDocumentoRevision().size() > 0){
-				mensaje = oDAOOperacion.eliminarDocumentoRevision(eOperacionSolicitud);
-				if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-					throw new Exception(mensaje.getDescMensaje());
-				}
-				
-				for(EOperacionDocumentoRevision oEOperacionDocumentoRevision: eOperacionSolicitud.getLstOperacionDocumentoRevision()){
-					if(oEOperacionDocumentoRevision.getDataDocumento() != null){
-						mensajeLaserFiche = oUManejadorArchivo.guardarDocumentoRevisionOperacionSolicitud(eEvaluacionSolicitudCreditoLegal, oEOperacionDocumentoRevision);
-						if (!UFuncionesGenerales.validaMensajeLaserFiche(mensajeLaserFiche)) {
-							throw new Exception(mensajeLaserFiche.getDescripcion());
-						}
-						oEOperacionDocumentoRevision.setCodigoDocumentoLaserFiche(mensajeLaserFiche.getDocumentoID());
-					}
-					
-					oEOperacionDocumentoRevision.setDataDocumento(null);
-					mensaje = oDAOOperacion.agregarDocumentoRevision(eOperacionSolicitud, oEOperacionDocumentoRevision);
-					if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-						throw new Exception(mensaje.getDescMensaje());
-					}
-				}
-			}
-			
-			/*
-			mensaje = oDAOOperacion.modificarSolicitudSesion(eOperacionSolicitud.getCodigoSolicitud(), UIndicadorSesion.NOOCUPADO, 0);
-			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-				throw new Exception(mensaje.getDescMensaje());
-			}
-			*/
-			
-			oIConexion.ejecutaCommit();
-		} catch (Exception e) {
-			if (oIConexion != null) {
-				oIConexion.ejecutaRollback();
-			}
-			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
-			UManejadorLog.error("Control: Error al modificar solicitud: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return mensaje;
-	}
-	
-	public EMensaje agregarSesion(EOperacionSesion eOperacionSesion){
-		IConexion oIConexion = null;
-		EMensaje mensaje = new EMensaje();
-		DAOOperacion oDAOOperacion= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOOperacion= new DAOOperacion(oIConexion);
-			mensaje = oDAOOperacion.agregarSesion(eOperacionSesion);
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al agregar sesion: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return mensaje;
-	}
-	
-	public EMensaje modificarSesion(EOperacionSesion eOperacionSesion){
-		IConexion oIConexion = null;
-		EMensaje mensaje = new EMensaje();
-		DAOOperacion oDAOOperacion= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOOperacion= new DAOOperacion(oIConexion);
-			mensaje = oDAOOperacion.modificarSesion(eOperacionSesion);
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al agregar sesion: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return mensaje;
-	}
-	
-	public EMensaje liberarSolicitudSesion(long codigoSolicitud){
-		IConexion oIConexion = null;
-		EMensaje mensaje = new EMensaje();
-		DAOOperacion oDAOOperacion= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOOperacion= new DAOOperacion(oIConexion);
-			mensaje = oDAOOperacion.modificarSolicitudSesion(codigoSolicitud, UIndicadorSesion.NOOCUPADO, 0);
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al modificar indicador sesion: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return mensaje;
-	}
-	
-	public EMensaje modificarSolicitudSesion(long codigoSolicitud, int indicadorSesion, int codigoUsuario){
-		IConexion oIConexion = null;
-		EMensaje mensaje = new EMensaje();
-		DAOOperacion oDAOOperacion= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOOperacion= new DAOOperacion(oIConexion);
-			mensaje = oDAOOperacion.modificarSolicitudSesion(codigoSolicitud, indicadorSesion, codigoUsuario);
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al modificar indicador sesion: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return mensaje;
-	}
-	
-	public EMensaje verificarSolicitudSesion(){
-		IConexion oIConexion = null;
-		EMensaje mensaje = new EMensaje();
-		DAOOperacion oDAOOperacion= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOOperacion= new DAOOperacion(oIConexion);
-			mensaje = oDAOOperacion.verificarSolicitudSesion();
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al verificar indicador sesion: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return mensaje;
-	}
-	
-	public EMensaje verificarSolicitudSiaf(){
-		IConexion oIConexion = null;
-		EMensaje mensaje = new EMensaje();
-		DAOOperacion oDAOOperacion= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOOperacion= new DAOOperacion(oIConexion);
-			mensaje = oDAOOperacion.verificarSolicitudSiaf();
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al verificar estado: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return mensaje;
-	}
-	
-	public List<EOperacionSolicitud> listarSolicitud(EOperacionSolicitud eOperacionSolicitud, int indicadorConsulta){
-		IConexion oIConexion = null;
-		List<EOperacionSolicitud> resultado = null;
-		DAOOperacion oDAOOperacion= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();
-			oDAOOperacion = new DAOOperacion(oIConexion);
-			resultado = oDAOOperacion.listarSolicitud(eOperacionSolicitud, indicadorConsulta);	
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al listar solicitud: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
-	public List<EOperacionMensaje> listarMensaje(long codigoSolicitud){
-		IConexion oIConexion = null;
-		DAOOperacion oDAOOperacion= null;
-		List<EOperacionMensaje> resultado = null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOOperacion = new DAOOperacion(oIConexion);
-			resultado = oDAOOperacion.listarMensaje(codigoSolicitud);
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al buscar mensaje: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
-	public List<EOperacionDocumento> listarDocumento(long codigoSolicitud){
-		IConexion oIConexion = null;
-		DAOOperacion oDAOOperacion= null;
-		List<EOperacionDocumento> resultado = null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOOperacion = new DAOOperacion(oIConexion);
-			resultado = oDAOOperacion.listarDocumento(codigoSolicitud);
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al buscar documento: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
 	public List<EOperacionDocumento> listarDocumentoGarantia(EGarantia eOGarantia,int indicador){
 		IConexion oIConexion = null;
 		DAOOperacion oDAOOperacion= null;
@@ -662,132 +135,6 @@ public class COperacion {
 			resultado = oDAOOperacion.listarDocumentoGarantia(eOGarantia,indicador);
 		} catch (Exception e) {
 			UManejadorLog.error("Control: Error al buscar documento: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
-	public List<EOperacionDocumentoRequerido> listarDocumentoRequerido(long codigoSolicitud){
-		IConexion oIConexion = null;
-		DAOOperacion oDAOOperacion= null;
-		List<EOperacionDocumentoRequerido> resultado = null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOOperacion = new DAOOperacion(oIConexion);
-			resultado = oDAOOperacion.listarDocumentoRequerido(codigoSolicitud);
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al buscar documento: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
-	public List<EDocumentoCarga> listarDocumentoTemporal(long codigoSolicitud){
-		IConexion oIConexion = null;
-		DAOOperacion oDAOOperacion= null;
-		List<EDocumentoCarga> resultado = null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOOperacion = new DAOOperacion(oIConexion);
-			resultado = oDAOOperacion.listarDocumentoTemporal(codigoSolicitud);
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al buscar documento: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
-	public List<EOperacionDocumentoRevision> listarDocumentoRevision(long codigoSolicitud){
-		IConexion oIConexion = null;
-		DAOOperacion oDAOOperacion= null;
-		List<EOperacionDocumentoRevision> resultado = null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOOperacion = new DAOOperacion(oIConexion);
-			resultado = oDAOOperacion.listarDocumentoRevision(codigoSolicitud);
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al buscar documento: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
-	public List<EEstado> listarEstadoPorSolicitud(long codigoSolicitud, EUsuario eUsuario){
-		IConexion oIConexion = null;
-		List<EEstado> resultado = null;
-		DAOOperacion oDAOOperacion= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();
-			oDAOOperacion = new DAOOperacion(oIConexion);
-			resultado = oDAOOperacion.listarEstadoPorSolicitud(codigoSolicitud, eUsuario);	
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al listar estado: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
-	public EOperacionSolicitud buscarSolicitud(long codigoSolicitud){
-		IConexion oIConexion = null;
-		EOperacionSolicitud resultado = null;
-		DAOOperacion oDAOOperacion= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();
-			oDAOOperacion = new DAOOperacion(oIConexion);
-			resultado = oDAOOperacion.buscarSolicitud(codigoSolicitud);
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al buscar: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
-	public String buscarMensajeTemporal(long codigoSolicitud){
-		IConexion oIConexion = null;
-		DAOOperacion oDAOOperacion= null;
-		String resultado = null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOOperacion = new DAOOperacion(oIConexion);
-			resultado = oDAOOperacion.buscarMensajeTemporal(codigoSolicitud);
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al buscar mensaje: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
-	public EOpcion buscarOpcionPorSolicitud(long codigoSolicitud, int codigoTipoEvaluacion, EUsuario eUsuario){
-		IConexion oIConexion = null;
-		EOpcion resultado = null;
-		DAOOperacion oDAOOperacion= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();
-			oDAOOperacion = new DAOOperacion(oIConexion);
-			resultado = oDAOOperacion.buscarOpcionPorSolicitud(codigoSolicitud, codigoTipoEvaluacion, eUsuario);
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al buscar: " + e.getMessage());
 		} finally {
 			if (oIConexion != null) {
 				oIConexion.cierraConexion();
@@ -987,17 +334,10 @@ public class COperacion {
 				throw new Exception(mensaje.getDescMensaje());
 			}
 			
-			mensaje = oDAOSolicitudCredito.agregarModificarInformeLegalAdicional2(eOperacionCliente, eOperacionCliente.getInformeLegalAdicional());
+			mensaje = oDAOOperacion.agregarModificarInformeLegalAdicional2(eOperacionCliente, eOperacionCliente.getInformeLegalAdicional());
 			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
 				throw new Exception(mensaje.getDescMensaje());
 			}
-			
-			/*
-			mensaje = oDAOSolicitudCredito.agregarModificarInformeLegalAdicional2(eOperacionCliente.getInformeLegalAdicional());
-			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-				throw new Exception(mensaje.getDescMensaje());
-			}
-			*/
 			
 			//Eliminar Suscripcion
 			mensaje = oDAOSolicitudCredito.eliminarSuscripcion(eOperacionCliente.getNumeroSolicitud(), eOperacionCliente.getCodigoCliente(), eOperacionCliente.getCodigoTipoCliente());
@@ -1251,7 +591,7 @@ public class COperacion {
 	}
 	
 
-	public EMensaje modificarEvaluacionSolicitudCredito2(EOperacionSolicitudCredito eOperacionSolicitudCredito, ECliente eCliente, EClienteConstitucionEmpresa eClienteConstitucionEmpresa, EClienteAdicional eClienteAdicional, int codigoTipoCliente){
+	public EMensaje modificarEvaluacionSolicitudCredito(EOperacionSolicitudCredito eOperacionSolicitudCredito, ECliente eCliente, EClienteConstitucionEmpresa eClienteConstitucionEmpresa, EClienteAdicional eClienteAdicional, int codigoTipoCliente){
 		IConexion oIConexion = null;
 		EMensaje mensaje = new EMensaje();
 		Mensaje mensajeLaserFiche = new Mensaje();
@@ -1288,7 +628,7 @@ public class COperacion {
 					
 					/*
 					if(oESolicitudLogMovimiento.getCodigoAccion() == UTipologMovimiento.CAMBIADTOSOCIO){
-						mensaje = oDAOCliente.agregarHistoricoCliente(eEvaluacionSolicitudCreditoLegal, eEvaluacionSolicitudCreditoLegal.getInformeLegalAdicional(), eCliente, eClienteConstitucionEmpresa, eClienteAdicional);
+						mensaje = oDAOCliente.agregarClienteHistorico(eEvaluacionSolicitudCreditoLegal, eEvaluacionSolicitudCreditoLegal.getInformeLegalAdicional(), eCliente, eClienteConstitucionEmpresa, eClienteAdicional);
 						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
 							throw new Exception(mensaje.getDescMensaje());
 						}
@@ -1665,6 +1005,24 @@ public class COperacion {
 			resultado = oDAOOperacion.listarEvaluacionSolicitudCreditoDocumentoRevision(numeroSolicitud, codigoTipoCliente, codigoCliente);			
 		} catch (Exception e) {
 			UManejadorLog.error("Control: Error al listar documento " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
+	public List<EOperacionSolicitudCreditoDocumentoRequerido> listarEvaluacionSolicitudCreditoDocumentoRequerido(){
+		IConexion oIConexion = null;
+		List<EOperacionSolicitudCreditoDocumentoRequerido> resultado = null;
+		DAOOperacion oDAOOperacion= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();		
+			oDAOOperacion = new DAOOperacion(oIConexion);
+			resultado = oDAOOperacion.listarEvaluacionSolicitudCreditoDocumentoRequerido();			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al listar documento requerido " + e.getMessage());
 		} finally {
 			if (oIConexion != null) {
 				oIConexion.cierraConexion();

@@ -12,7 +12,6 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.abaco.ageneral.MBRegistroOperacionSolicitudCredito;
 import com.abaco.negocio.util.UFuncionesGenerales;
 
 @ManagedBean(name = "vlgeneral3")

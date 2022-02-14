@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -51,6 +52,8 @@ import com.abaco.negocio.util.UConstante.UAccionExterna;
 import com.abaco.negocio.util.UConstante.UArea;
 import com.abaco.negocio.util.UConstante.UDatePattern;
 import com.abaco.negocio.util.UConstante.UEstado;
+import com.abaco.negocio.util.UConstante.UEstadoAutorizacion;
+import com.abaco.negocio.util.UConstante.UEstadoAutorizacionJefe;
 import com.abaco.negocio.util.UConstante.UEstadoLegal;
 import com.abaco.negocio.util.UConstante.UIndicadorSesion;
 import com.abaco.negocio.util.UConstante.UIndicadorTipoReasignar;
@@ -58,14 +61,13 @@ import com.abaco.negocio.util.UConstante.UData;
 import com.abaco.negocio.util.UConstante.URutaCarpetaCompartida;
 import com.abaco.negocio.util.UConstante.USistemaOperativo;
 import com.abaco.negocio.util.UConstante.UTipoArchivo;
-import com.abaco.negocio.util.UConstante.UTipoAutonomia;
 import com.abaco.negocio.util.UConstante.UTipoBusquedaTercero;
 import com.abaco.negocio.util.UConstante.UTipoCliente;
 import com.abaco.negocio.util.UConstante.UTipoCorrelativo;
-import com.abaco.negocio.util.UConstante.UTipoDocumento;
 import com.abaco.negocio.util.UConstante.UTipoEnvio;
 import com.abaco.negocio.util.UConstante.UTipoEstadoUsuario;
 import com.abaco.negocio.util.UConstante.UTipoEvaluacion;
+import com.abaco.negocio.util.UConstante.UTipoPersona;
 import com.abaco.negocio.util.UConstante.UUbicacion;
 import com.abaco.negocio.util.UConstante.UVariablesQueryString;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
@@ -77,9 +79,9 @@ import com.abaco.negocio.util.UManejadorSesionWeb;
 import com.abaco.negocio.util.UtilPoi;
 import com.abaco.negocio.util.UtilWeb;
 
-@ManagedBean(name = "mblistaoperacionsolicitudcreditootros")
+@ManagedBean(name = "mblistaoperacionsolicitudcreditoporautorizar")
 @ViewScoped
-public class MBListaOperacionSolicitudCreditoOtros implements Serializable {
+public class MBListaOperacionSolicitudCreditoPorAutorizar implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private EMensaje oEMensaje;
 	private EUsuario oEUsuario;
@@ -88,15 +90,13 @@ public class MBListaOperacionSolicitudCreditoOtros implements Serializable {
 	private UManejadorListaDesplegable oUManejadorListaDesplegable;
 	
 	@Getter @Setter private List<EOperacionSolicitudCredito> lstOperacionSolicitudCredito;
-	@Getter @Setter private List<EOperacionSolicitudCredito> lstOperacionSolicitudCreditoPendiente;
-	@Getter @Setter private List<EOperacionSolicitudCredito> lstOperacionSolicitudCreditoHistorico;
-	@Getter @Setter private List<EGeneral> lstEstado;
+	//@Getter @Setter private List<EOperacionSolicitudCredito> lstOperacionSolicitudCreditoSolicitado;
+	//@Getter @Setter private List<EOperacionSolicitudCredito> lstOperacionSolicitudCreditoAutorizadoPendiente;
 	@Getter @Setter private List<EGeneral> lstAutorizacion;
-	@Getter @Setter private List<EPersona> lstPersona;
+	@Getter @Setter private List<EGeneral> lstAutorizacionFiltro;
 	
 	/* Variables Interfaz */
 	@Getter @Setter private int numeroSolicitud;
-	@Getter @Setter private String codigoEstado;
 	@Getter @Setter private int codigoAutorizacion;
 	@Getter @Setter private String nombrePersona;
 	
@@ -110,10 +110,10 @@ public class MBListaOperacionSolicitudCreditoOtros implements Serializable {
 		oUManejadorListaDesplegable = new UManejadorListaDesplegable();
 		
 		lstOperacionSolicitudCredito = new ArrayList<EOperacionSolicitudCredito>();
-		lstOperacionSolicitudCreditoPendiente = new ArrayList<EOperacionSolicitudCredito>();
-		lstOperacionSolicitudCreditoHistorico = new ArrayList<EOperacionSolicitudCredito>();
-		lstEstado = new ArrayList<EGeneral>();
+		//lstOperacionSolicitudCreditoSolicitado = new ArrayList<EOperacionSolicitudCredito>();
+		//lstOperacionSolicitudCreditoAutorizadoPendiente = new ArrayList<EOperacionSolicitudCredito>();
 		lstAutorizacion = new ArrayList<EGeneral>();
+		lstAutorizacionFiltro = new ArrayList<EGeneral>();
 
 		oEUsuario = (EUsuario) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.USUARIO);
 		
@@ -134,7 +134,7 @@ public class MBListaOperacionSolicitudCreditoOtros implements Serializable {
 		String ruta = "";
 		if (oEOperacionSolicitudCreditoItem != null) {
 			oEOperacionSolicitudCreditoItem.setUsuarioRegistro(oEUsuario);
-			oEOperacionSolicitudCreditoItem.setIndicadorMdlAutorizacion(0);
+			oEOperacionSolicitudCreditoItem.setIndicadorMdlAutorizacion(1);
 			
 			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.OPERACION_SESION, oEOperacionSolicitudCreditoItem);
 			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.EDITAR);
@@ -165,58 +165,41 @@ public class MBListaOperacionSolicitudCreditoOtros implements Serializable {
 		oEOperacionSolicitudCredito.setUsuarioRegistro(oEUsuario);
 		oEOperacionSolicitudCredito.setNombreLargo(nombrePersona);
 		oEOperacionSolicitudCredito.setNumeroSolicitud(numeroSolicitud);
-		oEOperacionSolicitudCredito.setCodigoEstadoActual(codigoEstado);
+		oEOperacionSolicitudCredito.setCodigoEstadoActual("");
 		oEOperacionSolicitudCredito.setCodigoAutorizacion(codigoAutorizacion);
 		oEOperacionSolicitudCredito.setUsuarioRegistro(oEUsuario);
 		
-		if(oEUsuario.getCodigoAutonomia() == UTipoAutonomia.GERENCIAL){
-			lstOperacionSolicitudCredito = oBOOperacion.listarEvaluacionSolicitudCredito(oEOperacionSolicitudCredito, 1);
-		}else {
-			lstOperacionSolicitudCredito = oBOOperacion.listarEvaluacionSolicitudCredito(oEOperacionSolicitudCredito, 2);
-		}
+		lstOperacionSolicitudCredito = oBOOperacion.listarEvaluacionSolicitudCredito(oEOperacionSolicitudCredito, 3);
 		
+		/*
 		if (lstOperacionSolicitudCredito != null){
-			lstOperacionSolicitudCreditoPendiente = new ArrayList<EOperacionSolicitudCredito>();
+			lstOperacionSolicitudCreditoSolicitado = new ArrayList<EOperacionSolicitudCredito>();
 	        for (EOperacionSolicitudCredito obj: lstOperacionSolicitudCredito) {
-	            if (obj.getCodigoEstadoActual().equals(UEstadoLegal.OBSERVADO)) {
-	            	lstOperacionSolicitudCreditoPendiente.add(obj);
+	            if (obj.getCodigoAutorizacion() == UEstadoAutorizacionJefe.SOLICITADO) {
+	            	lstOperacionSolicitudCreditoSolicitado.add(obj);
 	            }
 	        }
 	        
-	        lstOperacionSolicitudCreditoHistorico = new ArrayList<EOperacionSolicitudCredito>();
+	        lstOperacionSolicitudCreditoAutorizadoPendiente = new ArrayList<EOperacionSolicitudCredito>();
 	        for (EOperacionSolicitudCredito obj: lstOperacionSolicitudCredito) {
-	            if (obj.getCodigoEstadoActual().equals(UEstadoLegal.PENDIENTEDEEVALUACION) ||
-	            	obj.getCodigoEstadoActual().equals(UEstadoLegal.ENEVALUACION) ||
-	            	obj.getCodigoEstadoActual().equals(UEstadoLegal.EVALUADO) ||
-	            	obj.getCodigoEstadoActual().equals(UEstadoLegal.DESAPROBADO) ||
-	            	obj.getCodigoEstadoActual().equals(UEstadoLegal.APROBADO)) {
-	            	lstOperacionSolicitudCreditoHistorico.add(obj);
+	        	if (obj.getCodigoAutorizacion() == UEstadoAutorizacionJefe.AUTORIZADO) {
+	            	lstOperacionSolicitudCreditoAutorizadoPendiente.add(obj);
 	            }
 	        }
 		}
+		*/
 	}
 	
 	public void listarDesplegable(){
-		lstEstado = oUManejadorListaDesplegable.obtieneEstadoLegal();
 		lstAutorizacion = oUManejadorListaDesplegable.obtieneAutorizaJefe();
-	}
-	
-	public boolean visualizarBtnEditar(EOperacionSolicitudCredito oEOperacionSolicitudCreditoItem){
-		boolean ind = false;
-		if (oEOperacionSolicitudCreditoItem != null) {
-			if(oEOperacionSolicitudCreditoItem.getNombreUsuarioRevision()!=null){
-				if(oEOperacionSolicitudCreditoItem.getCodigoUbicacionRevision() == oEUsuario.getCodigoArea() &&
-					oEOperacionSolicitudCreditoItem.getNombreUsuarioRevision().equals(oEUsuario.getNombreUsuario())){
-					ind = true;
-				}
-			}
-		}
-		return ind;
+		lstAutorizacionFiltro = lstAutorizacion.stream()
+				.filter(x -> x.getCodigo2() != UEstadoAutorizacionJefe.RECHAZADO)
+				.filter(x -> x.getCodigo2() != UEstadoAutorizacionJefe.AUTORIZADOCOMPLETADO)
+				.collect(Collectors.toList());
 	}
 	
 	public void inicializar() {
 		nombrePersona= "";
-		codigoEstado = "";
 		codigoAutorizacion = 0;
 	}
 	

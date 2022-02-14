@@ -2016,24 +2016,6 @@ public class CGarantia {
 		return mensaje;
 	}
 	
-	public List<EGarantiaSolicitud> listarGarantiaConCreditoVigente(int codigo, String descripcion){
-		IConexion oIConexion = null;
-		List<EGarantiaSolicitud> resultado = null;
-		DAOGarantia oDAOGarantia= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOGarantia = new DAOGarantia(oIConexion);
-			resultado = oDAOGarantia.listarGarantiaConCreditoVigente(codigo, descripcion);			
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al listar Garantia por Liberar " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
 	public List<EAsignacionContratoGarantia> listarCreditosAsociadosGarantia(long codigoGarantia){
 		IConexion oIConexion = null;
 		List<EAsignacionContratoGarantia> resultado = null;
@@ -2524,24 +2506,6 @@ public class CGarantia {
 			resultado = oDAOGarantia.listarDocumentoSolicitado(numeroSolicitud);			
 		} catch (Exception e) {
 			UManejadorLog.error("Control: Error al listar documento solicitado " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
-	public List<EGarantiaCreditoRelacionado> listarCreditoRelacionado(int codigo){
-		IConexion oIConexion = null;
-		List<EGarantiaCreditoRelacionado> resultado = null;
-		DAOGarantia oDAOGarantia= null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();			
-			oDAOGarantia = new DAOGarantia(oIConexion);
-			resultado = oDAOGarantia.listarCreditoRelacionado(codigo);			
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al listar credito relacionado " + e.getMessage());
 		} finally {
 			if (oIConexion != null) {
 				oIConexion.cierraConexion();

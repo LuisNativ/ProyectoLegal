@@ -17,7 +17,6 @@ import com.abaco.servicio.laserfiche.Mensaje;
 import com.abaco.ageneral.EDocumentoCarga;
 import com.abaco.ageneral.EEvaluacionSolicitudCreditoLegal;
 import com.abaco.ageneral.EGarantia;
-import com.abaco.ageneral.EOperacionDocumentoRevision;
 import com.abaco.ageneral.EOperacionSolicitud;
 import com.abaco.ageneral.EOperacionSolicitudCredito;
 import com.abaco.ageneral.EOperacionSolicitudCreditoDocumentoRevision;
@@ -207,53 +206,6 @@ public class UManejadorArchivo {
 			documento.setNombreArchivo(eDocumentoCarga.getNombreLaserFiche());
 			documento.setArchivoBinario(eDocumentoCarga.getData());
 			mensaje =  oBOLaserFiche.guardarDocumento(documento);
-			
-			if (mensaje.getCodigo() < 0) {
-				throw new Exception("Error al guardar documento laserfiche: " + mensaje.getDescripcion());
-			} else {
-				mensaje.setCodigo(0);
-				mensaje.setDescripcion("Proceso Exitoso");
-			}
-		} catch (Exception objEx) {
-			UManejadorLog.log("Problema al conectar con el Web Service LaserFiche: " + objEx.getMessage());
-		}
-		return mensaje;
-	}
-	
-	public Mensaje guardarDocumentoRevisionOperacionSolicitud(EEvaluacionSolicitudCreditoLegal eEvaluacionSolicitudCreditoLegal, EOperacionDocumentoRevision eOperacionDocumentoRevision){
-		BOLaserFiche oBOLaserFiche = new BOLaserFiche();
-		Documento documento = new Documento();
-		Mensaje mensaje = null;
-		
-		try{
-			int clasificacion = 1;
-			int tipocliente = 1;
-			
-			if(eEvaluacionSolicitudCreditoLegal.getCodigoTipoCliente() == UTipoClienteSolicitudCredito.COD_POSTULANTE){
-				tipocliente = 2;
-			}else if(eEvaluacionSolicitudCreditoLegal.getCodigoTipoCliente() == UTipoClienteSolicitudCredito.COD_SOCIO){
-				tipocliente = 1;
-			}
-			
-			documento.setClasificacion(clasificacion);
-			documento.setTipoCliente(tipocliente);
-			documento.setCodigoSocio(eEvaluacionSolicitudCreditoLegal.getCodigoCliente()+"");
-			documento.setNumeroDocumento(eEvaluacionSolicitudCreditoLegal.getNumeroDocumento());
-			documento.setNumeroOperacion(eEvaluacionSolicitudCreditoLegal.getNumeroSolicitud()+"");
-			documento.setNombreArchivo(eOperacionDocumentoRevision.getNombreDocumentoOriginal());
-			documento.setArchivoBinario(eOperacionDocumentoRevision.getDataDocumento());
-			mensaje =  oBOLaserFiche.guardarDocumento(documento);
-			
-			/*
-			documento.setClasificacion(clasificacion);
-			documento.setTipoCliente(tipocliente);
-			documento.setCodigoSocio(eOperacionSolicitud.getCodigoClientePersona()+"");
-			documento.setNumeroDocumento(eOperacionSolicitud.getNumeroDocumentoPersona());
-			documento.setNumeroOperacion("Operacion Nº "+eOperacionSolicitud.getCodigoSolicitud());
-			documento.setNombreArchivo(eOperacionDocumentoRevision.getNombreDocumentoOriginal());
-			documento.setArchivoBinario(eOperacionDocumentoRevision.getDataDocumento());
-			mensaje =  oBOLaserFiche.guardarDocumento(documento);
-			*/
 			
 			if (mensaje.getCodigo() < 0) {
 				throw new Exception("Error al guardar documento laserfiche: " + mensaje.getDescripcion());

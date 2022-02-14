@@ -24,37 +24,35 @@
 			
 			<p:commandButton styleClass="dsBoton1 tamanio3 principal" value="Generar Acta"
 			action="#{mbregistrooperacinsolicitudcredito.imprimirDocumento1}"
-			rendered="#{mbregistrooperacinsolicitudcredito.visualizarBtnGenerarDocumento}" ajax="false">
-			</p:commandButton>
+			rendered="#{mbregistrooperacinsolicitudcredito.visualizarBtnGenerarDocumento}" ajax="false"/>
 			
 			<p:commandButton styleClass="dsBoton1 tamanio3 principal" value="Generar Informe"
 			action="#{mbregistrooperacinsolicitudcredito.imprimirDocumento2}"
-			rendered="#{mbregistrooperacinsolicitudcredito.visualizarBtnGenerarDocumento}" ajax="false">
-			</p:commandButton>
+			rendered="#{mbregistrooperacinsolicitudcredito.visualizarBtnGenerarDocumento}" ajax="false"/>
 			
 			<p:commandButton styleClass="dsBoton1 tamanio4 principal" value="Solicitar Autorización" onclick="PF('dlgPreload').show();" 
-			oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacinsolicitudcredito.obtenerEstado(1)}"
+			oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacinsolicitudcredito.obtenerAutorizacion(1)}"
 			update=":frmDlgMensajeValidacion"
-			rendered="#{mbregistrooperacinsolicitudcredito.oEOpcionLoad.indicadorSolicitarAutorizar eq '1' ? true : false}"/>
+			rendered="#{mbregistrooperacinsolicitudcredito.visualizarBtnSolicitarAutorizacion}"/>
 			
 			<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Rechazar" onclick="PF('dlgPreload').show();" 
-			oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacinsolicitudcredito.obtenerEstado(2)}"
+			oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacinsolicitudcredito.obtenerAutorizacion(2)}"
 			update=":frmDlgMensajeValidacion"
-			rendered="#{mbregistrooperacinsolicitudcredito.oEOpcionLoad.indicadorRechazarAutorizar eq '1' ? true : false}"/>
+			rendered="#{mbregistrooperacinsolicitudcredito.visualizarBtnRechazarAutorizacion}"/>
 			
 			<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Autorizar" onclick="PF('dlgPreload').show();" 
-			oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacinsolicitudcredito.obtenerEstado(3)}"
+			oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacinsolicitudcredito.obtenerAutorizacion(3)}"
 			update=":frmDlgMensajeValidacion"
-			rendered="#{mbregistrooperacinsolicitudcredito.oEOpcionLoad.indicadorConfirmarAutorizar eq '1' ? true : false}"/>
+			rendered="#{mbregistrooperacinsolicitudcredito.visualizarBtnConfirmarAutorizacionPendiente}"/>
 			
 			<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Autorizar Completado" onclick="PF('dlgPreload').show();" 
-			oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacinsolicitudcredito.obtenerEstado(4)}"
+			oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacinsolicitudcredito.obtenerAutorizacion(4)}"
 			update=":frmDlgMensajeValidacion"
-			rendered="#{mbregistrooperacinsolicitudcredito.oEOpcionLoad.indicadorConfirmarAutorizarCompletado eq '1' ? true : false}"/>
+			rendered="#{mbregistrooperacinsolicitudcredito.visualizarBtnConfirmarAutorizacionCompletado}"/>
 
 			<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Grabar" onclick="PF('dlgPreload').show();" 
 			oncomplete="PF('dlgPreload').hide();" process="@form" 
-			actionListener="#{mbregistrooperacinsolicitudcredito.obtenerEstado(6)}"
+			actionListener="#{mbregistrooperacinsolicitudcredito.guardar()}"
 			update=":frmDlgMensajeValidacion, :frmDlgMensajeOperacion, :form:tabView1"
 			rendered="#{mbregistrooperacinsolicitudcredito.visualizarBtnGrabar}"/>
 		</div>
@@ -155,10 +153,9 @@
 			</div>
 			<div class="ui-g-3" style="#{mbregistrooperacinsolicitudcredito.visualizarEstado2 ? 'display:block;' : 'display:none'}">	            
 				<p:outputLabel for="idEstado" value="Estado" styleClass="dsLabel1"/>
-				<p:selectOneMenu id="idEstado" value="#{mblistaoperacionsolicitudcredito.codigoEstado}" disabled="#{mbregistrooperacinsolicitudcredito.deshabilitarEstado}" required="true" requiredMessage="Campo Obligatorio" rendered="#{mbregistrooperacinsolicitudcredito.visualizarEstado2}">
-					<p:ajax event="change" update="@this"/>
-					<f:selectItem itemLabel="-Seleccione-" itemValue="0" />
-					<f:selectItems value="#{mblistaoperacionsolicitudcredito.lstEstado}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
+				<p:selectOneMenu id="idEstado" value="#{mbregistrooperacinsolicitudcredito.oEOperacionSolicitudCreditoData.codigoEstadoActual}" disabled="#{mbregistrooperacinsolicitudcredito.deshabilitarEstado}" required="false" requiredMessage="Campo Obligatorio" rendered="#{mbregistrooperacinsolicitudcredito.visualizarEstado2}">
+					<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+					<f:selectItems value="#{mbregistrooperacinsolicitudcredito.lstEstadoFiltro}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
 				</p:selectOneMenu>
 				<h:message for="idEstado" styleClass="dsMessage1"/>
 	        </div>
@@ -282,14 +279,7 @@
 				<p:outputLabel value="Nombre Largo" styleClass="dsLabel1"/>
 				<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacinsolicitudcredito.oEOperacionSolicitudCreditoData.nombreLargo}" disabled="true" autocomplete="off" maxlength="140"></p:inputText>
 			</div>
-
-			<!--
-			<div class="ui-g-12 ui-md-12 ui-lg-6">
-				<p:outputLabel for="idNombre" value="Nombres" styleClass="dsLabel1"/>
-				<p:inputText type="text" id="idNombre" styleClass="dsInput1" value="#{mbregistrooperacinsolicitudcredito.oEOperacionSolicitudCreditoData.nombreLargo}" disabled="true"></p:inputText>
-			</div>
-			-->
-
+			
 			<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
 				<div class="ui-g-6">
 					<p:outputLabel for="idTipoDoc" value="Tipo Doc" styleClass="dsLabel1"/>
@@ -318,11 +308,10 @@
 				</div>
 				
 				<div class="ui-g-3">
-					<p:outputLabel for="idNroRuc" value="RUC" styleClass="dsLabel1"/>
+					<p:outputLabel value="RUC" styleClass="dsLabel1"/>
 					<p:inputText id="idNroRuc" type="text" styleClass="dsInput1" value="#{mbregistrooperacinsolicitudcredito.oEOperacionSolicitudCreditoData.ruc}" disabled="#{mbregistrooperacinsolicitudcredito.deshabilitarFrmContratante}" autocomplete="off" maxlength="11">
 						<p:keyFilter mask="num"></p:keyFilter>
 					</p:inputText>
-					<h:message for="idNroRuc" styleClass="dsMessage1"/>
 				</div>
 			</div>
 			
@@ -396,7 +385,6 @@
 					<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 					<f:selectItems value="#{mbregistrooperacinsolicitudcredito.lstEstadoCivil}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
 				</p:selectOneMenu>
-				<h:message styleClass="dsMessage1"/>
 			</div>
 			
 			<div style="#{mbregistrooperacinsolicitudcredito.visualizarFrmContratantePN ? 'display:block;' : 'display:none'}">
@@ -1180,7 +1168,9 @@
 							<h:outputText value="#{item.usuarioRevision}"/>
 						</p:column>
 						<p:column headerText="Monto Solicitado" styleClass="dsTextoCentro" >
-							<h:outputText value="#{item.montoSolicitud}"/>
+							<h:outputText value="#{item.montoSolicitud}" title="#{item.montoSolicitud}">
+								<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
+							</h:outputText>
 						</p:column>
 						<p:column headerText="" styleClass="dsTextoCentro"> 
 							<p:commandButton styleClass="dsBoton5 green" icon="fa fa-search" title="Consultar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperacinsolicitudcredito.visualizarSolicitudCredito(item)}"  update="form:tabView1:frmPnlCabeceraCredito, form:tabView1:frmPnlDetalleCredito"></p:commandButton>										   
@@ -2841,7 +2831,7 @@
 					<p:selectOneMenu id="cbTipoDocumentoRevision" value="#{mbregistrooperacinsolicitudcredito.oEOperacionSolicitudCreditoDocumentoRevisionData.codigoDocumentoRequerido}" required="true" requiredMessage="Campo Obligatorio">
 						<p:ajax event="change" listener="#{mbregistrooperacinsolicitudcredito.obtenerDocumentoRequerido()}" update="pnlgNombreDocumentoRevision"/>
 						<f:selectItem itemLabel="-Seleccione-" itemValue="" />
-						<f:selectItems value="#{mbregistrooperacinsolicitudcredito.lstDocumentoRequeridoFiltro}" var="lst" itemLabel="#{lst.descripcionDocumentoRequerido}" itemValue="#{lst.codigoDocumentoRequerido}"/>
+						<f:selectItems value="#{mbregistrooperacinsolicitudcredito.lstOperacionSolicitudCreditoDocumentoRequeridoFiltro}" var="lst" itemLabel="#{lst.descripcionDocumentoRequerido}" itemValue="#{lst.codigoDocumentoRequerido}"/>
 					</p:selectOneMenu>
 					<h:message for="cbTipoDocumentoRevision" styleClass="dsMessage1"/>
 				</div>

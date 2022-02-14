@@ -216,6 +216,18 @@ public class UManejadorListaDesplegable {
 		return obtieneListaDesplegableF0901(UF0901.VALOR_SI_NO, 2);
 	}
 	
+	public List<EGeneral> obtieneTipoContrato() {
+		return obtieneListaDesplegableF0901(UF0901.TIPOCONTRATO, 1);
+	}
+	
+	public List<EGeneral> obtieneTipoAplicacion() {
+		return obtieneListaDesplegableF0901(UF0901.TIPOAPLICACION, 2);
+	}
+	
+	public List<EGeneral> obtieneTipoPeriodo() {
+		return obtieneListaDesplegableF0901(UF0901.TIPOPERIODO, 2);
+	}
+	
 	public List<EGeneral> obtieneTipoAlmacen() {
 		return obtieneListaDesplegableF0901(UF0901.TIPOALMACEN, 2);
 	}
@@ -293,6 +305,9 @@ public class UManejadorListaDesplegable {
 	}
 	public List<EGeneral> obtieneEstadoOperacionCliente() {
 		return obtieneListaDesplegableGeneral(UGeneral.ESTADOOPERACIONCLIENTE, 2);
+	}
+	public List<EGeneral> obtieneTipoDocumentoGarantia() {
+		return obtieneListaDesplegableGeneral(UGeneral.TIPODOCUMENTOGARANTIA, 2);
 	}
 	
 	public List<EGeneral> obtieneZonaGeograficaF0713() {

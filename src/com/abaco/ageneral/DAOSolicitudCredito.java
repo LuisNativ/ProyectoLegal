@@ -29,18 +29,14 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_INS_EVALUACIONNEGOCIOS_MAESTRA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_EVALUACIONNEGOCIOS_MAESTRA("+parametrosSP(13)+") }";
 	private static final String SP_ABACOINLEGAL_INS_EVALUACIONXNIVEL_MAESTRA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_EVALUACIONXNIVEL_MAESTRA("+parametrosSP(8)+") }";
 	private static final String SP_ABACOINLEGAL_INS_EVALUACIONXNIVEL_DETALLE="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_EVALUACIONXNIVEL_DETALLE("+parametrosSP(7)+") }";
-	private static final String SP_ABACOINLEGAL_UPD_SOLICITUDCREDITO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_SOLICITUDCREDITO("+parametrosSP(59)+") }";
-	private static final String SP_ABACOINLEGAL_UPD_DEUDOR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_DEUDOR("+parametrosSP(34)+") }";
 	
-	private static final String SP_ABACOINLEGAL_INS_UPD_INFORMELEGALADICIONAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_UPD_INFORMELEGALADICIONAL3("+parametrosSP(48)+") }";//BDLOCAL
-	//private static final String SP_ABACOINLEGAL_INS_UPD_INFORMELEGALADICIONAL2="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_UPD_INFORMELEGALADICIONAL2("+parametrosSP(27)+") }";
+	private static final String SP_ABACOINLEGAL_UPD_DEUDOR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_DEUDOR("+parametrosSP(34)+") }";
 	
 	private static final String SP_ABACOINLEGAL_DEL_DEUDOR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_DEUDOR("+parametrosSP(5)+") }";
 	private static final String SP_ABACOINLEGAL_DEL_EVALUACIONXNIVEL_DETALLE="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_EVALUACIONXNIVEL_DETALLE("+parametrosSP(5)+") }";
 	private static final String SP_ABACOINLEGAL_DEL_SOLICITUDSUSCRIPCION="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_SOLICITUDSUSCRIPCION("+parametrosSP(5)+") }";
 	private static final String SP_ABACOINLEGAL_DEL_CLIENTESUSCRIPCION="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_CLIENTESUSCRIPCION("+parametrosSP(3)+") }";
 	
-	private static final String SP_ABACOINLEGAL_SEL_SOLICITUDCREDITOPORREGISTRAR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_SOLICITUDCREDITOPORREGISTRAR() }";
 	private static final String SP_ABACOINLEGAL_SEL_DEUDOR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_DEUDOR("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_AVALSOLICITUD="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_AVALSOLICITUD("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_EVALUACIONXNIVEL_DETALLE="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_EVALUACIONXNIVEL_DETALLE("+parametrosSP(3)+") }";
@@ -50,12 +46,10 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_SEL_EVALUACIONSOLICITUDCREDITOLEGAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_EVALUACIONSOLICITUDCREDITOLEGAL("+parametrosSP(2)+") }";
 	
 	private static final String SP_ABACOINLEGAL_BUS_SOLICITUDCREDITO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_SOLICITUDCREDITO("+parametrosSP(1)+") }";
-	private static final String SP_ABACOINLEGAL_BUS_EVALUACIONSOLICITUDCREDITOLEGAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_EVALUACIONSOLICITUDCREDITOLEGAL("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_INFORMELEGALADICIONAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_INFORMELEGALADICIONAL("+parametrosSP(3)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_DEUDORESTADO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_DEUDORESTADO("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_DEUDORADICIONAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_DEUDORADICIONAL("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_EVALUACIONNEGOCIOS_MAESTRA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_EVALUACIONNEGOCIOS_MAESTRA("+parametrosSP(2)+") }";
-	private static final String SP_ABACOINLEGAL_BUS_CREDITO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_CREDITO("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_AVALTERCERO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_AVALTERCERO("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_EMAIL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_EMAIL("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_SOLICITUDXCARTAFIANZA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_SOLICITUDXCARTAFIANZA("+parametrosSP(1)+") }";
@@ -231,88 +225,6 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 		return mensaje; 
 	}
 	
-	public EMensaje modificarSolicitudCredito(EEvaluacionSolicitudCreditoLegal eEvaluacionSolicitudCreditoLegal, EOperacionSolicitud eOperacionSolicitud) {
-		EMensaje mensaje = new EMensaje();
-		List<Object> lstParametrosEntrada;
-		SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
-		
-		try {			
-			lstParametrosEntrada = new ArrayList<Object>();
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getNumeroSolicitud());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getCodigoCliente());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getCodigoTipoCliente());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getCodigoTipoPersona());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getCodigoTipoDocumento());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getNumeroDocumento());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getRuc());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getApellidoPaterno());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getApellidoMaterno());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getNombre());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getNombreLargo());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getDireccionReal());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getCodigoUbigeoReal());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getDireccionContractual());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getCodigoUbigeoContractual());
-			
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getCodigoTipoDocumentoConyugue());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getDocumentoConyugue());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getApellidoPaternoConyugue());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getApellidoMaternoConyugue());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getNombreConyugue());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getNombreLargoConyuge());
-			
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getCodigoTipoPersonaJuridica());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getMontoCapitalSocialRegistroPublicos());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getMontoCapitalSocialActual());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getCodigoFacultadOperar());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getCodigoTipoSuscripcionPago());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getNumeroSuscripcionPago());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getNumeroAcciones());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getIndicadorAvalarTercero());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getIndicadorGrabarBien());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getDescripcionAvalarTercero());
-			
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionAvalarTercero(),0));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionAvalarTercero(),1));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionAvalarTercero(),2));
-			
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionGrabarBien(),0));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionGrabarBien(),1));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionGrabarBien(),2));
-			
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionConstanciaSocial(),0));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionConstanciaSocial(),1));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionConstanciaSocial(),2));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionConstanciaSocial(),3));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionConstanciaSocial(),4));
-			
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionSolicitud(),0));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionSolicitud(),1));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionSolicitud(),2));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionSolicitud(),3));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionSolicitud(),4));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionSolicitud(),5));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionSolicitud(),6));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionSolicitud(),7));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionSolicitud(),8));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionSolicitud(),9));
-			
-			lstParametrosEntrada.add(eOperacionSolicitud.getCodigoEstado());
-			
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getUsuarioRegistro().getCodigoArea());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getUsuarioRegistro().getNombreUsuario());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getFechaRegistro());
-			lstParametrosEntrada.add(formato.format(eEvaluacionSolicitudCreditoLegal.getFechaRegistro()));
-			
-			mensaje = objConexion.ejecutaTransaccion(SP_ABACOINLEGAL_UPD_SOLICITUDCREDITO, lstParametrosEntrada);
-		} catch(Exception objEx) {
-			mensaje.setIdMensaje(-1);
-			mensaje.setDescMensaje(objEx.getMessage());
-			UManejadorLog.error("Acceso: Problemas al modificar.", objEx);
-		}
-		return mensaje;
-	}
-	
 	public EMensaje modificarDeudor(EDeudor eDeudor) {
 		EMensaje mensaje = new EMensaje();
 		List<Object> lstParametrosEntrada;
@@ -366,180 +278,6 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 		}
 		return mensaje;
 	}
-	
-	public EMensaje agregarModificarInformeLegalAdicional(EEvaluacionSolicitudCreditoLegal eEvaluacionSolicitudCreditoLegal, EInformeLegalAdicional eEInformeLegalAdicional) {
-		EMensaje mensaje = new EMensaje();
-		List<Object> lstParametrosEntrada;
-		SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
-		
-		try {		
-			lstParametrosEntrada = new ArrayList<Object>();
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getNumeroSolicitud());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoCliente());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoTipoCliente());
-			
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getCodigoTipoPersonaJuridica());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getMontoCapitalSocialRegistroPublicos());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getMontoCapitalSocialActual());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getCodigoFacultadOperar());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getCodigoTipoSuscripcionPago());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getNumeroSuscripcionPago());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getNumeroAcciones());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getIndicadorAvalarTercero());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getIndicadorGrabarBien());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getDescripcionAvalarTercero());
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionAvalarTercero(),0));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionAvalarTercero(),1));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionAvalarTercero(),2));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionGrabarBien(),0));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionGrabarBien(),1));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionGrabarBien(),2));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionConstanciaSocial(),0));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionConstanciaSocial(),1));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionConstanciaSocial(),2));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionConstanciaSocial(),3));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eEvaluacionSolicitudCreditoLegal.getObservacionConstanciaSocial(),4));
-			
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoEstadoCivil());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getNumeroPartida());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getOficinaRegistral());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoTipoDuracionPartida());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getRegistroPartida());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getDescripcionConstitucion());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getFechaConstitucion());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoNotario());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getDescripcionNotario());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getNumeroAcciones());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoTipoValorSuscripcion());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getMontoValorNominal());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getEstatuto());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getDescripcionPatrimonio());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoTipoNumeracionEstatuto());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getNumeracionEstatuto());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getAsiento());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getFechaPeriodoInicio());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getFechaPeriodoVencimiento());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getUsuarioRegistro().getNombreUsuario());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getFechaRegistro());
-			lstParametrosEntrada.add(formato.format(eEInformeLegalAdicional.getFechaRegistro()));
-			
-			mensaje = objConexion.ejecutaTransaccion(SP_ABACOINLEGAL_INS_UPD_INFORMELEGALADICIONAL, lstParametrosEntrada);
-		} catch(Exception objEx) {
-			mensaje.setIdMensaje(-1);
-			mensaje.setDescMensaje(objEx.getMessage());
-			UManejadorLog.error("Acceso: Problemas al modificar.", objEx);
-		}
-		return mensaje;
-	}
-	
-	public EMensaje agregarModificarInformeLegalAdicional2(EOperacionCliente eOperacionCliente, EInformeLegalAdicional eEInformeLegalAdicional) {
-		EMensaje mensaje = new EMensaje();
-		List<Object> lstParametrosEntrada;
-		SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
-		
-		try {		
-			lstParametrosEntrada = new ArrayList<Object>();
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getNumeroSolicitud());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoCliente());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoTipoCliente());
-			
-			lstParametrosEntrada.add(eOperacionCliente.getCodigoTipoPersonaJuridica());
-			lstParametrosEntrada.add(eOperacionCliente.getMontoCapitalSocialRegistroPublicos());
-			lstParametrosEntrada.add(eOperacionCliente.getMontoCapitalSocialActual());
-			lstParametrosEntrada.add(eOperacionCliente.getCodigoFacultadOperar());
-			lstParametrosEntrada.add(eOperacionCliente.getCodigoTipoSuscripcionPago());
-			lstParametrosEntrada.add(eOperacionCliente.getNumeroSuscripcionPago());
-			lstParametrosEntrada.add(eOperacionCliente.getNumeroAcciones());
-			lstParametrosEntrada.add(eOperacionCliente.getIndicadorAvalarTercero());
-			lstParametrosEntrada.add(eOperacionCliente.getIndicadorGrabarBien());
-			lstParametrosEntrada.add(eOperacionCliente.getDescripcionAvalarTercero());
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eOperacionCliente.getObservacionAvalarTercero(),0));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eOperacionCliente.getObservacionAvalarTercero(),1));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eOperacionCliente.getObservacionAvalarTercero(),2));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eOperacionCliente.getObservacionGrabarBien(),0));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eOperacionCliente.getObservacionGrabarBien(),1));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eOperacionCliente.getObservacionGrabarBien(),2));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eOperacionCliente.getObservacionConstanciaSocial(),0));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eOperacionCliente.getObservacionConstanciaSocial(),1));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eOperacionCliente.getObservacionConstanciaSocial(),2));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eOperacionCliente.getObservacionConstanciaSocial(),3));
-			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eOperacionCliente.getObservacionConstanciaSocial(),4));
-			
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoEstadoCivil());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getNumeroPartida());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getOficinaRegistral());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoTipoDuracionPartida());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getRegistroPartida());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getDescripcionConstitucion());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getFechaConstitucion());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoNotario());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getDescripcionNotario());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getNumeroAcciones());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoTipoValorSuscripcion());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getMontoValorNominal());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getEstatuto());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getDescripcionPatrimonio());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoTipoNumeracionEstatuto());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getNumeracionEstatuto());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getAsiento());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getFechaPeriodoInicio());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getFechaPeriodoVencimiento());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getUsuarioRegistro().getNombreUsuario());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getFechaRegistro());
-			lstParametrosEntrada.add(formato.format(eEInformeLegalAdicional.getFechaRegistro()));
-			
-			mensaje = objConexion.ejecutaTransaccion(SP_ABACOINLEGAL_INS_UPD_INFORMELEGALADICIONAL, lstParametrosEntrada);
-		} catch(Exception objEx) {
-			mensaje.setIdMensaje(-1);
-			mensaje.setDescMensaje(objEx.getMessage());
-			UManejadorLog.error("Acceso: Problemas al modificar.", objEx);
-		}
-		return mensaje;
-	}
-	
-	/*
-	public EMensaje agregarModificarInformeLegalAdicional2(EInformeLegalAdicional eEInformeLegalAdicional) {
-		EMensaje mensaje = new EMensaje();
-		List<Object> lstParametrosEntrada;
-		SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
-		
-		try {		
-			lstParametrosEntrada = new ArrayList<Object>();
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getNumeroSolicitud());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoCliente());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoTipoCliente());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoEstadoCivil());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getNumeroPartida());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getOficinaRegistral());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoTipoDuracionPartida());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getRegistroPartida());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getDescripcionConstitucion());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getFechaConstitucion());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoNotario());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getDescripcionNotario());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getNumeroAcciones());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoTipoValorSuscripcion());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getMontoValorNominal());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getEstatuto());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getDescripcionPatrimonio());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoTipoNumeracionEstatuto());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getNumeracionEstatuto());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getAsiento());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getFechaPeriodoInicio());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getFechaPeriodoVencimiento());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getUsuarioRegistro().getNombreUsuario());
-			lstParametrosEntrada.add(eEInformeLegalAdicional.getFechaRegistro());
-			lstParametrosEntrada.add(formato.format(eEInformeLegalAdicional.getFechaRegistro()));
-			
-			mensaje = objConexion.ejecutaTransaccion(SP_ABACOINLEGAL_INS_UPD_INFORMELEGALADICIONAL2, lstParametrosEntrada);
-		} catch(Exception objEx) {
-			mensaje.setIdMensaje(-1);
-			mensaje.setDescMensaje(objEx.getMessage());
-			UManejadorLog.error("Acceso: Problemas al modificar.", objEx);
-		}
-		return mensaje;
-	}
-	*/
 	
 	public EMensaje eliminarDeudor(EDeudor eDeudor) {
 		EMensaje mensaje = new EMensaje();
@@ -613,48 +351,6 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 			UManejadorLog.error("Acceso: Problemas al eliminar.", objEx);
 		}
 		return mensaje;
-	}
-	
-	public List<EEvaluacionSolicitudCreditoLegal> listarInformeLegalPorRegistrar() {
-		List<Object> lstParametrosEntrada;
-		ResultSet oResultSet = null;
-		EEvaluacionSolicitudCreditoLegal oEEvaluacionSolicitudCreditoLegal= null;
-		List<EEvaluacionSolicitudCreditoLegal> lstEvaluacionSolicitudCreditoLegal = null;
-		SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
-		
-		try {
-			lstParametrosEntrada = new ArrayList<Object>();
-			
-			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_SEL_SOLICITUDCREDITOPORREGISTRAR, lstParametrosEntrada, null);
-			if (oResultSet != null) {
-				lstEvaluacionSolicitudCreditoLegal = new ArrayList<EEvaluacionSolicitudCreditoLegal>();
-				while (oResultSet.next()) {
-					oEEvaluacionSolicitudCreditoLegal=new EEvaluacionSolicitudCreditoLegal();
-					oEEvaluacionSolicitudCreditoLegal.setNumeroSolicitud(oResultSet.getInt("NROSOL"));
-					oEEvaluacionSolicitudCreditoLegal.setCodigoCliente(oResultSet.getInt("CODCLI"));
-					oEEvaluacionSolicitudCreditoLegal.setCodigoTipoPersona(UFuncionesGenerales.revisaCadena(oResultSet.getString("PERSON")));
-					oEEvaluacionSolicitudCreditoLegal.setCodigoTipoCliente(oResultSet.getInt("TIPCLI"));
-					oEEvaluacionSolicitudCreditoLegal.setCodigoTipoDocumento(UFuncionesGenerales.revisaCadena(oResultSet.getString("TIPDOC")));
-					oEEvaluacionSolicitudCreditoLegal.setNumeroDocumento(UFuncionesGenerales.revisaCadena(oResultSet.getString("DOCUME")));
-					oEEvaluacionSolicitudCreditoLegal.setNombreLargo(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMBCL")));
-					oEEvaluacionSolicitudCreditoLegal.setNombreCorto(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMABV")));
-					
-					oEEvaluacionSolicitudCreditoLegal.setCodigoAreaRegistroLegal(oResultSet.getInt("CODAREREGL"));
-					oEEvaluacionSolicitudCreditoLegal.setCodigoUsuarioRegistroLegal(oResultSet.getInt("CODUSREGL"));
-					oEEvaluacionSolicitudCreditoLegal.setUsuarioRegistroLegal(UFuncionesGenerales.revisaCadena(oResultSet.getString("USREGL")));
-					oEEvaluacionSolicitudCreditoLegal.setDescripcionUsuarioRegistroLegal(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCUSREGL")));
-					
-					oEEvaluacionSolicitudCreditoLegal.setFechaRegistroLegal(oResultSet.getDate("FECREGL"));
-					oEEvaluacionSolicitudCreditoLegal.setHoraRegistroLegal(oResultSet.getString("HOREGL"));
-					
-					lstEvaluacionSolicitudCreditoLegal.add(oEEvaluacionSolicitudCreditoLegal);
-				}								
-			}						
-			
-		} catch(Exception objEx) {
-			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
-		}
-		return lstEvaluacionSolicitudCreditoLegal;
 	}
 	
 	public List<EDeudor> listarDeudor(int codigoCliente, long numeroSolicitud) {
@@ -1164,135 +860,6 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
 		}
 		return lstSuscripcion;
-	}
-	
-	public ECredito buscarCredito(long numeroSolicitud) {
-		List<Object> lstParametrosEntrada;
-		ResultSet oResultSet = null;
-		ECredito oECredito= null;
-		SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
-		
-		try {
-			lstParametrosEntrada = new ArrayList<Object>();
-			lstParametrosEntrada.add(numeroSolicitud);
-			
-			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_BUS_CREDITO, lstParametrosEntrada, null);
-			if (oResultSet != null) {
-				while (oResultSet.next()) {
-					oECredito=new ECredito();
-					oECredito.setNumeroSolicitud(oResultSet.getInt("NROSOL"));
-					oECredito.setAbreviacionMoneda(UFuncionesGenerales.revisaCadena(oResultSet.getString("ABRVMON")));
-					oECredito.setTotalDesembolso(oResultSet.getDouble("TOTDES"));
-					//oECredito.setUltimoDesembolso(oResultSet.getDate("ULTDES"));
-					oECredito.setFechaCancelacion(oResultSet.getDate("FECCAN"));
-					oECredito.setDescripcionTipoCredito(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCTCR")));
-					/*
-					oESolicitudCredito.setCodigoMonedaSolicitud(oResultSet.getInt("MONSOL"));
-					oESolicitudCredito.setDescripcionMonedaSolicitud(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCMONSOL")));
-					oESolicitudCredito.setFechaDesembolso(oResultSet.getDate("FECDES"));
-					
-					oESolicitudCredito.setCodigoProducto(oResultSet.getInt("TPRODU"));
-					oESolicitudCredito.setAbreviacionProducto(UFuncionesGenerales.revisaCadena(oResultSet.getString("APRODU")));
-					oESolicitudCredito.setDescripcionProducto(UFuncionesGenerales.revisaCadena(oResultSet.getString("DPRODU")));
-					
-					oESolicitudCredito.setCodigoCliente(oResultSet.getInt("CODCLI"));
-					*/
-				}						
-			}						
-			
-		} catch(Exception objEx) {
-			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
-		}
-		return oECredito;
-	}
-	
-	public EEvaluacionSolicitudCreditoLegal buscarEvaluacionSolicitudCreditoLegal(long numeroSolicitud, int codigoCliente) {
-		List<Object> lstParametrosEntrada;
-		ResultSet oResultSet = null;
-		EEvaluacionSolicitudCreditoLegal oEEvaluacionSolicitudCreditoLegal= null;
-		SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
-		
-		try {
-			lstParametrosEntrada = new ArrayList<Object>();
-			lstParametrosEntrada.add(numeroSolicitud);
-			lstParametrosEntrada.add(codigoCliente);
-			
-			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_BUS_EVALUACIONSOLICITUDCREDITOLEGAL, lstParametrosEntrada, null);
-			if (oResultSet != null) {
-				while (oResultSet.next()) {
-					oEEvaluacionSolicitudCreditoLegal=new EEvaluacionSolicitudCreditoLegal();
-					oEEvaluacionSolicitudCreditoLegal.setNumeroSolicitud(oResultSet.getInt("NROSOL"));
-					oEEvaluacionSolicitudCreditoLegal.setCodigoEstadoActual(UFuncionesGenerales.revisaCadena(oResultSet.getString("STALEG")));
-					oEEvaluacionSolicitudCreditoLegal.setDescripcionEstadoActual(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCSTALEG")));
-					
-					oEEvaluacionSolicitudCreditoLegal.setCodigoCliente(oResultSet.getInt("CODCLI"));
-					oEEvaluacionSolicitudCreditoLegal.setCodigoTipoCliente(oResultSet.getInt("TIPCLI"));
-					oEEvaluacionSolicitudCreditoLegal.setDescripcionTipoCliente(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCTIPCLI")));
-					oEEvaluacionSolicitudCreditoLegal.setCodigoTipoPersona(UFuncionesGenerales.revisaCadena(oResultSet.getString("PERSON")));
-					oEEvaluacionSolicitudCreditoLegal.setAbreviacionTipoPersona(UFuncionesGenerales.revisaCadena(oResultSet.getString("ABRVPERSON")));
-					oEEvaluacionSolicitudCreditoLegal.setCodigoTipoDocumento(UFuncionesGenerales.revisaCadena(oResultSet.getString("TIPDOC")));
-					oEEvaluacionSolicitudCreditoLegal.setNumeroDocumento(UFuncionesGenerales.revisaCadena(oResultSet.getString("DOCUME")));
-					oEEvaluacionSolicitudCreditoLegal.setRuc(UFuncionesGenerales.revisaCadena(oResultSet.getString("NRORUC")));
-					
-					oEEvaluacionSolicitudCreditoLegal.setNombreLargo(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMBCL")));
-					oEEvaluacionSolicitudCreditoLegal.setNombreCorto(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMABV")));
-					
-					oEEvaluacionSolicitudCreditoLegal.setCodigoTipoDocumentoConyugue(UFuncionesGenerales.revisaCadena(oResultSet.getString("TDOCON")));
-					oEEvaluacionSolicitudCreditoLegal.setDocumentoConyugue(UFuncionesGenerales.revisaCadena(oResultSet.getString("DOCCON")));
-					oEEvaluacionSolicitudCreditoLegal.setNombreLargoConyuge(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMCON")));
-					
-					oEEvaluacionSolicitudCreditoLegal.setCodigoUbigeoReal(oResultSet.getInt("CCIUDA"));
-					oEEvaluacionSolicitudCreditoLegal.setDireccionReal(UFuncionesGenerales.revisaCadena(oResultSet.getString("DIRECC")));
-					oEEvaluacionSolicitudCreditoLegal.setCodigoUbigeoContractual(oResultSet.getInt("CCIUDP"));
-					oEEvaluacionSolicitudCreditoLegal.setDireccionContractual(UFuncionesGenerales.revisaCadena(oResultSet.getString("DIRECP")));
-					
-					oEEvaluacionSolicitudCreditoLegal.setCodigoTipoPersonaJuridica(UFuncionesGenerales.revisaCadena(oResultSet.getString("TIPOPJ")));
-					oEEvaluacionSolicitudCreditoLegal.setMontoCapitalSocialRegistroPublicos(oResultSet.getDouble("CAPSRP"));
-					oEEvaluacionSolicitudCreditoLegal.setMontoCapitalSocialActual(oResultSet.getDouble("CAPSAC"));
-					oEEvaluacionSolicitudCreditoLegal.setCodigoFacultadOperar(UFuncionesGenerales.revisaCadena(oResultSet.getString("FACUOP")));
-					oEEvaluacionSolicitudCreditoLegal.setCodigoTipoSuscripcionPago(UFuncionesGenerales.revisaCadena(oResultSet.getString("TIPSPG")));
-					//oEEvaluacionSolicitudCreditoLegal.setCodigoTipoSuscripcionPago(oResultSet.getInt("TIPSPG"));
-					oEEvaluacionSolicitudCreditoLegal.setNumeroSuscripcionPago(oResultSet.getInt("SUSPAG"));
-					oEEvaluacionSolicitudCreditoLegal.setNumeroAcciones(oResultSet.getInt("NROACC"));
-					oEEvaluacionSolicitudCreditoLegal.setIndicadorAvalarTercero(UFuncionesGenerales.revisaCadena(oResultSet.getString("AVATER")));
-					oEEvaluacionSolicitudCreditoLegal.setIndicadorGrabarBien(UFuncionesGenerales.revisaCadena(oResultSet.getString("GRABIE")));
-					oEEvaluacionSolicitudCreditoLegal.setDescripcionAvalarTercero(UFuncionesGenerales.revisaCadena(oResultSet.getString("AVATFI")));
-					oEEvaluacionSolicitudCreditoLegal.setObservacionAvalarTercero(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1AVT"))+"\n"+
-																				  UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2AVT"))+"\n"+
-																				  UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3AVT")));
-					oEEvaluacionSolicitudCreditoLegal.setObservacionGrabarBien(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1GRA"))+"\n"+
-																			   UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2GRA"))+"\n"+
-																			   UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3GRA")));
-					oEEvaluacionSolicitudCreditoLegal.setObservacionConstanciaSocial(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT1PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT2PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT3PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT4PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT5PJ")));
-					oEEvaluacionSolicitudCreditoLegal.setObservacionSolicitud(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL01"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL02"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL03"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL04"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL05"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL06"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL07"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL08"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL09"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL10")));
-					
-					oEEvaluacionSolicitudCreditoLegal.setUsuarioEvaluacionLegal(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMUSUEVALG")));
-					oEEvaluacionSolicitudCreditoLegal.setFechaRegistroLegal(oResultSet.getDate("FECREGL"));
-					oEEvaluacionSolicitudCreditoLegal.setHoraRegistroLegal(UFuncionesGenerales.convertirEnteroATime(oResultSet.getInt("HOREGL")));
-					oEEvaluacionSolicitudCreditoLegal.setUsuarioRegistroLegal(UFuncionesGenerales.revisaCadena(oResultSet.getString("USREGL")));
-					oEEvaluacionSolicitudCreditoLegal.setFechaUltimaRevision(oResultSet.getDate("FECUREV"));
-					oEEvaluacionSolicitudCreditoLegal.setHoraUltimaRevision(UFuncionesGenerales.convertirEnteroATime(oResultSet.getInt("HOUREV")));
-					oEEvaluacionSolicitudCreditoLegal.setUsuarioUltimaRevision(UFuncionesGenerales.revisaCadena(oResultSet.getString("USUREV")));
-				}						
-			}						
-			
-		} catch(Exception objEx) {
-			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
-		}
-		return oEEvaluacionSolicitudCreditoLegal;
 	}
 	
 	public EInformeLegalAdicional buscarInformeLegalAdicional(long numeroSolicitud, int codigoCliente, int codigoTipoCliente){

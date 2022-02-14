@@ -28,7 +28,6 @@ public @Data class EOperacionSolicitud extends ESolicitud{
 	private String horaAutorizacion;
 	
 	private List<EOperacionDocumento> lstOperacionDocumento;
-	private List<EOperacionDocumentoRevision> lstOperacionDocumentoRevision;
 	
 	//Extras
 	//private int indicadorConfirmar;

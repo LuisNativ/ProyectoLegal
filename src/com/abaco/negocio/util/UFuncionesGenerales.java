@@ -25,7 +25,7 @@ import kotlin.text.Regex;
 import org.jasypt.util.text.BasicTextEncryptor;
 import org.primefaces.context.RequestContext;
 
-import com.abaco.ageneral.EDocumentoRequerido;
+import com.abaco.ageneral.EOperacionSolicitudCreditoDocumentoRequerido;
 import com.abaco.entidad.EGeneral;
 import com.abaco.entidad.EMensaje;
 import com.abaco.entidad.ENombre;
@@ -305,12 +305,12 @@ public class UFuncionesGenerales {
 		return strResultado;
 	}
 	
-	public static String obtieneDescripcionDeValorSeleccionado3(final List<EDocumentoRequerido> lstListaValores,
+	public static String obtieneDescripcionDeValorSeleccionado4(final List<EOperacionSolicitudCreditoDocumentoRequerido> lstListaValores,
 			final int strValor, final boolean descripcionLarga) {
 
 		String strResultado = "";
 		if (lstListaValores != null && lstListaValores.size() > 0) {
-			for (EDocumentoRequerido objEntrada : lstListaValores) {
+			for (EOperacionSolicitudCreditoDocumentoRequerido objEntrada : lstListaValores) {
 				if (objEntrada.getCodigoDocumentoRequerido() == strValor) {
 					if(descripcionLarga){
 						strResultado = objEntrada.getDescripcionDocumentoRequerido();
@@ -323,6 +323,7 @@ public class UFuncionesGenerales {
 		}
 		return strResultado;
 	}
+	
 	
 	public static String obtieneDescripcionDeValorIndicador(final int strValor) {
 		String strResultado = "";

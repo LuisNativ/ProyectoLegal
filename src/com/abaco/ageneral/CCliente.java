@@ -79,38 +79,6 @@ public class CCliente {
 			return mensaje;
 	}
 	
-	/*
-	public List<EPersona> listarSocio(EPersonaParametro objEPersonaParam) {
-		IConexion objConexion = null;
-		DAOCliente oDAOCliente = null;
-		List<EPersona> resultado = null;
-		try {
-			objConexion = FabricaConexion.creaConexion();
-			oDAOCliente = new DAOCliente(objConexion);
-			
-			if (objEPersonaParam.getDocumentoPersona() == null) {
-				EDocumentoIdentidad objEDocumentoIdentidad = new EDocumentoIdentidad();
-				ETipoDocumentoPersona objETipoDocumentoPersona = new ETipoDocumentoPersona();
-				objEDocumentoIdentidad.setTipoDocumento(objETipoDocumentoPersona);
-				objEPersonaParam.setDocumentoPersona(objEDocumentoIdentidad);
-			}
-			if (objEPersonaParam.getDocumentoPersona().getTipoDocumento() == null) {
-				ETipoDocumentoPersona objETipoDocumentoPersona = new ETipoDocumentoPersona();
-				objEPersonaParam.getDocumentoPersona().setTipoDocumento(objETipoDocumentoPersona);
-			}
-			
-			resultado = oDAOCliente.listarSocio(objEPersonaParam);
-		} catch (Exception e) {
-			UManejadorLog.error("Error al listar socio: " + e.getMessage());
-		} finally {
-			if (objConexion != null) {
-				objConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	*/
-	
 	public List<EPersona> listarSocio(EPersonaParametro objEPersonaParam) {
 		IConexion objConexion = null;
 		DAOCliente oDAOCliente = null;
@@ -129,7 +97,7 @@ public class CCliente {
 		return resultado;
 	}
 	
-	public List<EPersona> buscarSocioyTercero(int codigo, String descripcion) {
+	public List<EPersona> listarSocioyTercero(int codigo, String descripcion) {
 		IConexion objConexion = null;
 		DAOCliente oDAOCliente = null;
 		List<EPersona> resultado = null;
@@ -389,24 +357,6 @@ public class CCliente {
 			oIConexion = FabricaConexion.creaConexion();
 			oDAOCliente = new DAOCliente(oIConexion);
 			resultado = oDAOCliente.buscarClienteAdicional(codigoCliente, codigoTipoCliente);
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al recuperar: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
-	public EUsuario buscarPermisoUsuario(String nombreUsuario){
-		IConexion oIConexion = null;
-		EUsuario resultado = null;
-		DAOCliente oDAOCliente = null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();
-			oDAOCliente = new DAOCliente(oIConexion);
-			resultado = oDAOCliente.buscarPermisoUsuario( nombreUsuario);
 		} catch (Exception e) {
 			UManejadorLog.error("Control: Error al recuperar: " + e.getMessage());
 		} finally {

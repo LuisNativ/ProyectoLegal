@@ -309,10 +309,6 @@ public class BOGarantia {
 		EMensaje resultado = oCGarantia.eliminarDetalleFlagRequisitoLegal(eFlagRequisitoLegal);
 		return resultado;
 	}
-	public List<EGarantiaSolicitud> listarGarantiaConCreditoVigente(int codigo, String descripcion){					
-		List<EGarantiaSolicitud> lista=oCGarantia.listarGarantiaConCreditoVigente(codigo, descripcion);
-		return lista;
-	}
 	public List<EAsignacionContratoGarantia> listarCreditosAsociadosGarantia(long codigoGarantia) {					
 		List<EAsignacionContratoGarantia> lista=oCGarantia.listarCreditosAsociadosGarantia(codigoGarantia);
 		return lista;
@@ -412,10 +408,6 @@ public class BOGarantia {
 	}
 	public List<EGarantiaDocumentoSolicitado> listarDocumentoSolicitado(long numeroSolicitud){
 		List<EGarantiaDocumentoSolicitado> lista=oCGarantia.listarDocumentoSolicitado(numeroSolicitud);
-		return lista;
-	}
-	public List<EGarantiaCreditoRelacionado> listarCreditoRelacionado(int codigo){
-		List<EGarantiaCreditoRelacionado> lista=oCGarantia.listarCreditoRelacionado(codigo);
 		return lista;
 	}
 	public List<EGarantiaCreditoRelacionado> listarCreditoVigenteRelacionado(long codigo){

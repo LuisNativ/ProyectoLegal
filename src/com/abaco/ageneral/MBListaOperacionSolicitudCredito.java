@@ -154,6 +154,7 @@ public class MBListaOperacionSolicitudCredito implements Serializable {
 		String ruta = "";
 		if (oEOperacionSolicitudCreditoItem != null) {
 			oEOperacionSolicitudCreditoItem.setUsuarioRegistro(oEUsuario);
+			oEOperacionSolicitudCreditoItem.setIndicadorMdlAutorizacion(0);
 			
 			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.OPERACION_SESION, oEOperacionSolicitudCreditoItem);
 			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.EDITAR);
@@ -193,7 +194,7 @@ public class MBListaOperacionSolicitudCredito implements Serializable {
 		if (lstOperacionSolicitudCredito != null){
 			lstOperacionSolicitudCreditoPendiente = new ArrayList<EOperacionSolicitudCredito>();
 	        for (EOperacionSolicitudCredito obj: lstOperacionSolicitudCredito) {
-	            if (obj.getCodigoEstadoActual().equals("") ||
+	            if (obj.getCodigoEstadoActual().equals(UEstadoLegal.PENDIENTEDEEVALUACION) ||
 	            	obj.getCodigoEstadoActual().equals(UEstadoLegal.ENEVALUACION)) {
 	            	lstOperacionSolicitudCreditoPendiente.add(obj);
 	            }
@@ -320,9 +321,19 @@ public class MBListaOperacionSolicitudCredito implements Serializable {
         UFuncionesGenerales.borrarArchivo(rutaExcelGenerado);
 	}
 	
+	public boolean visualizarBtnEditar(EOperacionSolicitudCredito oEOperacionSolicitudCreditoItem){
+		boolean ind = false;
+		if (oEOperacionSolicitudCreditoItem != null) {
+			if(oEOperacionSolicitudCreditoItem.getCodigoUbicacionRevision() == oEUsuario.getCodigoArea()){
+				ind = true;
+			}
+		}
+		return ind;
+	}
+	
 	public void inicializar() {
 		nombrePersona= "";
-		codigoEstado = "0";
+		codigoEstado = "";
 		codigoAutorizacion = 0;
 		codigoTipoClienteBuscar = UTipoCliente.COD_SOCIO;
 	}

@@ -542,27 +542,6 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
         return ind;
 	}
 	
-	/*
-	public boolean validarLiberarGarantiaCreditoRelacionado() {
-		boolean ind=true;
-		mensajeValidacion = "";
-		
-		lstCreditoRelacionado = oBOGarantia.listarCreditoRelacionado(1);
-		
-		if(lstCreditoRelacionado !=null){
-			if(lstCreditoRelacionado.size() > 0){
-				mensajeValidacion = UMensajeValidacion.MSJ_11;
-				
-				for(int i=0;i<lstCreditoRelacionado.size();i++){
-					mensajeValidacion = mensajeValidacion + "\n" +lstCreditoRelacionado.get(i).getCodigoCliente()+"-"+lstCreditoRelacionado.get(i).getCodigoServicio()+"-"+lstCreditoRelacionado.get(i).getNumeroOperacion();
-				}
-				ind = false;
-			}
-		}
-        return ind;
-	}
-	*/
-	
 	public void salir() {
 		String ruta = "";
 		

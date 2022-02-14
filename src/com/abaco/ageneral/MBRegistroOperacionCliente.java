@@ -120,7 +120,6 @@ public class MBRegistroOperacionCliente implements Serializable {
 	private ESuscripcion oESuscripcionData;
 	private ETercero oETerceroData;
 	
-	private EOperacionMensaje oEOperacionMensajeSelected;
 	private ERepresentanteLegal oERepresentanteLegalSelected;
 	private ERepresentanteLegal oERepresentanteLegalRelacionSelected;
 	private ERepresentanteLegal oERL1Selected;
@@ -385,7 +384,6 @@ public class MBRegistroOperacionCliente implements Serializable {
 		this.oESuscripcionData = new ESuscripcion();
 		this.oETerceroData = new ETercero();
 		
-		oEOperacionMensajeSelected = new EOperacionMensaje();
 		oERepresentanteLegalSelected = new ERepresentanteLegal();
 		oERepresentanteLegalRelacionSelected = new ERepresentanteLegal();
 		oERL1Selected = new ERepresentanteLegal();
@@ -2608,15 +2606,6 @@ public class MBRegistroOperacionCliente implements Serializable {
 		this.oETerceroData = oETerceroData;
 	}
 	
-	public EOperacionMensaje getoEOperacionMensajeSelected() {
-		return oEOperacionMensajeSelected;
-	}
-
-	public void setoEOperacionMensajeSelected(
-			EOperacionMensaje oEOperacionMensajeSelected) {
-		this.oEOperacionMensajeSelected = oEOperacionMensajeSelected;
-	}
-
 	public ERepresentanteLegal getoERepresentanteLegalSelected() {
 		return oERepresentanteLegalSelected;
 	}

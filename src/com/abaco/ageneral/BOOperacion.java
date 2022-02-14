@@ -23,77 +23,9 @@ public class BOOperacion {
 		EMensaje mensaje = oCOperacion.modificarFirmaDocumentoGarantia(eOperacionDocumento);
 		return mensaje;
 	}
-	public EMensaje agregarEvaluacionSolicitudCredito(EOperacionSolicitud eOperacionSolicitud){
-		EMensaje mensaje = oCOperacion.agregarEvaluacionSolicitudCredito(eOperacionSolicitud);
-		return mensaje;
-	}
-	public EMensaje modificarEvaluacionSolicitudCredito(EOperacionSolicitud eOperacionSolicitud, EEvaluacionSolicitudCreditoLegal eEvaluacionSolicitudCreditoLegal, ECliente eCliente, EClienteConstitucionEmpresa eClienteConstitucionEmpresa, EClienteAdicional eClienteAdicional, int codigoTipoCliente){
-		EMensaje mensaje = oCOperacion.modificarEvaluacionSolicitudCredito(eOperacionSolicitud, eEvaluacionSolicitudCreditoLegal, eCliente, eClienteConstitucionEmpresa, eClienteAdicional, codigoTipoCliente);
-		return mensaje;
-	}
-	public EMensaje agregarSesion(EOperacionSesion eOperacionSesion){
-		EMensaje mensaje = oCOperacion.agregarSesion(eOperacionSesion);
-		return mensaje;
-	}
-	public EMensaje modificarSesion(EOperacionSesion eOperacionSesion){
-		EMensaje mensaje = oCOperacion.modificarSesion(eOperacionSesion);
-		return mensaje;
-	}
-	public EMensaje liberarSolicitudSesion(long codigoSolicitud){
-		EMensaje mensaje = oCOperacion.liberarSolicitudSesion(codigoSolicitud);
-		return mensaje;
-	}
-	public EMensaje verificarSolicitudSesion(){
-		EMensaje mensaje = oCOperacion.verificarSolicitudSesion();
-		return mensaje;
-	}
-	public EMensaje verificarSolicitudSiaf(){
-		EMensaje mensaje = oCOperacion.verificarSolicitudSiaf();
-		return mensaje;
-	}
-	public List<EOperacionSolicitud> listarSolicitud(EOperacionSolicitud eOperacionSolicitud, int indicadorConsulta){					
-		List<EOperacionSolicitud> resultado=oCOperacion.listarSolicitud(eOperacionSolicitud, indicadorConsulta);
-		return resultado;
-	}
-	public List<EOperacionMensaje> listarMensaje(long codigoSolicitud){
-		List<EOperacionMensaje> lista=oCOperacion.listarMensaje(codigoSolicitud);
-		return lista;
-	}
-	public List<EOperacionDocumento> listarDocumento(long codigoSolicitud){
-		List<EOperacionDocumento> lista=oCOperacion.listarDocumento(codigoSolicitud);
-		return lista;
-	}
 	public List<EOperacionDocumento> listarDocumentoGarantia(EGarantia eOGarantia, int indicador){
 		List<EOperacionDocumento> lista=oCOperacion.listarDocumentoGarantia(eOGarantia,indicador);
 		return lista;
-	}
-	public List<EOperacionDocumentoRequerido> listarDocumentoRequerido(long codigoSolicitud){
-		List<EOperacionDocumentoRequerido> lista=oCOperacion.listarDocumentoRequerido(codigoSolicitud);
-		return lista;
-	}
-	public List<EDocumentoCarga> listarDocumentoTemporal(long codigoSolicitud){
-		List<EDocumentoCarga> lista=oCOperacion.listarDocumentoTemporal(codigoSolicitud);
-		return lista;
-	}
-	public List<EOperacionDocumentoRevision> listarDocumentoRevision(long codigoSolicitud){
-		List<EOperacionDocumentoRevision> lista=oCOperacion.listarDocumentoRevision(codigoSolicitud);
-		return lista;
-	}
-	public List<EEstado> listarEstadoPorSolicitud(long codigoSolicitud, EUsuario eUsuario){
-		List<EEstado> resultado=oCOperacion.listarEstadoPorSolicitud(codigoSolicitud, eUsuario);
-		return resultado;
-	}
-	public EOperacionSolicitud buscarSolicitud(long codigoSolicitud){
-		EOperacionSolicitud resultado=oCOperacion.buscarSolicitud(codigoSolicitud);
-		return resultado;
-	}
-	public String buscarMensajeTemporal(long codigoSolicitud){
-		String resultado=oCOperacion.buscarMensajeTemporal(codigoSolicitud);
-		return resultado;
-	}
-	public EOpcion buscarOpcionPorSolicitud(long codigoSolicitud, int codigoTipoEvaluacion, EUsuario eUsuario){
-		EOpcion resultado = oCOperacion.buscarOpcionPorSolicitud(codigoSolicitud, codigoTipoEvaluacion, eUsuario);
-		return resultado;
 	}
 	public EMensaje agregarEvaluacionLevantamientoGarantia(EOperacionLevantamientoGarantia eOperacionLevantamientoGarantia){
 		EMensaje mensaje = oCOperacion.agregarEvaluacionLevantamientoGarantia(eOperacionLevantamientoGarantia);
@@ -135,8 +67,8 @@ public class BOOperacion {
 		EMensaje mensaje = oCOperacion.agregarEvaluacionSolicitudCredito();
 		return mensaje;
 	}
-	public EMensaje modificarEvaluacionSolicitudCredito2(EOperacionSolicitudCredito eOperacionSolicitudCredito, ECliente eCliente, EClienteConstitucionEmpresa eClienteConstitucionEmpresa, EClienteAdicional eClienteAdicional, int codigoTipoCliente){
-		EMensaje mensaje = oCOperacion.modificarEvaluacionSolicitudCredito2(eOperacionSolicitudCredito, eCliente, eClienteConstitucionEmpresa, eClienteAdicional, codigoTipoCliente);
+	public EMensaje modificarEvaluacionSolicitudCredito(EOperacionSolicitudCredito eOperacionSolicitudCredito, ECliente eCliente, EClienteConstitucionEmpresa eClienteConstitucionEmpresa, EClienteAdicional eClienteAdicional, int codigoTipoCliente){
+		EMensaje mensaje = oCOperacion.modificarEvaluacionSolicitudCredito(eOperacionSolicitudCredito, eCliente, eClienteConstitucionEmpresa, eClienteAdicional, codigoTipoCliente);
 		return mensaje;
 	}
 	public List<EOperacionSolicitudCredito> listarEvaluacionSolicitudCredito(EOperacionSolicitudCredito eOperacionSolicitudCredito, int indicadorConsulta){
@@ -157,6 +89,10 @@ public class BOOperacion {
 	}
 	public List<EOperacionSolicitudCreditoDocumentoRevision> listarEvaluacionSolicitudCreditoDocumentoRevision(long numeroSolicitud, int codigoTipoCliente, int codigoCliente){
 		List<EOperacionSolicitudCreditoDocumentoRevision> lista=oCOperacion.listarEvaluacionSolicitudCreditoDocumentoRevision(numeroSolicitud, codigoTipoCliente, codigoCliente);
+		return lista;
+	}
+	public List<EOperacionSolicitudCreditoDocumentoRequerido> listarEvaluacionSolicitudCreditoDocumentoRequerido(){
+		List<EOperacionSolicitudCreditoDocumentoRequerido> lista=oCOperacion.listarEvaluacionSolicitudCreditoDocumentoRequerido();
 		return lista;
 	}
 }

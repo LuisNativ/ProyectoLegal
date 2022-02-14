@@ -9,7 +9,7 @@ import lombok.Data;
 
 import com.abaco.entidad.EUsuario;
 
-public @Data class EDocumentoRequerido {
+public @Data class EOperacionSolicitudCreditoDocumentoRequerido {
 	private int codigoDocumentoRequerido;
 	private String descripcionDocumentoRequerido;
 	private EUsuario usuarioRegistro;

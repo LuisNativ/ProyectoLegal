@@ -2,16 +2,10 @@ package com.abaco.bo;
 
 import java.util.List;
 
-import com.abaco.entidad.EGeneral;
 import com.abaco.entidad.EGeneralTipoCambio;
 import com.abaco.entidad.EGeneralTipoCambioParametro;
 import com.abaco.entidad.EUsuario;
-import com.abaco.ageneral.EDocumentoRequerido;
-import com.abaco.ageneral.EOperacionDocumento;
-import com.abaco.ageneral.EOperacionDocumentoRequerido;
-import com.abaco.ageneral.ERevisionSolicitud;
 import com.abaco.ageneral.EServicio;
-import com.abaco.ageneral.ETercero;
 import com.abaco.control.CGeneral;
 
 public class BOGeneral {
@@ -19,16 +13,6 @@ public class BOGeneral {
 	
 	public List<EUsuario> listarUsuarioPorAreaReasignacion(EUsuario eUsuario){
 		List<EUsuario> resultado = oCGeneral.listarUsuarioPorAreaReasignacion(eUsuario);
-		return resultado;
-	}
-	/*
-	public List<EOperacionDocumentoRequerido> listarDocumentoRequeridoPorTipoEvaluacion(int codigoTipoEvaluacion){
-		List<EOperacionDocumentoRequerido> resultado = oCGeneral.listarDocumentoRequeridoPorTipoEvaluacion(codigoTipoEvaluacion);
-		return resultado;
-	}
-	*/
-	public List<EDocumentoRequerido> listarDocumentoRequeridoSolicitudCredito(){
-		List<EDocumentoRequerido> resultado = oCGeneral.listarDocumentoRequeridoSolicitudCredito();
 		return resultado;
 	}
 	public List<EServicio> listarServicio(){

@@ -78,7 +78,7 @@ public class DAOGarantia extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_BUS_MAESTROCONTRATO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_MAESTROCONTRATO("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_ULTIMOCONTRATOGARANTIAGENERADO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_ULTIMOCONTRATOGARANTIAGENERADO() }";
 	private static final String SP_ABACOINLEGAL_BUS_MAESTRODOCUMENTOGENERADO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_MAESTRODOCUMENTOGENERADO("+parametrosSP(4)+") }";
-	private static final String SP_ABACOINLEGAL_SEL_GARANTIAPORLIBERAR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_GARANTIAPORLIBERAR("+parametrosSP(2)+") }";//BDLOCAL
+	private static final String SP_ABACOINLEGAL_SEL_GARANTIAPORLIBERAR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_GARANTIAPORLIBERAR("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_GARANTIAPORCONSTITUIR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_GARANTIAPORCONSTITUIR("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_GARANTIASOLICITUD="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_GARANTIASOLICITUD("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_GARANTIAASOCIADASOLICITUD="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_GARANTIAASOCIADASOLICITUD("+parametrosSP(2)+") }";
@@ -89,12 +89,8 @@ public class DAOGarantia extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_SEL_CIASEGUROPOLIZA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CIASEGUROPOLIZA("+parametrosSP(3)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_HISTORICOGARANTIATRAMITE="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_HISTORICOGARANTIATRAMITE("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_ASIENTOTRAMITEGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_ASIENTOTRAMITEGARANTIA("+parametrosSP(1)+") }";
-	private static final String SP_ABACOINLEGAL_SEL_CREDITORELACIONADOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CREDITORELACIONADOGARANTIA("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_CREDITOVIGENTERELACIONADOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CREDITOVIGENTERELACIONADOGARANTIA("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_CREDITOCANCELADORELACIONADOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CREDITOCANCELADORELACIONADOGARANTIA("+parametrosSP(1)+") }";
-	//
-	private static final String SP_ABACOINLEGAL_SEL_GARANTIACONCREDITOVIGENTE="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_GARANTIACONCREDITOVIGENTE("+parametrosSP(2)+") }";
-	//
 	private static final String SP_ABACOINLEGAL_SEL_CREDITOSASOCIADOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CREDITOSASOCIADOGARANTIA("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_DEL_POLIZA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_POLIZA("+parametrosSP(5)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_GARANTIALIBERADA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_GARANTIALIBERADA("+parametrosSP(2)+") }";
@@ -2199,40 +2195,6 @@ public class DAOGarantia extends InstanciaAcceso{
 		return mensaje;
 	}
 	
-	public List<EGarantiaSolicitud> listarGarantiaConCreditoVigente(int codigo, String descripcion) {
-		List<Object> lstParametrosEntrada;
-		ResultSet oResultSet = null;
-		EGarantiaSolicitud oEGarantia= null;
-		List<EGarantiaSolicitud> lstGarantia = null;
-		
-		try {
-			lstParametrosEntrada = new ArrayList<Object>();
-			lstParametrosEntrada.add(codigo);
-			lstParametrosEntrada.add(descripcion);
-			
-			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_SEL_GARANTIACONCREDITOVIGENTE, lstParametrosEntrada, null);
-			if (oResultSet != null) {
-				lstGarantia = new ArrayList<EGarantiaSolicitud>();
-				while (oResultSet.next()) {
-					oEGarantia = new EGarantiaSolicitud();
-					oEGarantia.setCodigoCliente(oResultSet.getInt("CODCLI"));
-					oEGarantia.setNombreLargo(oResultSet.getString("NOMBCL"));
-					oEGarantia.setCodigoServicioGarantia(oResultSet.getInt("SERVIC"));
-					oEGarantia.setCodigoGarantia(oResultSet.getInt("GARANT"));
-					oEGarantia.setMontoGarantia(oResultSet.getDouble("MTOGAR"));
-					oEGarantia.setDescripcionTipoGarantiaReal(oResultSet.getString("DESGAR"));
-					oEGarantia.setDescripcionCreditoRelacionado(oResultSet.getString("DESCOPE"));
-					
-					lstGarantia.add(oEGarantia);
-				}								
-			}						
-			
-		} catch(Exception objEx) {
-			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
-		}
-		return lstGarantia;
-	}
-	
 	public List<EGarantiaTramite> listarHistoricoTramiteGarantia(long codigoGarantia) {
 		List<Object> lstParametrosEntrada;
 		ResultSet oResultSet = null;
@@ -3378,34 +3340,6 @@ public class DAOGarantia extends InstanciaAcceso{
 			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
 		}
 		return lstGarantiaDocumentoSolicitado;
-	}
-	
-	public List<EGarantiaCreditoRelacionado> listarCreditoRelacionado(int codigo) {
-		List<Object> lstParametrosEntrada;
-		ResultSet oResultSet = null;
-		EGarantiaCreditoRelacionado oEGarantiaCreditoRelacionado= null;
-		List<EGarantiaCreditoRelacionado> lstGarantiaCreditoRelacionado = null;
-		
-		try {
-			lstParametrosEntrada = new ArrayList<Object>();
-			lstParametrosEntrada.add(codigo);
-			 
-			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_SEL_CREDITORELACIONADOGARANTIA, lstParametrosEntrada, null);
-			if (oResultSet != null) {
-				lstGarantiaCreditoRelacionado = new ArrayList<EGarantiaCreditoRelacionado>();
-				while (oResultSet.next()) {
-					oEGarantiaCreditoRelacionado = new EGarantiaCreditoRelacionado();
-					oEGarantiaCreditoRelacionado.setCodigoCliente(oResultSet.getInt("CODCLI"));
-					oEGarantiaCreditoRelacionado.setCodigoServicio(oResultSet.getInt("SERVIC"));
-					oEGarantiaCreditoRelacionado.setNumeroOperacion(oResultSet.getInt("NUMOPE"));
-					lstGarantiaCreditoRelacionado.add(oEGarantiaCreditoRelacionado);
-				}								
-			}						
-			
-		} catch(Exception objEx) {
-			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
-		}
-		return lstGarantiaCreditoRelacionado;
 	}
 	
 	public List<EGarantiaCreditoRelacionado> listarCreditoVigenteRelacionado(long codigo) {

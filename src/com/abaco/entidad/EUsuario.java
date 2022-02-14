@@ -21,8 +21,7 @@ public class EUsuario {
 	private String correo;
 	private int codigoArea;
 	private int codigoAutonomia;
-	private int indicadorJefeInmediato;
-	private int codigoUbicacion;
+	//private int indicadorJefeInmediato;
 	
 	public List<EPermiso> getLstPermisos() {
 		return lstPermisos;
@@ -159,21 +158,5 @@ public class EUsuario {
 
 	public void setCodigoAutonomia(int codigoAutonomia) {
 		this.codigoAutonomia = codigoAutonomia;
-	}
-
-	public int getIndicadorJefeInmediato() {
-		return indicadorJefeInmediato;
-	}
-
-	public void setIndicadorJefeInmediato(int indicadorJefeInmediato) {
-		this.indicadorJefeInmediato = indicadorJefeInmediato;
-	}
-
-	public int getCodigoUbicacion() {
-		return codigoUbicacion;
-	}
-
-	public void setCodigoUbicacion(int codigoUbicacion) {
-		this.codigoUbicacion = codigoUbicacion;
 	}
 }

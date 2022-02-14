@@ -23,7 +23,7 @@ public class BOCliente {
 		return lista;
 	}
 	public List<EPersona> listarSocioyTercero(int codigo, String descripcion){
-		List<EPersona> lista = oCCliente.buscarSocioyTercero(codigo,descripcion);
+		List<EPersona> lista = oCCliente.listarSocioyTercero(codigo,descripcion);
 		return lista;
 	}
 	public List<ETercero> listarNotarios(int codigo, String descripcion){
@@ -80,10 +80,6 @@ public class BOCliente {
 	}
 	public EClienteAdicional buscarClienteAdicional(long codigoCliente, int codigoTipoCliente){
 		EClienteAdicional resultado = oCCliente.buscarClienteAdicional(codigoCliente, codigoTipoCliente);
-		return resultado;
-	}
-	public EUsuario buscarPermisoUsuario(String nombreUsuario){
-		EUsuario resultado = oCCliente.buscarPermisoUsuario(nombreUsuario);
 		return resultado;
 	}
 }

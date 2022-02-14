@@ -22,13 +22,4 @@ public @Data class EOpcion implements Serializable{
 	private int indicadorRechazarAutorizar;
 	private int indicadorConfirmarAutorizar;
 	private int indicadorConfirmarAutorizarCompletado;
-	
-	//Operacion
-	private int indicadorGrabar;
-	private int indicadorRechazarLevantamiento;
-	private int indicadorConfirmarLevantamiento;
-	private int indicadorLiberar;
-	private int indicadorEntregar;
-	private int indicadorConfirmarCartaFianza;
-	private int indicadorEnviarCartaFianza;
 }

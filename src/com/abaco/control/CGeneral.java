@@ -2,19 +2,13 @@ package com.abaco.control;
 
 import java.util.List;
 
-import com.abaco.entidad.EGeneral;
 import com.abaco.entidad.EGeneralTipoCambio;
 import com.abaco.entidad.EGeneralTipoCambioParametro;
 import com.abaco.entidad.EPlantillaEmail;
 import com.abaco.entidad.EUsuario;
 import com.abaco.negocio.util.UManejadorLog;
 import com.abaco.persistencia.acceso.FabricaConexion;
-import com.abaco.ageneral.DAOSolicitudCredito;
-import com.abaco.ageneral.EDocumentoRequerido;
-import com.abaco.ageneral.EOperacionDocumentoRequerido;
-import com.abaco.ageneral.ERevisionSolicitud;
 import com.abaco.ageneral.EServicio;
-import com.abaco.ageneral.ETercero;
 import com.abaco.dao.DAOGeneral;
 import com.abaco.persistencia.interfaces.IConexion;
 
@@ -28,44 +22,6 @@ public class CGeneral {
 			oIConexion = FabricaConexion.creaConexion();
 			oDAOGeneral = new DAOGeneral(oIConexion);
 			resultado = oDAOGeneral.listarUsuarioPorAreaReasignacion(eUsuario);
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al recuperar: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	
-	/*
-	public List<EOperacionDocumentoRequerido> listarDocumentoRequeridoPorTipoEvaluacion(int codigoTipoEvaluacion){
-		IConexion oIConexion = null;
-		List<EOperacionDocumentoRequerido> resultado = null;
-		DAOGeneral oDAOGeneral = null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();
-			oDAOGeneral = new DAOGeneral(oIConexion);
-			resultado = oDAOGeneral.listarDocumentoRequeridoPorTipoEvaluacion(codigoTipoEvaluacion);
-		} catch (Exception e) {
-			UManejadorLog.error("Control: Error al recuperar: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return resultado;
-	}
-	*/
-	
-	public List<EDocumentoRequerido> listarDocumentoRequeridoSolicitudCredito(){
-		IConexion oIConexion = null;
-		List<EDocumentoRequerido> resultado = null;
-		DAOGeneral oDAOGeneral = null;
-		try {
-			oIConexion = FabricaConexion.creaConexion();
-			oDAOGeneral = new DAOGeneral(oIConexion);
-			resultado = oDAOGeneral.listarDocumentoRequeridoSolicitudCredito();
 		} catch (Exception e) {
 			UManejadorLog.error("Control: Error al recuperar: " + e.getMessage());
 		} finally {

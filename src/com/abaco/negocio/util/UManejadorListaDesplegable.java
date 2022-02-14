@@ -379,7 +379,7 @@ public class UManejadorListaDesplegable {
 	public List<EGeneral> obtieneEstadoGarantiaSolicitud() {
 		return obtieneListaDesplegableData(UData.ESTADOSOLICITUDGARANTIA, 2);
 	}
-		
+	
 	public List<EGeneral> obtieneEstadoLevantamientoGarantia() {
 		return obtieneListaDesplegableData(UData.ESTADOLEVANTAMIENTO, 2);
 	}

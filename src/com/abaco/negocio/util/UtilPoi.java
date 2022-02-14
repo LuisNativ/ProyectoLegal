@@ -36,7 +36,6 @@ import org.apache.xmlbeans.XmlCursor;
 import org.apache.xmlbeans.XmlException;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTStyles;
 
-import com.abaco.ageneral.EOperacionDocumentoRevision;
 import com.abaco.ageneral.EOperacionSolicitudCreditoDocumentoRevision;
 import com.abaco.ageneral.ERepresentanteLegal;
 import com.abaco.ageneral.ESuscripcion;
@@ -983,6 +982,7 @@ public class UtilPoi {
 						XWPFParagraph paragraph = tableRowOne.getCell(0).getParagraphArray(0);
 						
 						//setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(0).getCodigoOrden()+"", false);
+						/*
 						setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(0).getCodigoOrden() > 0 ? lista.get(0).getCodigoOrden()+"":"-", false);
 						paragraph = tableRowOne.addNewTableCell().getParagraphArray(0);
 						setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(0).getCargoLaboral(), false);
@@ -992,113 +992,56 @@ public class UtilPoi {
 						setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(0).getNombreLargo(), false);
 						paragraph = tableRowOne.addNewTableCell().getParagraphArray(0);
 						setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(0).getInscripcionPoder1(), false);
-						
-						for (int e = 1; e < lista.size(); e++) {
-							tableRowOne = tablaCreada.createRow();
-							
-							paragraph = tableRowOne.getCell(0).getParagraphArray(0);
-							//setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getCodigoOrden()+"", false);
-							setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getCodigoOrden() > 0 ? lista.get(e).getCodigoOrden()+"":"-", false);
-							paragraph = tableRowOne.getCell(1).getParagraphArray(0);
-							setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getCargoLaboral()!= null ? lista.get(e).getCargoLaboral(): lista.get(e).getCargoLaboral().equals("") ? "-":"-", false);
-							paragraph = tableRowOne.getCell(2).getParagraphArray(0);
-							setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getDocumento(), false);
-							paragraph = tableRowOne.getCell(3).getParagraphArray(0);
-							setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getNombreLargo(), false);
-							paragraph = tableRowOne.getCell(4).getParagraphArray(0);
-							setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getInscripcionPoder1(), false);
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-		}
-	
-		return tablaCreada;
-	}
-	
-	public static XWPFTable crearTablaDocumentosRevisados(XWPFDocument docx, String buscar, List<EOperacionDocumentoRevision> lista) {
-		XWPFTable tablaCreada = null;
-		
-		try {
-			List<XWPFParagraph> parrafos = docx.getParagraphs();
-			for (int i = 0; i < parrafos.size(); i++) {
-				List<XWPFRun> runs = parrafos.get(i).getRuns();
-				String cadena = "";
-				for (int j = 0; j < runs.size(); j++) {
-					cadena = cadena + runs.get(j);
-				}
-	
-				if (!cadena.equals("")) {
-					// busca en la cadena si hay algun campo que reemplazar
-					if (cadena.contains(buscar)) {
-						// quito la marca
-						deleteParagraph(parrafos.get(i));
-						// obtengo el valor a reemplazar
-	
-						XmlCursor cursor = parrafos.get(i).getCTP().newCursor();
-						tablaCreada = docx.insertNewTbl(cursor);
-						
-						XWPFTableRow tableRowOne = tablaCreada.getRow(0);
-						XWPFParagraph paragraph = tableRowOne.getCell(0).getParagraphArray(0);
-						
-						setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(0).getCodigoDocumento()+"", false);
 						paragraph = tableRowOne.addNewTableCell().getParagraphArray(0);
-						setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(0).getNombreDocumento(), false);
+						setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(0).getDescripcionIndicadorFirma(), false);
+						*/
 						
-						for (int e = 1; e < lista.size(); e++) {
-							tableRowOne = tablaCreada.createRow();
-							
-							paragraph = tableRowOne.getCell(0).getParagraphArray(0);
-							setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getCodigoDocumento()+"", false);
-							paragraph = tableRowOne.getCell(1).getParagraphArray(0);
-							setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getNombreDocumento(), false);
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-		}
-	
-		return tablaCreada;
-	}
-	
-	public static XWPFTable crearTablaDocumentosFaltantes(XWPFDocument docx, String buscar, List<EOperacionDocumentoRevision> lista) {
-		XWPFTable tablaCreada = null;
-		
-		try {
-			List<XWPFParagraph> parrafos = docx.getParagraphs();
-			for (int i = 0; i < parrafos.size(); i++) {
-				List<XWPFRun> runs = parrafos.get(i).getRuns();
-				String cadena = "";
-				for (int j = 0; j < runs.size(); j++) {
-					cadena = cadena + runs.get(j);
-				}
-	
-				if (!cadena.equals("")) {
-					// busca en la cadena si hay algun campo que reemplazar
-					if (cadena.contains(buscar)) {
-						// quito la marca
-						deleteParagraph(parrafos.get(i));
-						// obtengo el valor a reemplazar
-	
-						XmlCursor cursor = parrafos.get(i).getCTP().newCursor();
-						tablaCreada = docx.insertNewTbl(cursor);
-						
-						XWPFTableRow tableRowOne = tablaCreada.getRow(0);
-						XWPFParagraph paragraph = tableRowOne.getCell(0).getParagraphArray(0);
-						
-						setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(0).getCodigoDocumento()+"", false);
+						setRun(paragraph.createRun(), "Arial Narrow", 11, "", true);
 						paragraph = tableRowOne.addNewTableCell().getParagraphArray(0);
-						setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(0).getNombreDocumento(), false);
+						setRun(paragraph.createRun(), "Arial Narrow", 11, "", true);
+						paragraph = tableRowOne.addNewTableCell().getParagraphArray(0);
+						setRun(paragraph.createRun(), "Arial Narrow", 11, "", true);
+						paragraph = tableRowOne.addNewTableCell().getParagraphArray(0);
+						setRun(paragraph.createRun(), "Arial Narrow", 11, "", true);
+						paragraph = tableRowOne.addNewTableCell().getParagraphArray(0);
+						setRun(paragraph.createRun(), "Arial Narrow", 11, "", true);
+						paragraph = tableRowOne.addNewTableCell().getParagraphArray(0);
+						setRun(paragraph.createRun(), "Arial Narrow", 11, "", true);
 						
-						for (int e = 1; e < lista.size(); e++) {
+						for (int e = 0; e < lista.size(); e++) {
 							tableRowOne = tablaCreada.createRow();
 							
-							paragraph = tableRowOne.getCell(0).getParagraphArray(0);
-							setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getCodigoDocumento()+"", false);
-							paragraph = tableRowOne.getCell(1).getParagraphArray(0);
-							setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getNombreDocumento(), false);
+							if(e == 0  || e == 2){
+								//paragraph = tableRowOne.getCell(0).getParagraphArray(0);
+								//setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getCodigoOrden() > 0 ? lista.get(e).getCodigoOrden()+"":"-", true);
+								paragraph = tableRowOne.getCell(0).getParagraphArray(0);
+								setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getNominativo(), true);
+								paragraph = tableRowOne.getCell(1).getParagraphArray(0);
+								setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getCargoLaboral()!= null ? lista.get(e).getCargoLaboral(): lista.get(e).getCargoLaboral().equals("") ? "-":"-", true);
+								paragraph = tableRowOne.getCell(2).getParagraphArray(0);
+								setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getDocumento(), true);
+								paragraph = tableRowOne.getCell(3).getParagraphArray(0);
+								setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getNombreLargo(), true);
+								paragraph = tableRowOne.getCell(4).getParagraphArray(0);
+								setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getInscripcionPoder1(), true);
+								paragraph = tableRowOne.getCell(5).getParagraphArray(0);
+								setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getDescripcionIndicadorFirma(), true);
+							}else {
+								//paragraph = tableRowOne.getCell(0).getParagraphArray(0);
+								//setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getCodigoOrden() > 0 ? lista.get(e).getCodigoOrden()+"":"-", false);
+								paragraph = tableRowOne.getCell(0).getParagraphArray(0);
+								setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getNominativo(), false);
+								paragraph = tableRowOne.getCell(1).getParagraphArray(0);
+								setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getCargoLaboral()!= null ? lista.get(e).getCargoLaboral(): lista.get(e).getCargoLaboral().equals("") ? "-":"-", false);
+								paragraph = tableRowOne.getCell(2).getParagraphArray(0);
+								setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getDocumento(), false);
+								paragraph = tableRowOne.getCell(3).getParagraphArray(0);
+								setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getNombreLargo(), false);
+								paragraph = tableRowOne.getCell(4).getParagraphArray(0);
+								setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getInscripcionPoder1(), false);
+								paragraph = tableRowOne.getCell(5).getParagraphArray(0);
+								setRun(paragraph.createRun(), "Arial Narrow", 11, lista.get(e).getDescripcionIndicadorFirma(), false);
+							}
 						}
 					}
 				}
@@ -1109,7 +1052,6 @@ public class UtilPoi {
 		return tablaCreada;
 	}
 	
-
 	public static XWPFTable crearTablaDocumentosRevisados2(XWPFDocument docx, String buscar, List<EOperacionSolicitudCreditoDocumentoRevision> lista) {
 		XWPFTable tablaCreada = null;
 		

@@ -83,7 +83,7 @@ public class UConstante {
 	
 	public static interface URutaCarpetaCompartida{
 		//Local
-		
+		/*
 		String rutaBaseLinux =  File.separator + File.separator + "192.168.1.60" + 
 					              File.separator +  "Documentos" + 
 						          File.separator +  "Analistas" +
@@ -100,9 +100,9 @@ public class UConstante {
 						          File.separator +  "Socio" +
 						          File.separator +  "FichaSocio" +
 						          File.separator ;
-		        
+		*/         
 		//Desarrollo .130
-        /*
+        
 		String rutaBaseLinux =  File.separator + "media" + 
 				                File.separator + "unidad" +
 				              //  File.separator +  "Documentos" + 
@@ -121,7 +121,7 @@ public class UConstante {
 					                File.separator +  "Socio" +
 					                File.separator +  "FichaSocio" +
 					                File.separator ;
-        */
+        
         
         String rutaBaseWindows2 = "\\\\192.168.1.60\\Documentos\\Analistas\\Analistas\\ModelosAbacoTesting\\Socio\\FichaSocio\\";
 	}
@@ -549,6 +549,7 @@ public class UConstante {
 	}
 	
 	public static interface UTipologMovimiento {
+		int REENVIAPARAEVALUACION = 302;
 		int HOJALEGALGENERADA = 501;
 		int EVALUADOPORLEGAL = 505;
 		int OBSERVADOPORLEGAL = 507;
@@ -642,6 +643,7 @@ public class UConstante {
 	}
 	
 	public static interface UEstadoLegal {
+		String PENDIENTEDEEVALUACION = "0";
 		String EVALUADO = "1";
 		String OBSERVADO = "2";
 		String DESAPROBADO = "3";

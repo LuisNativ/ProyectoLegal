@@ -9,10 +9,6 @@ public class BOSolicitudCredito {
 
 	CSolicitudCredito oCSolicitudCredito= new CSolicitudCredito();
 	
-	public List<EEvaluacionSolicitudCreditoLegal> listarInformeLegalPorRegistrar(){					
-		List<EEvaluacionSolicitudCreditoLegal> lista=oCSolicitudCredito.listarInformeLegalPorRegistrar();
-		return lista;
-	}
 	public List<EDeudor> listarDeudor(int codigoCliente, long numeroSolicitud){
 		List<EDeudor> lista=oCSolicitudCredito.listarDeudor(codigoCliente, numeroSolicitud);
 		return lista;
@@ -56,14 +52,6 @@ public class BOSolicitudCredito {
 	public List<ESuscripcion> listarClienteSuscripcion(String numeroDocumento){
 		List<ESuscripcion> lista=oCSolicitudCredito.listarClienteSuscripcion(numeroDocumento);
 		return lista;
-	}
-	public ECredito buscarCredito(long numeroSolicitud){
-		ECredito resultado=oCSolicitudCredito.buscarCredito(numeroSolicitud);
-		return resultado;
-	}
-	public EEvaluacionSolicitudCreditoLegal buscarEvaluacionSolicitudCreditoLegal(long numeroSolicitud, int codigoCliente){
-		EEvaluacionSolicitudCreditoLegal resultado=oCSolicitudCredito.buscarEvaluacionSolicitudCreditoLegal(numeroSolicitud, codigoCliente);
-		return resultado;
 	}
 	public EInformeLegalAdicional buscarInformeLegalAdicional(long numeroSolicitud, int codigoCliente, int codigoTipoCliente){
 		EInformeLegalAdicional resultado=oCSolicitudCredito.buscarInformeLegalAdicional(numeroSolicitud, codigoCliente, codigoTipoCliente);

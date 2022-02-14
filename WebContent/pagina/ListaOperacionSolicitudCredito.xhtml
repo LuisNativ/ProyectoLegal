@@ -50,7 +50,7 @@
 					<p:outputLabel value="Estado" styleClass="dsLabel1"/>
 					<p:selectOneMenu value="#{mblistaoperacionsolicitudcredito.codigoEstado}">
 						<p:ajax event="change" onstart="PF('blkPanel').show();" onsuccess="PF('blkPanel').hide();" listener="#{mblistaoperacionsolicitudcredito.listarSolicitud()}" update=":form:tabView1:tblSolicitudPendiente"/>
-						<f:selectItem itemValue="0" itemLabel="Todos"/>
+						<f:selectItem itemValue="" itemLabel="Todos"/>
 						<f:selectItems value="#{mblistaoperacionsolicitudcredito.lstEstado}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
 					</p:selectOneMenu>
 				</div>
@@ -71,7 +71,7 @@
 				<p:dataTable id="tblSolicitudPendiente" value="#{mblistaoperacionsolicitudcredito.lstOperacionSolicitudCreditoPendiente}" var="item" styleClass="dsTabla1 altura1" paginator="true" rows="15" paginatorPosition="bottom" rowKey="#{item.numeroSolicitud}" reflow="false">
 					<p:column headerText="Nombre" width="15%">
 						<div class="dsTextoCorto">
-							<h:outputText value="#{item.nombreLargo}" title="#{item.nombreLargo}"/>
+							<h:outputText value="#{item.nombreCorto}" title="#{item.nombreCorto}"/>
 						</div>
 					</p:column>
 					<p:column headerText="N°Sol" styleClass="dsTextoCentro" style="width: 45px">
@@ -132,7 +132,7 @@
 						</div>
 					</p:column>
 					<p:column headerText="" style="width: 18px">
-						<p:commandButton styleClass="dsBoton5 green" icon="fa fa-pencil" title="Revisar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaoperacionsolicitudcredito.modificar(item)}" update=":frmDlgMensajeOperacion"></p:commandButton>
+						<p:commandButton styleClass="dsBoton5 green" icon="fa fa-pencil" title="Revisar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaoperacionsolicitudcredito.modificar(item)}" update=":frmDlgMensajeOperacion" rendered="#{mblistaoperacionsolicitudcredito.visualizarBtnEditar(item)}"></p:commandButton>
 			     	</p:column>
 				</p:dataTable>
 			</p:tab>
@@ -140,7 +140,7 @@
 				<p:dataTable id="tblSolicitudHistorico" value="#{mblistaoperacionsolicitudcredito.lstOperacionSolicitudCreditoHistorico}" var="item" styleClass="dsTabla1" paginator="true" rows="15" paginatorPosition="bottom" rowKey="#{item.numeroSolicitud}" reflow="false">
 					<p:column headerText="Nombre" width="15%">
 						<div class="dsTextoCorto">
-							<h:outputText value="#{item.nombreLargo}" title="#{item.nombreLargo}"/>
+							<h:outputText value="#{item.nombreCorto}" title="#{item.nombreCorto}"/>
 						</div>
 					</p:column>
 					<p:column headerText="N°Sol" styleClass="dsTextoCentro" style="width: 45px">
