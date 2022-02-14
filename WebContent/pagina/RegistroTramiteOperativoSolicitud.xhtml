@@ -83,7 +83,7 @@
 									<p:column headerText="Status" styleClass="dsTextoCentro" width="20%">
 									    <div class="dsTextoCorto">
 										    <h:outputText value="#{item.descripcionActualizacionFlag}" style="font-size: 13px !important;"
-										    styleClass="#{item.actualizacionFlag eq 0 ? 'dsText3 orange'
+										    styleClass="#{item.actualizacionFlag eq 0 ? 'dsText3 red'
 												:item.actualizacionFlag eq 3 ? 'dsText3 green'
 												:item.actualizacionFlag eq 1 ? 'dsText3 red'
 												:'dsText3 blue'}"/>
@@ -490,7 +490,7 @@
 													</h:outputText>
 												</p:column>
 												<p:column headerText="" styleClass="dsTextoCentro" width="5%">
-													<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-search" title="Visualizar Firmante" 
+													<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-search" title="Consultar Comprobante" 
 													onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
 													action="#{mbregistrotramiteoperativosolicitud.visualizarDetalleComprobante(item)}" 
 													update=":frmDlgMantenimientoFirmantes" immediate="true">
@@ -513,9 +513,9 @@
 	   	 				<f:facet name="header">
 						    <i class="fas fa-book"></i> Contrato Garantía  
 							<p:commandButton styleClass="dsBoton1 tamanio2 terciario" value="Grabar" icon="fa fa-save" 
-							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.guardarContratoGarantia()}" update="form:tabView1,:frmDlgMensaje,form:tabView1:tblRepresentantesCIAContrato" rendered="#{mbregistrotramiteoperativosolicitud.renderizarBotonGrabarContrato}"/>
+							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.guardarContratoGarantia()}" update="form:tabView1,:frmDlgMensaje,form:tabView1:tblRepresentantesCIAContrato,:frmDlgMensajeOperacionAjax" rendered="#{mbregistrotramiteoperativosolicitud.renderizarBotonGrabarContrato}"/>
 							<p:commandButton styleClass="dsBoton1 tamanio2 terciario2" value="Imprimir" icon="fa fa-file" 
-							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.generarContratoGarantia()}" update="form:tabView1,:frmDlgMensajeConfirmacionImpresion,form:tabView1:tblRepresentantesCIAContrato" rendered="#{mbregistrotramiteoperativosolicitud.renderizarBotonGenerarContrato}"/>
+							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.generarContratoGarantia()}" update="form:tabView1,:frmDlgMensajeConfirmacionImpresion,form:tabView1:tblRepresentantesCIAContrato,:frmDlgMensajeOperacionAjax" rendered="#{mbregistrotramiteoperativosolicitud.renderizarBotonGenerarContrato}"/>
 							<p:commandButton styleClass="dsBoton1 tamanio2 terciario3" value="Cancelar" icon="fa fa-file" 
 							onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrotramiteoperativosolicitud.cancelarGenerarContratoGarantia()}" update="form:tabView1,form:tabView1:tblRepresentantesCIAContrato" rendered="#{mbregistrotramiteoperativosolicitud.renderizarBotonGenerarContrato}"/>
 						</f:facet>
