@@ -103,6 +103,7 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 	@Getter @Setter private boolean tooglePanel;
 	@Getter @Setter private boolean indicadorBotonCancelar,indicadorBotonGrabarAsiento,indicadorBotonNuevoAsiento;
 	@Getter @Setter private boolean visualizarDatosPN,visualizarDatosPJ;
+	@Getter @Setter private boolean visualizarTabAsiento,visualizarTabHistorico;
 	
 	@Getter @Setter private int codigoDepartamentoGarantia,codigoDepartamentoGarantiaPostal;
 	@Getter @Setter private int codigoProvinciaGarantia,codigoProvinciaGarantiaPostal;
@@ -178,6 +179,8 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 			if(UAccionExterna.NUEVO == accionExterna){
 				oEGarantiaLoad = (EGarantia) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.FICHA_PARAMETRO);
 				oEGarantiaData = oEGarantiaLoad;
+				visualizarTabAsiento = false;
+				visualizarTabHistorico = false;
 				oEGarantiaTramiteData = new EGarantiaTramite();
 				if(oEGarantiaData.getCodigoTipoGarantia()== UTipoGarantia.PREDIO){
 					indicadorPnlBloqueoReq = true; 
@@ -189,7 +192,9 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 				}						
 			}else if(UAccionExterna.EDITAR == accionExterna){
 				oEGarantiaLoad = (EGarantia) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.FICHA_PARAMETRO);
-				oEGarantiaData = oEGarantiaLoad;		
+				oEGarantiaData = oEGarantiaLoad;	
+				visualizarTabAsiento = true;
+				visualizarTabHistorico = true;
 				if(oEGarantiaData.getCodigoTipoGarantia() == UTipoGarantia.PREDIO){
 					indicadorPnlBloqueoReq = true; 
 					deshabilitarHipoteca=false;

@@ -470,9 +470,11 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 			
 			lstOperacionDocumentoLegalFiltro = lstOpDoc.stream()
 					                          .filter(x -> x.getCodigoAreaEmisora() == 100)
+					                          .filter(x -> x.getTipoDocumento() != UTipoDocumentoGarantia.NOTARIA)
 					                          .collect(Collectors.toList());
 			lstOperacionDocumentoNegociosFiltro = lstOpDoc.stream()
 									                .filter(x -> x.getCodigoAreaEmisora() != 100)
+									                .filter(x -> x.getTipoDocumento() != UTipoDocumentoGarantia.NOTARIA)
 									                .collect(Collectors.toList());
 		}
 	

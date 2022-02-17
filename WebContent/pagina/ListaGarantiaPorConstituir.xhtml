@@ -13,7 +13,7 @@
 <f:view>   
 	<div class="ui-g ui-fluid">
 	     <div class="dsCuadrarCentroInicio tituloIzquieda">
-	         <h4><i class="fa fa-folder-open"></i> M&#243;dulo : Operaciones <small> > Gestión de Garantias</small></h4>
+	         <h4><i class="fa fa-folder-open"></i> M&#243;dulo : Garantías <small> > Gestión de Garantias</small></h4>
 	     </div>
 	</div>				
 	<p:tabView id="tabView1" dynamic="true" widgetVar="tabs1" activeIndex="#{mblistagarantiaporconstituir.indicadorTabView}">
@@ -558,15 +558,15 @@
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
 					<p:dataTable id="tblTipoGarantia" value="#{mblistagarantiaporconstituir.lstTipoGarantiaFiltro}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom" sortBy="#{item.codigo2}" 
 								  rowKey="#{item.codigo}" reflow="false" >
-						<p:column headerText="Código" styleClass="dsTextoCentro" visible="true" width="50px;">
+						<p:column headerText="Código" styleClass="dsTextoCentro" visible="true" width="20%">
 							<h:outputText value="#{item.codigo2}"/>
 						</p:column>
-						<p:column headerText="Nombre" styleClass="dsTextoCentro" visible="true">
+						<p:column headerText="Nombre" styleClass="dsTextoCentro" visible="true" width="60%">
 						    <div class="dsTextoCorto">
 							   <h:outputText value="#{item.nombreCorto}"/>
 						    </div>
 						</p:column>
-						<p:column headerText="" styleClass="dsTextoCentro">
+						<p:column headerText="" styleClass="dsTextoCentro" width="20%">
 					      <p:commandButton styleClass="dsBoton5" icon="fa fa-check" title="Elegir" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.nuevaGarantia(item)}"></p:commandButton>
 		     	        </p:column>
 					</p:dataTable>

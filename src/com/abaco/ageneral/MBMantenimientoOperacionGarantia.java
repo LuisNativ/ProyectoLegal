@@ -344,7 +344,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				visualizarTabDocumento = false;
 				visualizarTabPrestamos= false;
 				visualizarTabCumplimiento= false;
-				visualizarBotonIrTramite = true;
+				visualizarBotonIrTramite = false;
 				visualizarBtnAgregarPropietario = true;
 				visualizarBtnEliminarPropietario = true;
 				//Data de F5101 o F5151
