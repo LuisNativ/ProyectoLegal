@@ -495,7 +495,7 @@
 											<div class="dsCuadrarCentro">
 											  <p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
 														oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbregistrooperaciongarantiasolicitud.buscarIndicadorCiaSeguro(1)}" immediate="true"
-														update=":frmDlgBuscarCiaSeguro"><i class="fas fa-search"></i></p:commandLink>
+														update=":frmDlgBuscarCiaSeguro" rendered="#{mbregistrooperaciongarantiasolicitud.visualizarBotonPolizaGarantia}"><i class="fas fa-search"></i></p:commandLink>
 											</div>
 										</div>	
 										<div class="ui-g-3">
@@ -533,7 +533,7 @@
 										   	<div class="dsCuadrarCentro">
 										   		<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
 													oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbregistrooperaciongarantiasolicitud.buscarIndicadorPersona(1)}" immediate="true"
-													update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
+													update=":frmDlgBuscarSocio" rendered="#{mbregistrooperaciongarantiasolicitud.visualizarBotonTasadorGarantia}"><i class="fas fa-search"></i></p:commandLink>
 											</div>
 									    </div>	
 									</div>
@@ -715,7 +715,7 @@
 											   	<div class="dsCuadrarCentro">
 											   		<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
 														oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbregistrooperaciongarantiasolicitud.buscarIndicadorPersona(1)}" immediate="true"
-														update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
+														update=":frmDlgBuscarSocio" rendered="#{mbregistrooperaciongarantiasolicitud.visualizarBotonTasadorGarantia}"><i class="fas fa-search"></i></p:commandLink>
 												</div>
 										    </div>
 								   		</div>
@@ -780,7 +780,7 @@
 												<div class="dsCuadrarCentro">
 											  		<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
 														oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbregistrooperaciongarantiasolicitud.buscarIndicadorCiaSeguro(1)}" immediate="true"
-														update=":frmDlgBuscarCiaSeguro"><i class="fas fa-search"></i></p:commandLink>
+														update=":frmDlgBuscarCiaSeguro" rendered="#{mbregistrooperaciongarantiasolicitud.visualizarBotonPolizaGarantia}"><i class="fas fa-search"></i></p:commandLink>
 												</div>
 											</div>		
 								   		</div>
@@ -936,7 +936,7 @@
 											   	<div class="dsCuadrarCentro">
 											   		<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
 														oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbregistrooperaciongarantiasolicitud.buscarIndicadorPersona(1)}" immediate="true"
-														update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
+														update=":frmDlgBuscarSocio" rendered="#{mbregistrooperaciongarantiasolicitud.visualizarBotonTasadorGarantia}"><i class="fas fa-search"></i></p:commandLink>
 												</div>
 										    </div>
 								   		</div>			   						   		
@@ -979,7 +979,7 @@
 											<div class="dsCuadrarCentro">
 											  <p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
 														oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbregistrooperaciongarantiasolicitud.buscarIndicadorCiaSeguro(1)}" immediate="true"
-														update=":frmDlgBuscarCiaSeguro"><i class="fas fa-search"></i></p:commandLink>
+														update=":frmDlgBuscarCiaSeguro" rendered="#{mbregistrooperaciongarantiasolicitud.visualizarBotonPolizaGarantia}"><i class="fas fa-search"></i></p:commandLink>
 											</div>
 										</div>
 										<div class="ui-g-4 ui-md-4 ui-lg-4 ui-g-nopad">
@@ -1136,7 +1136,7 @@
 						   </div>
 						   <div class="ui-g-12 ui-md-6 ui-lg-6">
 				           	   <p:outputLabel value="Vigencia de Asiento" styleClass="dsLabel1"/>
-								<p:calendar value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaTramiteData.fechaVigenciaAsiento}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbregistrooperaciongarantiasolicitud.deshabilitarCampoTramite}" autocomplete="off" placeholder="dd-mm-yyyy"></p:calendar>
+								<p:calendar value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaTramiteData.fechaVigenciaAsiento}" navigator="true" pattern="dd-MM-yyyy" disabled="true" autocomplete="off" placeholder="dd-mm-yyyy"></p:calendar>
 						   </div>
 						    <div class="ui-g-12 ui-md-12 ui-lg-12">
 				           	   <p:outputLabel value="Observacion Nro. 1" styleClass="dsLabel1"/>
@@ -1191,7 +1191,7 @@
 						   		</div>
 							   <div class="ui-g-4">
 					           	   <p:outputLabel value="Vigencia de Asiento" styleClass="dsLabel1"/>
-									<p:calendar value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaTramiteData.fechaVigenciaAsientoB}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbregistrooperaciongarantiasolicitud.deshabilitarCampoTramite}" autocomplete="off" placeholder="dd-mm-yyyy"></p:calendar>
+									<p:calendar value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaTramiteData.fechaVigenciaAsientoB}" navigator="true" pattern="dd-MM-yyyy" disabled="true" autocomplete="off" placeholder="dd-mm-yyyy"></p:calendar>
 							   </div>
 							    <div class="ui-g-4">
 					           	   <p:outputLabel value="Fecha Observación" styleClass="dsLabel1"/>

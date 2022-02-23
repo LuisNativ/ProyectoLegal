@@ -2591,7 +2591,7 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantia.setCodigoTipoGarantia(oResultSet.getInt("TIPGAR"));
 					oEGarantia.setDescripcionTipoGarantia(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCTIPGAR")));
 					//oEGarantia.setUbicacion1(UFuncionesGenerales.revisaCadena(oResultSet.getString("UBICAC")));
-					oEGarantia.setFechaIngreso(oResultSet.getDate("FECING"));
+					//oEGarantia.setFechaIngreso(oResultSet.getDate("FECING"));
 					oEGarantia.setCodigoMoneda(oResultSet.getInt("MONEDA"));
 					oEGarantia.setDescripcionMoneda(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCMONGAR")));
 					oEGarantia.setMontoGravamen(oResultSet.getDouble("MONGRA"));
@@ -2605,7 +2605,7 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantia.setValorPoliza(oResultSet.getDouble("VALPOL"));
 					oEGarantia.setCodigoCiaSeguro(oResultSet.getInt("CIASEG"));		
 					oEGarantia.setDescripcionCiaSeguro(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCCIASEG")));
-					oEGarantia.setFechaVencimientoPoliza(oResultSet.getDate("FECVENCPOL"));
+					//oEGarantia.setFechaVencimientoPoliza(oResultSet.getDate("FECVENCPOL"));
 					oEGarantia.setDescripcionTipoPoliza(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCTIPPOL")));
 					lstGarantia.add(oEGarantia);
 				}								

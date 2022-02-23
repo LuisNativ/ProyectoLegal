@@ -17,11 +17,10 @@
 	     </div>
 	</div>				
 	<p:tabView id="tabView1" dynamic="true" widgetVar="tabs1" activeIndex="0">
-	    <p:tab id="tab1-1" title="Pendiente de Registro">
-	        
+	    <p:tab id="tab1-1" title="Solicitudes Asociadas a Garantías">        
 			<p:panel styleClass="dsPanel2" id="idPanel1" widgetVar="pnl1" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
 			    <f:facet name="header" >
-			        <i class="fa fa-table"></i> Solicitudes Asociadas a una Garantía
+			        <i class="fa fa-table"></i> Lista de Solicitudes Asociadas a una Garantía
 			    </f:facet>
 			    <h:form id="form">
 			    <div class="ui-g ui-fluid ui-g-nopad">
@@ -58,9 +57,9 @@
 				</div>
 				</div>
 				<p:tabView id="tabView2" dynamic="true" widgetVar="tabs2" activeIndex="0">
-				<p:ajax event="tabChange" listener="#{mblistagarantiaporconstituircredito.onTabChange}"/>
+				<p:ajax event="tabChange" listener="#{mblistagarantiaporconstituircredito.onTabChangeGarantiaRE}"/>
 				<p:tab id="tab2-1" title="Garantía Real Nueva">
-				<p:dataTable id="tblGarantia" value="#{mblistagarantiaporconstituircredito.lstGarantiaSolicitudNueva}" var="item" styleClass="dsTabla3" paginator="true" rows="12" paginatorPosition="bottom"
+				<p:dataTable id="tblGarantia" value="#{mblistagarantiaporconstituircredito.lstGarantiaSolicitudNueva}" var="item" styleClass="dsTabla1" paginator="true" rows="12" paginatorPosition="bottom"
 							 rowKey="#{item.numeroSolicitud}" reflow="true" tableStyle="table-layout:auto">
 					<p:column headerText="N°Sol" width="10%">
 						<div class="dsTextoCentro">
@@ -110,10 +109,12 @@
 				</p:dataTable>
 			    </p:tab>
 			    <p:tab id="tab2-2" title="Garantía Real Existente" rendered="true">
-			    	<p:dataTable id="tblGarantiaExistente" value="#{mblistagarantiaporconstituircredito.lstGarantiaSolicitudExistente}" var="item" styleClass="dsTabla3" paginator="true" rows="12" paginatorPosition="bottom"
+			    	<p:dataTable id="tblGarantiaExistente" value="#{mblistagarantiaporconstituircredito.lstGarantiaSolicitudExistente}" var="item" styleClass="dsTabla1" paginator="true" rows="12" paginatorPosition="bottom"
 							 rowKey="#{item.codigoGarantia}" reflow="true" tableStyle="table-layout:auto">
 						<p:column headerText="N°Sol" width="10%">
-							<h:outputText value="#{item.numeroSolicitud}"/>
+							<div class="dsTextoCentro">
+								<h:outputText value="#{item.numeroSolicitud}"/>
+							</div>
 						</p:column>
 						<p:column headerText="Nombre del Socio" width="20%">
 							<div class="dsTextoCorto">
@@ -145,7 +146,7 @@
 						<p:column headerText="N°" styleClass="dsTextoCentro" width="10%">
 							<h:outputText value="#{item.secuenciaGarantia}"/>
 						</p:column>
-						<p:column headerText="Tipo de Garantìa" width="10%">
+						<p:column headerText="Tipo Gar." width="10%">
 							<div class="dsTextoCorto dsTextoCentro">
 								<h:outputText value="#{item.descripcionTipoGarantiaReal}"/>
 							</div>
@@ -153,7 +154,7 @@
 						
 						<p:column headerText="Estado" styleClass="dsTextoCentro" width="10%">
 								<h:outputText value="#{item.descripcionEstadoGarantiaSolicitud}" 
-								styleClass="#{item.codigoEstadoGarantiaSolicitud eq 52 ? 'dsText3 orange'
+								styleClass="#{item.codigoEstadoGarantiaSolicitud eq 52 ? 'dsText3 red'
 											:item.codigoEstadoGarantiaSolicitud eq 53 ? 'dsText3 blue'
 											:item.codigoEstadoGarantiaSolicitud eq 54 ? 'dsText3 green'
 											:null}"/>					
@@ -165,8 +166,7 @@
 		    	</p:tab>
 			    </p:tabView>
 			    </h:form>
-			</p:panel>
-				   
+			</p:panel>				   
 		</p:tab>
 		<p:tab id="tab1-2" title="Histórico" rendered="false">
 	        <h:form id="formHistorico">
@@ -233,7 +233,7 @@
 			</p:panel>
 			</h:form>	   
 		</p:tab>
-		<p:tab id="tab1-3" title="Póliza">
+		<p:tab id="tab1-3" title="Pólizas Asociadas a Garantías">
 			<h:form id="formPoliza">
 			<p:panel styleClass="dsPanel2" widgetVar="pnl2" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
 			    <f:facet name="header" >
@@ -260,44 +260,34 @@
 					update=":tabView1:formPoliza:tblGarantiaPoliza"></p:commandButton>
 				</div>
 				</div>
-				<p:dataTable id="tblGarantiaPoliza" value="#{mblistagarantiaporconstituircredito.lstGarantiaPoliza}" var="item" styleClass="dsTabla3" paginator="true" rows="10" paginatorPosition="bottom" 
+				<p:dataTable id="tblGarantiaPoliza" value="#{mblistagarantiaporconstituircredito.lstGarantiaPoliza}" var="item" styleClass="dsTabla1" paginator="true" rows="12" paginatorPosition="bottom" 
 							 rowKey="#{item.codigoGarantia}" reflow="true" resizableColumns="true" resizeMode="expand">
-					<p:column headerText="Nro. Garantía" styleClass="dsTextoCentro" width="70px;">
+					<p:column headerText="Nro. Garantía" styleClass="dsTextoCentro" width="10%">
 						<h:outputText value="#{item.codigoGarantia}"/>
 					</p:column>
-					<p:column headerText="Socio" styleClass="dsTextoCentro">
+					<p:column headerText="Socio" styleClass="dsTextoCentro" width="25%">
 					    <div class="dsTextoCorto">
 							<h:outputText value="#{item.nombreCorto}"/>
 					    </div>
 					</p:column>
-					<p:column headerText="Tipo" styleClass="dsTextoCentro">
+					<p:column headerText="Tipo" styleClass="dsTextoCentro" width="20%">
 					    <div class="dsTextoCorto">
 							<h:outputText value="#{item.descripcionTipoGarantia}"/>
 					    </div>
 					</p:column>
-					<p:column headerText="Seguro" styleClass="dsTextoCentro">
+					<p:column headerText="Seguro" styleClass="dsTextoCentro" width="30%">
 					    <div class="dsTextoCorto">
 							<h:outputText value="#{item.descripcionCiaSeguro}"/>
 					    </div>
 					</p:column>
-					<p:column headerText="Nro Poliza" styleClass="dsTextoCentro">
+					<p:column headerText="Nro Poliza" styleClass="dsTextoCentro" width="10%">
 						<h:outputText value="#{item.poliza}" />
 					</p:column>
-					<p:column headerText="Corr." styleClass="dsTextoCentro">
+					<p:column headerText="Corr." styleClass="dsTextoCentro" width="10%">
 						<h:outputText value="#{item.codigoInspector}" />
 					</p:column>
-					<p:column headerText="Fecha Ingreso" styleClass="dsTextoCentro">
-						<h:outputText value="#{item.fechaIngreso}" />
-					</p:column>
-					
-					<p:column headerText="Estado" styleClass="dsTextoCentro">
-						<h:outputText value="#{item.descripcionEstadoGarantia}"/>
-					</p:column>
-					<p:column headerText="Situación" styleClass="dsTextoCentro">
-						<h:outputText value="#{item.descripcionSituacion}"/>
-					</p:column>
-					<p:column headerText="" styleClass="dsTextoCentro">
-						<p:commandButton styleClass="dsBoton5 green" icon="fa fa-hospital-o" title="Asignar Poliza" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituircredito.buscarPoliza(item)}" update="frmDlgBuscarCiaSeguro:tblPoliza"></p:commandButton>
+					<p:column headerText="" styleClass="dsTextoCentro" width="5%">
+						<p:commandButton styleClass="dsBoton5 green" icon="fa fa-hospital-o" title="Asignar Poliza" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituircredito.buscarPoliza(item)}" update=":frmDlgBuscarCiaSeguro"></p:commandButton>
 			     	</p:column>
 				</p:dataTable>
 			</p:panel>
@@ -389,12 +379,12 @@
 	</h:form>
 	</p:dialog>
 
-	<p:dialog widgetVar="dlgBuscarCiaSeguro" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">
+	<p:dialog  widgetVar="dlgBuscarCiaSeguro" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">
 	<h:form id="frmDlgBuscarCiaSeguro">
 		<div class="dsDlgBuscarSocio dsDialogo4">
 	 		<div class="cabecera">
 				<div class="dlgIzquierda">
-					<p:outputLabel styleClass="dsLabel2" value="Relación de Polizas"/>
+					<p:outputLabel styleClass="dsLabel2" value="Relación de Pólizas"/>
 					<p:commandLink styleClass="dsCmdlink4" title="Nueva Poliza" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituircredito.nuevaPoliza}" update=":frmDlgMantenimientoPoliza">
 						<i class="fas fa-hospital-o"></i>
 					</p:commandLink>
@@ -444,32 +434,33 @@
 					</div>
 				</div>
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
-					<p:dataTable id="tblPoliza" value="#{mblistagarantiaporconstituircredito.lstPolizaSeguro}" var="item" styleClass="dsTabla1" paginator="true" rows="4" paginatorPosition="bottom" selectionMode="single"
-						selection="#{mblistagarantiaporconstituircredito.oEPolizaSelected}"  rowKey="#{item.codigoPoliza}" reflow="false" >
+					<p:dataTable id="tblPoliza" value="#{mblistagarantiaporconstituircredito.lstPolizaSeguro}" var="item" styleClass="dsTabla1" paginator="true" rows="4" paginatorPosition="bottom"   rowKey="#{item.codigoPoliza}" reflow="false" >
 						<p:ajax event="rowDblselect" listener="#{mblistagarantiaporconstituircredito.asignarPoliza()}" oncomplete="PF('dlgBuscarCiaSeguro').hide()"/>
-						<p:column headerText="Código" styleClass="dsTextoCentro" visible="true" width="80px;">
+						<p:column headerText="Código" styleClass="dsTextoCentro" visible="true" width="10%">
 							<h:outputText value="#{item.codigoCiaSeguro}"/> 
 						</p:column>
-						<p:column headerText="Descripción" styleClass="dsTextoCentro" visible="true">
+						<p:column headerText="Descripción" styleClass="dsTextoCentro" visible="true" width="45%">
 						    <div class="dsTextoCorto">
 							   <h:outputText value="#{item.descripcionCiaSeguro}"/>
 						    </div>
 						</p:column>
-						<p:column headerText="Corr" styleClass="dsTextoCentro" visible="true" width="20px;">
+						<p:column headerText="Corr" styleClass="dsTextoCentro" visible="true" width="5%">
 							<h:outputText value="#{item.correlativoPoliza}"/> 
 						</p:column>
-						<p:column headerText="Numero Poliza" styleClass="dsTextoCentro" visible="true" width="100px;">
+						<p:column headerText="Numero Poliza" styleClass="dsTextoCentro" visible="true" width="15%">
 						    <div class="dsTextoCorto">
 							   <h:outputText value="#{item.numeroPoliza}"/>
 						    </div>
 						</p:column>
-						<p:column headerText="Valor Poliza" styleClass="dsTextoCentro" visible="true" width="80px;">
+						<p:column headerText="Valor Poliza" styleClass="dsTextoCentro" visible="true" width="15%">
 							   <h:outputText value="#{item.valorPoliza}"/>
 						</p:column>	
-						<p:column headerText="Acciones" styleClass="dsTextoCentro">
-			      			<p:commandButton styleClass="dsBoton5 green" icon="fa fa-pencil" title="Editar Poliza" actionListener="#{mblistagarantiaporconstituircredito.modificarPoliza(item)}" update=":frmDlgMantenimientoPoliza">
+						<p:column headerText="Acciones" styleClass="dsTextoCentro" width="10%">
+							<p:commandButton styleClass="dsBoton5 green" icon="fa fa-check" title="Asignar Póliza" actionListener="#{mblistagarantiaporconstituircredito.asignarPoliza(item)}"  oncomplete="PF('dlgBuscarCiaSeguro').hide()">
 			      			</p:commandButton>
-			      			<p:commandButton styleClass="dsBoton5 red" icon="fa fa-trash" title="Eliminar Poliza" actionListener="#{mblistagarantiaporconstituircredito.eliminarPoliza(item)}" update="frmDlgBuscarCiaSeguro:tblPoliza">
+			      			<p:commandButton styleClass="dsBoton5 green" icon="fa fa-pencil" title="Editar Póliza" actionListener="#{mblistagarantiaporconstituircredito.modificarPoliza(item)}" update=":frmDlgMantenimientoPoliza">
+			      			</p:commandButton>
+			      			<p:commandButton styleClass="dsBoton5 red" icon="fa fa-trash" title="Eliminar Póliza" actionListener="#{mblistagarantiaporconstituircredito.eliminarPoliza(item)}" update="frmDlgBuscarCiaSeguro:tblPoliza">
 			      			</p:commandButton>
 						</p:column>	 			
 					</p:dataTable>

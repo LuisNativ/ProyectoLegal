@@ -11,6 +11,7 @@ import javax.faces.bean.ViewScoped;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.primefaces.component.tabview.TabView;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.TabChangeEvent;
 
@@ -19,6 +20,7 @@ import com.abaco.entidad.EMensaje;
 import com.abaco.entidad.EPersona;
 import com.abaco.entidad.EUsuario;
 import com.abaco.negocio.util.UConstante.UAccionExterna;
+import com.abaco.negocio.util.UConstante.UAccionInterna;
 import com.abaco.negocio.util.UConstante.UClaseGarantia;
 import com.abaco.negocio.util.UConstante.UEstado;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
@@ -71,6 +73,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 	@Getter @Setter private boolean visualizarCampo1,visualizarCampo2;
 	@Getter @Setter private int indicadorTituloDescripcionPoliza;
 
+	private int indicadorPoliza;
 
 	@PostConstruct
 	public void inicio() {
@@ -178,7 +181,8 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 			lstGarantiaSolicitudExistente = new ArrayList<EGarantiaSolicitud>();
 			if(lstGarantiaSol != null){
 				for(EGarantiaSolicitud obj: lstGarantiaSol){
-					if(obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES && obj.getCodigoEstadoEvaluacionLegal().equals("1")){
+					if(obj.getCodigoEstadoGarantiaSolicitud() != UEstado.REGISTRADOGARANTIAPENDIENTE &&
+						obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES && obj.getCodigoEstadoEvaluacionLegal().equals("1")){
 						lstGarantiaSolicitudExistente.add(obj);
 					}
 				}
@@ -230,10 +234,10 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 		
 	}
 	
-	//Método para Identificar el Cambio de un Tab dentro de un Tabview
-	public void onTabChange(TabChangeEvent event){
-		String titulo = event.getTab().getTitle();
-		if(titulo.equals("Garantía Real Nueva")) codigoTabviewIndex = 0;
+	//Método para Identificar el Cambio de un Tab dentro de un Tabview para las Garantías Reales y Existentes
+	public void onTabChangeGarantiaRE(TabChangeEvent event){
+		TabView tv = (TabView) event.getTab().getParent();		
+		if(tv.getActiveIndex() == 0) codigoTabviewIndex = 0;
 		else codigoTabviewIndex = 1;
 	}
 	
@@ -274,7 +278,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 	
 	//Listado de Garantias para el Llenado de Pólizas
 	public void listarPolizasconGarantia(){
-		lstGarantiaPoliza = oBOGarantia.listarGarantia(0, "0");
+		lstGarantiaPoliza = oBOGarantia.listarGarantia(0, "");
 	}
 	
 	public void buscarPolizaconGarantia(){
@@ -293,6 +297,9 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 		}
 		codigoBuscarPoliza = 0;
 		descripcionBuscarPoliza = "";
+		descripcionBuscarPoliza2 = "";
+		visualizar1eraDescripcion = true;
+		visualizar2daDescripcion = false;
 		RequestContext.getCurrentInstance().execute("PF('dlgBuscarCiaSeguro').show();");
 	}
 	
@@ -359,9 +366,27 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 		
 	}
 	
+	public void asignarPoliza(EPoliza ePolizaItem){
+		if(ePolizaItem != null){
+			EGarantia eGarantia = new EGarantia();
+			eGarantia.setCodigoGarantia(codigoGarantia);
+			eGarantia.setCodigoCiaSeguro(ePolizaItem.getCodigoCiaSeguro());
+			eGarantia.setPoliza(ePolizaItem.getNumeroPoliza());
+			eGarantia.setCodigoInspector(ePolizaItem.getCorrelativoPoliza());
+			oEMensaje = oBOGarantia.modificarGarantiaPoliza(eGarantia);
+			
+			indicadorActualizador = 1;
+			UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
+			RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
+			
+		}
+		
+	}
+	
 	public void nuevaPoliza(){
 		oEPolizaData = new EPoliza();
 		deshabilitarCampoPoliza = false;
+		indicadorPoliza = UAccionInterna.NUEVO;
 		RequestContext.getCurrentInstance().execute("PF('dlgMantenimientoPoliza').show();");
 	}
 	
@@ -370,13 +395,10 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 	//Mantenimiento Poliza
 	public void grabarPoliza(){
 		if(oEPolizaData != null){
-			
-			EPoliza validarPoliza = oBOGarantia.buscarPoliza(oEPolizaData);
-			
 			EPoliza ePoliza = oEPolizaData;
 			ePoliza.setUsuarioRegistro(oEUsuario);
 			
-			if(validarPoliza != null){
+			if(indicadorPoliza != UAccionInterna.NUEVO){
 				oEMensaje = oBOGarantia.modificarPoliza(ePoliza);
 				
 			}else{
@@ -397,7 +419,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 		if(ePolizaItem != null){
 			oEPolizaData = ePolizaItem;
 			deshabilitarCampoPoliza = true;
-			
+			indicadorPoliza = UAccionInterna.EDITAR;
 			RequestContext.getCurrentInstance().execute("PF('dlgMantenimientoPoliza').show();");
 		}
 

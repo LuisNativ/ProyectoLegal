@@ -131,6 +131,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	@Getter @Setter private boolean renderizarTab3;
 	@Getter @Setter private boolean visualizarBotonInfFinanciera;
 	@Getter @Setter private boolean visualizarBtnBuscarPoliza;
+	@Getter @Setter private boolean visualizarBotonPolizaGarantia;
+	@Getter @Setter private boolean visualizarBotonTasadorGarantia;
 	@Getter @Setter private double montoAcumuladoSaldoCredito;
 	
 	@Getter @Setter private boolean colapsarPanel;
@@ -249,6 +251,9 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 						visualizarBtnBuscarPoliza = true;
 						visualizarFrmdeCredito = true;
 						deshabilitarPorcentaje = true;
+						deshabilitarCampoDetGenGarantia= true;
+						visualizarBotonPolizaGarantia = false;
+						visualizarBotonTasadorGarantia = false;
 						if(oEGarantiaSolicitudLoad.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS){
 							visualizarFrmdeLegal = false;
 							renderizarTab2 = false;
@@ -261,7 +266,31 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 							indicadorBoton = 1; 
 							indicadorBotonRegistro = 3;
 							visualizarPorcentaje = false;
+							visualizarBtnAgregarPropietario = false;
+							visualizarBtnEliminarPropietario = false;
 							oEGarantiaData = oBOGarantia.buscarGarantia(oEGarantiaSolicitudLoad.getNumeroGarantiaReal());
+							oEGarantiaData.setLstPropietario(new ArrayList<EPersona>());
+							
+							//Data de F92011
+							oEGarantiaAnexoData = oBOGarantia.buscarAnexoGarantia(oEGarantiaSolicitudLoad.getNumeroGarantiaReal());
+							if(oEGarantiaAnexoData != null){
+								oEGarantiaData.setUbicacion1(oEGarantiaAnexoData.getUbicacion1Largo() != null ? 
+										oEGarantiaAnexoData.getUbicacion1Largo():"");
+								oEGarantiaData.setPartidaRegistral(oEGarantiaAnexoData.getPartidaRegistral());
+								oEGarantiaData.setOficinaRegistral(oEGarantiaAnexoData.getOficinaRegistral());
+								oEGarantiaData.setTipoRegistral(oEGarantiaAnexoData.getTipoRegistral());
+								oEGarantiaData.setFechaComercial(oEGarantiaAnexoData.getFechaComercial());
+								oEGarantiaData.setMontoComercial(oEGarantiaAnexoData.getMontoComercial());
+								oEGarantiaData.setLstPropietario(oEGarantiaAnexoData.getLstPropietario());
+								oEGarantiaData.setCodigoAsignacionInmueble(oEGarantiaAnexoData.getCodigoAsignacionInmueble());
+							}
+							
+							EPersona ePersona = new EPersona();
+							ePersona.setCodigo(oEGarantiaData.getCodigoPropietario());
+							ePersona.setNombreCorte(oEGarantiaData.getDescripcionPropietario());
+							if(oEGarantiaData.getCodigoPropietario() != 0){
+								oEGarantiaData.getLstPropietario().add(0, ePersona);
+							}
 							
 							if(oEGarantiaAsociadaSolicitudData.getPorcentajeAsignado() != 0){
 								oEGarantiaAsociadaSolicitudData.setPorcentajeAsignado(oEGarantiaData.getPorcentajeDisponible());
@@ -297,6 +326,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 						renderizarTab2 = true;
 						visualizarBotonInfFinanciera = false;
 						visualizarBtnBuscarPoliza = false;
+						visualizarBotonPolizaGarantia = true;
+						visualizarBotonTasadorGarantia = true;
 						if(oEGarantiaSolicitudLoad.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS){
 							renderizarTab3 = false;
 							indicadorBoton = 3;
@@ -426,6 +457,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		descripcionBuscar = "";
 		descripcionBuscar2 = "";
 		montoAcumuladoSaldoCredito = 0;
+		visualizarBotonPolizaGarantia = false;
 	}
 	
 	public void listarDesplegable(){
