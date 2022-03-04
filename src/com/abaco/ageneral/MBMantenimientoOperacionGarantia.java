@@ -970,9 +970,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				if(oEPolizaPrestamoData == null){
 					oEPolizaPrestamoData = new EPoliza();	
 				}
-				oEPolizaPrestamoData.setNumeroOperacion(eAsignacionContratoGarantiaItem.getNumeroOperacion());
 			}
-			
 		}
 	}
 	

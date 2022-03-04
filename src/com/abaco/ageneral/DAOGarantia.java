@@ -3244,6 +3244,7 @@ public class DAOGarantia extends InstanciaAcceso{
 			if (oResultSet != null) {
 				while (oResultSet.next()) {
 					oEPolizaPrestamo = new EPoliza();
+					oEPolizaPrestamo.setNumeroOperacion(oResultSet.getLong("NUMPRE"));
 					oEPolizaPrestamo.setCodigoCiaSeguro(oResultSet.getInt("CIAS22"));
 					oEPolizaPrestamo.setNumeroPoliza(UFuncionesGenerales.revisaCadena(oResultSet.getString("POLIZA")));
 					oEPolizaPrestamo.setCorrelativoPoliza(oResultSet.getInt("CORP22"));
