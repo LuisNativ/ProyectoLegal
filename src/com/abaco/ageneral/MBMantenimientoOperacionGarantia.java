@@ -69,6 +69,7 @@ import com.abaco.negocio.util.UConstante.UArea;
 import com.abaco.negocio.util.UConstante.UAsignacionInmueble;
 import com.abaco.negocio.util.UConstante.UEstado;
 import com.abaco.negocio.util.UConstante.UEstadoGarantia;
+import com.abaco.negocio.util.UConstante.UMensajeTabla;
 import com.abaco.negocio.util.UConstante.UModoIngreso;
 import com.abaco.negocio.util.UConstante.UMoneda;
 import com.abaco.negocio.util.UConstante.UPersonaRelacion;
@@ -107,6 +108,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	private EGarantia oEGarantiaInmuebleData;
 	private EPersona oEPersonaSelected;
 	private EPoliza oEPolizaSelected;
+	private EPoliza oEPolizaPrestamoData;
 	private EOperacionDocumento oEOperacionDocumentoNotariaData;
 	private EFlagReqLegal oEFlagRequisitoLegalData;
 	//BO
@@ -255,6 +257,9 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	@Getter @Setter private boolean deshabilitarCampoFlagReqLeg;
 	@Getter @Setter private boolean visualizarBotonEditarEliminarReqLegal;
 	@Getter @Setter private boolean visualizarTabCumplimiento;
+	@Getter @Setter private boolean visualizarEditarInmueble;
+	@Getter @Setter private boolean visualizarEliminarInmueble;
+	@Getter @Setter private String mensajeTablaPolizaPrestamo;
 	@Getter @Setter private int accionInternaInmueble;
 	
 	//Para Tercero
@@ -273,6 +278,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		oETerceroData = new ETercero();
 		oEPersonaSelected = new EPersona();
 		oEPolizaSelected = new EPoliza();
+		oEPolizaPrestamoData = new EPoliza();
 		oEOperacionDocumentoNotariaData = new EOperacionDocumento();
 		oEFlagRequisitoLegalData = new EFlagReqLegal();
 		oUManejadorListaDesplegable = new UManejadorListaDesplegable();
@@ -480,18 +486,27 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				
 				
 				//Acciones para Negocios y sus Areas
-				if(oEUsuario.getCodigoArea() == 102 || 
+				if(oEUsuario.getCodigoArea() == UArea.NEGOCIOS || 
 				   oEUsuario.getCodigoArea()==103   ||
 				   oEUsuario.getCodigoArea()==104   ||
-				   oEUsuario.getCodigoArea()==105){
+				   oEUsuario.getCodigoArea()==105 ||
+				   oEUsuario.getCodigoArea()== UArea.CREDITOS){
 					deshabilitarCampo = true;
 					deshabilitarCampoAsignacion = true;
 					deshabilitarBotonEnviar = true;
+					visualizarBtnAgregarPropietario = false;
+					visualizarBtnEliminarPropietario = false;
 					visualizarGenerarDocumento = false;
 					visualizarGenerarDocumentoHipotecario = false;
-					visualizarTabPrestamos = false;
 					visualizarBotonIrTramite = false;
 					deshabilitarPanel = true;
+					visualizarTabDocumento = false;
+					visualizarTabPrestamos = true;
+					visualizarTabCumplimiento = false;
+					visualizarGenerarContratoPrivado = false;
+					renderizarBotonNuevoInmueble = false;
+					visualizarEditarInmueble = false;
+					visualizarEliminarInmueble = false;
 				}
 				
 			}
@@ -553,6 +568,10 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		 deshabilitarCampoFlagReqLeg = false;
 		 visualizarBotonAnadirCondicionLegal = false;
 		 visualizarBotonEditarEliminarReqLegal = false;
+		 visualizarEditarInmueble = true;
+		 visualizarEliminarInmueble = true;
+		 
+		 mensajeTablaPolizaPrestamo = UMensajeTabla.MSJ_1;
 	}
 	
 	public void listarDesplegable(){
@@ -696,8 +715,11 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				 oEUsuario.getCodigoArea()  == 103     ||
 				 oEUsuario.getCodigoArea()  == 104     ||
 				 oEUsuario.getCodigoArea()  == 105){
-			ruta = "ListaConstitucionGarantia.xhtml";
-		}else{
+			ruta = "ListaConsultaGarantia.xhtml";
+		}else if (oEUsuario.getCodigoArea()  == UArea.CREDITOS){
+			ruta = "ListaConsultaGarantia.xhtml";
+		}
+		else {
 			ruta = "BandejaOperacionOtros.xhtml";
 		}
 		
@@ -939,6 +961,19 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		montoAcumuladoCoberturado = montoAcumCoberturado;
 		
 		
+	}
+	
+	public void consultarPolizaPrestamo(EAsignacionContratoGarantia eAsignacionContratoGarantiaItem){
+		if(eAsignacionContratoGarantiaItem != null){
+			if(eAsignacionContratoGarantiaItem.getNumeroOperacion()>0){
+				oEPolizaPrestamoData = oBOGarantia.buscarPolizaAsociadoPrestamoMaxCorrelativo(eAsignacionContratoGarantiaItem.getNumeroOperacion());			
+				if(oEPolizaPrestamoData == null){
+					oEPolizaPrestamoData = new EPoliza();	
+				}
+				oEPolizaPrestamoData.setNumeroOperacion(eAsignacionContratoGarantiaItem.getNumeroOperacion());
+			}
+			
+		}
 	}
 	
 	
@@ -2149,8 +2184,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
         eGarantia.setUsuarioRegistro(oEUsuario);*/
 		
 		EFlagReqLegal eFlagRequisitoLegal = new EFlagReqLegal();
-		eFlagRequisitoLegal.setNumeroSolicitud(oEOperacionDocumentoDesembolso.getCodigoSolicitud());
-		eFlagRequisitoLegal.setNumeroFlag(2);
+		eFlagRequisitoLegal.setNumeroSolicitud(oEOperacionDocumentoDesembolso.getCodigoSolicitudCredito());
+		eFlagRequisitoLegal.setNumeroFlag(4);
 		eFlagRequisitoLegal.setModoIngresoFlag(UModoIngreso.AUTOMATICO);
 		eFlagRequisitoLegal.setActualizacionFlag(UActualizacionFlag.CUMPLIDOTOTAL);
 		eFlagRequisitoLegal.setUsuarioRegistro(oEUsuario);
@@ -2267,6 +2302,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				}
 				
 				if(lstDetalleFlagsReqLegal.get(i).getNumeroFlag() == 4 && 
+				   lstDetalleFlagsReqLegal.get(i).getActualizacionFlag() != UActualizacionFlag.CUMPLIDOTOTAL &&
 					lstDetalleFlagsReqLegal.get(i).getModoIngresoFlag() == UModoIngreso.AUTOMATICO){
 					lstDetalleFlagsReqLegal.get(i).setIndicadorCartaFianza(1);
 				}
@@ -2821,6 +2857,14 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 
 	public void setoEFlagRequisitoLegalData(EFlagReqLegal oEFlagRequisitoLegalData) {
 		this.oEFlagRequisitoLegalData = oEFlagRequisitoLegalData;
+	}
+
+	public EPoliza getoEPolizaPrestamoData() {
+		return oEPolizaPrestamoData;
+	}
+
+	public void setoEPolizaPrestamoData(EPoliza oEPolizaPrestamoData) {
+		this.oEPolizaPrestamoData = oEPolizaPrestamoData;
 	}
 
 	

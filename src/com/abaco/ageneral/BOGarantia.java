@@ -291,8 +291,7 @@ public class BOGarantia {
 	public List<EFlagReqLegal> listarDetalleFlagRequisitoLegal(long numeroSolicitud){					
 		List<EFlagReqLegal> lista=oCGarantia.listarDetalleFlagRequisitoLegal(numeroSolicitud);
 		return lista;
-	}
-	
+	}	
 	public EMensaje eliminarDetalleSolicitudDocumentoGarantia(EGarantia eGarantia){
 		EMensaje resultado = oCGarantia.eliminarDetalleSolicitudDocumentoGarantia(eGarantia);
 		return resultado;
@@ -400,6 +399,10 @@ public class BOGarantia {
 	}
 	public EDocumentoGenerado buscarMaestroDocumentoGeneradoF7420(EDocumentoGenerado eDocumentoGenerado){					
 		EDocumentoGenerado lista=oCGarantia.buscarMaestroDocumentoGeneradoF7420(eDocumentoGenerado);
+		return lista;
+	}
+	public EPoliza buscarPolizaAsociadoPrestamoMaxCorrelativo(long numeroOperacion){					
+		EPoliza lista=oCGarantia.buscarPolizaAsociadoPrestamoMaxCorrelativo(numeroOperacion);
 		return lista;
 	}
 	public List<ESaldoServicio> obtenerSaldosServiciosCliente(int codigoCliente){

@@ -887,6 +887,11 @@ public class UConstante {
 		String MSJ_16 = "¿Está seguro de enviar el documento con la firma del socio?";
 	}
 	
+	public static interface UMensajeTabla{
+		String MSJ_1 = "No Existen Registros";
+		String MSJ_2 = "No Existen Pólizas Asociadas para la Operación: ";
+	}
+	
 	/* Fin: AHM */
 	
 	public static interface UProcesoMantePostulante {
@@ -1064,5 +1069,12 @@ public class UConstante {
 		String pdf = ".pdf";
 		String txt = ".txt";
 		String xls = ".xls";
+	}
+	
+	public static interface UCriterioBusqueda{
+		int CODIGO_SOCIO = 1;
+		int NOMBRE_SOCIO = 2;
+		int CODIGO_GARANTIA = 3;
+		int PARTIDA_REGISTRAL = 4;
 	}
 }

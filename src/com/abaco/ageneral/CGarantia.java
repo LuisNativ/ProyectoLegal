@@ -2478,6 +2478,25 @@ public class CGarantia {
 		return resultado;
 	}
 	
+	public EPoliza buscarPolizaAsociadoPrestamoMaxCorrelativo(long numeroOperacion){
+		IConexion oIConexion = null;
+		EPoliza resultado = null;
+		DAOGarantia oDAOGarantia= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();			
+			oDAOGarantia = new DAOGarantia(oIConexion);
+			resultado = oDAOGarantia.buscarPolizaAsociadoPrestamoMaxCorrelativo(numeroOperacion);	
+			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al obtener: " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
 	public List<ESaldoServicio> obtenerSaldosServiciosCliente(int codigoCliente){
 		IConexion oIConexion = null;
 		List<ESaldoServicio> resultado = null;

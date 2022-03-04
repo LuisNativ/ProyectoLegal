@@ -299,7 +299,7 @@ public class MBListaConstitucionGarantia implements Serializable {
 	
 	public void eliminarDocumentoCarga(EDocumentoCarga oEDocumentoCargaItem){
 		lstDocumentoCarga.remove(oEDocumentoCargaItem);
-		if(lstDocumentoCarga.size()==0 ||lstDocumentoCarga == null) deshabilitarGrabarDocumento = true;
+		if(lstDocumentoCarga.size()==0 ||lstDocumentoCarga == null) visualizarGrabarDocumento = false;
 	}
 	
 	public void descargarDocumento(EOperacionDocumento oEOperacionDocumentoItem) {

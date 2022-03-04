@@ -78,6 +78,7 @@ public class DAOGarantia extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_BUS_MAESTROCONTRATO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_MAESTROCONTRATO("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_ULTIMOCONTRATOGARANTIAGENERADO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_ULTIMOCONTRATOGARANTIAGENERADO() }";
 	private static final String SP_ABACOINLEGAL_BUS_MAESTRODOCUMENTOGENERADO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_MAESTRODOCUMENTOGENERADO("+parametrosSP(4)+") }";
+	private static final String SP_ABACOINLEGAL_BUS_POLIZAASOCIADOPRESTAMO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_POLIZAASOCIADOPRESTAMO("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_GARANTIAPORLIBERAR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_GARANTIAPORLIBERAR("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_GARANTIAPORCONSTITUIR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_GARANTIAPORCONSTITUIR("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_GARANTIASOLICITUD="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_GARANTIASOLICITUD("+parametrosSP(1)+") }";
@@ -2121,8 +2122,7 @@ public class DAOGarantia extends InstanciaAcceso{
 		}
 		return lstFlagRequisitoLegal;
 	}
-	
-	
+		
 	public EMensaje eliminarDetalleSolicitudDocumentoGarantia(EGarantia eGarantia) {
 		EMensaje mensaje = new EMensaje();
 		List<Object> lstParametrosEntrada;
@@ -2556,6 +2556,7 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantia.setMontoGravamen(oResultSet.getDouble("MONGRA"));
 					oEGarantia.setCodigoEstado(oResultSet.getInt("ESTADO"));
 					oEGarantia.setDescripcionEstadoGarantia(UFuncionesGenerales.revisaCadena(oResultSet.getString("ESTADOGARANT")));
+					oEGarantia.setDescripcionSituacion(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCSITUAC")));
 					oEGarantia.setNumeroRegistro(oResultSet.getInt("REGIST"));
 					oEGarantia.setDescripcionGarantia(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESSER")));
 					lstGarantia.add(oEGarantia);
@@ -3229,6 +3230,41 @@ public class DAOGarantia extends InstanciaAcceso{
 			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
 		}
 		return oEODocumentoGenerado;
+	}
+	
+	public EPoliza buscarPolizaAsociadoPrestamoMaxCorrelativo(long numeroOperacion){
+		List<Object> lstParametrosEntrada;
+		ResultSet oResultSet = null;
+		EPoliza oEPolizaPrestamo= null;
+		
+		try {
+			lstParametrosEntrada = new ArrayList<Object>();	
+			lstParametrosEntrada.add(numeroOperacion);
+			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_BUS_POLIZAASOCIADOPRESTAMO, lstParametrosEntrada, null);
+			if (oResultSet != null) {
+				while (oResultSet.next()) {
+					oEPolizaPrestamo = new EPoliza();
+					oEPolizaPrestamo.setCodigoCiaSeguro(oResultSet.getInt("CIAS22"));
+					oEPolizaPrestamo.setNumeroPoliza(UFuncionesGenerales.revisaCadena(oResultSet.getString("POLIZA")));
+					oEPolizaPrestamo.setCorrelativoPoliza(oResultSet.getInt("CORP22"));
+					oEPolizaPrestamo.setTipoPoliza(oResultSet.getInt("TIPP22"));
+					oEPolizaPrestamo.setCodigoBrocker(oResultSet.getInt("BROC22"));
+					oEPolizaPrestamo.setFechaInicioPoliza(oResultSet.getDate("FECIPO"));
+					oEPolizaPrestamo.setFechaVencimientoPoliza(oResultSet.getDate("FECPOL"));
+					oEPolizaPrestamo.setFechaRenovacion(oResultSet.getDate("FECREN"));
+					oEPolizaPrestamo.setFechaOrdenPago(oResultSet.getDate("FECPAG"));
+					oEPolizaPrestamo.setMontoPrimaNetaAnual(oResultSet.getDouble("PNETAA"));
+					oEPolizaPrestamo.setDescripcionCiaSeguro(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCCIASEG")));
+					oEPolizaPrestamo.setDescripcionTipoPoliza(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCTIPPOL")));
+					oEPolizaPrestamo.setDescripcionBrockerSeguro(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCBROC")));
+					oEPolizaPrestamo.setAbreviacionMonedaPrimaNeta(UFuncionesGenerales.revisaCadena(oResultSet.getString("ABRVMON")));
+					oEPolizaPrestamo.setDescripcionMonedaPrimaNeta(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCMON")));
+				}											
+		    }
+		} catch(Exception objEx) {
+			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
+		}
+		return oEPolizaPrestamo;
 	}
 	
 	public List<ESaldoServicio> obtenerSaldosServiciosCliente(int codigoCliente) {

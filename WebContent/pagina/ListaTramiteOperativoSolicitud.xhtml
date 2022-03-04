@@ -151,7 +151,7 @@
 				<p:commandButton styleClass="dsBoton1 secundario" value="Aceptar" onclick="PF('dlgObservacionSolicitud').hide();" rendered="#{mblistatramiteoperativosolicitud.renderizarBotonAceptar}"></p:commandButton>
 				<p:commandButton styleClass="dsBoton1 principal" id="idBtnGrabarObservacion" value="Grabar"  onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mblistatramiteoperativosolicitud.procesarObservacionSolicitud()}" process="@form"  update="frmDlgObservacionSolicitud"
 				rendered="#{mblistatramiteoperativosolicitud.renderizarBotonGrabarObservacion}"></p:commandButton>
-				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mblistatramiteoperativosolicitud.cancelarObservacionSolicitud()}" update=":frmDlgObservacionSolicitud" rendered="#{mblistatramiteoperativosolicitud.renderizarBotonGrabarObservacion}"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mblistatramiteoperativosolicitud.cancelarObservacionSolicitud()}" update=":frmDlgObservacionSolicitud" immediate="true" rendered="#{mblistatramiteoperativosolicitud.renderizarBotonGrabarObservacion}"></p:commandButton>
 				
 			</div>
 		</div>

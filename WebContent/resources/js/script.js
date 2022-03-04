@@ -17,22 +17,20 @@ function limitaCaracter(limite, linea, id){
 
 //Función para limpiar campos Input Text Numericos
 function limpiarCampoInputText(objetoCampo){
-	if(objetoCampo!= null){
+	if(objetoCampo != null){
 		for(var i = 0;i<objetoCampo.length;i++){
 			if(objetoCampo[i].value != null){
-				if (objetoCampo[i].value == 0 )  
+				if (objetoCampo[i].value == 0)  
 				{   
 					objetoCampo[i].value = "";
 				} 
 			}else{
 				console.log("");
-			}
-			
+			}	
 	 	}
 	}
-	
-	
 }
+
 
 function mostrarLoader(){
 	var over = document.getElementById("overlay");

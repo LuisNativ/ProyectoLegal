@@ -293,28 +293,7 @@
 									</p:inputNumber>
 								</div>
 							</h:panelGroup>
-							<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
-								<div class="ui-g-6">
-									<p:outputLabel value="Cia. De Seguros" styleClass="dsLabel1"/>	
-									<p:inputText id="idDescripcionCiaSeguroG" type="text" styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.descripcionCiaSeguro}" disabled="true" autocomplete="off"></p:inputText>
-						   		</div>
-						   		<div class="ui-g-1">
-									<br />
-									  <p:commandLink styleClass="dsCmdlink1" title="Buscar Poliza de Seguro" onclick="PF('dlgPreload').show()" 
-												oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbregistrooperaciongarantiasolicitud.buscarIndicadorCiaSeguro(2)}" immediate="true"
-												update=":frmDlgBuscarCiaSeguro" rendered="#{mbregistrooperaciongarantiasolicitud.visualizarBtnBuscarPoliza}"><i class="fas fa-search"></i></p:commandLink>
-								</div>	
-								<div class="ui-g-3">
-									<p:outputLabel value="Nro. Poliza" styleClass="dsLabel1"/>
-									<p:inputText id="idCodigoNumeroPolizaG" type="text" styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.poliza}" disabled="true" autocomplete="off" maxlength="12">
-									</p:inputText>
-						   		</div>	
-						   		<div class="ui-g-2">
-									<p:outputLabel value="Correl. Poli" styleClass="dsLabel1"/>
-									<p:inputNumber id="idCorrelPoliG"  styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.correlativoPoliza}" disabled="#{mbregistrooperaciongarantiasolicitud.deshabilitarCampoDetGenGarantia}" autocomplete="off" minValue="0" maxValue="999">
-								     </p:inputNumber>
-						   	    </div>						   		
-							</div>
+							
 						</div>
 					</p:panel>
 				</div>
@@ -327,11 +306,11 @@
 							<div class="ui-g-12 ui-md-7 ui-lg-7 ui-g-nopad">
 								<div class="ui-g-4">
 									<p:outputLabel value="Monto Tasación" styleClass="dsLabel1"/>
-									<p:inputNumber type="text" inputStyleClass="dsInput1 dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.montoTasacion}" placeholder="0.00" decimalSeparator="." thousandSeparator="," disabled="#{mbregistrooperaciongarantiasolicitud.deshabilitarCampoAdicional}" autocomplete="off" symbol="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaGarantia}" minValue="0" maxValue="999999999999.99" emptyValue="always" decimalPlaces="2"></p:inputNumber>
+									<p:inputNumber id="idMontoTasacion"  inputStyleClass="dsInput1 dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.montoTasacion}" placeholder="0.00" decimalSeparator="." thousandSeparator="," disabled="#{mbregistrooperaciongarantiasolicitud.deshabilitarCampoAdicional}" autocomplete="off" symbol="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaGarantia}" minValue="0" maxValue="999999999999.99" emptyValue="always" decimalPlaces="2"></p:inputNumber>
 								</div>
 								<div class="ui-g-4">
 									<p:outputLabel value="Monto Comercial" styleClass="dsLabel1"/>
-									<p:inputNumber type="text" inputStyleClass="dsInput1 dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.montoComercial}"  decimalSeparator="." thousandSeparator="," disabled="#{mbregistrooperaciongarantiasolicitud.deshabilitarCampoAdicional}" autocomplete="off" symbol="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaGarantia}" minValue="0" maxValue="999999999999.99" emptyValue="always" decimalPlaces="2"></p:inputNumber>
+									<p:inputNumber id="idMontoComercial"  inputStyleClass="dsInput1 dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.montoComercial}"  decimalSeparator="." thousandSeparator="," disabled="#{mbregistrooperaciongarantiasolicitud.deshabilitarCampoAdicional}" autocomplete="off" symbol="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaGarantia}" minValue="0" maxValue="999999999999.99" emptyValue="always" decimalPlaces="2"></p:inputNumber>
 								</div>
 								<div class="ui-g-4">
 									<p:outputLabel value="Fecha Valor Comercial" styleClass="dsLabel1"/>
@@ -339,17 +318,17 @@
 						   		</div>
 						   		<div class="ui-g-4">
 									<p:outputLabel value="Monto Gravamen" styleClass="dsLabel1"/>
-									<p:inputNumber type="text" inputStyleClass="dsInput1 dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.montoGravamen}"  decimalSeparator="." thousandSeparator="," disabled="#{mbregistrooperaciongarantiasolicitud.deshabilitarCampoAdicional}" autocomplete="off" symbol="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaGarantia}" minValue="0" maxValue="999999999999.99"></p:inputNumber>
+									<p:inputNumber id="idMontoGravamen"  inputStyleClass="dsInput1 dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.montoGravamen}"  decimalSeparator="." thousandSeparator="," disabled="#{mbregistrooperaciongarantiasolicitud.deshabilitarCampoAdicional}" autocomplete="off" symbol="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaGarantia}" minValue="0" maxValue="999999999999.99"></p:inputNumber>
 								</div>			   		
 								<div class="ui-g-4">
 									<p:outputLabel value="Monto Solicitado Crédito" styleClass="dsLabel1"/>
-									<p:inputNumber type="text" inputStyleClass="dsInput1 dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.montoSolicitud}" symbol="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaSolicitud}" decimalSeparator="." thousandSeparator="," disabled="true" autocomplete="off">
+									<p:inputNumber  type="text" inputStyleClass="dsInput1 dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.montoSolicitud}" symbol="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaSolicitud}" decimalSeparator="." thousandSeparator="," disabled="true" autocomplete="off">
 										<p:ajax event="keyup" update=":form:tabView1:idPorcentaje,:form:tabView1:idMensajePorcentaje,:form:tabView1:idSaldoDisponible" listener="#{mbregistrooperaciongarantiasolicitud.calcularPorcentaje()}"/>
 									</p:inputNumber>
 								</div> 
 								<div class="ui-g-4">
 									<p:outputLabel value="Valor Realización" styleClass="dsLabel1"/>
-									<p:inputNumber type="text" inputStyleClass="dsInput1 dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.montoValorRealizacion}"  decimalSeparator="." thousandSeparator="," disabled="#{mbregistrooperaciongarantiasolicitud.deshabilitarCampoAdicional}" autocomplete="off" symbol="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaGarantia}">
+									<p:inputNumber id="idMontoRealizacion"  inputStyleClass="dsInput1 dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.montoValorRealizacion}"  decimalSeparator="." thousandSeparator="," disabled="#{mbregistrooperaciongarantiasolicitud.deshabilitarCampoAdicional}" autocomplete="off" symbol="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaGarantia}">
 										<p:ajax event="keyup" update=":form:tabView1:idPorcentaje,:form:tabView1:idMensajePorcentaje,:form:tabView1:idSaldoDisponible" listener="#{mbregistrooperaciongarantiasolicitud.calcularPorcentaje()}"/>
 									</p:inputNumber>
 								</div>
@@ -361,7 +340,7 @@
 								</div>
 								<div class="ui-g-1" style="#{mbregistrooperaciongarantiasolicitud.visualizarPorcentaje ? 'display:block;' : 'display:none;'}">
 									<br />
-									<p:commandLink styleClass="dsCmdlink2" title="Ingreso Manual"  onclick="PF('dlgIngresoManual').show();" update=":form:tabView1:idPorcentaje" rendered="#{mbregistrooperaciongarantiasolicitud.visualizarBotonInfFinanciera}">
+									<p:commandLink styleClass="dsCmdlink2" title="Ingreso Manual"  onclick="PF('dlgIngresoManual').show();" update=":form:tabView1:idPorcentaje,:frmDlgIngresoManual" rendered="#{mbregistrooperaciongarantiasolicitud.visualizarBotonInfFinanciera}">
 										<i class="fa fa-edit"></i>
 									</p:commandLink>
 									<p:commandLink styleClass="dsCmdlink2" title="Actualizar"  onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperaciongarantiasolicitud.calcularPorcentaje()}" update=":form:tabView1:idPorcentaje,:form:tabView1:idMensajePorcentaje,:form:tabView1:idSaldoDisponible" rendered="#{mbregistrooperaciongarantiasolicitud.visualizarBotonInfFinanciera}">
@@ -1521,10 +1500,6 @@
 	</h:form>
 	<p:blockUI block="frmDlgBuscarCiaSeguro" widgetVar="blkDlgBuscarCiaSeguro"></p:blockUI>
 	</p:dialog>
-
-
-
-
 
 
 </f:view>

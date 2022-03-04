@@ -28,6 +28,7 @@ import com.abaco.entidad.EUsuario;
 import com.abaco.negocio.util.UConstante.UAccionExterna;
 import com.abaco.negocio.util.UConstante.UArea;
 import com.abaco.negocio.util.UConstante.UClaseGarantia;
+import com.abaco.negocio.util.UConstante.UCriterioBusqueda;
 import com.abaco.negocio.util.UConstante.UEstado;
 import com.abaco.negocio.util.UConstante.UTipoDocumentoGarantia;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
@@ -274,10 +275,13 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 				garantiaMonedaNacional = 0;
 				garantiaMonedaExtranjera = 0; 
 				
-				lstGarantiaVigente = oBOGarantia.listarGarantiaVigente(codigoBuscarGarantia, descripcionBuscarGarantia);
+				lstGarantiaVigente = oBOGarantia.listarGarantiaVigente(codigoBuscarGarantia, descripcionBuscarGarantia.trim());
 				if(lstGarantiaVigente == null || lstGarantiaVigente.isEmpty()){
 					lstGarantiaVigente = new ArrayList<EGarantia>();
-					lstPersona = oBOCliente.listarSocioyTercero(1, descripcionBuscarGarantia);
+					lstPersona = new ArrayList<EPersona>();
+					if(codigoBuscarGarantia == UCriterioBusqueda.CODIGO_SOCIO){
+						lstPersona = oBOCliente.listarSocioyTercero(1, descripcionBuscarGarantia);
+					}
 					if(lstPersona == null || lstPersona.isEmpty()){
 						oEGarantiaData = new EGarantia();
 						indicadorBoton=true;
