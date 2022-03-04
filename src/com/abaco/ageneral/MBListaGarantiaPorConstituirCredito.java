@@ -104,7 +104,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 		verificarGarantiaSolicitud();
 		listarGarantiaSolicitudNueva();
 		listarGarantiaSolicitudExistente();
-		listarHistoricoGarantiaSolicitud();
+		//listarHistoricoGarantiaSolicitud();
 		listarPolizasconGarantia();
 		listarDesplegable();
 	}

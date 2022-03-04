@@ -1295,14 +1295,14 @@ public class DAOGarantia extends InstanciaAcceso{
 				while (oResultSet.next()) {
 					oEGarantia = new EGarantiaSolicitud();
 					oEGarantia.setCodigoCliente(oResultSet.getInt("CODCLI"));
-					oEGarantia.setNombreLargo(oResultSet.getString("NOMBCL"));
+					oEGarantia.setNombreLargo(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMBCL")));
 					//oEGarantia.setCodigoServicioGarantia(oResultSet.getInt("SERVIC"));
 					oEGarantia.setCodigoGarantia(oResultSet.getInt("GARANT"));
 					oEGarantia.setMontoGarantia(oResultSet.getDouble("MTOGAR"));
-					oEGarantia.setDescripcionTipoGarantiaReal(oResultSet.getString("DESGAR"));
-					oEGarantia.setDescripcionCreditoRelacionado(oResultSet.getString("DESCOPE"));
+					oEGarantia.setDescripcionTipoGarantiaReal(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESGAR")));
+					oEGarantia.setDescripcionCreditoRelacionado(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCOPE")));
 					oEGarantia.setCodigoEstadoLevantamiento(oResultSet.getInt("CODESTSOL"));
-					oEGarantia.setDescripcionEstadoLevantamiento(oResultSet.getString("DESCESTSOL"));
+					oEGarantia.setDescripcionEstadoLevantamiento(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCESTSOL")));
 					oEGarantia.setAbreviacionMonedaGarantia(UFuncionesGenerales.revisaCadena(oResultSet.getString("ABRVMON")));
 					
 					lstGarantia.add(oEGarantia);
@@ -1332,15 +1332,15 @@ public class DAOGarantia extends InstanciaAcceso{
 				while (oResultSet.next()) {
 					oEGarantia = new EGarantiaSolicitud();
 					oEGarantia.setCodigoCliente(oResultSet.getInt("CODCLI"));
-					oEGarantia.setNombreLargo(oResultSet.getString("NOMBCL"));
+					oEGarantia.setNombreLargo(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMBCL")));
 					oEGarantia.setCodigoServicioGarantia(oResultSet.getInt("SERVIC"));
 					oEGarantia.setCodigoGarantia(oResultSet.getInt("GARANT"));
 					oEGarantia.setMontoGarantia(oResultSet.getDouble("MTOGAR"));
 					oEGarantia.setDescripcionTipoGarantiaReal(oResultSet.getString("DESGAR"));
 					oEGarantia.setCodigoEstadoLevantamiento(oResultSet.getInt("CODESTSOL"));
-					oEGarantia.setDescripcionEstadoLevantamiento(oResultSet.getString("DESCESTSOL"));
+					oEGarantia.setDescripcionEstadoLevantamiento(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCESTSOL")));
 					oEGarantia.setCodigoEstadoDocumento(oResultSet.getInt("CODESTDOC"));
-					oEGarantia.setDescripcionEstadoDocumento(oResultSet.getString("DESCESTDOC"));
+					oEGarantia.setDescripcionEstadoDocumento(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCESTDOC")));
 					oEGarantia.setAbreviacionMonedaGarantia(UFuncionesGenerales.revisaCadena(oResultSet.getString("ABRVMON")));
 					
 					lstGarantia.add(oEGarantia);
@@ -1499,10 +1499,10 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEOperacionDocumento.setCodigoGarantia(oResultSet.getInt("GARANT"));
 					oEOperacionDocumento.setCodigoDocumento(oResultSet.getInt("SECUEN"));
 					oEOperacionDocumento.setTipoDocumento(oResultSet.getInt("TIPDOC"));
-					oEOperacionDocumento.setCodigoDocumentoLaserFiche(oResultSet.getString("CODDOCLSF"));
-					oEOperacionDocumento.setNombreDocumento(oResultSet.getString("NOMDOC"));
-					oEOperacionDocumento.setNombreDocumentoLaserFiche(oResultSet.getString("NOMDOCLSF"));
-					oEOperacionDocumento.setNombreDocumentoOriginal(oResultSet.getString("NOMDOCORI"));
+					oEOperacionDocumento.setCodigoDocumentoLaserFiche(UFuncionesGenerales.revisaCadena(oResultSet.getString("CODDOCLSF")));
+					oEOperacionDocumento.setNombreDocumento(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMDOC")));
+					oEOperacionDocumento.setNombreDocumentoLaserFiche(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMDOCLSF")));
+					oEOperacionDocumento.setNombreDocumentoOriginal(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMDOCORI")));
 					oEOperacionDocumento.setCodigoAreaEmisora(oResultSet.getInt("AREAEMI"));
 					oEOperacionDocumento.setFirmaDocumento(UFuncionesGenerales.revisaCadena(oResultSet.getString("FIRMA")));
 					oEOperacionDocumento.setObervacionDocumento(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSERV")));
@@ -2409,7 +2409,7 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantia = new EGarantiaSolicitud();
 					oEGarantia.setNumeroSolicitud(oResultSet.getInt("NROSOL"));
 					oEGarantia.setNumeroRevision(oResultSet.getInt("NREVIS"));
-					oEGarantia.setNombreLargo(oResultSet.getString("NOMABV"));
+					oEGarantia.setNombreLargo(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMABV")));
 					oEGarantia.setCodigoTipoProducto(oResultSet.getInt("TPRODU"));
 					oEGarantia.setCodigoEstadoSolCredito(oResultSet.getInt("ESTADO"));
 					oEGarantia.setCodigoEstadoRevision(oResultSet.getNString("STATUS"));
@@ -2419,7 +2419,7 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantia.setSecuenciaGarantia(oResultSet.getInt("SECGAR"));
 					oEGarantia.setCodigoTipoGarantiaReal(oResultSet.getInt("TIPGAR"));
 					oEGarantia.setCodigoTipoGarantia(oResultSet.getInt("GARTIP"));
-					oEGarantia.setDescripcionTipoGarantiaReal(oResultSet.getString("DESGAR"));
+					oEGarantia.setDescripcionTipoGarantiaReal(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESGAR")));
 					oEGarantia.setCodigoNroIngresoGarantia(oResultSet.getInt("GARANI"));
 					
 					lstGarantia.add(oEGarantia);
@@ -2452,10 +2452,10 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantia.setNumeroSolicitud(oResultSet.getInt("NROSOL"));
 					oEGarantia.setCodigoCliente(oResultSet.getInt("CODCLI"));
 					oEGarantia.setNumeroRevision(oResultSet.getInt("NREVIS"));
-					oEGarantia.setNombreLargo(oResultSet.getString("NOMABV"));
+					oEGarantia.setNombreLargo(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMABV")));
 					oEGarantia.setCodigoTipoProducto(oResultSet.getInt("TPRODU"));
 					oEGarantia.setCodigoEstadoSolCredito(oResultSet.getInt("ESTADO"));
-					oEGarantia.setCodigoEstadoRevision(oResultSet.getString("STATUS"));
+					oEGarantia.setCodigoEstadoRevision(UFuncionesGenerales.revisaCadena(oResultSet.getString("STATUS")));
 					oEGarantia.setFechaRevision(oResultSet.getDate("FECREVF"));
 					oEGarantia.setCodigoMonedaSolicitud(oResultSet.getInt("MONSOL"));
 					oEGarantia.setMontoSolicitud(oResultSet.getDouble("MTOSOL"));	
@@ -2464,11 +2464,11 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantia.setCodigoTipoGarantia(oResultSet.getInt("GARTIP"));
 					oEGarantia.setNumeroGarantiaReal(oResultSet.getInt("GARGAR"));
 					oEGarantia.setCodigoEstadoGarantiaSolicitud(oResultSet.getInt("ESTADOSG"));
-					oEGarantia.setDescripcionEstadoGarantiaSolicitud(oResultSet.getString("DESCESTGAR"));
-					oEGarantia.setDescripcionTipoGarantiaReal(oResultSet.getString("DESCTIPGAR"));
+					oEGarantia.setDescripcionEstadoGarantiaSolicitud(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCESTGAR")));
+					oEGarantia.setDescripcionTipoGarantiaReal(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCTIPGAR")));
 					oEGarantia.setCodigoNroIngresoGarantia(oResultSet.getInt("GARANI"));
-					oEGarantia.setAbreviacionMonedaSolicitud(oResultSet.getString("ABRVMON"));
-					oEGarantia.setDescripcionMonedaSolicitud(oResultSet.getString("DESCMON"));
+					oEGarantia.setAbreviacionMonedaSolicitud(UFuncionesGenerales.revisaCadena(oResultSet.getString("ABRVMON")));
+					oEGarantia.setDescripcionMonedaSolicitud(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCMON")));
 					oEGarantia.setCodigoEstadoEvaluacionLegal(UFuncionesGenerales.revisaCadena(oResultSet.getString("STALEG")));
 					//oEGarantia.setObservacion(oResultSet.getString("OBSERV"));
 					
@@ -2501,7 +2501,7 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantia.setNumeroSolicitud(oResultSet.getInt("NROSOL"));
 					oEGarantia.setNumeroRevision(oResultSet.getInt("NREVIS"));
 					oEGarantia.setCodigoCliente(oResultSet.getInt("CODCLI"));
-					oEGarantia.setNombreLargo(oResultSet.getString("NOMABV"));
+					oEGarantia.setNombreLargo(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMABV")));
 					//oEGarantia.setCodigoTipoProducto(oResultSet.getInt("TPRODU"));
 					//oEGarantia.setCodigoEstadoSolCredito(oResultSet.getInt("ESTADO"));
 					//oEGarantia.setCodigoEstadoRevision(oResultSet.getNString("STATUS"));
@@ -2513,7 +2513,7 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantia.setCodigoTipoGarantia(oResultSet.getInt("GARTIP"));
 					//oEGarantia.setCodigoEstadoGarantiaSolicitud(oResultSet.getInt("ESTSOLGAR"));
 					//oEGarantia.setDescripcionEstadoGarantiaSolicitud(oResultSet.getString("DESCESTGAR"));
-					oEGarantia.setDescripcionTipoGarantiaReal(oResultSet.getString("DESTIPGAR"));
+					oEGarantia.setDescripcionTipoGarantiaReal(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESTIPGAR")));
 					oEGarantia.setCodigoNroIngresoGarantia(oResultSet.getInt("GARANI"));
 					
 					lstGarantia.add(oEGarantia);
@@ -2959,11 +2959,11 @@ public class DAOGarantia extends InstanciaAcceso{
 				while (oResultSet.next()) {
 					oEGarantia = new EGarantia();
 					oEGarantia.setCodigoGarantia(oResultSet.getLong("GARANT"));
-					oEGarantia.setUbicacion1Largo(oResultSet.getString("UBICAC"));
-					oEGarantia.setUbicacion2Largo(oResultSet.getString("UBICAB"));
+					oEGarantia.setUbicacion1Largo(UFuncionesGenerales.revisaCadena(oResultSet.getString("UBICAC")));
+					oEGarantia.setUbicacion2Largo(UFuncionesGenerales.revisaCadena(oResultSet.getString("UBICAB")));
 					oEGarantia.setMontoComercial(oResultSet.getDouble("MONCOM"));
 					oEGarantia.setFechaComercial(oResultSet.getDate("FECCOM"));
-					oEGarantia.setPartidaRegistral(oResultSet.getString("PARREG"));
+					oEGarantia.setPartidaRegistral(UFuncionesGenerales.revisaCadena(oResultSet.getString("PARREG")));
 					oEGarantia.setOficinaRegistral(oResultSet.getInt("OFIREG"));
 					oEGarantia.setTipoRegistral(oResultSet.getInt("TIPREG"));
 					oEGarantia.setCodigoPropietario2(oResultSet.getInt("CODPR2"));
@@ -3362,11 +3362,11 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantiaDocumentoSolicitado.setFechaIngreso(oResultSet.getDate("FECTRS"));
 					oEGarantiaDocumentoSolicitado.setHoraIngreso(oResultSet.getString("HORINS"));
 					oEGarantiaDocumentoSolicitado.setFechaRegistro(oResultSet.getDate("FECREG"));
-					oEGarantiaDocumentoSolicitado.setHoraRegistro(oResultSet.getString("HORREG"));
+					oEGarantiaDocumentoSolicitado.setHoraRegistro(UFuncionesGenerales.revisaCadena(oResultSet.getString("HORREG")));
 					
 					oEGarantiaDocumentoSolicitado.setDescripcionTipoDocumento(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCTDO")));
-					oEGarantiaDocumentoSolicitado.setDescripcionTipoOrigenSolicitado(oResultSet.getString("DESCTORISOL"));
-					oEUsuario.setNombreUsuario(oResultSet.getString("USUREG"));
+					oEGarantiaDocumentoSolicitado.setDescripcionTipoOrigenSolicitado(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCTORISOL")));
+					oEUsuario.setNombreUsuario(UFuncionesGenerales.revisaCadena(oResultSet.getString("USUREG")));
 					oEGarantiaDocumentoSolicitado.setUsuarioRegistro(oEUsuario);
 					
 					lstGarantiaDocumentoSolicitado.add(oEGarantiaDocumentoSolicitado);
@@ -3723,11 +3723,11 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantiaSolicitud.setCodigoTipoGarantia(oResultSet.getInt("GARTIP"));
 					oEGarantiaSolicitud.setCodigoNroIngresoGarantia(oResultSet.getInt("GARANI"));
 					oEGarantiaSolicitud.setCodigoEstadoGarantiaSolicitud(oResultSet.getInt("ESTADOSG"));
-					oEGarantiaSolicitud.setUsuarioCredito(oResultSet.getString("USUREG"));
+					oEGarantiaSolicitud.setUsuarioCredito(UFuncionesGenerales.revisaCadena(oResultSet.getString("USUREG")));
 					oEGarantiaSolicitud.setFechaCredito(oResultSet.getDate("FECREG"));
-					oEGarantiaSolicitud.setUsuarioLegal(oResultSet.getString("USULEG"));
+					oEGarantiaSolicitud.setUsuarioLegal(UFuncionesGenerales.revisaCadena(oResultSet.getString("USULEG")));
 					oEGarantiaSolicitud.setFechaLegal(oResultSet.getDate("FECLEG"));			
-					oEGarantiaSolicitud.setObservacion(oResultSet.getString("OBSERV"));
+					oEGarantiaSolicitud.setObservacion(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSERV")));
 					oEGarantiaSolicitud.setMontoTasacion(oResultSet.getDouble("MONTAS"));
 					oEGarantiaSolicitud.setMontoGravamen(oResultSet.getDouble("MONGRA"));
 					oEGarantiaSolicitud.setMontoValorRealizacion(oResultSet.getDouble("MONTOV"));
