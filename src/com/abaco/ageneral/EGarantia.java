@@ -208,5 +208,14 @@ public @Data class EGarantia {
 	private String descripcionOficinaRegistral;
 	private String descripcionTipoRegistral;
 	
+	public String codigoNombreSocio(){
+		String nombre = "";
+		switch(codigoCliente){
+		case 0 : nombre = ""; break; 
+		default: nombre = codigoCliente + " - " + nombreCorto;
+		}
+		return nombre;
+	}
+	
 	
 }

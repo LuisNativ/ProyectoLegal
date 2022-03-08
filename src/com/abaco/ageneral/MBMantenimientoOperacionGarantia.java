@@ -1992,6 +1992,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	}
 	
 	public void procesarObservacionDocumento(){	
+		RequestContext.getCurrentInstance().execute("PF('dlgObservacionDocumento').hide();");
         EGarantia eGarantia = new EGarantia();
         eGarantia = oEGarantiaData;
         eGarantia.setNumeroSolicitud(oEOperacionDocumentoDetalle.getCodigoSolicitud());
@@ -2503,6 +2504,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				
 				lstInmueblesAdicionales.add(oEGarantiaInmueble);
 				listarInmueblesAdicionalesFiltro();
+				RequestContext.getCurrentInstance().execute("PF('dlgInmueblesAdicionales').hide();");
 			}else if(accionInternaInmueble == UAccionInterna.EDITAR){
 				EGarantia oEGarantiaInmueble = new EGarantia();
 				oEGarantiaInmueble = oEGarantiaInmuebleData;
@@ -2521,6 +2523,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 					}
 				}
 				listarInmueblesAdicionalesFiltro();
+				RequestContext.getCurrentInstance().execute("PF('dlgInmueblesAdicionales').hide();");
 			}
 			
 

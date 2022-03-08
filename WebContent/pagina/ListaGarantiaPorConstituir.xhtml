@@ -180,7 +180,7 @@
 			
 			<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-4">
 				<p:outputLabel value="Socio" styleClass="dsLabel1"/>
-				<p:inputText  type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.oEGarantiaData.codigoCliente} - #{mblistagarantiaporconstituir.oEGarantiaData.nombreCorto}" disabled="true">
+				<p:inputText  type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.oEGarantiaData.codigoNombreSocio()}" disabled="true">
 				</p:inputText>
 			</div>
 			
@@ -249,10 +249,10 @@
 				<p:column headerText="Servicio" styleClass="dsTextoCentro" responsivePriority="5" width="5%">
 					<h:outputText value="#{item.codigoServicio}" />
 				</p:column>
-				<p:column headerText="Nro. Garantía" styleClass="dsTextoCentro" responsivePriority="2" width="10%">
+				<p:column headerText="Garantía" styleClass="dsTextoCentro" responsivePriority="2" width="10%">
 					<h:outputText value="#{item.codigoGarantia}"/>
 				</p:column>
-				<p:column headerText="Descripcion" styleClass="dsTextoCentro" responsivePriority="3" width="30%">
+				<p:column headerText="Descripción" styleClass="dsTextoCentro" responsivePriority="3" width="30%">
 				    <div class="dsTextoCorto">
 						<h:outputText value="#{item.descripcionGarantia}"/>
 				    </div>
@@ -268,7 +268,7 @@
 				<p:column headerText="Mon." styleClass="dsTextoCentro" width="5%">
 					<h:outputText value="#{item.abreviacionMoneda}" />
 				</p:column>
-				<p:column headerText="Monto Gravamen" styleClass="dsTextoCentro" width="10%">
+				<p:column headerText="Gravamen" styleClass="dsTextoCentro" width="10%">
 					<h:outputText value="#{item.montoGravamen}">
 						<f:convertNumber type="currency" currencySymbol="#{item.abreviacionMoneda}" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
 					</h:outputText>

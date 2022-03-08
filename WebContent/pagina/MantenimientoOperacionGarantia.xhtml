@@ -172,24 +172,25 @@
 									
 									<div class="ui-g-5">
 										<p:outputLabel value="Área de Terreno" styleClass="dsLabel1"/>
-										<p:inputNumber id="idAreaTerreno" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable2}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">									
+										<p:inputNumber id="idAreaTerreno" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable2}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">									
 										</p:inputNumber>
 							   		</div>
 							   		<div class="ui-g-5">
 										<p:outputLabel value="Área Construida" styleClass="dsLabel1"/>
-										<p:inputNumber id="idAreaConstruida" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable3}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idAreaConstruida" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable3}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>
 							   		<div class="ui-g-2">
 										<p:outputLabel value="Pisos" styleClass="dsLabel1"/>
-										<p:inputNumber id="idPisos" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="999"></p:inputNumber>
+										<p:inputNumber id="idPisos" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="999" 
+										placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
 							   		</div>
 								</div>
 								
 							    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 							    	<div class="ui-g-8">
 										<p:outputLabel for="idUso" value="Uso" styleClass="dsLabel1"/>
-										<p:inputText id="idUso" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionA}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60" ></p:inputText>
+										<p:inputText id="idUso" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionA}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60"></p:inputText>
 										
 							   		</div>
 							    	<div class="ui-g-4">
@@ -233,11 +234,11 @@
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Informe Nva. Tasación" styleClass="dsLabel1"/>
-										<p:inputNumber id="idInforTasPred" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator=""></p:inputNumber>
+										<p:inputNumber id="idInforTasPred" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Fecha Nva. Valoriz." styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>
 								</div>
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
@@ -259,46 +260,47 @@
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel for="idValorGravamenPredio" value="Valor Gravamen" styleClass="dsLabel1"/>
-										<p:inputNumber id="idValorGravamenPredio"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" required="true" requiredMessage="Campo Obligatorio">
+										<p:inputNumber id="idValorGravamenPredio"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator=","  minValue="0" maxValue="999999999999.99"  required="true" requiredMessage="Campo Obligatorio" 
+										onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 										<p:message for="idValorGravamenPredio"/>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Fecha Gravamen" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Límite" styleClass="dsLabel1"/>
-										<p:inputNumber id="idLimitePredio" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" emptyValue="empty">
+										<p:inputNumber id="idLimitePredio" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>
 								</div>
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Fecha Valor Comercial" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaComercial}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaComercial}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Valor Comercial" styleClass="dsLabel1"/>
-										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoComercial}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoComercial}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>
 									<div class="ui-g-4">
 										<p:outputLabel value="Fecha Inicial Tasación" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable1}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable1}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>
 							   		
 								</div>					
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">	
 									<div class="ui-g-4">
 										<p:outputLabel for="idValorActualPredio" value="Valor Realización" styleClass="dsLabel1"/>
-										<p:inputNumber id="idValorActualPredio"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" required="true" requiredMessage="Campo Obligatorio">
+										<p:inputNumber id="idValorActualPredio"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value" required="true" requiredMessage="Campo Obligatorio">
 										</p:inputNumber>
 										<p:message for="idValorActualPredio"/>
 							   		</div>
 							   		<div class="ui-g-4">
 							   			<p:outputLabel value="Valor Realiz. Actual" styleClass="dsLabel1"/>
-										<p:inputNumber id="idValorRealizPredio"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoValoracion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idValorRealizPredio"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoValoracion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" onfocus="this.value == 0 ? this.value='':this.value" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
 										</p:inputNumber>						
 							   		</div>					   		
 							   		<div class="ui-g-4">
@@ -313,7 +315,6 @@
 										<p:outputLabel  value="Asignación" styleClass="dsLabel1"/>
 						        		<p:selectOneMenu id="idAsignacionPredio"  value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoAsignacionInmueble}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoAsignacion}">
 						        			<p:ajax event="change" listener="#{mbmantenimientooperaciongarantia.evaluarAsignacion()}" update="form:tabView1:idInmuebleAdicional" />
-											<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 											<f:selectItem itemLabel="Individual" itemValue="0" />
 											<f:selectItem itemLabel="Conjunta" itemValue="1" />
 									
@@ -427,18 +428,18 @@
 							   		</div>				   		
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Informe Tasación" styleClass="dsLabel1"/>
-										<p:inputNumber id="idInfTasVeh" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"  autocomplete="off"  minValue="0" maxValue="9999999999" thousandSeparator=""></p:inputNumber>
+										<p:inputNumber id="idInfTasVeh" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"  autocomplete="off"  minValue="0" maxValue="9999999999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Fecha Tasación" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"  autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 
 							   		</div>
 								</div>
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Valor Realización" styleClass="dsLabel1"/>
-										<p:inputNumber id="ValorRealizVeh" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoValoracion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00"  autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="ValorRealizVeh" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoValoracion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00"  autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>
 							   		<div class="ui-g-8">
@@ -461,32 +462,32 @@
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Valor Gravamen" styleClass="dsLabel1"/>
-										<p:inputNumber id="idValorGravVeh" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00"  autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idValorGravVeh" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00"  autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99"  onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Fecha Gravamen" styleClass="dsLabel1"/>
-										<p:calendar  value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"  autocomplete="off"></p:calendar>
+										<p:calendar  value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Límite" styleClass="dsLabel1"/>
-										<p:inputNumber id="idLimiteVeh"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00"  autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idLimiteVeh"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00"  autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>
 								</div>
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Fecha Nva. Valor." styleClass="dsLabel1"/>
-										<p:calendar  value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable1}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"  autocomplete="off"></p:calendar>
+										<p:calendar  value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable1}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Valor Actual" styleClass="dsLabel1"/>
-										<p:inputNumber id="idValorActVeh" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00"  autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idValorActVeh" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00"  autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Fabricación" styleClass="dsLabel1"/>
-										<p:inputNumber id="idFabricacVeh"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.anioFabricacion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"  autocomplete="off" minValue="0" maxValue="9999" thousandSeparator=""></p:inputNumber>							
+										<p:inputNumber id="idFabricacVeh"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.anioFabricacion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"  autocomplete="off" minValue="0" maxValue="9999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>							
 							   		</div>
 								</div>
 							    
@@ -538,11 +539,11 @@
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Fecha Ini. Poliza" styleClass="dsLabel1"/>
-										<p:calendar  navigator="true" pattern="dd-MM-yyyy"  autocomplete="off" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"></p:calendar>
+										<p:calendar  navigator="true" pattern="dd-MM-yyyy"  autocomplete="off" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy"></p:calendar>
 							        </div>	
 							        <div class="ui-g-4">
 										<p:outputLabel value="Fecha Fin Poliza" styleClass="dsLabel1"/>
-										<p:calendar  value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVencimientoPoliza}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"  autocomplete="off"></p:calendar>
+										<p:calendar  value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVencimientoPoliza}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>				   		
 								</div>
 								<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
@@ -600,7 +601,7 @@
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel for="idCantidadAcciones" value="Cant. Acciones" styleClass="dsLabel1"/>
-										<p:inputNumber id="idCantidadAcciones" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable3}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999" thousandSeparator="" ></p:inputNumber>
+										<p:inputNumber id="idCantidadAcciones" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable3}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Nemonico" styleClass="dsLabel1"/>
@@ -618,39 +619,39 @@
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Informe Tasación" styleClass="dsLabel1"/>
-										<p:inputNumber id="idInfTasAcc" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator=""></p:inputNumber>
+										<p:inputNumber id="idInfTasAcc" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
 							   		</div>
 									<div class="ui-g-4">
 										<p:outputLabel value="Valor Nominal" styleClass="dsLabel1"/>
-										<p:inputNumber id="idValorNomAcc" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable2}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idValorNomAcc" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable2}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Valor de Mercado" styleClass="dsLabel1"/>
-										<p:inputNumber id="idValorMercAcc" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable3}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idValorMercAcc" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable3}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>					   		
 								</div>
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Total Val. Nom." styleClass="dsLabel1"/>
-										<p:inputNumber id="idTotalValNomAcc" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idTotalValNomAcc" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>
 									<div class="ui-g-4">
 										<p:outputLabel value="Total Val. Merc." styleClass="dsLabel1"/>
-										<p:inputNumber id="idTotalValMercAcc" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idTotalValMercAcc" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>				   		
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Fecha Valorizacion" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>					   		
 								</div>
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Valor Actual" styleClass="dsLabel1"/>
-										<p:inputNumber id="idValorActAcc" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idValorActAcc" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>
 									<div class="ui-g-8">
@@ -777,7 +778,7 @@
 							   		</div>	
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Monto Fianza" styleClass="dsLabel1"/>
-										<p:inputNumber id="idMontoFianFianza"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoOriginalGarantia}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idMontoFianFianza"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoOriginalGarantia}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>			   						   		
 								</div>
@@ -797,7 +798,7 @@
 							   		</div>	
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Informe Tasación" styleClass="dsLabel1"/>
-										<p:inputNumber id="idInfTasFian" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator=""></p:inputNumber>
+										<p:inputNumber id="idInfTasFian" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
 							   		</div>					 				
 								</div>									   		  			 		
 				           </div>
@@ -843,7 +844,7 @@
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Cantidad" styleClass="dsLabel1"/>
-										<p:inputNumber id="idCantidadMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable2}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="999999" thousandSeparator=""></p:inputNumber>
+										<p:inputNumber id="idCantidadMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable2}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="999999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel for="idMonedaMaq" value="Moneda" styleClass="dsLabel1"/>
@@ -855,33 +856,33 @@
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Informe Tasación" styleClass="dsLabel1"/>
-										<p:inputNumber id="idInfTasMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator=""></p:inputNumber>
+										<p:inputNumber id="idInfTasMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
 							   		</div>						   		
 								</div>	
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Valor de Gravamen" styleClass="dsLabel1"/>
-										<p:inputNumber id="idValGravMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idValGravMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>		
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Fecha de Gravamen" styleClass="dsLabel1"/>
-										<p:calendar  value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar  value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>	
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Límite" styleClass="dsLabel1"/>
-										<p:inputNumber id="idLimiteMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idLimiteMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>					 				
 								</div>					
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-3">
 										<p:outputLabel value="Fecha Tasación" styleClass="dsLabel1"/>
-										<p:calendar  value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar  value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>	
 									<div class="ui-g-3">
 										<p:outputLabel value="Valor Relización" styleClass="dsLabel1"/>
-										<p:inputNumber id="idValorRealMaq" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoValoracion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idValorRealMaq" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoValoracion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>	
 							   		<div class="ui-g-6">
@@ -903,11 +904,11 @@
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-6">
 										<p:outputLabel value="Fecha Nva. Valoriz." styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable1}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable1}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>	
 									<div class="ui-g-6">
 										<p:outputLabel value="Valor Actual" styleClass="dsLabel1"/>
-										<p:inputNumber id="idValorActMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idValorActMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>				   						   		
 								</div>	
@@ -1003,7 +1004,7 @@
 							    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Cantidad" styleClass="dsLabel1"/>
-										<p:inputNumber id="idCantidadMer" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable2}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" thousandSeparator="" minValue="0" maxValue="999999">								
+										<p:inputNumber id="idCantidadMer" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable2}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" thousandSeparator="" minValue="0" maxValue="999999" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value">								
 										</p:inputNumber>
 							   		</div>
 							   		<div class="ui-g-4">
@@ -1016,7 +1017,7 @@
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Informe Tasación" styleClass="dsLabel1"/>
-										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator=""></p:inputNumber>
+										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
 							   		</div>					   		
 								</div>		   
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">						
@@ -1030,11 +1031,11 @@
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Fecha Tasación" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							        </div>	
 							        <div class="ui-g-4">
 										<p:outputLabel value="Valor Tasación" styleClass="dsLabel1"/>
-										<p:inputNumber id="idValTasaMer"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoValoracion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idValTasaMer"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoValoracion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							        </div>
 								</div>
@@ -1056,27 +1057,27 @@
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Valor de Gravamen" styleClass="dsLabel1"/>
-										<p:inputNumber id="idValGravMer"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idValGravMer"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>		
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Fecha de Gravamen" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>	
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Valorización Actualiz." styleClass="dsLabel1"/>
-										<p:inputNumber id="idValorActMer"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idValorActMer"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>					 				
 								</div>					
 								<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-3">
 										<p:outputLabel value="Fecha Nva. Valoriz." styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable1}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable1}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>	
 									<div class="ui-g-3">
 										<p:outputLabel value="Valor Actual" styleClass="dsLabel1"/>
-										<p:inputNumber id="idValActualMer" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber id="idValActualMer" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>	
 							   		<div class="ui-g-6">
@@ -1122,7 +1123,7 @@
 							   	<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Correlativo Poli." styleClass="dsLabel1"/>
-										<p:inputNumber id="idCorrelPolMer" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoInspector}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="999"></p:inputNumber>
+										<p:inputNumber id="idCorrelPolMer" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoInspector}" disabled="true" autocomplete="off" minValue="0" maxValue="999"></p:inputNumber>
 							   		</div>	
 							   		<div class="ui-g-8">
 										<p:outputLabel value="Cobertura" styleClass="dsLabel1"/>
@@ -1215,21 +1216,22 @@
 							    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 							     	<div class="ui-g-4">
 										<p:outputLabel value="Fecha de Emisión" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable1}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable1}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>	
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Plazo" styleClass="dsLabel1"/>
-										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="999"></p:inputNumber>
+										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="999" 
+										placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
 							   		</div>	
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Fecha de Vencimiento" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable2}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable2}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>							   		
 							    </div>
 							    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 							     	<div class="ui-g-4">
 										<p:outputLabel value="Fecha de Renovación" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable3}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable3}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>	
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Plazo Renovación" styleClass="dsLabel1"/>
@@ -1240,21 +1242,21 @@
 							   		</div>	
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Nuevo Vencimiento" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable4}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVariable4}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>							   		
 							    </div>
 							    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 							    	<div class="ui-g-4">
 										<p:outputLabel value="Informe Tasación" styleClass="dsLabel1"/>
-										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator=""></p:inputNumber>
+										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
 							   		</div>	
 							    	<div class="ui-g-4">
 										<p:outputLabel value="Fecha Tasación" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							        </div>	
 							        <div class="ui-g-4">
 										<p:outputLabel value="Valor Tasación" styleClass="dsLabel1"/>
-										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoValoracion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoValoracion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							        </div>
 								</div>
@@ -1302,7 +1304,7 @@
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Informe Tasación" styleClass="dsLabel1"/>
-										<p:inputNumber id="idInforTasDocCob" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator=""></p:inputNumber>
+										<p:inputNumber id="idInforTasDocCob" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
 							   		</div>
 							   </div>
 							    <div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">						    
@@ -1315,12 +1317,12 @@
 							   		</div>	
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Monto" styleClass="dsLabel1"/>
-										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGarantia}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGarantia}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel  value="Valor Actual" styleClass="dsLabel1"/>
-										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>
 
@@ -1328,15 +1330,15 @@
 							    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 									<div class="ui-g-4">
 										<p:outputLabel value="Fecha Recepción" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Fecha Vencimiento" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVencimiento}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVencimiento}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel  value="Valor Gravamen" styleClass="dsLabel1"/>
-										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>
 							   		
@@ -1344,7 +1346,7 @@
 							   	<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">							   	
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Fecha Gravamen" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>
 							   		<div class="ui-g-8">
 										<p:outputLabel value="Deudor" styleClass="dsLabel1"/>
@@ -1486,7 +1488,7 @@
 							   		</div>		
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Informe Tasación" styleClass="dsLabel1"/>
-										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator=""></p:inputNumber>
+										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
 							   		</div>	
 							    </div>
 							    <div class="ui-g-12 ui-md-6 ui-lg-6">
@@ -1506,17 +1508,17 @@
 							    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 							     	<div class="ui-g-4">
 							   			<p:outputLabel value="Valorización" styleClass="dsLabel1"/>
-										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoValoracion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoValoracion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>						
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Valor Gravamen" styleClass="dsLabel1"/>
-										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Fecha Gravamen" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>
 							   								   		
 							    </div>
@@ -1545,7 +1547,7 @@
 							   		</div>	
 							   		<div class="ui-g-6">
 										<p:outputLabel value="Correl. Poli" styleClass="dsLabel1"/>
-										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoInspector}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="999">
+										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoInspector}" disabled="true" autocomplete="off" minValue="0" maxValue="999">
 										</p:inputNumber>
 							   		</div>
 							    </div>
@@ -1584,7 +1586,7 @@
 							   		</div>		
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Informe Tasación" styleClass="dsLabel1"/>
-										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator=""></p:inputNumber>
+										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable4}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="9999999999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
 							   		</div>	
 							    </div>
 							    <div class="ui-g-12 ui-md-6 ui-lg-6">
@@ -1604,17 +1606,17 @@
 							    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 							     	<div class="ui-g-4">
 							   			<p:outputLabel value="Valorización" styleClass="dsLabel1"/>
-										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoValoracion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoValoracion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>						
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Valor Gravamen" styleClass="dsLabel1"/>
-										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+										<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 							   		</div>
 							   		<div class="ui-g-4">
 										<p:outputLabel value="Fecha Gravamen" styleClass="dsLabel1"/>
-										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off"></p:calendar>
+										<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 							   		</div>
 							   								   		
 							    </div>
@@ -1656,7 +1658,7 @@
 							   		</div>	
 							   		<div class="ui-g-6">
 										<p:outputLabel value="Correl. Poli" styleClass="dsLabel1"/>
-										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoInspector}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="999">
+										<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoInspector}" disabled="true" autocomplete="off" minValue="0" maxValue="999">
 										</p:inputNumber>
 							   		</div>
 							    </div>
@@ -2340,13 +2342,15 @@
 				<h:panelGroup layout="block">
 					<div class="ui-g ui-fluid ui-g-nopad">				
 						<div class="ui-g-12 ui-md-6 ui-lg-6">
-							<p:outputLabel  value="Ubicación" styleClass="dsLabel1"/>
-							<p:inputText  type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.ubicacion1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}"  maxlength="120" autocomplete="off" ></p:inputText>
+							<p:outputLabel for="idUbicacionInm" value="Ubicación" styleClass="dsLabel1"/>
+							<p:inputText id="idUbicacionInm" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.ubicacion1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}"  maxlength="120" autocomplete="off" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
+							 <p:message for="idUbicacionInm"/>
 					   	</div>
 					   	<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					    	<div class="ui-g-5">
-								<p:outputLabel  value="Part. Reg." styleClass="dsLabel1"/>
-								<p:inputText  type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.partidaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" autocomplete="off" maxlength="10" ></p:inputText>
+								<p:outputLabel for="idPartRegInm" value="Part. Reg." styleClass="dsLabel1"/>
+								<p:inputText id="idPartRegInm" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.partidaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" autocomplete="off" maxlength="10" required="true" requiredMessage="Campo Obligatorio" ></p:inputText>
+								 <p:message for="idPartRegInm"/>
 			          		</div>
 			          		<div class="ui-g-7">
 								<p:outputLabel value="Tipo Registral" styleClass="dsLabel1"/>						
@@ -2359,27 +2363,30 @@
 					    </div>
 					    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 							<div class="ui-g-4">
-								<p:outputLabel  value="Departamento" styleClass="dsLabel1"/>
-								<p:selectOneMenu  value="#{mbmantenimientooperaciongarantia.codigoDepartamentoInmueble}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}">
+								<p:outputLabel for="idDepartamentoInm" value="Departamento" styleClass="dsLabel1"/>
+								<p:selectOneMenu id="idDepartamentoInm" value="#{mbmantenimientooperaciongarantia.codigoDepartamentoInmueble}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" required="true" requiredMessage="Campo Obligatorio">
 									<p:ajax event="change" listener="#{mbmantenimientooperaciongarantia.obtenerDepartamentoInmueble()}" update="frmDlgInmueblesAdicionales:cbProvinciaPredioIA" />
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbmantenimientooperaciongarantia.lstDepartamentoInmueble}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					            </p:selectOneMenu>
+					             <p:message for="idDepartamentoInm"/>
 							</div>				
 							<div class="ui-g-4">
-								<p:outputLabel  value="Provincia" styleClass="dsLabel1"/>
-								<p:selectOneMenu id="cbProvinciaPredioIA" value="#{mbmantenimientooperaciongarantia.codigoProvinciaInmueble}"  disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}"> 
+								<p:outputLabel for="cbProvinciaPredioIA" value="Provincia" styleClass="dsLabel1"/>
+								<p:selectOneMenu id="cbProvinciaPredioIA" value="#{mbmantenimientooperaciongarantia.codigoProvinciaInmueble}"  disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" required="true" requiredMessage="Campo Obligatorio"> 
 									<p:ajax event="change" listener="#{mbmantenimientooperaciongarantia.obtenerProvinciaInmueble()}" update="frmDlgInmueblesAdicionales:cbDistritoGarantiaIA" />
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbmantenimientooperaciongarantia.lstProvinciaInmueble}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					            </p:selectOneMenu>
+					             <p:message for="cbProvinciaPredioIA"/>
 							</div>					
 							<div class="ui-g-4">
-								<p:outputLabel  value="Distrito" styleClass="dsLabel1"/>
-								<p:selectOneMenu id="cbDistritoGarantiaIA" value="#{mbmantenimientooperaciongarantia.codigoDistritoInmueble}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}">
+								<p:outputLabel for="cbDistritoGarantiaIA" value="Distrito" styleClass="dsLabel1"/>
+								<p:selectOneMenu id="cbDistritoGarantiaIA" value="#{mbmantenimientooperaciongarantia.codigoDistritoInmueble}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" required="true" requiredMessage="Campo Obligatorio">
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbmantenimientooperaciongarantia.lstDistritoInmueble}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					            </p:selectOneMenu>
+					             <p:message for="cbDistritoGarantiaIA"/>
 							</div>
 					    </div>
 					    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
@@ -2392,12 +2399,12 @@
 					   		</div>
 							<div class="ui-g-4">
 								<p:outputLabel value="Área de Terreno" styleClass="dsLabel1"/>
-								<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.montoVariable2}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">									
+								<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.montoVariable2}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">									
 								</p:inputNumber>
 					   		</div>
 					   		<div class="ui-g-4">
 								<p:outputLabel value="Área Construida" styleClass="dsLabel1"/>
-								<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.montoVariable3}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+								<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.montoVariable3}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 								</p:inputNumber>
 					   		</div>
 					   		
@@ -2419,7 +2426,7 @@
 					    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					    	<div class="ui-g-4">
 								<p:outputLabel value="Pisos" styleClass="dsLabel1"/>
-								<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.numeroVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" autocomplete="off" minValue="0" maxValue="999"></p:inputNumber>
+								<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.numeroVariable1}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" autocomplete="off" minValue="0" maxValue="999" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
 					   		</div>
 							<div class="ui-g-8">
 								<p:outputLabel   value="Moneda" styleClass="dsLabel1"/>
@@ -2433,16 +2440,16 @@
 						<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 							<div class="ui-g-4">
 								<p:outputLabel value="Valor Gravamen" styleClass="dsLabel1"/>
-								<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" required="true" requiredMessage="Campo Obligatorio">
+								<p:inputNumber styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.montoGravamen}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 								</p:inputNumber>
 					   		</div>
 					   		<div class="ui-g-4">
 								<p:outputLabel value="Fecha Gravamen" styleClass="dsLabel1"/>
-								<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" autocomplete="off"></p:calendar>
+								<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.fechaGravamen}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 					   		</div>
 					   		<div class="ui-g-4">
 								<p:outputLabel value="Valor Comercial" styleClass="dsLabel1"/>
-								<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.montoComercial}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+								<p:inputNumber  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.montoComercial}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 								</p:inputNumber>
 					   		</div>
 					   			
@@ -2450,7 +2457,7 @@
 						<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 							<div class="ui-g-4">
 								<p:outputLabel  value="Valor Realización" styleClass="dsLabel1"/>
-								<p:inputNumber   styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+								<p:inputNumber   styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaInmuebleData.montoEjecucion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoInmuebleAdicional}" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 								</p:inputNumber>
 					   		</div>
 						</div>
@@ -2459,8 +2466,10 @@
 				</h:panelGroup>
 			</div>
 			<div class="ui-g ui-fluid pie">
-				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgInmueblesAdicionales').hide();"></p:commandButton>
-				<p:commandButton styleClass="dsBoton1 principal" value="Grabar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();PF('dlgInmueblesAdicionales').hide();" actionListener="#{mbmantenimientooperaciongarantia.guardarInmuebleGarantiaPredios()}" update=":form:tabView1:tblInmuebles,:form:tabView1:idAsignacionPredio"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" process="@this" onclick="PF('dlgInmueblesAdicionales').hide();">
+					 <p:ajax update="frmDlgInmueblesAdicionales" resetValues="true" />
+				</p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Grabar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbmantenimientooperaciongarantia.guardarInmuebleGarantiaPredios()}" process="@form" update=":form:tabView1:tblInmuebles,:form:tabView1:idAsignacionPredio,frmDlgInmueblesAdicionales"></p:commandButton>
 			</div>
 		</div>
 	</h:form>
@@ -2926,6 +2935,7 @@
 					<p:outputLabel styleClass="dsLabel2" value="Ingrese Descripción"/>
 				</div>
 			</div>
+			<div class="dsLineaHorizontal"></div>
 			<div class="ui-g ui-fluid contenido">
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
 					<p:outputLabel for="txtDescripcionDocumentoCarga" value="Descripcion" styleClass="dsLabel1"/>
@@ -2947,11 +2957,11 @@
 					<p:outputLabel styleClass="dsLabel2" value="¿Tiene Firma?"/>
 				</div>
 			</div>
+			<div class="dsLineaHorizontal"></div>
 			<div class="ui-g ui-fluid contenido">
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
 					<p:outputLabel value="Firma" styleClass="dsLabel1"/>
 					<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.codigoFirmaSiNo}">
-						<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 						<f:selectItems value="#{mbmantenimientooperaciongarantia.lstValorSiNo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 			        </p:selectOneMenu>
 								       
@@ -2974,16 +2984,20 @@
 					<p:outputLabel styleClass="dsLabel2" value="Observación Documento"/>
 				</div>
 			</div>
+			<div class="dsLineaHorizontal"></div>
 			<div class="ui-g ui-fluid contenido">
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
-					<p:outputLabel  value="Observación" styleClass="dsLabel1"/>
-					<p:inputTextarea type="text" id="txtObservacionDocumento"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEOperacionDocumentoDetalle.obervacionDocumento}" autocomplete="off" disabled="#{mbmantenimientooperaciongarantia.deshabilitarObservacionDocumento}" counter="displayObsDoc" maxlength="400" counterTemplate="{0} caracteres restantes" ></p:inputTextarea>
+					<p:outputLabel  for="txtObservacionDocumento" value="Observación" styleClass="dsLabel1"/>
+					<p:inputTextarea type="text" id="txtObservacionDocumento"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEOperacionDocumentoDetalle.obervacionDocumento}" autocomplete="off" disabled="#{mbmantenimientooperaciongarantia.deshabilitarObservacionDocumento}" counter="displayObsDoc" maxlength="400" counterTemplate="{0} caracteres restantes" required="true" requiredMessage="Campo Obligatorio"></p:inputTextarea>
 					<p:outputLabel id="displayObsDoc" styleClass="dsLabel1" />
+					<p:message for="txtObservacionDocumento"/>	
 				</div>
 			</div>
 			<div class="ui-g ui-fluid pie">
-				<p:commandButton styleClass="dsBoton1 secundario" value="#{mbmantenimientooperaciongarantia.deshabilitarObservacionDocumento ? 'Aceptar' : 'Cancelar'}" onclick="PF('dlgObservacionDocumento').hide();"></p:commandButton>
-				<p:commandButton styleClass="dsBoton1 principal" id="idSolicitarFirma" value="Aceptar"  onclick="PF('dlgPreload').show();" oncomplete="PF('dlgObservacionDocumento').hide();PF('dlgPreload').hide();" actionListener="#{mbmantenimientooperaciongarantia.procesarObservacionDocumento()}" update=":frmDlgMensajeOperacionAjax"
+				<p:commandButton styleClass="dsBoton1 secundario" process="@this" value="#{mbmantenimientooperaciongarantia.deshabilitarObservacionDocumento ? 'Aceptar' : 'Cancelar'}" onclick="PF('dlgObservacionDocumento').hide();">
+					<p:ajax update="frmDlgObservacionDocumento" resetValues="true" />
+				</p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" id="idSolicitarFirma" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbmantenimientooperaciongarantia.procesarObservacionDocumento()}" update=":frmDlgMensajeOperacionAjax,frmDlgObservacionDocumento"
 				style="#{mbmantenimientooperaciongarantia.deshabilitarObservacionDocumento ? 'display: none;':'display: block;'}"></p:commandButton>
 			</div>
 		</div>
@@ -2995,21 +3009,24 @@
 		<div class="dsDlgNuevoDocumentoNotaria dsDialogo4">
 	 		<div class="cabecera">
 				<div class="dlgIzquierda">
-					<p:outputLabel styleClass="dsLabel2" value="Nuevo Documento Notaría"/>
+					<p:outputLabel styleClass="dsLabel2" value="Documentos de Notaría"/>
 				</div>
 			</div>
+			<div class="dsLineaHorizontal"></div>
 			<div class="ui-g ui-fluid contenido">
 				<div class="ui-g-12 ui-md-12 ui-lg-12 ui-nopad">
 					<div class="ui-g-6">
-						<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
-						<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEOperacionDocumentoNotariaData.nombreDocumentoOriginal}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60"></p:inputText>		
+						<p:outputLabel for="idDescripcionNotaria" value="Descripción" styleClass="dsLabel1"/>
+						<p:inputText id="idDescripcionNotaria" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEOperacionDocumentoNotariaData.nombreDocumentoOriginal}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
+						<p:message for="idDescripcionNotaria"/>		
 					</div>
 					<div class="ui-g-6">
-						<p:outputLabel value="Firma" styleClass="dsLabel1"/>
-						<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEOperacionDocumentoNotariaData.codigofirmaDocumento}">
+						<p:outputLabel for="idFirmaNotaria" value="Firma" styleClass="dsLabel1"/>
+						<p:selectOneMenu  id="idFirmaNotaria" value="#{mbmantenimientooperaciongarantia.oEOperacionDocumentoNotariaData.codigofirmaDocumento}" required="true" requiredMessage="Campo Obligatorio">
 							<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 							<f:selectItems value="#{mbmantenimientooperaciongarantia.lstValorSiNo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
-				        </p:selectOneMenu>		
+				        </p:selectOneMenu>	
+				        <p:message for="idFirmaNotaria"/>		
 					</div>				       
 				</div>
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
@@ -3018,8 +3035,10 @@
 				</div>
 			</div>
 			<div class="ui-g ui-fluid pie">
-				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgNuevoDocumentoNotaria').hide();"></p:commandButton>
-				<p:commandButton styleClass="dsBoton1 principal" value="Grabar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbmantenimientooperaciongarantia.procesarDocumentoNotaria()}" update=":frmDlgMensajeOperacionAjax"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" process="@this" onclick="PF('dlgNuevoDocumentoNotaria').hide();">
+					 <p:ajax update="frmDlgNuevoDocumentoNotaria" resetValues="true" />
+				</p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Grabar" process="@form" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbmantenimientooperaciongarantia.procesarDocumentoNotaria()}" update=":frmDlgMensajeOperacionAjax,frmDlgNuevoDocumentoNotaria"></p:commandButton>
 			</div>
 		</div>
 	</h:form>
@@ -3319,6 +3338,7 @@
 
     <script type="text/javascript">
 		 window.onload = function() {
+		 	
 		 	var nroGarantia= document.getElementById("form:idNroGarantia") != null ? document.getElementById("form:idNroGarantia") : "";
 		 	var areaTerreno= document.getElementById("form:idAreaTerreno_input") != null ? document.getElementById("form:idAreaTerreno_input") : "";
 		 	var areaConstruida= document.getElementById("form:idAreaConstruida_input") != null ? document.getElementById("form:idAreaConstruida_input") : "";
