@@ -135,6 +135,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	@Getter @Setter private boolean indicadorPnlDetalleGarantiaMercaderia;
 	@Getter @Setter private boolean indicadorPnlDetalleGarantiaWarrant;
 	@Getter @Setter private boolean indicadorPnlDetalleGarantiaFideicomiso;
+	@Getter @Setter private boolean indicadorPnlDetalleGarantiaDocPorCobrar;
 	@Getter @Setter private boolean indicadorPnlDetalleGarantiaOtros;
 	
 	//Ubigeo para Garantia (Predios)
@@ -367,6 +368,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				case  UTipoGarantia.MAQUINARIA:indicadorPnlDetalleGarantiaMaquinaria=true; break;
 				case  UTipoGarantia.MERCADERIAS:indicadorPnlDetalleGarantiaMercaderia=true; break;
 				case  UTipoGarantia.WARRANT:indicadorPnlDetalleGarantiaWarrant = true; break;
+				case  UTipoGarantia.DOCUMENTOS_POR_COBRAR: indicadorPnlDetalleGarantiaDocPorCobrar = true; break;
 				case  UTipoGarantia.FIDEICOMISO_BIENES: indicadorPnlDetalleGarantiaFideicomiso = true; break;
 				case  UTipoGarantia.FLUJOS: 
 				case  UTipoGarantia.SALDOCUENTA:
@@ -382,6 +384,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 					 indicadorPnlDetalleGarantiaWarrant = false;
 					 indicadorPnlDetalleGarantiaOtros = false;
 					 indicadorPnlDetalleGarantiaFideicomiso = false;
+					 indicadorPnlDetalleGarantiaDocPorCobrar = false;
 					 
 				}
 				//Para el caso de Otras Garantías
@@ -452,6 +455,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				case  UTipoGarantia.MAQUINARIA: indicadorPnlDetalleGarantiaMaquinaria=true; break;
 				case  UTipoGarantia.MERCADERIAS: indicadorPnlDetalleGarantiaMercaderia=true; break;
 				case  UTipoGarantia.WARRANT: indicadorPnlDetalleGarantiaWarrant = true; break;
+				case  UTipoGarantia.DOCUMENTOS_POR_COBRAR: indicadorPnlDetalleGarantiaDocPorCobrar = true; break;
 				case  UTipoGarantia.FIDEICOMISO_BIENES: indicadorPnlDetalleGarantiaFideicomiso = true; break;
 				case  UTipoGarantia.FLUJOS: 
 				case  UTipoGarantia.SALDOCUENTA:
@@ -467,6 +471,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 					 indicadorPnlDetalleGarantiaWarrant=false;
 					 indicadorPnlDetalleGarantiaFideicomiso = false;
 					 indicadorPnlDetalleGarantiaOtros = false;
+					 indicadorPnlDetalleGarantiaDocPorCobrar = false;
 				}
 				//Para el caso de Otras Garantías
 				if(oEGarantiaData.getCodigoTipoGarantia()>21 && oEGarantiaData.getCodigoTipoGarantia()!=88){
@@ -1738,7 +1743,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		oEGarantia.setUsuarioRegistro(oEUsuario);	
 		oEGarantia.setAreaEmisora(UArea.LEGAL_DESC);
 		oEGarantia.setAreaReceptora(UArea.NEGOCIOS_DESC);
-		oEGarantia.setEstadoDocumento(UEstado.SOLICITADOFIRMA);
+		oEGarantia.setEstadoDocumento(UEstado.ENTRAMITE);
 		oEGarantia.setFirmaDocumento("NO");
 		oEGarantia.setOperacionDocumento(oEOperacionDocumento);
 		oEGarantia.setObservacionDocumento(oEOperacionDocumento.getObervacionDocumento());
@@ -1949,7 +1954,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
         eGarantia.setNumeroSolicitud(oEOperacionDocumento.getCodigoSolicitud());
 		eGarantia.setCodigoGarantia(oEOperacionDocumento.getCodigoGarantia());
 		eGarantia.setTipoDocumento(oEOperacionDocumento.getTipoDocumento());
-		eGarantia.setEstadoDocumento(UEstado.SOLICITADOFIRMA);
+		eGarantia.setEstadoDocumento(UEstado.ENTRAMITE);
 
         eGarantia.setUsuarioRegistro(oEUsuario);
 		if(UAccionExterna.EDITAR == accionExterna){

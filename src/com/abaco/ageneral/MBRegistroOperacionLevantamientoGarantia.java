@@ -478,7 +478,7 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 	public void obtenerEstadoDocumentoLevantamiento() {
 		if(lstOperacionDocumento != null){
 			for(int i=0;i<lstOperacionDocumento.size();i++){
-				if(lstOperacionDocumento.get(i).getEstadoDocumento() == UEstado.SOLICITADOFIRMA){
+				if(lstOperacionDocumento.get(i).getEstadoDocumento() == UEstado.ENTRAMITE){
 					codigoEstadoDocumento = lstOperacionDocumento.get(i).getEstadoDocumento();
 					break;
 				}
@@ -1036,7 +1036,7 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 		oEGarantia.setUsuarioRegistro(oEUsuario);	
 		oEGarantia.setAreaEmisora(UArea.LEGAL_DESC);
 		oEGarantia.setAreaReceptora(UArea.NEGOCIOS_DESC);
-		oEGarantia.setEstadoDocumento(UEstado.SOLICITADOFIRMA);
+		oEGarantia.setEstadoDocumento(UEstado.ENTRAMITE);
 		oEGarantia.setFirmaDocumento("NO");
 		oEGarantia.setOperacionDocumento(oEOperacionDocumento);
 		oEGarantia.setObservacionDocumento(oEOperacionDocumento.getObervacionDocumento());

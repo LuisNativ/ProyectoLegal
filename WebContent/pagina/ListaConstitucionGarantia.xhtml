@@ -30,7 +30,6 @@
 		            	<f:selectItem itemLabel="[Seleccione]" itemValue="0" />
 		            	<f:selectItem itemLabel="Nro. Solicitud" itemValue="1" />
 		            	<f:selectItem itemLabel="Nro. Garantía" itemValue="2" />
-		            	<f:selectItem itemLabel="Estado" itemValue="3" />
 		            </p:selectOneMenu>
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
@@ -41,48 +40,88 @@
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 					<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Buscar" onclick="PF('dlgPreload').show();" 
 					oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.buscarSolicitudDocumento()}" 
-					update="form:tblSolicitudDocumento"></p:commandButton>
+					update="form:tabView2:tblSolicitudDocumentoPendiente,form:tabView2:tblSolicitudDocumentoHistorico"></p:commandButton>
 				</div>
 			</div>
 			<div class="ui-g ui-fluid ui-g-nopad">
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
-					<p:dataTable id="tblSolicitudDocumento" value="#{mblistaconstituciongarantia.lstDocumentoGarantia}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom" 
-						 rowKey="#{item.codigoSolicitud}" reflow="false" >
-						<p:column headerText="Sol." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
-							<h:outputText value="#{item.codigoSolicitudCredito}"/>
-						</p:column>
-						 <p:column headerText="Garant." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
-							<h:outputText value="#{item.codigoGarantia}"/>
-						</p:column>
-						<p:column headerText="Socio" priority="1" width="25%">
-						    <div class="dsTextoCorto">
-							    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
-						    </div>
-						</p:column>
-						<p:column headerText="Estado" styleClass="dsTextoCentro" priority="1" width="10%">
-							<h:outputText value="#{item.descripcionEstadoDocumento}"/>
-						</p:column>
-						<p:column headerText="Negocios" styleClass="dsTextoCentro" priority="6" width="10%">
-							<h:outputText value="#{item.descripcionEstadoDocumentoNegocio}"/>
-						</p:column>
-						<p:column headerText="Legal" styleClass="dsTextoCentro" priority="6" width="10%">
-							<h:outputText value="#{item.descripcionEstadoDocumentoLegal}"/>
-						</p:column>
-						<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" priority="6" width="10%">
-							<h:outputText value="#{item.usuarioRegist}"/>
-						</p:column>
-						<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" priority="6" width="15%">
-							<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
-						</p:column>
-						<p:column headerText="Acciones" styleClass="dsTextoCentro" priority="4" width="10%">
-					      <p:commandButton styleClass="dsBoton5 green" icon="#{item.estadoDocumento eq 60 ? 'fa fa-eye': 'fa fa-pencil'}" title="#{item.estadoDocumento eq 60 ? 'Visualizar': 'Evaluar'}" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.evaluarDocumentoSolicitud(item)}" update=":frmDlgDocumentacion">
+					<p:tabView id="tabView2" dynamic="true" widgetVar="tabs3" activeIndex="0">
+		    		<p:ajax event="tabChange" listener="#{mblistaconstituciongarantia.onTabChangeDocumentoGarantia}"/>
+		    		<p:tab id="tab2-1" title="Pendiente">  
+						<p:dataTable id="tblSolicitudDocumentoPendiente" value="#{mblistaconstituciongarantia.lstDocumentoGarantiaPendiente}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom" 
+							 rowKey="#{item.codigoSolicitud}" reflow="false" >
+							<p:column headerText="Sol." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
+								<h:outputText value="#{item.codigoSolicitudCredito}"/>
+							</p:column>
+							 <p:column headerText="Garant." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
+								<h:outputText value="#{item.codigoGarantia}"/>
+							</p:column>
+							<p:column headerText="Socio" priority="1" width="25%">
+							    <div class="dsTextoCorto">
+								    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
+							    </div>
+							</p:column>
+							<p:column headerText="Estado" styleClass="dsTextoCentro" priority="1" width="10%">
+								<h:outputText value="#{item.descripcionEstadoDocumento}"/>
+							</p:column>
+							<p:column headerText="Negocios" styleClass="dsTextoCentro" priority="6" width="10%">
+								<h:outputText value="#{item.descripcionEstadoDocumentoNegocio}"/>
+							</p:column>
+							<p:column headerText="Legal" styleClass="dsTextoCentro" priority="6" width="10%">
+								<h:outputText value="#{item.descripcionEstadoDocumentoLegal}"/>
+							</p:column>
+							<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" priority="6" width="10%">
+								<h:outputText value="#{item.usuarioRegist}"/>
+							</p:column>
+							<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" priority="6" width="15%">
+								<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
+							</p:column>
+							<p:column headerText="Acciones" styleClass="dsTextoCentro" priority="4" width="10%">
+						      <p:commandButton styleClass="dsBoton5 green" icon="#{item.estadoDocumento eq 60 ? 'fa fa-eye': 'fa fa-pencil'}" title="#{item.estadoDocumento eq 60 ? 'Visualizar': 'Evaluar'}" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.evaluarDocumentoSolicitud(item)}" update=":frmDlgDocumentacion">
+						      	</p:commandButton>
+					      	 <p:commandButton styleClass="dsBoton5 orange" icon="fa fa-handshake" title="Confirmación Firma" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.visualizarConfirmarFirmaDocumento(item)}"
+							  rendered="#{item.indicadorConfirmarNegocios eq 1 ? true : false}"
+					      	  update=":frmDlgDocumentacion">
 					      	</p:commandButton>
-				      	 <p:commandButton styleClass="dsBoton5 orange" icon="fa fa-handshake" title="Confirmación Firma" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.visualizarConfirmarFirmaDocumento(item)}"
-						  rendered="#{item.indicadorConfirmarNegocios eq 1 ? true : false}"
-				      	  update=":frmDlgDocumentacion">
-				      	</p:commandButton>
-		     	        </p:column>
-					</p:dataTable>
+			     	        </p:column>
+						</p:dataTable>
+					</p:tab>
+					<p:tab id="tab2-2" title="Histórico"> 
+						<p:dataTable id="tblSolicitudDocumentoHistorico" value="#{mblistaconstituciongarantia.lstDocumentoGarantiaHistorico}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom" 
+							 rowKey="#{item.codigoSolicitud}" reflow="false" >
+							<p:column headerText="Sol." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
+								<h:outputText value="#{item.codigoSolicitudCredito}"/>
+							</p:column>
+							 <p:column headerText="Garant." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
+								<h:outputText value="#{item.codigoGarantia}"/>
+							</p:column>
+							<p:column headerText="Socio" priority="1" width="25%">
+							    <div class="dsTextoCorto">
+								    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
+							    </div>
+							</p:column>
+							<p:column headerText="Estado" styleClass="dsTextoCentro" priority="1" width="10%">
+								<h:outputText value="#{item.descripcionEstadoDocumento}"/>
+							</p:column>
+							<p:column headerText="Negocios" styleClass="dsTextoCentro" priority="6" width="10%">
+								<h:outputText value="#{item.descripcionEstadoDocumentoNegocio}"/>
+							</p:column>
+							<p:column headerText="Legal" styleClass="dsTextoCentro" priority="6" width="10%">
+								<h:outputText value="#{item.descripcionEstadoDocumentoLegal}"/>
+							</p:column>
+							<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" priority="6" width="10%">
+								<h:outputText value="#{item.usuarioRegist}"/>
+							</p:column>
+							<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" priority="6" width="15%">
+								<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
+							</p:column>
+							<p:column headerText="Acciones" styleClass="dsTextoCentro" priority="4" width="10%">
+						      <p:commandButton styleClass="dsBoton5 green" icon="#{item.estadoDocumento eq 60 ? 'fa fa-eye': 'fa fa-pencil'}" title="#{item.estadoDocumento eq 60 ? 'Visualizar': 'Evaluar'}" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.evaluarDocumentoSolicitud(item)}" update=":frmDlgDocumentacion">
+						      	</p:commandButton>
+			     	        </p:column>
+						</p:dataTable> 
+					</p:tab>
+				    </p:tabView>
 				</div>
 			</div>		
 		</p:panel>
@@ -153,9 +192,12 @@
 							<p:commandButton styleClass="dsBoton5 green" icon="fa fa-download" title="Descargar" actionListener="#{mblistaconstituciongarantia.descargarDocumento(item)}" ajax="false" immediate="true">
 			      				<p:fileDownload value="#{mblistaconstituciongarantia.fileDownload}"/>
 			      			</p:commandButton>
-			      			<p:commandButton styleClass="dsBoton5 green" icon="#{item.validarObservacion ? 'fa fa-eye' : 'fa fa-envelope' }" title="Observación" actionListener="#{mblistaconstituciongarantia.visualizarObservacionDocumento(item)}" update=":frmDlgObservacionDocumento">
+			      			<p:commandButton styleClass="dsBoton5 green" icon="#{item.validarObservacion ? 'fa fa-eye' : 'fa fa-envelope' }" title="Observación" actionListener="#{mblistaconstituciongarantia.visualizarObservacionDocumento(item)}" 
+			      			update=":frmDlgObservacionDocumento" >
 			      			</p:commandButton>
-			      			<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-check" title="Actualizar Firma" actionListener="#{mblistaconstituciongarantia.visualizarFirmaDocumento(item)}" update=":frmDlgFirma">
+			      			<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-check" title="Actualizar Firma" actionListener="#{mblistaconstituciongarantia.visualizarFirmaDocumento(item)}"
+			      			rendered="#{mblistaconstituciongarantia.visualizarActualizacionFirmaDocGarantia}" 
+			      			update=":frmDlgFirma">
 			      			</p:commandButton>
 			      			<p:commandButton styleClass="dsBoton5 red" icon="fa fa-trash" title="Eliminar Documento" actionListener="#{mblistaconstituciongarantia.visualizarEliminarDocumento(item)}" 
 			      			rendered="#{mblistaconstituciongarantia.visualizarEliminarDocumentoGarantia}"
@@ -289,7 +331,7 @@
 				</div>
 			</div>
 			<div class="pie">
-				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.actualizarDatosAjax()}" update=":form:tblSolicitudDocumento,:frmDlgDocumentacion:tblOperacionDocumentoLegal,:frmDlgDocumentacion:tblOperacionDocumentoNegocios"></p:commandButton> 
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistaconstituciongarantia.actualizarDatosAjax()}" update=":form:tabView2:tblSolicitudDocumentoPendiente,:form:tabView2:tblSolicitudDocumentoHistorico,:frmDlgDocumentacion:tblOperacionDocumentoLegal,:frmDlgDocumentacion:tblOperacionDocumentoNegocios"></p:commandButton> 
 			</div>
 		</div>
 	</h:form>
@@ -314,6 +356,28 @@
 			<div class="ui-g ui-fluid pie">
 				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgConfirmacionDocumentoFirma').hide();"></p:commandButton>
 				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" action="#{mblistaconstituciongarantia.procesarConfirmarFirmaDocumento()}" oncomplete="PF('dlgConfirmacionDocumentoFirma').hide();PF('dlgPreload').hide();" update=":frmDlgMensajeOperacionAjax"></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+	<p:dialog widgetVar="dlgConfirmacionEliminarDocumento" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">	
+	<h:form id="frmDlgMensajeConfirmacionEliminarDocumento">
+		<div class="dsDlgMensajeConfirmacion dsDialogo4">
+	 		<div class="cabecera">
+	 			<div class="dlgIzquierda">
+	 				<p:outputLabel styleClass="dsLabel2" value="Mensaje de Confirmación"/>
+	 			</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="ui-g ui-fluid contenido">
+				<div class="mensaje">
+					<p:outputLabel value="¿Está seguro de eliminar el Documento?" styleClass="dsLabel3 dsTextoCentro"/>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid pie">
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgConfirmacionEliminarDocumento').hide();"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" action="#{mblistaconstituciongarantia.procesarEliminarDocumento()}" oncomplete="PF('dlgConfirmacionEliminarDocumento').hide();PF('dlgPreload').hide();" update=":frmDlgMensajeOperacionAjax"></p:commandButton>
 			</div>
 		</div>
 	</h:form>

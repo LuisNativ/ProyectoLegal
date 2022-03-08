@@ -17,8 +17,10 @@ import javax.faces.context.FacesContext;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.primefaces.component.tabview.TabView;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.TabChangeEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -84,9 +86,12 @@ public class MBListaConstitucionGarantia implements Serializable {
 	@Getter @Setter private List<UploadedFile> files;
 	@Getter @Setter private List<EDocumentoCarga> lstDocumentoCarga;
 	@Getter @Setter private int codigoFirmaSiNo;
+	@Getter @Setter private int codigoTabview2Index;
     private int codigoGarantiaDocumento;
   	
 	@Getter @Setter private List<EOperacionDocumento> lstOperacionDocumento,lstDocumentoGarantia;
+	@Getter @Setter private List<EOperacionDocumento> lstDocumentoGarantiaPendiente;
+	@Getter @Setter private List<EOperacionDocumento> lstDocumentoGarantiaHistorico;
 	@Getter @Setter private List<EOperacionDocumento> lstOperacionDocumentoFiltro; 
 	@Getter @Setter private boolean deshabilitarGrabarDocumento,deshabilitarBotonFirma;
 	@Getter @Setter private boolean deshabilitarSolFirma;
@@ -97,6 +102,7 @@ public class MBListaConstitucionGarantia implements Serializable {
 	@Getter @Setter private boolean indicadorTituloDocumento;
 	@Getter @Setter private boolean deshabilitarAdjuntaDocumento;
 	@Getter @Setter private boolean visualizarEliminarDocumentoGarantia;
+	@Getter @Setter private boolean visualizarActualizacionFirmaDocGarantia;
 
 	@Getter @Setter private List<EGeneral> lstValorSiNo;
 	@Getter @Setter private List<EOperacionDocumento> lstOperacionDocumentoLegalFiltro;
@@ -123,6 +129,8 @@ public class MBListaConstitucionGarantia implements Serializable {
 		lstOperacionDocumento = new ArrayList<EOperacionDocumento>();
 		lstOperacionDocumentoFiltro = new ArrayList<EOperacionDocumento>();
 		lstDocumentoGarantia = new ArrayList<EOperacionDocumento>();
+		lstDocumentoGarantiaPendiente = new ArrayList<EOperacionDocumento>();
+		lstDocumentoGarantiaHistorico = new ArrayList<EOperacionDocumento>();
 		lstEvaluacionSolicitudCreditoLegal = new ArrayList<EEvaluacionSolicitudCreditoLegal>();
 		lstSolicitudDocumento = new ArrayList<EOperacionDocumento>();
 		lstOperacionDocumentoLegalFiltro = new ArrayList<EOperacionDocumento>();
@@ -142,6 +150,8 @@ public class MBListaConstitucionGarantia implements Serializable {
 	    deshabilitarObservacionDocumento = false;
 	    deshabilitarAdjuntaDocumento = false;
 	    visualizarEliminarDocumentoGarantia = true;
+	    visualizarActualizacionFirmaDocGarantia = true;
+	    codigoTabview2Index = 0;
 	}
 	
 	public void listarDesplegable(){
@@ -213,6 +223,7 @@ public class MBListaConstitucionGarantia implements Serializable {
 			oEGarantia.setUsuarioRegistro(oEUsuario);	
 			oEGarantia.setTipoDocumento(UTipoDocumentoGarantia.CONSTITUCION);
 			oEGarantia.setNumeroSolicitud(eOperacionDocumento.getCodigoSolicitud());
+			oEGarantia.setNumeroSolicitudCredito(eOperacionDocumento.getCodigoSolicitudCredito());
 			oEGarantia.setCodigoAreaEmisora(oEUsuario.getCodigoArea());
 			oEGarantia.setSecuenciaDocumento(eOperacionDocumento.getCodigoDocumento());
 			oEGarantia.setCodigoGarantia(eOperacionDocumento.getCodigoGarantia());
@@ -265,12 +276,34 @@ public class MBListaConstitucionGarantia implements Serializable {
 			if(lstDocumentoCarga.size()>0) visualizarGrabarDocumento = true;
 			files = new ArrayList<UploadedFile>();
 		}
+	
+	public void onTabChangeDocumentoGarantia(TabChangeEvent event){
+		TabView tv = (TabView) event.getTab().getParent();		
+		if(tv.getActiveIndex() == 0) codigoTabview2Index = 0;
+		else codigoTabview2Index = 1;
+	}
 		
 	public void listarSolicitudDocumento() {
 		EGarantia eGarantia = new EGarantia();
 		eGarantia.setUsuarioRegistro(oEUsuario);
 		eGarantia.setTipoDocumento(UTipoDocumentoGarantia.CONSTITUCION);
 		lstDocumentoGarantia = oBOGarantia.listarSolicitudDocumentoGarantia(0,"",eGarantia);
+		
+		if(lstDocumentoGarantia != null){
+			lstDocumentoGarantiaPendiente = new ArrayList<EOperacionDocumento>();
+			for(EOperacionDocumento obj : lstDocumentoGarantia){				
+				if(obj.getEstadoDocumento() != UEstado.DOCUMENTOFIRMADO){
+					lstDocumentoGarantiaPendiente.add(obj);
+				}				
+			}			
+			lstDocumentoGarantiaHistorico = new ArrayList<EOperacionDocumento>();
+			for(EOperacionDocumento obj : lstDocumentoGarantia){
+				if(obj.getEstadoDocumento() == UEstado.DOCUMENTOFIRMADO ){
+					lstDocumentoGarantiaHistorico.add(obj);;
+				}
+				
+			}
+		}
 	}
 	public void buscarSolicitudDocumento(){
 		EGarantia eGarantia = new EGarantia();
@@ -278,6 +311,28 @@ public class MBListaConstitucionGarantia implements Serializable {
 		eGarantia.setTipoDocumento(UTipoDocumentoGarantia.CONSTITUCION);
 		lstDocumentoGarantia = oBOGarantia.listarSolicitudDocumentoGarantia(codigoBuscar, descripcionBuscar, eGarantia);
 
+		if(codigoTabview2Index == 0){
+			lstDocumentoGarantiaPendiente = new ArrayList<EOperacionDocumento>();
+			if(lstDocumentoGarantia != null){
+				for(EOperacionDocumento obj: lstDocumentoGarantia){
+					if(obj.getEstadoDocumento() != UEstado.DOCUMENTOFIRMADO ){
+						lstDocumentoGarantiaPendiente.add(obj);
+					}
+				}
+			}
+		}else if (codigoTabview2Index == 1){
+			lstDocumentoGarantiaHistorico = new ArrayList<EOperacionDocumento>();
+			if(lstDocumentoGarantia != null){
+				for(EOperacionDocumento obj: lstDocumentoGarantia){
+					if(obj.getEstadoDocumento() == UEstado.DOCUMENTOFIRMADO ){
+						lstDocumentoGarantiaHistorico.add(obj);
+					}
+				}
+			}
+		}else{
+			lstDocumentoGarantiaPendiente = new ArrayList<EOperacionDocumento>();
+			lstDocumentoGarantiaHistorico = new ArrayList<EOperacionDocumento>();
+		}
 
 	}
 		
@@ -383,8 +438,25 @@ public class MBListaConstitucionGarantia implements Serializable {
 	}
 	
 	public void visualizarEliminarDocumento(EOperacionDocumento oEOperacionDocumentoItem){
-		
+		if(oEOperacionDocumentoItem != null){
+			oEOperacionDocumentoDetalle = oEOperacionDocumentoItem;
+			RequestContext.getCurrentInstance().execute("PF('dlgConfirmacionEliminarDocumento').show();");
+		}
 	}
+	
+	public void procesarEliminarDocumento(){
+		if(oEOperacionDocumentoDetalle != null){
+			EGarantia eGarantia = new EGarantia();
+			eGarantia.setCodigoGarantia(oEOperacionDocumentoDetalle.getCodigoGarantia());
+			eGarantia.setNumeroSolicitud(oEOperacionDocumentoDetalle.getCodigoSolicitud());
+			eGarantia.setSecuenciaDocumento(oEOperacionDocumentoDetalle.getCodigoDocumento());
+			oEMensaje = oBOGarantia.eliminarDetalleSolicitudDocumentoGarantia(eGarantia);
+			
+			UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
+			RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
+		}
+	}
+	
 	
 	public void visualizarConfirmarFirmaDocumento(EOperacionDocumento oEOperacionDocumentoItem){
 		if(oEOperacionDocumentoItem != null){
@@ -418,13 +490,15 @@ public class MBListaConstitucionGarantia implements Serializable {
 			visualizarGrabarDocumento = false;
 			indicadorTituloDocumento = false;
 			deshabilitarAdjuntaDocumento = oEOperacionDocumentoItem.getEstadoDocumento() == 60 ? true : false;
-			visualizarEliminarDocumentoGarantia = oEOperacionDocumentoItem.getEstadoDocumento() == 55? true : false;
-
+			visualizarEliminarDocumentoGarantia = oEOperacionDocumentoItem.getEstadoDocumento() == 56? true : false;
+			visualizarActualizacionFirmaDocGarantia = oEOperacionDocumentoItem.getEstadoDocumento() == 56? true : false;
+			
 			oEOperacionDocumento = oEOperacionDocumentoItem;
 			lstDocumentoCarga = new ArrayList<EDocumentoCarga>();
 			RequestContext.getCurrentInstance().execute("PF('dlgDocumentacion').show();");
 		}
 	}
+	
 	
 
 	

@@ -2412,7 +2412,7 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantia.setNombreLargo(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMABV")));
 					oEGarantia.setCodigoTipoProducto(oResultSet.getInt("TPRODU"));
 					oEGarantia.setCodigoEstadoSolCredito(oResultSet.getInt("ESTADO"));
-					oEGarantia.setCodigoEstadoRevision(oResultSet.getNString("STATUS"));
+					oEGarantia.setCodigoEstadoRevision(oResultSet.getString("STATUS"));
 					oEGarantia.setFechaRevision(oResultSet.getDate("FECREVF"));
 					oEGarantia.setCodigoMonedaSolicitud(oResultSet.getInt("MONSOL"));
 					oEGarantia.setMontoSolicitud(oResultSet.getDouble("MTOSOL"));	

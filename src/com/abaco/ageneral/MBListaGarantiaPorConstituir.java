@@ -14,6 +14,7 @@ import javax.faces.bean.ViewScoped;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.primefaces.component.tabview.TabView;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.TabChangeEvent;
@@ -72,7 +73,7 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 
 	@Getter @Setter private int codigoBuscarGarantia,codigoBuscarSolicitud,codigoBuscarDocumento,codigoBuscar;
 	@Getter @Setter private String descripcionBuscarGarantia,descripcionBuscarSolicitud,descripcionBuscarDocumento,descripcionBuscar;
-	@Getter @Setter private int codigoTabview2Index;
+	@Getter @Setter private int codigoTabview2Index,codigoTabview3Index;
 	@Getter @Setter private String tipoGarantiaBuscar;
 	@Getter @Setter private String nombreTipoGarantia;
 	@Getter @Setter private String mensajeValidacion;
@@ -102,6 +103,8 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 	private int codigoGarantiaDocumento;
 	
 	@Getter @Setter private List<EOperacionDocumento> lstOperacionDocumento,lstDocumentoGarantia;
+	@Getter @Setter private List<EOperacionDocumento> lstDocumentoGarantiaPendiente;
+	@Getter @Setter private List<EOperacionDocumento> lstDocumentoGarantiaHistorico;
 	@Getter @Setter private List<EOperacionDocumento> lstOperacionDocumentoFiltro; 
 	@Getter @Setter private boolean deshabilitarGrabarDocumento,deshabilitarBotonFirma;
 	@Getter @Setter private boolean deshabilitarSolFirma;
@@ -144,6 +147,8 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 		lstOperacionDocumentoLegalFiltro = new ArrayList<EOperacionDocumento>();
 		lstOperacionDocumentoNegociosFiltro = new ArrayList<EOperacionDocumento>();
 		lstDocumentoGarantia = new ArrayList<EOperacionDocumento>();
+		lstDocumentoGarantiaPendiente = new ArrayList<EOperacionDocumento>();
+		lstDocumentoGarantiaHistorico = new ArrayList<EOperacionDocumento>();
 
 		
 		oEUsuario = (EUsuario) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.USUARIO);
@@ -161,6 +166,7 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 		indicadorBoton = true;
 		nombreTipoGarantia = "";
 		codigoTabview2Index = 0;
+		codigoTabview3Index = 0;
 		indicadorNuevoDocumentoSolicitud = true;
 		visualizarCodigoGarantiaDocumento = true;
 		deshabilitarBotonFirma = true;
@@ -182,11 +188,13 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 	
 	
 	//Método para Identificar el Cambio de un Tab dentro de un Tabview
-	public void onTabChange(TabChangeEvent event){
-		String titulo = event.getTab().getTitle();
-		if(titulo.equals("Garantía Real Nueva")) codigoTabview2Index = 0;
+	
+	public void onTabChangeGarantiaRE(TabChangeEvent event){
+		TabView tv = (TabView) event.getTab().getParent();		
+		if(tv.getActiveIndex() == 0) codigoTabview2Index = 0;
 		else codigoTabview2Index = 1;
 	}
+
 	
 	//Buscar Solicitudes según Codigo y Descripcion
 	public void buscarGarantiaSolicitud(){
@@ -342,7 +350,7 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 	
 	//Listar Tipos de Garantia y llevarlo a un Dialog
 	public void buscarTiposGarantia(){
-		lstTipoGarantia = oUManejadorListaDesplegable.obtieneTipoGarantia();
+		lstTipoGarantia = oUManejadorListaDesplegable.obtieneTipoGarantiaF9205();
 		lstTipoGarantiaFiltro = lstTipoGarantia;
 		RequestContext.getCurrentInstance().execute("PF('dlgBuscarTipoGarantia').show();");
 	}
@@ -459,12 +467,33 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 	//*************************************//
 	//Metodos para documento de carga
     //*************************************//
+	
+	public void onTabChangeDocumentoGarantia(TabChangeEvent event){
+		TabView tv = (TabView) event.getTab().getParent();		
+		if(tv.getActiveIndex() == 0) codigoTabview3Index = 0;
+		else codigoTabview3Index = 1;
+	}
 
 	public void listarSolicitudDocumento() {
 		EGarantia eGarantia = new EGarantia();
 		eGarantia.setUsuarioRegistro(oEUsuario);
 		eGarantia.setTipoDocumento(UTipoDocumentoGarantia.CONSTITUCION);
 		lstDocumentoGarantia = oBOGarantia.listarSolicitudDocumentoGarantia(0,"",eGarantia);
+		if(lstDocumentoGarantia != null){
+			lstDocumentoGarantiaPendiente = new ArrayList<EOperacionDocumento>();
+			for(EOperacionDocumento obj : lstDocumentoGarantia){				
+				if(obj.getEstadoDocumento() != UEstado.DOCUMENTOFIRMADO){
+					lstDocumentoGarantiaPendiente.add(obj);
+				}				
+			}			
+			lstDocumentoGarantiaHistorico = new ArrayList<EOperacionDocumento>();
+			for(EOperacionDocumento obj : lstDocumentoGarantia){
+				if(obj.getEstadoDocumento() == UEstado.DOCUMENTOFIRMADO ){
+					lstDocumentoGarantiaHistorico.add(obj);;
+				}
+				
+			}
+		}
 	}
 	
 	
@@ -489,6 +518,29 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 		eGarantia.setUsuarioRegistro(oEUsuario);
 		eGarantia.setTipoDocumento(UTipoDocumentoGarantia.CONSTITUCION);
 		lstDocumentoGarantia = oBOGarantia.listarSolicitudDocumentoGarantia(codigoBuscarDocumento, descripcionBuscarDocumento, eGarantia);
+		
+		if(codigoTabview3Index == 0){
+			lstDocumentoGarantiaPendiente = new ArrayList<EOperacionDocumento>();
+			if(lstDocumentoGarantia != null){
+				for(EOperacionDocumento obj: lstDocumentoGarantia){
+					if(obj.getEstadoDocumento() != UEstado.DOCUMENTOFIRMADO ){
+						lstDocumentoGarantiaPendiente.add(obj);
+					}
+				}
+			}
+		}else if (codigoTabview3Index == 1){
+			lstDocumentoGarantiaHistorico = new ArrayList<EOperacionDocumento>();
+			if(lstDocumentoGarantia != null){
+				for(EOperacionDocumento obj: lstDocumentoGarantia){
+					if(obj.getEstadoDocumento() == UEstado.DOCUMENTOFIRMADO ){
+						lstDocumentoGarantiaHistorico.add(obj);
+					}
+				}
+			}
+		}else{
+			lstDocumentoGarantiaPendiente = new ArrayList<EOperacionDocumento>();
+			lstDocumentoGarantiaHistorico = new ArrayList<EOperacionDocumento>();
+		}
 
 
 	}

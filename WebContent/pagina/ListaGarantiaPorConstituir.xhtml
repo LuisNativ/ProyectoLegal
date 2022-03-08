@@ -43,11 +43,11 @@
 						<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 							<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Buscar" onclick="PF('dlgPreload').show();" 
 							oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.buscarGarantiaSolicitud()}" 
-							update=":tabView1:form:tabView2:tblGarantia"></p:commandButton>
+							update="tabView1:form:tabView2:tblGarantia,tabView1:form:tabView2:tblGarantiaExistente"></p:commandButton>
 						</div>
 					</div>
 		    <p:tabView id="tabView2" dynamic="true" widgetVar="tabs2" activeIndex="0">
-		    <p:ajax event="tabChange" listener="#{mblistagarantiaporconstituir.onTabChange}"/>
+		    <p:ajax event="tabChange" listener="#{mblistagarantiaporconstituir.onTabChangeGarantiaRE}"/>
 		    	<p:tab id="tab2-1" title="Garantía Real Nueva">    		
 						<p:dataTable id="tblGarantia" value="#{mblistagarantiaporconstituir.lstGarantiaSolicitudNueva}" var="item" styleClass="dsTabla3" paginator="true" rows="12" paginatorPosition="bottom"
 									 rowKey="#{item.codigoGarantia}" reflow="true" tableStyle="table-layout:auto">
@@ -297,7 +297,6 @@
 					    <f:selectItem itemLabel="[Seleccione]" itemValue="0" />
 		            	<f:selectItem itemLabel="Nro. Solicitud" itemValue="1" />
 		            	<f:selectItem itemLabel="Nro. Garantía" itemValue="2" />
-		            	<f:selectItem itemLabel="Estado" itemValue="3" />
 		            </p:selectOneMenu>
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
@@ -308,50 +307,96 @@
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 					<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Buscar" onclick="PF('dlgPreload').show();" 
 					oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.buscarSolicitudDocumento()}" 
-					update="tabView1:formDocumentacion:tblSolicitudDocumento"></p:commandButton>
+					update="tabView1:formDocumentacion:tabView3:tblSolicitudDocumentoPendiente,tabView1:formDocumentacion:tabView3:tblSolicitudDocumentoHistorico"></p:commandButton>
 				</div>
 			</div>
 			<div class="ui-g ui-fluid ui-g-nopad">
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
-					<p:dataTable id="tblSolicitudDocumento" value="#{mblistagarantiaporconstituir.lstDocumentoGarantia}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom" 
-						 rowKey="#{item.codigoSolicitud}" reflow="true" >
-						<p:column headerText="Sol." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
-							<h:outputText value="#{item.codigoSolicitudCredito}"/>
-						</p:column>
-						 <p:column headerText="Garant." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
-							<h:outputText value="#{item.codigoGarantia}"/>
-						</p:column>
-						<p:column headerText="Socio" priority="1" width="25%">
-						    <div class="dsTextoCorto">
-							    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
-						    </div>
-						</p:column>
-						<p:column headerText="Estado" styleClass="dsTextoCentro" width="10%">
-							<h:outputText value="#{item.descripcionEstadoDocumento}"/>
-						</p:column>
-						<p:column headerText="Negocios" styleClass="dsTextoCentro" width="10%">
-							<h:outputText value="#{item.descripcionEstadoDocumentoNegocio}"/>
-						</p:column>
-						<p:column headerText="Legal" styleClass="dsTextoCentro" width="10%">
-							<h:outputText value="#{item.descripcionEstadoDocumentoLegal}"/>
-						</p:column>
-						<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" width="10%">
-							<div class="dsTextoCorto">
-								<h:outputText value="#{item.usuarioRegist}"/>
-							</div>	
-						</p:column>
-						<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" width="15%">
-							<div class="dsTextoCorto">
-								<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
-							</div>	
-						</p:column>
-						<p:column headerText="Acciones" styleClass="dsTextoCentro" width="10%">
-					      <p:commandButton styleClass="dsBoton5 green" icon="fa fa-search" title="Visualizar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.visualizarDocumentoSolicitud(item)}" update=":frmDlgDocumentacion">
-					      </p:commandButton>
-					      <p:commandButton styleClass="dsBoton5 blue" icon="fa fa-arrow-right" title="Ir a Mantenimiento" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.evaluarSolicitudDocumento(item)}">
-					      </p:commandButton>
-		     	        </p:column>
-					</p:dataTable>
+					<p:tabView id="tabView3" dynamic="true" widgetVar="tabs3" activeIndex="0">
+		    		<p:ajax event="tabChange" listener="#{mblistagarantiaporconstituir.onTabChangeDocumentoGarantia}"/>
+		    		<p:tab id="tab3-1" title="Pendiente">  
+						<p:dataTable id="tblSolicitudDocumentoPendiente" value="#{mblistagarantiaporconstituir.lstDocumentoGarantiaPendiente}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom" 
+							 rowKey="#{item.codigoSolicitud}" reflow="true">
+							<p:column headerText="Sol." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
+								<h:outputText value="#{item.codigoSolicitudCredito}"/>
+							</p:column>
+							 <p:column headerText="Garant." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
+								<h:outputText value="#{item.codigoGarantia}"/>
+							</p:column>
+							<p:column headerText="Socio" priority="1" width="25%">
+							    <div class="dsTextoCorto">
+								    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
+							    </div>
+							</p:column>
+							<p:column headerText="Estado" styleClass="dsTextoCentro" width="10%">
+								<h:outputText value="#{item.descripcionEstadoDocumento}"/>
+							</p:column>
+							<p:column headerText="Negocios" styleClass="dsTextoCentro" width="10%">
+								<h:outputText value="#{item.descripcionEstadoDocumentoNegocio}"/>
+							</p:column>
+							<p:column headerText="Legal" styleClass="dsTextoCentro" width="10%">
+								<h:outputText value="#{item.descripcionEstadoDocumentoLegal}"/>
+							</p:column>
+							<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" width="10%">
+								<div class="dsTextoCorto">
+									<h:outputText value="#{item.usuarioRegist}"/>
+								</div>	
+							</p:column>
+							<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" width="15%">
+								<div class="dsTextoCorto">
+									<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
+								</div>	
+							</p:column>
+							<p:column headerText="Acciones" styleClass="dsTextoCentro" width="10%">
+						      <p:commandButton styleClass="dsBoton5 green" icon="fa fa-search" title="Visualizar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.visualizarDocumentoSolicitud(item)}" update=":frmDlgDocumentacion">
+						      </p:commandButton>
+						      <p:commandButton styleClass="dsBoton5 blue" icon="fa fa-arrow-right" title="Ir a Mantenimiento" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.evaluarSolicitudDocumento(item)}">
+						      </p:commandButton>
+			     	        </p:column>
+						</p:dataTable>
+					</p:tab>
+					<p:tab id="tab3-2" title="Histórico">
+						<p:dataTable id="tblSolicitudDocumentoHistorico" value="#{mblistagarantiaporconstituir.lstDocumentoGarantiaHistorico}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom" 
+							 rowKey="#{item.codigoSolicitud}" reflow="true" >
+							<p:column headerText="Sol." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
+								<h:outputText value="#{item.codigoSolicitudCredito}"/>
+							</p:column>
+							 <p:column headerText="Garant." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
+								<h:outputText value="#{item.codigoGarantia}"/>
+							</p:column>
+							<p:column headerText="Socio" priority="1" width="25%">
+							    <div class="dsTextoCorto">
+								    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
+							    </div>
+							</p:column>
+							<p:column headerText="Estado" styleClass="dsTextoCentro" width="10%">
+								<h:outputText value="#{item.descripcionEstadoDocumento}"/>
+							</p:column>
+							<p:column headerText="Negocios" styleClass="dsTextoCentro" width="10%">
+								<h:outputText value="#{item.descripcionEstadoDocumentoNegocio}"/>
+							</p:column>
+							<p:column headerText="Legal" styleClass="dsTextoCentro" width="10%">
+								<h:outputText value="#{item.descripcionEstadoDocumentoLegal}"/>
+							</p:column>
+							<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" width="10%">
+								<div class="dsTextoCorto">
+									<h:outputText value="#{item.usuarioRegist}"/>
+								</div>	
+							</p:column>
+							<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" width="15%">
+								<div class="dsTextoCorto">
+									<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
+								</div>	
+							</p:column>
+							<p:column headerText="Acciones" styleClass="dsTextoCentro" width="10%">
+						      <p:commandButton styleClass="dsBoton5 green" icon="fa fa-search" title="Visualizar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.visualizarDocumentoSolicitud(item)}" update=":frmDlgDocumentacion">
+						      </p:commandButton>
+						      <p:commandButton styleClass="dsBoton5 blue" icon="fa fa-arrow-right" title="Ir a Mantenimiento" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.evaluarSolicitudDocumento(item)}">
+						      </p:commandButton>
+			     	        </p:column>
+						</p:dataTable>
+					</p:tab>
+					</p:tabView>
 				</div>
 			</div>		
 		</p:panel>
