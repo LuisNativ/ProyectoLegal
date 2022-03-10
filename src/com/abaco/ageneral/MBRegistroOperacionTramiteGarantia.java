@@ -58,6 +58,8 @@ import com.abaco.negocio.util.UConstante;
 import com.abaco.negocio.util.UConstante.UAccionExterna;
 import com.abaco.negocio.util.UConstante.UAccionInterna;
 import com.abaco.negocio.util.UConstante.UArea;
+import com.abaco.negocio.util.UConstante.UMaximoTamanio;
+import com.abaco.negocio.util.UConstante.UTipoDocumento;
 import com.abaco.negocio.util.UConstante.UTipoEstadoUsuario;
 import com.abaco.negocio.util.UConstante.UTipoGarantia;
 import com.abaco.negocio.util.UConstante.UTipoTerceroPersona;
@@ -131,6 +133,7 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 	@Getter @Setter private String descripcionBuscar;
 	@Getter @Setter private int indicadorPersona; //Para Buscar el Tipo de Persona (Propietario,Tasador,Depositario)
 	@Getter @Setter private boolean visualizarDatosPersonaNatural;
+	@Getter @Setter private int maxLgnNumeroDocumentoNotario;
 	
 	private EPersona oEPersonaSelected;
 	private ETercero oETerceroSelected;
@@ -616,7 +619,22 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 			oETerceroData.setApellidoMaterno("");
 			oETerceroData.setNombres("");
 		}
+		validarTamanioDocumentoNotario();
 		
+	}
+	
+	public void validarTamanioDocumentoNotario(){
+		if(oETerceroData.getCodigoTipoDocumento() != null){
+			switch(oETerceroData.getCodigoTipoDocumento()){
+			case UTipoDocumento.RUC: maxLgnNumeroDocumentoNotario = UMaximoTamanio.RUC_MAXLGN; break;
+			case UTipoDocumento.DNI:
+			case UTipoDocumento.LIBRETA_ELECTORAL:
+				maxLgnNumeroDocumentoNotario = UMaximoTamanio.DNI_MAXLGN; break;
+			default: maxLgnNumeroDocumentoNotario = UMaximoTamanio.OTROS_MAXLGN;
+			}
+		}else{
+			maxLgnNumeroDocumentoNotario = UMaximoTamanio.OTROS_MAXLGN;
+		}
 	}
 
 	public EGarantiaTramite getoEGarantiaTramiteData() {

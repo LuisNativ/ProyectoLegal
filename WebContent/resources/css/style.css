@@ -3129,7 +3129,7 @@ ui-message-error-detail
 .dsDlgBuscarSocio { width:800px; }
 .dsDlgBuscarNotario { width:800px; }
 .dsDlgBuscarClienteHistorico { width:800px; }
-.dsDlgMantenimientoNotario {width:800px; }
+/*.dsDlgMantenimientoNotario {width:800px; }*/
 .dsDlgMantenimientoPoliza {width:600px; }
 .dsDlgObservacionDocumento{width:500px;}
 /*.dsDlgInmueblesAdicionales{witdh:800px;}*/
@@ -3170,6 +3170,7 @@ ui-message-error-detail
 	.dsDlgFirmante { width: 600px; height: auto; }
 	.dsDlgGarantiaRelacion { width: 600px; height: auto; }
 	.dsDlgDetalleSolicitud { width: 600px; height: auto; }
+	.dsDlgMantenimientoNotario {width:600px; height: auto; }
 	.dsDlgDocumentacion{width:600px; height:auto;}
 	.dsDlgObservacionDocumento{width:400px; height:auto;}
 	.dsDlgInmueblesAdicionales{width:650px; height:auto;}
@@ -3191,6 +3192,7 @@ ui-message-error-detail
 	.dsDlgFirmante { width: 450px; height: auto; }
 	.dsDlgGarantiaRelacion { width: 450px; height: auto; }
 	.dsDlgDetalleSolicitud { width: 450px; height: auto; }
+	.dsDlgMantenimientoNotario {width:400px; height: auto; }
 	.dsDlgDocumentacion{width:450px; height:auto;}
 	.dsDlgObservacionDocumento{width:300px; height:auto;}
 	.dsDlgInmueblesAdicionales{width:400px; height:auto;}
