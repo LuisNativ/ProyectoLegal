@@ -30,6 +30,53 @@ import com.abaco.servicio.laserfiche.Mensaje;
 
 public class COperacion {
 	
+	public EMensaje agregarDocumentoGarantia(EGarantia eGarantia,List<EDocumentoCarga> lstDocumentoCarga){
+		IConexion oIConexion = null;
+		EMensaje mensaje = new EMensaje();
+		Mensaje mensajeLaserFiche = new Mensaje();
+		DAOGarantia oDAOGarantia= null;
+		UManejadorArchivo oUManejadorArchivo = new UManejadorArchivo();
+		DAOOperacion oDAOOperacion= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();
+			oIConexion.iniciaTransaccion();
+			oDAOGarantia= new DAOGarantia(oIConexion);
+			oDAOOperacion = new DAOOperacion(oIConexion);
+			
+			if(lstDocumentoCarga != null){
+				if(lstDocumentoCarga.size() > 0){
+					for(EDocumentoCarga oEDocumentoCarga: lstDocumentoCarga){
+						mensajeLaserFiche = oUManejadorArchivo.guardarDocumento(eGarantia, oEDocumentoCarga);
+						if (!UFuncionesGenerales.validaMensajeLaserFiche(mensajeLaserFiche)) {
+							throw new Exception(mensajeLaserFiche.getDescripcion());
+						}
+						
+						oEDocumentoCarga.setCodigoLaserFiche(mensajeLaserFiche.getDocumentoID());
+						eGarantia.setFirmaDocumento("NO");
+						eGarantia.setEstadoDocumento(UEstado.PENDIENTEFIRMA);
+						mensaje = oDAOOperacion.agregarDocumentoGarantia(eGarantia, oEDocumentoCarga);
+						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+							throw new Exception(mensaje.getDescMensaje());
+						}
+					}
+				}
+			}	
+			oIConexion.ejecutaCommit();
+		} catch (Exception e) {
+			if (oIConexion != null) {
+				oIConexion.ejecutaRollback();
+			}
+			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
+			UManejadorLog.error("Control: Error al agregar Documento Garantia : " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return mensaje;
+	}
+	
+	/*
 	public EMensaje agregarDocumentoGarantia(EGarantia eOGarantia, EDocumentoCarga eDocumentoCarga){
 		IConexion oIConexion = null;
 		EMensaje mensaje = new EMensaje();
@@ -60,6 +107,7 @@ public class COperacion {
 		}
 		return mensaje;
 	}
+	*/
 	
 	public EMensaje modificarDocumentoGarantia(EGarantia eOGarantia){
 		IConexion oIConexion = null;
@@ -317,6 +365,8 @@ public class COperacion {
 	public EMensaje modificarEvaluacionCliente(EOperacionCliente eOperacionCliente){
 		IConexion oIConexion = null;
 		EMensaje mensaje = new EMensaje();
+		Mensaje mensajeLaserFiche = new Mensaje();
+		UManejadorArchivo oUManejadorArchivo = new UManejadorArchivo();
 		DAOOperacion oDAOOperacion= null;
 		DAOSolicitudCredito oDAOSolicitudCredito = null;
 		DAORepresentanteLegal oDAORepresentanteLegal= null;
@@ -474,17 +524,15 @@ public class COperacion {
 				}
 			}
 			
-			//Agregar Documento
+			//Agregar Documento			
 			if(eOperacionCliente.getLstDocumentoCarga().size() > 0){
 				for(EDocumentoCarga oEDocumentoCarga: eOperacionCliente.getLstDocumentoCarga()){
-					/*
-					mensajeLaserFiche = oUManejadorArchivo.guardarDocumento(eOperacionCliente, oEDocumentoCarga);
+					mensajeLaserFiche = oUManejadorArchivo.guardarDocumentoOperacionCliente(eOperacionCliente, oEDocumentoCarga);
 					if (!UFuncionesGenerales.validaMensajeLaserFiche(mensajeLaserFiche)) {
 						throw new Exception(mensajeLaserFiche.getDescripcion());
 					}
 					
 					oEDocumentoCarga.setCodigoLaserFiche(mensajeLaserFiche.getDocumentoID());
-					*/
 					mensaje = oDAOOperacion.agregarEvaluacionClienteDocumento(eOperacionCliente, oEDocumentoCarga);
 					if (!UFuncionesGenerales.validaMensaje(mensaje)) {
 						throw new Exception(mensaje.getDescMensaje());
@@ -614,13 +662,13 @@ public class COperacion {
 			
 			//Agregar Log Movimiento
 			if(eOperacionSolicitudCredito.getLstSolicitudLogMovimiento() != null){
-				Date fecha = new Date();
+				//Date fecha = new Date();
 				for(ESolicitudLogMovimiento oESolicitudLogMovimiento: eOperacionSolicitudCredito.getLstSolicitudLogMovimiento()){
-					fecha.setSeconds(fecha.getSeconds()+1);
+					//fecha.setSeconds(fecha.getSeconds()+1);
 					oESolicitudLogMovimiento.setNumeroSolicitud(eOperacionSolicitudCredito.getNumeroSolicitud());
 					oESolicitudLogMovimiento.setCodigoAccion(oESolicitudLogMovimiento.getCodigoAccion());
 					oESolicitudLogMovimiento.setUsuarioRegistro(eOperacionSolicitudCredito.getUsuarioRegistro());
-					oESolicitudLogMovimiento.setFechaRegistro(fecha);
+					oESolicitudLogMovimiento.setFechaRegistro(eOperacionSolicitudCredito.getFechaRegistro());
 					mensaje = oDAOSolicitudCredito.agregarLogMovimiento(oESolicitudLogMovimiento);
 					if (!UFuncionesGenerales.validaMensaje(mensaje)) {
 						throw new Exception(mensaje.getDescMensaje());

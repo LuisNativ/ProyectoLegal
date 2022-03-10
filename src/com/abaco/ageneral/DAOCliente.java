@@ -1137,6 +1137,7 @@ public class DAOCliente extends InstanciaAcceso{
 				if (objResultSet.next()) {
 					oEClienteConstitucionEmpresa = new EClienteConstitucionEmpresa();
 					oEClienteConstitucionEmpresa.setCodigoCliente(objResultSet.getInt("CODCLI"));
+					oEClienteConstitucionEmpresa.setCodigoTipoPersonaJuridica(objResultSet.getInt("NATJUR"));
 					oEClienteConstitucionEmpresa.setInscripcionRegistroPublico(UFuncionesGenerales.revisaCadena(objResultSet.getString("INREPU")));
 					oEClienteConstitucionEmpresa.setFechaConstitucion(objResultSet.getDate("FECCIA"));
 					oEClienteConstitucionEmpresa.setCodigoNotario(objResultSet.getInt("CODNOT"));
@@ -1168,7 +1169,6 @@ public class DAOCliente extends InstanciaAcceso{
 					oEClienteAdicional.setCodigoCliente(oResultSet.getInt("CODCLI"));
 					oEClienteAdicional.setCodigoTipoCliente(oResultSet.getInt("TIPCLI"));
 					
-					oEClienteAdicional.setCodigoTipoPersonaJuridica(UFuncionesGenerales.revisaCadena(oResultSet.getString("TIPOPJ")));
 					oEClienteAdicional.setMontoCapitalSocialRegistroPublicos(oResultSet.getDouble("CAPSRP"));
 					oEClienteAdicional.setMontoCapitalSocialActual(oResultSet.getDouble("CAPSAC"));
 					oEClienteAdicional.setCodigoFacultadOperar(UFuncionesGenerales.revisaCadena(oResultSet.getString("FACUOP")));

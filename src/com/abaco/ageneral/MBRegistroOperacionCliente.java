@@ -571,6 +571,7 @@ public class MBRegistroOperacionCliente implements Serializable {
 					}
 					
 					if(oEClienteConstitucionEmpresaData != null){
+						oEOperacionClienteData.setCodigoTipoPersonaJuridica(oEClienteConstitucionEmpresaData.getCodigoTipoPersonaJuridica()+"");
 						oEInformeLegalAdicionalData.setNumeroPartida(oEClienteConstitucionEmpresaData.getInscripcionRegistroPublico());
 						oEInformeLegalAdicionalData.setOficinaRegistral(oEClienteConstitucionEmpresaData.getOficinaRegistral());
 						oEInformeLegalAdicionalData.setFechaConstitucion(oEClienteConstitucionEmpresaData.getFechaConstitucion());
@@ -580,7 +581,7 @@ public class MBRegistroOperacionCliente implements Serializable {
 					}
 					
 					if(oEClienteAdicionalData != null){
-						oEOperacionClienteData.setCodigoTipoPersonaJuridica(oEClienteAdicionalData.getCodigoTipoPersonaJuridica());
+						//oEOperacionClienteData.setCodigoTipoPersonaJuridica(oEClienteAdicionalData.getCodigoTipoPersonaJuridica());
 						oEOperacionClienteData.setMontoCapitalSocialRegistroPublicos(oEClienteAdicionalData.getMontoCapitalSocialRegistroPublicos());
 						oEOperacionClienteData.setMontoCapitalSocialActual(oEClienteAdicionalData.getMontoCapitalSocialActual());
 						oEOperacionClienteData.setCodigoFacultadOperar(oEClienteAdicionalData.getCodigoFacultadOperar());
@@ -870,7 +871,7 @@ public class MBRegistroOperacionCliente implements Serializable {
 		}
 	}
 	
-	public void descargarDocumento(EOperacionDocumento oEOperacionDocumentoItem) {
+	public void descargarDocumento(EOperacionClienteDocumento oEOperacionDocumentoItem) {
 		if (oEOperacionDocumentoItem != null) {
 			UManejadorArchivo manejoArchivo = new UManejadorArchivo();
 			Documento archivo = manejoArchivo.obtenerDocumento(oEOperacionDocumentoItem.getCodigoDocumentoLaserFiche());

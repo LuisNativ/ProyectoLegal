@@ -147,6 +147,24 @@ public class CGeneral {
 		return resultado;
 	}
 	
+	public String buscarCorreoUsuario(String nombreUsuario){
+		IConexion oIConexion = null;
+		DAOGeneral oDAOGeneral = null;
+		String resultado = "";
+		try {
+			oIConexion = FabricaConexion.creaConexion();
+			oDAOGeneral = new DAOGeneral(oIConexion);
+			resultado = oDAOGeneral.buscarCorreoUsuario(nombreUsuario);
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al obtener el correo de usuario: " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
 	public String buscarNombreUsuarioSiaf(int codigoUsuario){
 		IConexion oIConexion = null;
 		DAOGeneral oDAOGeneral = null;

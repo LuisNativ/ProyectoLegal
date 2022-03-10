@@ -84,10 +84,6 @@
 	  	
     <div class="ui-g ui-fluid ui-g-nopad">
     <div class="ui-g-12">
-		<div class="ui-g-12 ui-md-6 ui-lg-3">
-			<p:outputLabel value="Socio" styleClass="dsLabel1"/>
-			<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEClienteData.documento}, #{mbregistrooperacionlevantamientogarantia.oEClienteData.nombreLargo}" disabled="true"></p:inputText>
-		</div>
 		<div class="ui-g-12 ui-md-6 ui-lg-3 ui-g-nopad">
 			<div class="ui-g-6">
 				<p:outputLabel value="N° Garantía" styleClass="dsLabel1"/>
@@ -664,15 +660,15 @@
 	            <i class="fa fa-table"></i> Préstamos Asociados a la Garantía
 	        </f:facet>
 			<p:dataTable  value="#{mbregistrooperacionlevantamientogarantia.lstCreditoGarantia}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom" reflow="false" resizableColumns="true" resizeMode="expand">
-				<p:column headerText="Descripción" styleClass="dsTextoCentro">
+				<p:column headerText="Descripción" styleClass="dsTextoCentro" width="5%">
 					<h:outputText value="#{item.servicio} - #{item.numeroOperacion}"/>
 				</p:column>
 				<p:column headerText="Fec. Asig." styleClass="dsTextoCentro">
 					<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
 				</p:column>
-				<p:column headerText="Socio" styleClass="dsTextoCentro">
+				<p:column headerText="Socio" styleClass="dsTextoCentro" width="20%">
 					 <div class="dsTextoCorto">
-					 	<h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
+					 	<h:outputText value="#{item.codigoCliente} #{item.nombreCliente}" title="#{item.codigoCliente} #{item.nombreCliente}"/>
 					 </div>	
 				</p:column>
 				<p:column headerText="Importe Asig." styleClass="dsTextoCentro" >

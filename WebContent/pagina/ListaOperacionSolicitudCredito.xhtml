@@ -33,7 +33,7 @@
 				<p:inputText type="text" styleClass="dsInput1" value="#{mblistaoperacionsolicitudcredito.nombrePersona}"
 				autocomplete="off" maxlength="50" onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
 					<p:ajax event="change" onstart="PF('blkPanel').show();" onsuccess="PF('blkPanel').hide();"
-					listener="#{mblistaoperacionsolicitudcredito.listarSolicitud()}" update=":form:tabView1:tblSolicitudPendiente"/>
+					listener="#{mblistaoperacionsolicitudcredito.listarSolicitud()}" update=":form:tabView1:tblSolicitudPendiente, :form:tabView1:tblSolicitudHistorico"/>
 				</p:inputText>
 				</div>
 			</div>
@@ -43,13 +43,13 @@
 					<p:inputText type="text" styleClass="dsInput1" value="#{mblistaoperacionsolicitudcredito.numeroSolicitud}"
 					autocomplete="off" maxlength="10" onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
 						<p:ajax event="change" onstart="PF('blkPanel').show();" onsuccess="PF('blkPanel').hide();"
-						listener="#{mblistaoperacionsolicitudcredito.listarSolicitud()}" update=":form:tabView1:tblSolicitudPendiente"/>
+						listener="#{mblistaoperacionsolicitudcredito.listarSolicitud()}" update=":form:tabView1:tblSolicitudPendiente, :form:tabView1:tblSolicitudHistorico"/>
 					</p:inputText>
 				</div>
 				<div class="ui-g-6">
 					<p:outputLabel value="Estado" styleClass="dsLabel1"/>
 					<p:selectOneMenu value="#{mblistaoperacionsolicitudcredito.codigoEstado}">
-						<p:ajax event="change" onstart="PF('blkPanel').show();" onsuccess="PF('blkPanel').hide();" listener="#{mblistaoperacionsolicitudcredito.listarSolicitud()}" update=":form:tabView1:tblSolicitudPendiente"/>
+						<p:ajax event="change" onstart="PF('blkPanel').show();" onsuccess="PF('blkPanel').hide();" listener="#{mblistaoperacionsolicitudcredito.listarSolicitud()}" update=":form:tabView1:tblSolicitudPendiente, :form:tabView1:tblSolicitudHistorico"/>
 						<f:selectItem itemValue="" itemLabel="Todos"/>
 						<f:selectItems value="#{mblistaoperacionsolicitudcredito.lstEstado}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
 					</p:selectOneMenu>
@@ -59,7 +59,7 @@
 				<div class="ui-g-6">
 					<p:outputLabel value="Autorización" styleClass="dsLabel1"/>
 					<p:selectOneMenu value="#{mblistaoperacionsolicitudcredito.codigoAutorizacion}">
-						<p:ajax event="change" onstart="PF('blkPanel').show();" onsuccess="PF('blkPanel').hide();" listener="#{mblistaoperacionsolicitudcredito.listarSolicitud()}" update=":form:tabView1:tblSolicitudPendiente"/>
+						<p:ajax event="change" onstart="PF('blkPanel').show();" onsuccess="PF('blkPanel').hide();" listener="#{mblistaoperacionsolicitudcredito.listarSolicitud()}" update=":form:tabView1:tblSolicitudPendiente, :form:tabView1:tblSolicitudHistorico"/>
 						<f:selectItem itemValue="0" itemLabel="Todos"/>
 						<f:selectItems value="#{mblistaoperacionsolicitudcredito.lstAutorizacion}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					</p:selectOneMenu>

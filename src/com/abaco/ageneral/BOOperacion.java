@@ -11,10 +11,16 @@ public class BOOperacion {
 
 	COperacion oCOperacion= new COperacion();
 	
+	public EMensaje agregarDocumentoGarantia(EGarantia eGarantia,List<EDocumentoCarga> lstDocumentoCarga){
+		EMensaje resultado=oCOperacion.agregarDocumentoGarantia(eGarantia,lstDocumentoCarga);
+		return resultado;
+	}
+	/*
 	public EMensaje agregarDocumentoGarantia(EGarantia eOGarantia, EDocumentoCarga eDocumentoCarga){
 		EMensaje mensaje = oCOperacion.agregarDocumentoGarantia(eOGarantia, eDocumentoCarga);
 		return mensaje;
 	}
+	*/
 	public EMensaje modificarDocumentoGarantia(EGarantia eOGarantia){
 		EMensaje mensaje = oCOperacion.modificarDocumentoGarantia(eOGarantia);
 		return mensaje;

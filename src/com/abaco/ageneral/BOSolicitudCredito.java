@@ -9,6 +9,10 @@ public class BOSolicitudCredito {
 
 	CSolicitudCredito oCSolicitudCredito= new CSolicitudCredito();
 	
+	public List<ESolicitudLogMovimiento> listarLogMovimiento(long numeroSolicitud){
+		List<ESolicitudLogMovimiento> lista=oCSolicitudCredito.listarLogMovimiento(numeroSolicitud);
+		return lista;
+	}
 	public List<EDeudor> listarDeudor(int codigoCliente, long numeroSolicitud){
 		List<EDeudor> lista=oCSolicitudCredito.listarDeudor(codigoCliente, numeroSolicitud);
 		return lista;

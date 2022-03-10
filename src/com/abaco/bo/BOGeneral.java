@@ -35,6 +35,10 @@ public class BOGeneral {
 		String resultado = oCGeneral.buscarCorreoUsuario(codigoUsuario);
 		return resultado;
 	}
+	public String buscarCorreoUsuario(String nombreUsuario){
+		String resultado = oCGeneral.buscarCorreoUsuario(nombreUsuario);
+		return resultado;
+	}
 	public String buscarNombreUsuarioSiaf(int codigoUsuario){	
 		String resultado = oCGeneral.buscarNombreUsuarioSiaf(codigoUsuario);
 		return resultado;

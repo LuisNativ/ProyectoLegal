@@ -133,7 +133,7 @@
         <f:facet name="header" >
             <i class="fas fa-comments"></i> Informe Legal
         </f:facet>
-		
+
 		<div class="ui-g ui-fluid">
 			<div class="ui-g-3">
 				<p:outputLabel value="Usu.Evaluación" styleClass="dsLabel1"/>
@@ -184,15 +184,15 @@
 				<p:inputTextarea type="text" id="idObservacionSolicitud" onkeyup="limitaCaracter(60, 10, 'form:tabView1:idObservacionSolicitud');" styleClass="dsInput1" value="#{mbregistrooperacinsolicitudcredito.oEOperacionSolicitudCreditoData.observacionSolicitud}" disabled="#{mbregistrooperacinsolicitudcredito.deshabilitarObservacionSolicitud}" autocomplete="off" maxlength="9999" ></p:inputTextarea>
 			</div>
 			<div class="ui-g-12 ui-md-12 ui-lg-12">
-				<p:outputLabel value="Observaciónes de Legal" styleClass="dsLabel1"/>
+				<p:outputLabel value="Observaciones de Legal" styleClass="dsLabel1"/>
 				<p:inputTextarea type="text" id="idObservacionLegal" onkeyup="limitaCaracter(70, 999, 'form:tabView1:idObservacionLegal');" styleClass="dsInput1" value="#{mbregistrooperacinsolicitudcredito.oEOperacionSolicitudCreditoData.observacionLegal}" disabled="#{mbregistrooperacinsolicitudcredito.deshabilitarObservacionLegal}" autocomplete="off" maxlength="9999" autoResize="false" rows="15"></p:inputTextarea>
 			</div>
 			<div class="ui-g-12 ui-md-12 ui-lg-12" style="#{mbregistrooperacinsolicitudcredito.visualizarObservacionNegocios ? 'display:block;' : 'display:none'}">
-				<p:outputLabel value="Observaciónes de Negocios" styleClass="dsLabel1"/>
+				<p:outputLabel value="Observaciones de Negocios" styleClass="dsLabel1"/>
 				<p:inputTextarea type="text" id="idObservacionNegocios" onkeyup="limitaCaracter(70, 6, 'form:tabView1:idObservacionNegocios');" styleClass="dsInput1" value="#{mbregistrooperacinsolicitudcredito.oEOperacionSolicitudCreditoData.observacionNegocios}" autocomplete="off" maxlength="9999" ></p:inputTextarea>
 			</div>
 			<div class="ui-g-12 ui-md-12 ui-lg-12" style="#{mbregistrooperacinsolicitudcredito.visualizarFrmAutorizacion ? 'display:block;' : 'display:none'}">
-				<p:outputLabel value="Observaciónes Jefe de Negocios" styleClass="dsLabel1"/>
+				<p:outputLabel value="Observaciones Jefe de Negocios" styleClass="dsLabel1"/>
 				<p:inputTextarea type="text" id="idObservacionAutorizacion" onkeyup="limitaCaracter(70, 999, 'form:tabView1:idObservacionAutorizacion');" styleClass="dsInput1" value="#{mbregistrooperacinsolicitudcredito.oEOperacionSolicitudCreditoData.observacionAutorizacion}" disabled="true" autocomplete="off" maxlength="9999" ></p:inputTextarea>
 			</div>
 			<div class="ui-g-12 ui-md-12 ui-lg-12" style="#{mbregistrooperacinsolicitudcredito.visualizarBtnAdjuntar ? 'display:block;' : 'display:none'}">
@@ -667,7 +667,7 @@
 				</h:panelGroup>
 	        	<h:panelGroup id="pnlgObservacionAval" class="ui-g-12" layout="block" style="#{mbregistrooperacinsolicitudcredito.visualizarObservacionAval ? 'display:block;' : 'display:none'}">
 					<div class="ui-g-12 ui-g-nopad">
-						<p:outputLabel value="Observaciónes" styleClass="dsLabel1"/>
+						<p:outputLabel value="Observaciones" styleClass="dsLabel1"/>
 						<p:inputTextarea type="text" id="idObservacionAvalTercero" onkeyup="limitaCaracter(50, 3, 'form:tabView1:idObservacionAvalTercero');" styleClass="dsInput1" value="#{mbregistrooperacinsolicitudcredito.oEOperacionSolicitudCreditoData.observacionAvalarTercero}" disabled="#{mbregistrooperacinsolicitudcredito.deshabilitarFrmContratante}" autocomplete="off"></p:inputTextarea>
 					</div>
 				</h:panelGroup>
@@ -684,7 +684,7 @@
 	        	</div>
 	        	<h:panelGroup id="pnlgObservacionGrabarBien" class="ui-g-12" layout="block" style="#{mbregistrooperacinsolicitudcredito.visualizarObservacionGrabarBien ? 'display:block;' : 'display:none'}">
 					<div class="ui-g-12 ui-g-nopad">
-						<p:outputLabel value="Observaciónes" styleClass="dsLabel1"/>
+						<p:outputLabel value="Observaciones" styleClass="dsLabel1"/>
 						<p:inputTextarea type="text" id="idObservacionGrabarBien" onkeyup="limitaCaracter(50, 3, 'form:tabView1:idObservacionGrabarBien');" styleClass="dsInput1" value="#{mbregistrooperacinsolicitudcredito.oEOperacionSolicitudCreditoData.observacionGrabarBien}" disabled="#{mbregistrooperacinsolicitudcredito.deshabilitarFrmContratante}" autocomplete="off"></p:inputTextarea>
 					</div>
 				</h:panelGroup>
@@ -1046,6 +1046,30 @@
 				<p:commandButton styleClass="dsBoton5 green" icon="fa fa-envelope" title="Ver" action="#{mbregistrooperacinsolicitudcredito.visualizarMensaje(item.descripcionMensaje)}" update=":frmDlgDetalleMensaje">
 	     		</p:commandButton>
 	     	</p:column>
+		</p:dataTable>
+	</p:panel>
+	</div>
+
+	<div class="ui-g-12">
+	<p:panel styleClass="dsPanel2" widgetVar="pnl14" toggleable="true" collapsed="#{mbregistrooperacinsolicitudcredito.minimizarPnlLogMovimiento}" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+        <f:facet name="header" >
+            <i class="fa fa-table"></i> Lista de Log Movimientos
+        </f:facet>
+		<p:dataTable id="tblLogMovimiento" value="#{mbregistrooperacinsolicitudcredito.lstSolicitudLogMovimientoHistorico}" var="item" styleClass="dsTabla1" paginator="true" rows="5" paginatorPosition="bottom" rowKey="#{item.codigoUbicacionLog}" reflow="true">
+			<p:column headerText="Descripción" width="60%">
+				<div class="dsTextoCorto">
+					<h:outputText value="#{item.descripcionAccion}" title="#{item.descripcionAccion}"/>
+				</div>
+			</p:column>
+			<p:column headerText="Usuario" styleClass="dsTextoCentro">
+				<h:outputText value="#{item.usuarioRevision}"/>
+			</p:column>
+			<p:column headerText="Fecha" styleClass="dsTextoCentro">
+				<h:outputText value="#{item.fechaRevision}"/>
+			</p:column>
+			<p:column headerText="Hora" styleClass="dsTextoCentro" >
+				<h:outputText value="#{item.horaRevision}"/>
+			</p:column>
 		</p:dataTable>
 	</p:panel>
 	</div>
@@ -1878,7 +1902,7 @@
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacinsolicitudcredito.oERepresentanteLegalData.inscripcionPoder2}" disabled="#{mbregistrooperacinsolicitudcredito.deshabilitarFrmRepresentante}" autocomplete="off" maxlength="50"></p:inputText>
 					</div>
 					<div class="ui-g-12">
-						<p:outputLabel value="Observaciónes" styleClass="dsLabel1"/>
+						<p:outputLabel value="Observaciones" styleClass="dsLabel1"/>
 						<p:inputTextarea type="text" id="idObservacionRepresentante" onkeyup="limitaCaracter(59, 2, 'frmDlgRepresentanteLegal:tabView2:idObservacionRepresentante');" styleClass="dsInput1" value="#{mbregistrooperacinsolicitudcredito.oERepresentanteLegalData.observacion}" disabled="#{mbregistrooperacinsolicitudcredito.deshabilitarFrmRepresentante}" autocomplete="off" rows="5"></p:inputTextarea>
 					</div>
 				</div>
@@ -2239,7 +2263,7 @@
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacinsolicitudcredito.oEDeudorData.estado.horaRegistroUltimo}" disabled="true"></p:inputText>
 					</div>
 					<div class="ui-g-12">
-						<p:outputLabel value="Ult. Observaciónes" styleClass="dsLabel1"/>
+						<p:outputLabel value="Ult. Observaciones" styleClass="dsLabel1"/>
 						<p:inputTextarea type="text" styleClass="dsInput1" value="#{mbregistrooperacinsolicitudcredito.oEDeudorData.estado.observacionUltimo}" disabled="true"></p:inputTextarea>
 					</div>
 					<div class="ui-g-12 ui-md-3 ui-lg-3">
@@ -2251,7 +2275,7 @@
 						</p:selectOneMenu>
 					</div>
 					<div class="ui-g-12">
-						<p:outputLabel value="Observaciónes" styleClass="dsLabel1"/>
+						<p:outputLabel value="Observaciones" styleClass="dsLabel1"/>
 						<p:inputTextarea type="text" styleClass="dsInput1" value="#{mbregistrooperacinsolicitudcredito.oEDeudorData.estado.observacion}" autocomplete="off" maxlength="540" disabled="#{mbregistrooperacinsolicitudcredito.deshabilitarFrmDeudor}"></p:inputTextarea>
 					</div>
 				</div>
@@ -3710,7 +3734,7 @@
 
 		        	<h:panelGroup class="ui-g-12" layout="block" style="#{mbregistrooperacinsolicitudcredito.visualizarObservacionAvalHistorico ? 'display:block;' : 'display:none'}">
 						<div class="ui-g-12 ui-g-nopad">
-							<p:outputLabel value="Observaciónes" styleClass="#{mbregistrooperacinsolicitudcredito.oEClienteHistoricoData.validarObservacionAvalarTercero ? 'dsLabel6': 'dsLabel1'}"/>
+							<p:outputLabel value="Observaciones" styleClass="#{mbregistrooperacinsolicitudcredito.oEClienteHistoricoData.validarObservacionAvalarTercero ? 'dsLabel6': 'dsLabel1'}"/>
 							<p:inputTextarea type="text" styleClass="#{mbregistrooperacinsolicitudcredito.oEClienteHistoricoData.validarObservacionAvalarTercero ? 'dsInput2': 'dsInput1'}" value="#{mbregistrooperacinsolicitudcredito.oEClienteHistoricoData.observacionAvalarTercero}" disabled="true" autocomplete="off"></p:inputTextarea>
 						</div>
 					</h:panelGroup>
@@ -3727,7 +3751,7 @@
 
 		        	<h:panelGroup class="ui-g-12" layout="block" style="#{mbregistrooperacinsolicitudcredito.visualizarObservacionGrabarBienHistorico ? 'display:block;' : 'display:none'}">
 						<div class="ui-g-12 ui-g-nopad">
-							<p:outputLabel value="Observaciónes" styleClass="#{mbregistrooperacinsolicitudcredito.oEClienteHistoricoData.validarObservacionGrabarBien ? 'dsLabel6': 'dsLabel1'}"/>
+							<p:outputLabel value="Observaciones" styleClass="#{mbregistrooperacinsolicitudcredito.oEClienteHistoricoData.validarObservacionGrabarBien ? 'dsLabel6': 'dsLabel1'}"/>
 							<p:inputTextarea type="text" styleClass="#{mbregistrooperacinsolicitudcredito.oEClienteHistoricoData.validarObservacionGrabarBien ? 'dsInput2': 'dsInput1'}" value="#{mbregistrooperacinsolicitudcredito.oEClienteHistoricoData.observacionGrabarBien}" disabled="true" autocomplete="off"></p:inputTextarea>
 						</div>
 					</h:panelGroup>

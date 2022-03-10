@@ -83,6 +83,7 @@ import com.abaco.negocio.util.UConstante.UTipoArchivo;
 import com.abaco.negocio.util.UConstante.UTipoAutonomia;
 import com.abaco.negocio.util.UConstante.UTipoCliente;
 import com.abaco.negocio.util.UConstante.UTipoClienteSolicitudCredito;
+import com.abaco.negocio.util.UConstante.UTipoEstadoUsuario;
 import com.abaco.negocio.util.UConstante.UTipoPersona;
 import com.abaco.negocio.util.UConstante.UCorreoEnvio;
 import com.abaco.negocio.util.UConstante.UData;
@@ -223,6 +224,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 	@Getter @Setter private List<EGarantiaDocumentoSolicitado> lstGarantiaDocumentoSolicitado;
 	@Getter @Setter private List<EObservacionNegocios> lstObservacionNegocios;
 	@Getter @Setter private List<ESolicitudLogMovimiento> lstSolicitudLogMovimiento;
+	@Getter @Setter private List<ESolicitudLogMovimiento> lstSolicitudLogMovimientoHistorico;
 	@Getter @Setter private List<EClienteHistorico> lstClienteHistorico;
 	//@Getter @Setter private List<EEstado> lstEstado;
 	@Getter @Setter private List<EGeneral> lstEstado;
@@ -507,6 +509,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 	@Getter @Setter private boolean minimizarPnlRevision;
 	@Getter @Setter private boolean minimizarPnlDocumento;
 	@Getter @Setter private boolean minimizarPnlDocumentoRevision;
+	@Getter @Setter private boolean minimizarPnlLogMovimiento;
 	
 	@Getter @Setter private boolean visualizarBtnSalir;
 	@Getter @Setter private boolean visualizarBtnGrabar;
@@ -654,6 +657,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 		lstGarantiaDocumentoSolicitado = new ArrayList<EGarantiaDocumentoSolicitado>();
 		lstObservacionNegocios = new ArrayList<EObservacionNegocios>();
 		lstSolicitudLogMovimiento = new ArrayList<ESolicitudLogMovimiento>();
+		lstSolicitudLogMovimientoHistorico = new ArrayList<ESolicitudLogMovimiento>();
 		lstClienteHistorico = new ArrayList<EClienteHistorico>();
 		lstNotario = new ArrayList<ETercero>();
 		lstEstado = new ArrayList<EGeneral>();
@@ -791,7 +795,6 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 						oEOperacionSolicitudCreditoData.setApellidoMaterno(oEClienteData.getApellidoMaterno());
 						oEOperacionSolicitudCreditoData.setNombre(oEClienteData.getNombre());
 						oEOperacionSolicitudCreditoData.setNombreLargo(oEClienteData.getNombreLargo2());
-						//oEOperacionSolicitudCreditoData.setNumeroDocumento(oEClienteData.getDocumento());
 						oEOperacionSolicitudCreditoData.setDireccionReal(oEClienteData.getDireccion());
 						oEOperacionSolicitudCreditoData.setDireccionContractual(oEClienteData.getDireccion2());
 						oEOperacionSolicitudCreditoData.setCodigoUbigeoReal(oEClienteData.getCodigoUbigeo());
@@ -806,6 +809,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 					}
 					
 					if(oEClienteConstitucionEmpresaData != null){
+						oEOperacionSolicitudCreditoData.setCodigoTipoPersonaJuridica(oEClienteConstitucionEmpresaData.getCodigoTipoPersonaJuridica()+"");
 						oEInformeLegalAdicionalData.setNumeroPartida(oEClienteConstitucionEmpresaData.getInscripcionRegistroPublico());
 						oEInformeLegalAdicionalData.setOficinaRegistral(oEClienteConstitucionEmpresaData.getOficinaRegistral());
 						oEInformeLegalAdicionalData.setFechaConstitucion(oEClienteConstitucionEmpresaData.getFechaConstitucion());
@@ -815,7 +819,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 					}
 					
 					if(oEClienteAdicionalData != null){
-						oEOperacionSolicitudCreditoData.setCodigoTipoPersonaJuridica(oEClienteAdicionalData.getCodigoTipoPersonaJuridica());
+						//oEOperacionSolicitudCreditoData.setCodigoTipoPersonaJuridica(oEClienteAdicionalData.getCodigoTipoPersonaJuridica());
 						oEOperacionSolicitudCreditoData.setMontoCapitalSocialRegistroPublicos(oEClienteAdicionalData.getMontoCapitalSocialRegistroPublicos());
 						oEOperacionSolicitudCreditoData.setMontoCapitalSocialActual(oEClienteAdicionalData.getMontoCapitalSocialActual());
 						oEOperacionSolicitudCreditoData.setCodigoFacultadOperar(oEClienteAdicionalData.getCodigoFacultadOperar());
@@ -1038,6 +1042,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 			listarSolicitudesCredito();
 			listarObservacionNegocios();
 			listarEstado();
+			listarLogMovimiento();
 			listarClienteHistorico();
 			visualizarFrmContrante();
 			visualizarObservacionAval();
@@ -1062,6 +1067,9 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 			}
 			if(lstOperacionSolicitudCreditoMensaje.size() > 0){
 				minimizarPnlRevision = false;
+			}
+			if(lstSolicitudLogMovimientoHistorico.size() > 0){
+				minimizarPnlLogMovimiento = false;
 			}
 		}
 	}
@@ -1185,6 +1193,12 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 		
 		oEMensaje = oBOOperacion.modificarEvaluacionSolicitudCredito(oEOperacionSolicitudCredito, oEClienteData, oEClienteConstitucionEmpresaData, oEClienteAdicionalData, codigoTipoCliente);
 		
+		if(UFuncionesGenerales.validaMensaje(oEMensaje)){
+			if(codigoEstado.equals(UEstadoLegal.OBSERVADO)){
+	        	enviarCorreo();
+	        }
+		}
+		
 		UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 		RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacion').show();");
 	}
@@ -1199,6 +1213,85 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 		int correlativo = 0;
 		ESolicitudLogMovimiento oESolicitudLogMovimiento = new ESolicitudLogMovimiento();
 		
+		String codigoTipoDocumento = oEOperacionSolicitudCredito.getCodigoTipoDocumento() != null ? oEOperacionSolicitudCredito.getCodigoTipoDocumento():"";
+		String numeroDocumento = oEOperacionSolicitudCredito.getNumeroDocumento() != null ? oEOperacionSolicitudCredito.getNumeroDocumento():"";
+		String ruc = oEOperacionSolicitudCredito.getRuc() != null ? oEOperacionSolicitudCredito.getRuc():"";
+		String apellidoPaterno = oEOperacionSolicitudCredito.getApellidoPaterno() != null ? oEOperacionSolicitudCredito.getApellidoPaterno():"";
+		String apellidoMaterno = oEOperacionSolicitudCredito.getApellidoMaterno() != null ? oEOperacionSolicitudCredito.getApellidoMaterno():"";
+		String nombre = oEOperacionSolicitudCredito.getNombre() != null ? oEOperacionSolicitudCredito.getNombre():"";
+		String nombreLargo = oEOperacionSolicitudCredito.getNombreLargo() != null ? oEOperacionSolicitudCredito.getNombreLargo():"";
+		String direccionReal = oEOperacionSolicitudCredito.getDireccionReal() != null ? oEOperacionSolicitudCredito.getDireccionReal():"";
+		String direccionContractual = oEOperacionSolicitudCredito.getDireccionContractual() != null ? oEOperacionSolicitudCredito.getDireccionContractual():"";
+		int codigoUbigeoReal = oEOperacionSolicitudCredito.getCodigoUbigeoReal();
+		int codigoUbigeoContractual = oEOperacionSolicitudCredito.getCodigoUbigeoContractual();
+		String codigoTipoDocumentoConyugue = oEOperacionSolicitudCredito.getCodigoTipoDocumentoConyugue() != null ? oEOperacionSolicitudCredito.getCodigoTipoDocumentoConyugue():"";
+		String documentoConyugue = oEOperacionSolicitudCredito.getDocumentoConyugue() != null ? oEOperacionSolicitudCredito.getDocumentoConyugue():"";
+		String apellidoPaternoConyugue = oEOperacionSolicitudCredito.getApellidoPaternoConyugue() != null ? oEOperacionSolicitudCredito.getApellidoPaternoConyugue():"";
+		String apellidoMaternoConyugue = oEOperacionSolicitudCredito.getApellidoMaternoConyugue() != null ? oEOperacionSolicitudCredito.getApellidoMaternoConyugue():"";
+		String nombreConyugue = oEOperacionSolicitudCredito.getNombreConyugue() != null ? oEOperacionSolicitudCredito.getNombreConyugue():"";
+		String nombreLargoConyuge = oEOperacionSolicitudCredito.getNombreLargoConyuge() != null ? oEOperacionSolicitudCredito.getNombreLargoConyuge():"";
+		String codigoEstadoCivil = oEInformeLegalAdicionalData.getCodigoEstadoCivil() != null ? oEInformeLegalAdicionalData.getCodigoEstadoCivil():"";
+		/*
+		String numeroPartida = oEInformeLegalAdicionalData.getNumeroPartida() != null ? oEInformeLegalAdicionalData.getNumeroPartida():"";
+		String oficinaRegistral = oEInformeLegalAdicionalData.getOficinaRegistral() != null ? oEInformeLegalAdicionalData.getOficinaRegistral():"";
+		Date fechaConstitucion = oEInformeLegalAdicionalData.getFechaConstitucion();
+		int codigoNotario = oEInformeLegalAdicionalData.getCodigoNotario();
+		String descripcionNotario = oEInformeLegalAdicionalData.getDescripcionNotario() != null ? oEInformeLegalAdicionalData.getDescripcionNotario():"";
+		int numeroAcciones = oEInformeLegalAdicionalData.getNumeroAcciones();
+		*/
+		
+		String _codigoTipoDocumento = oEClienteData.getCodigoTipoDocumento() != null ? oEClienteData.getCodigoTipoDocumento():"";
+		String _numeroDocumento = oEClienteData.getDocumento() != null ? oEClienteData.getDocumento():"";
+		String _ruc = oEClienteData.getRuc() != null ? oEClienteData.getRuc():"";
+		String _apellidoPaterno = oEClienteData.getApellidoPaterno() != null ? oEClienteData.getApellidoPaterno():"";
+		String _apellidoMaterno = oEClienteData.getApellidoMaterno() != null ? oEClienteData.getApellidoMaterno():"";
+		String _nombre = oEClienteData.getNombre() != null ? oEClienteData.getNombre():"";
+		String _nombreLargo = oEClienteData.getNombreLargo2() != null ? oEClienteData.getNombreLargo2():"";
+		String _direccionReal = oEClienteData.getDireccion() != null ? oEClienteData.getDireccion():"";
+		String _direccionContractual = oEClienteData.getDireccion2() != null ? oEClienteData.getDireccion2():"";
+		int _codigoUbigeoReal = oEClienteData.getCodigoUbigeo();
+		int _codigoUbigeoContractual = oEClienteData.getCodigoUbigeo2();
+		String _codigoTipoDocumentoConyugue = oEClienteData.getCodigoTipoDocumentoConyugue() != null ? oEClienteData.getCodigoTipoDocumentoConyugue():"";
+		String _documentoConyugue = oEClienteData.getDocumentoConyugue() != null ? oEClienteData.getDocumentoConyugue():"";
+		String _apellidoPaternoConyugue = oEClienteData.getApellidoPaternoConyugue() != null ? oEClienteData.getApellidoPaternoConyugue():"";
+		String _apellidoMaternoConyugue = oEClienteData.getApellidoMaternoConyugue() != null ? oEClienteData.getApellidoMaternoConyugue():"";
+		String _nombreConyugue = oEClienteData.getNombreConyugue() != null ? oEClienteData.getNombreConyugue():"";
+		String _nombreLargoConyuge = oEClienteData.getNombreSuperLargoConyugue() != null ? oEClienteData.getNombreSuperLargoConyugue():"";
+		String _codigoEstadoCivil = oEClienteData.getCodigoEstadoCivil() != null ? oEClienteData.getCodigoEstadoCivil():"";
+		/*
+		String _numeroPartida = oEClienteConstitucionEmpresaData.getInscripcionRegistroPublico() != null ? oEClienteConstitucionEmpresaData.getInscripcionRegistroPublico():"";
+		String _oficinaRegistral = oEClienteConstitucionEmpresaData.getOficinaRegistral() != null ? oEClienteConstitucionEmpresaData.getOficinaRegistral():"";
+		Date _fechaConstitucion = oEClienteConstitucionEmpresaData.getFechaConstitucion();
+		int _codigoNotario = oEClienteConstitucionEmpresaData.getCodigoNotario();
+		String _descripcionNotario = oEClienteConstitucionEmpresaData.getDescripcionNotario() != null ? oEClienteConstitucionEmpresaData.getDescripcionNotario():"";
+		int _numeroAcciones = oEClienteConstitucionEmpresaData.getNumeroAcciones();
+		*/
+		
+		if(!_codigoTipoDocumento.equals(codigoTipoDocumento) ||
+			!_numeroDocumento.equals(numeroDocumento) ||
+			!_ruc.equals(ruc) ||
+			!_apellidoPaterno.equals(apellidoPaterno) ||
+			!_apellidoMaterno.equals(apellidoMaterno) ||
+			!_nombre.equals(nombre) ||
+			!_nombreLargo.equals(nombreLargo) ||
+			!_direccionReal.equals(direccionReal) ||
+			!_direccionContractual.equals(direccionContractual) ||
+			_codigoUbigeoReal != codigoUbigeoReal ||
+			_codigoUbigeoContractual != codigoUbigeoContractual ||
+			!_codigoTipoDocumentoConyugue.equals(codigoTipoDocumentoConyugue) ||
+			!_documentoConyugue.equals(documentoConyugue) ||
+			!_apellidoPaternoConyugue.equals(apellidoPaternoConyugue) ||
+			!_apellidoMaternoConyugue.equals(apellidoMaternoConyugue) ||
+			!_nombreConyugue.equals(nombreConyugue) ||
+			!_nombreLargoConyuge.equals(nombreLargoConyuge) ||
+			!_codigoEstadoCivil.equals(codigoEstadoCivil)
+		){
+			oESolicitudLogMovimiento = new ESolicitudLogMovimiento();
+			oESolicitudLogMovimiento.setCodigoOrden(correlativo +1);
+			oESolicitudLogMovimiento.setCodigoAccion(UTipologMovimiento.CAMBIADTOSOCIO);
+			lstSolicitudLogMovimiento.add(oESolicitudLogMovimiento);
+		}
+		
 		for(int i=0;i<lstRepresentanteLegal.size();i++){
 			if(lstRepresentanteLegal.get(i).getCodigoAccion() == UAccionTabla.INSERTAR ||
 				lstRepresentanteLegal.get(i).getCodigoAccion() == UAccionTabla.EDITAR ||
@@ -1210,7 +1303,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 				lstSolicitudLogMovimiento.add(oESolicitudLogMovimiento);
 				break;
 			}
-		}
+		}	
 		
 		if(oEUsuario.getCodigoArea() == UArea.LEGAL){
 			if(codigoEstado.equals(UEstadoLegal.ENEVALUACION)){
@@ -1236,35 +1329,6 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 				oESolicitudLogMovimiento.setCodigoAccion(UTipologMovimiento.REENVIAPARAEVALUACION);
 				lstSolicitudLogMovimiento.add(oESolicitudLogMovimiento);
 			}
-		}
-		
-		
-		String codigoTipoDocumento = oEOperacionSolicitudCreditoData.getCodigoTipoDocumento();
-		String numeroDocumento = oEOperacionSolicitudCreditoData.getNumeroDocumento();
-		String ruc = oEOperacionSolicitudCreditoData.getRuc();
-		String apellidoPaterno = oEOperacionSolicitudCreditoData.getApellidoPaterno();
-		String apellidoMaterno = oEOperacionSolicitudCreditoData.getApellidoMaterno();
-		String nombre = oEOperacionSolicitudCreditoData.getNombre();
-		String nombreLargoData = (oEOperacionSolicitudCreditoData.getNombreLargo() != null ? oEOperacionSolicitudCreditoData.getNombreLargo():"");
-		//oEOperacionSolicitudCreditoData.getNumeroDocumento();
-		String direccionReal = oEOperacionSolicitudCreditoData.getDireccionReal();
-		String direccionContractual = oEOperacionSolicitudCreditoData.getDireccionContractual();
-		int codigoUbigeoReal = oEOperacionSolicitudCreditoData.getCodigoUbigeoReal();
-		int codigoUbigeoContractual = oEOperacionSolicitudCreditoData.getCodigoUbigeoContractual();
-		String codigoTipoDocumentoConyugue = oEOperacionSolicitudCreditoData.getCodigoTipoDocumentoConyugue();
-		String documentoConyugue = oEOperacionSolicitudCreditoData.getDocumentoConyugue();
-		String apellidoPaternoConyugue = oEOperacionSolicitudCreditoData.getApellidoPaternoConyugue();
-		String apellidoMaternoConyugue = oEOperacionSolicitudCreditoData.getApellidoMaternoConyugue();
-		String nombreConyugue = oEOperacionSolicitudCreditoData.getNombreConyugue();
-		String nombreLargoConyuge = oEOperacionSolicitudCreditoData.getNombreLargoConyuge();
-		String codigoEstadoCivil = oEInformeLegalAdicionalData.getCodigoEstadoCivil();
-		
-		if(!oEOperacionSolicitudCreditoLoad.getNombreLargo().equals(oEOperacionSolicitudCredito.getNombreLargo())
-			){
-			oESolicitudLogMovimiento = new ESolicitudLogMovimiento();
-			oESolicitudLogMovimiento.setCodigoOrden(correlativo +1);
-			oESolicitudLogMovimiento.setCodigoAccion(UTipologMovimiento.CAMBIADTOSOCIO);
-			lstSolicitudLogMovimiento.add(oESolicitudLogMovimiento);
 		}
 	}
 	
@@ -1388,6 +1452,10 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 				.filter(x -> !x.getCodigo().equals(UEstadoLegal.APROBADO))
 				.collect(Collectors.toList());
 		//lstEstado = oBOOperacion.listarEstadoPorSolicitud(oEOperacionSolicitudLoad.getCodigoSolicitud(), oEUsuario);
+	}
+	
+	public void listarLogMovimiento(){
+		lstSolicitudLogMovimientoHistorico = oBOSolicitudCredito.listarLogMovimiento(oEOperacionSolicitudCreditoLoad.getNumeroSolicitud());
 	}
 	
 	public void listarObservacionNegocios(){
@@ -4174,6 +4242,53 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
         UFuncionesGenerales.borrarArchivo(rutaExcelGenerado);
 	 }
 
+	public void enviarCorreo() {
+		ULectorDeParametros uLectorDeParametros = ULectorDeParametros.getInstancia();
+		
+        List<Object> lstParametrosContenido = new ArrayList<>();
+        String indicadorProduccion = uLectorDeParametros.getValorParametro("indicador.produccion");
+        String emailDestino = "";
+        String descripcionEstado = "";
+        
+        if(indicadorProduccion.equals("true")){
+            String email1 = oBOGeneral.buscarCorreoUsuario(oEOperacionSolicitudCreditoLoad.getUsuarioRegistroLegal());
+            String email2 = oBOGeneral.buscarCorreoJefeInmediato(oEOperacionSolicitudCreditoLoad.getUsuarioRegistroLegal());
+            String email3 = "";
+            
+            if(codigoEstado.equals(UEstadoLegal.OBSERVADO)){
+            	emailDestino = email1;
+                if(!email2.equals("")){
+                	emailDestino = emailDestino +","+ email2;
+                }
+            }
+        }else if(indicadorProduccion.equals("false")){
+        	String email1 = uLectorDeParametros.getValorParametro("correo.prueba");
+        	String email2 = uLectorDeParametros.getValorParametro("correo.prueba2");
+        	
+            if(codigoEstado.equals(UEstadoLegal.OBSERVADO)){
+            	emailDestino = email1;
+            }
+        }
+		
+        if(codigoEstado.equals(UEstadoLegal.OBSERVADO)){
+        	descripcionEstado = UEstado.OBSERVADO_DESCEST;
+        }
+        
+        //String asunto = "La solicitud #" + oERevisionSolicitudData.getCodigoSolicitud() +" "+ oERevisionSolicitudData.getDescripcionAsunto() +" ha cambiado a estado "+ UFuncionesGenerales.convierteCadenaMayuscula(descripcionEstado);
+        String asunto = "Sistema Legal - Solicitud Nro." + oEOperacionSolicitudCreditoLoad.getNumeroSolicitud() +" "+ oEOperacionSolicitudCreditoLoad.getNombreCorto();
+        
+        lstParametrosContenido.add(oEOperacionSolicitudCreditoLoad.getNumeroSolicitud()+"");
+        lstParametrosContenido.add(oEOperacionSolicitudCreditoLoad.getNombreCorto());
+        lstParametrosContenido.add(UFuncionesGenerales.convierteCadenaMayuscula(descripcionEstado));
+        lstParametrosContenido.add(oEUsuario.getNombreCompleto());
+        
+        UManejadorCorreo uManejadorCorreo = new UManejadorCorreo();
+        uManejadorCorreo.enviarCorreo(lstParametrosContenido, 
+        		asunto, 
+        		uLectorDeParametros.getValorParametro("correo.msg.registro_operacionsolicitudcredito.cuerpo"), 
+        		emailDestino, "", "");
+	}
+	
 	public void inicializar() {
 		deshabilitar = false;
 		visualizar = true;

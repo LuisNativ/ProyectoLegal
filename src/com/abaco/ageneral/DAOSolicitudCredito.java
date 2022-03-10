@@ -37,6 +37,7 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_DEL_SOLICITUDSUSCRIPCION="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_SOLICITUDSUSCRIPCION("+parametrosSP(5)+") }";
 	private static final String SP_ABACOINLEGAL_DEL_CLIENTESUSCRIPCION="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_CLIENTESUSCRIPCION("+parametrosSP(3)+") }";
 	
+	private static final String SP_ABACOINLEGAL_SEL_LOGMOVIMIENTO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_LOGMOVIMIENTO("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_DEUDOR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_DEUDOR("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_AVALSOLICITUD="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_AVALSOLICITUD("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_EVALUACIONXNIVEL_DETALLE="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_EVALUACIONXNIVEL_DETALLE("+parametrosSP(3)+") }";
@@ -351,6 +352,39 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 			UManejadorLog.error("Acceso: Problemas al eliminar.", objEx);
 		}
 		return mensaje;
+	}
+	
+	public List<ESolicitudLogMovimiento> listarLogMovimiento(long numeroSolicitud) {
+		List<Object> lstParametrosEntrada;
+		ResultSet oResultSet = null;
+		ESolicitudLogMovimiento oESolicitudLogMovimiento= null;
+		List<ESolicitudLogMovimiento> lstSolicitudLogMovimiento = null;
+		
+		try {
+			lstParametrosEntrada = new ArrayList<Object>();
+			lstParametrosEntrada.add(numeroSolicitud);
+			
+			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_SEL_LOGMOVIMIENTO, lstParametrosEntrada, null);
+			
+			if (oResultSet != null) {
+				lstSolicitudLogMovimiento = new ArrayList<ESolicitudLogMovimiento>();
+				while (oResultSet.next()) {
+					oESolicitudLogMovimiento = new ESolicitudLogMovimiento();
+					
+					oESolicitudLogMovimiento.setNumeroSolicitud(oResultSet.getInt("SOLI80"));
+					oESolicitudLogMovimiento.setUsuarioRevision(UFuncionesGenerales.revisaCadena(oResultSet.getString("USULOG")));
+					oESolicitudLogMovimiento.setFechaRevision(oResultSet.getDate("FECLOG"));
+					oESolicitudLogMovimiento.setHoraRevision(UFuncionesGenerales.convertirEnteroATime(oResultSet.getInt("HORLOG")));
+					oESolicitudLogMovimiento.setDescripcionAccion(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCACC")));
+					
+					lstSolicitudLogMovimiento.add(oESolicitudLogMovimiento);
+				}								
+			}						
+			
+		} catch(Exception objEx) {
+			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
+		}
+		return lstSolicitudLogMovimiento;
 	}
 	
 	public List<EDeudor> listarDeudor(int codigoCliente, long numeroSolicitud) {

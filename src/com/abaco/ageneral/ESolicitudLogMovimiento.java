@@ -27,5 +27,7 @@ public @Data class ESolicitudLogMovimiento implements Serializable{
 	private String horaRegistro;
 	private EUsuario usuarioRegistro;
 	
+	//Adicional
 	private int codigoOrden;
+	private String descripcionAccion;
 }

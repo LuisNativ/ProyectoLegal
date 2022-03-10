@@ -20,7 +20,7 @@
 	    
 		<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad dsCuadrarCentroFin">
 			<p:commandButton styleClass="dsBoton1 tamanio1 secundario" value="Volver" icon="fa fa-arrow-left" onclick="PF('dlgSalir').show();" 
-			rendered="#{mbregistrooperacioncliente.visualizarBtnSalir eq '1' ? true : false}"/>
+			rendered="#{mbregistrooperacioncliente.visualizarBtnSalir}"/>
 			
 			<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Grabar" onclick="PF('dlgPreload').show();"
 			oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacioncliente.guardar()}"

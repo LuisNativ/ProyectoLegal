@@ -22,6 +22,7 @@ public class DAOGeneral extends InstanciaAcceso {
 	private static final String SP_ABACOINLEGAL_SEL_SERVICIO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_SERVICIO() }";
 	private static final String SP_ABACOINLEGAL_BUS_RUTAWEB ="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_RUTAWEB(?) }";
 	private static final String SP_ABACOINLEGAL_BUS_CORREOUSUARIO ="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_CORREOUSUARIO(?) }";
+	private static final String SP_ABACOINLEGAL_BUS_CORREOUSUARIOXNOMUSU ="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_CORREOUSUARIOXNOMUSU(?) }";
 	private static final String SP_ABACOINLEGAL_BUS_NOMBREUSUARIOSIAF ="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_NOMBREUSUARIOSIAF(?) }";
 	private static final String SP_ABACOINLEGAL_BUS_CORRELATIVO = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_CORRELATIVO(?,?,?,?) }";
 	
@@ -184,6 +185,26 @@ public class DAOGeneral extends InstanciaAcceso {
 			lstParametrosEntrada = new ArrayList<Object>();
 			lstParametrosEntrada.add(codigoUsuario);
 			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_BUS_CORREOUSUARIO, lstParametrosEntrada, null);
+			if (oResultSet != null) {
+				if (oResultSet.next()) {
+					correo = UFuncionesGenerales.revisaCadena(oResultSet.getString("A020_EMAIL"));
+				}
+				objConexion.cierraConsulta(oResultSet);
+			}
+		} catch (Exception objEx) {
+			UManejadorLog.error("Acceso: Error al obtener el correo: ", objEx);
+		}
+		return correo;
+	}
+	
+	public String buscarCorreoUsuario(String nombreUsuario){
+		List<Object> lstParametrosEntrada = null;
+		ResultSet oResultSet = null;
+		String correo = "";
+		try {
+			lstParametrosEntrada = new ArrayList<Object>();
+			lstParametrosEntrada.add(nombreUsuario);
+			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_BUS_CORREOUSUARIOXNOMUSU, lstParametrosEntrada, null);
 			if (oResultSet != null) {
 				if (oResultSet.next()) {
 					correo = UFuncionesGenerales.revisaCadena(oResultSet.getString("A020_EMAIL"));

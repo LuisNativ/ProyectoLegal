@@ -226,6 +226,7 @@ public class UConstante {
 		int TIPOGARANTIANUEVO=16;
 		int OFICINAREGISTRAL=17;
 		int ZONAGEO = 18;
+		int ESTADODESEMBOLSOGARANTIA = 19;
 	}
 	
 	public static interface UGeneral2 {
@@ -548,6 +549,7 @@ public class UConstante {
 	}
 	
 	public static interface UTipologMovimiento {
+		int REENVIAPARAEVALUACION = 302;
 		int HOJALEGALGENERADA = 501;
 		int EVALUADOPORLEGAL = 505;
 		int OBSERVADOPORLEGAL = 507;
@@ -641,6 +643,7 @@ public class UConstante {
 	}
 	
 	public static interface UEstadoLegal {
+		String PENDIENTEDEEVALUACION = "0";
 		String EVALUADO = "1";
 		String OBSERVADO = "2";
 		String DESAPROBADO = "3";
@@ -884,6 +887,11 @@ public class UConstante {
 		String MSJ_16 = "¿Está seguro de enviar el documento con la firma del socio?";
 	}
 	
+	public static interface UMensajeTabla{
+		String MSJ_1 = "No Existen Registros";
+		String MSJ_2 = "No Existen Pólizas Asociadas para la Operación: ";
+	}
+	
 	/* Fin: AHM */
 	
 	public static interface UProcesoMantePostulante {
@@ -1061,5 +1069,12 @@ public class UConstante {
 		String pdf = ".pdf";
 		String txt = ".txt";
 		String xls = ".xls";
+	}
+	
+	public static interface UCriterioBusqueda{
+		int CODIGO_SOCIO = 1;
+		int NOMBRE_SOCIO = 2;
+		int CODIGO_GARANTIA = 3;
+		int PARTIDA_REGISTRAL = 4;
 	}
 }

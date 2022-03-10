@@ -22,6 +22,24 @@ import com.abaco.servicio.laserfiche.Mensaje;
 
 public class CSolicitudCredito {
 	
+	public List<ESolicitudLogMovimiento> listarLogMovimiento(long numeroSolicitud){
+		IConexion oIConexion = null;
+		List<ESolicitudLogMovimiento> resultado = null;
+		DAOSolicitudCredito oDAOSolicitudCredito= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();			
+			oDAOSolicitudCredito = new DAOSolicitudCredito(oIConexion);
+			resultado = oDAOSolicitudCredito.listarLogMovimiento(numeroSolicitud);			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al listar log movimiento " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
 	public List<EDeudor> listarDeudor(int codigoCliente, long numeroSolicitud){
 		IConexion oIConexion = null;
 		List<EDeudor> resultado = null;

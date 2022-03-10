@@ -11,6 +11,7 @@ public @Data class EClienteConstitucionEmpresa {
 	private int codigoCliente;
 	private int codigoTipoEmpresa;
 	
+	private int codigoTipoPersonaJuridica;
 	private double montoPatrimonio;
 	private int numeroEmpleados;
 	private int numeroObreros;
