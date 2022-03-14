@@ -21,7 +21,7 @@ public @Data class EPoliza {
 	private int codigoClienteUltimoEndoso;
 	private String nombreClienteUltimoEndoso;
 	private int servicioGarantia;
-	private int codigoGarantia;
+	private long codigoGarantia;
 	private int codigoMonedaGarantia;
 	private int sucursal;
 	private int agenciaEmisora;
@@ -48,6 +48,9 @@ public @Data class EPoliza {
 	private String descripcionBrockerSeguro;
 	private String abreviacionMonedaPrimaNeta;
 	private String descripcionMonedaPrimaNeta;
+	private String abreviacionMonedaPoliza;
+	private String descripcionMonedaPoliza;
+	private String descripcionEstadoPoliza;
 	
 	
 	

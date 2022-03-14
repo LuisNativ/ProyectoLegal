@@ -69,12 +69,14 @@ import com.abaco.negocio.util.UConstante.UArea;
 import com.abaco.negocio.util.UConstante.UAsignacionInmueble;
 import com.abaco.negocio.util.UConstante.UEstado;
 import com.abaco.negocio.util.UConstante.UEstadoGarantia;
+import com.abaco.negocio.util.UConstante.UMaximoTamanio;
 import com.abaco.negocio.util.UConstante.UMensajeTabla;
 import com.abaco.negocio.util.UConstante.UModoIngreso;
 import com.abaco.negocio.util.UConstante.UMoneda;
 import com.abaco.negocio.util.UConstante.UPersonaRelacion;
 import com.abaco.negocio.util.UConstante.URutaCarpetaCompartida;
 import com.abaco.negocio.util.UConstante.UTipoCliente;
+import com.abaco.negocio.util.UConstante.UTipoDocumento;
 import com.abaco.negocio.util.UConstante.UTipoDocumentoGarantia;
 import com.abaco.negocio.util.UConstante.UTipoEstadoUsuario;
 import com.abaco.negocio.util.UConstante.UTipoGarantia;
@@ -108,7 +110,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	private EGarantia oEGarantiaInmuebleData;
 	private EPersona oEPersonaSelected;
 	private EPoliza oEPolizaSelected;
-	private EPoliza oEPolizaPrestamoData;
+	private EPoliza oEPolizaGarantiaData;
 	private EOperacionDocumento oEOperacionDocumentoNotariaData;
 	private EFlagReqLegal oEFlagRequisitoLegalData;
 	//BO
@@ -262,6 +264,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	@Getter @Setter private boolean visualizarEliminarInmueble;
 	@Getter @Setter private String mensajeTablaPolizaPrestamo;
 	@Getter @Setter private int accionInternaInmueble;
+	@Getter @Setter private int maxLgnNumeroDocumentoTercero;
 	
 	//Para Tercero
 	@Getter @Setter private boolean visualizarDatosPersonaNatural;
@@ -279,7 +282,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		oETerceroData = new ETercero();
 		oEPersonaSelected = new EPersona();
 		oEPolizaSelected = new EPoliza();
-		oEPolizaPrestamoData = new EPoliza();
+		oEPolizaGarantiaData = new EPoliza();
 		oEOperacionDocumentoNotariaData = new EOperacionDocumento();
 		oEFlagRequisitoLegalData = new EFlagReqLegal();
 		oUManejadorListaDesplegable = new UManejadorListaDesplegable();
@@ -410,8 +413,11 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				visualizarBtnEliminarPropietario = true;	
 				//Data de F9201
 				oEGarantiaData = oBOGarantia.buscarGarantia(oEGarantiaLoad.getCodigoGarantia());
+				oEPolizaGarantiaData = oBOGarantia.buscarPolizaAsociadoGarantiaMaxCorrelativo(oEGarantiaLoad.getCodigoGarantia());
 				oEGarantiaData.setLstPropietario(new ArrayList<EPersona>());
-				
+				if(oEPolizaGarantiaData == null){
+					oEPolizaGarantiaData = new EPoliza();
+				}
 				//Data de F92011
 				oEGarantiaAnexoData = oBOGarantia.buscarAnexoGarantia(oEGarantiaLoad.getCodigoGarantia());
 				if(oEGarantiaAnexoData != null){
@@ -967,18 +973,18 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		
 		
 	}
-	
+	/*
 	public void consultarPolizaPrestamo(EAsignacionContratoGarantia eAsignacionContratoGarantiaItem){
 		if(eAsignacionContratoGarantiaItem != null){
 			if(eAsignacionContratoGarantiaItem.getNumeroOperacion()>0){
-				oEPolizaPrestamoData = oBOGarantia.buscarPolizaAsociadoPrestamoMaxCorrelativo(eAsignacionContratoGarantiaItem.getNumeroOperacion());			
-				if(oEPolizaPrestamoData == null){
-					oEPolizaPrestamoData = new EPoliza();	
+				oEPolizaGarantiaData = oBOGarantia.buscarPolizaAsociadoPrestamoMaxCorrelativo(eAsignacionContratoGarantiaItem.getNumeroOperacion());			
+				if(oEPolizaGarantiaData == null){
+					oEPolizaGarantiaData = new EPoliza();	
 				}
 			}
 		}
 	}
-	
+	*/
 	
 	//*************************************//
   	//End: Metodos para Préstamos Asociadas a Garantías (TAB=2)
@@ -2674,7 +2680,22 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			oETerceroData.setApellidoMaterno("");
 			oETerceroData.setNombres("");
 		}
+		validarTamanioDocumentoTercero();
 		
+	}
+	
+	public void validarTamanioDocumentoTercero(){
+		if(oETerceroData.getCodigoTipoDocumento() != null){
+			switch(oETerceroData.getCodigoTipoDocumento()){
+			case UTipoDocumento.RUC: maxLgnNumeroDocumentoTercero = UMaximoTamanio.RUC_MAXLGN; break;
+			case UTipoDocumento.DNI:
+			case UTipoDocumento.LIBRETA_ELECTORAL:
+				maxLgnNumeroDocumentoTercero = UMaximoTamanio.DNI_MAXLGN; break;
+			default: maxLgnNumeroDocumentoTercero = UMaximoTamanio.OTROS_MAXLGN;
+			}
+		}else{
+			maxLgnNumeroDocumentoTercero = UMaximoTamanio.OTROS_MAXLGN;
+		}
 	}
 	
 	public void nuevoTercero(){
@@ -2750,6 +2771,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			}
 			
 			UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
+			RequestContext.getCurrentInstance().execute("PF('dlgMantenimientoTercero').hide();");
 			RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
 			
 
@@ -2865,14 +2887,15 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		this.oEFlagRequisitoLegalData = oEFlagRequisitoLegalData;
 	}
 
-	public EPoliza getoEPolizaPrestamoData() {
-		return oEPolizaPrestamoData;
+	public EPoliza getoEPolizaGarantiaData() {
+		return oEPolizaGarantiaData;
 	}
 
-	public void setoEPolizaPrestamoData(EPoliza oEPolizaPrestamoData) {
-		this.oEPolizaPrestamoData = oEPolizaPrestamoData;
+	public void setoEPolizaGarantiaData(EPoliza oEPolizaGarantiaData) {
+		this.oEPolizaGarantiaData = oEPolizaGarantiaData;
 	}
 
+	
 	
 
 	

@@ -1701,8 +1701,73 @@
 			    	</p:panel>
 			    	
 			    </div>
-			    <div  class="ui-g-12">
+			     <div  class="ui-g-12">	
+			     	<p:panel id="pnlPoliza" styleClass="dsPanel2" widgetVar="pnl5" toggleable="true" toggleSpeed="500" closeSpeed="500" style="#{mbmantenimientooperaciongarantia.indicadorPnlDetalleGarantiaPredio or mbmantenimientooperaciongarantia.indicadorPnlDetalleGarantiaVehicular? 'display:block;' : 'display:none;'}">
+				        <f:facet name="header" >
+				            <i class="fa fa-hospital"></i> Datos de La Póliza Asociada a la Garantía
+				        </f:facet>
+						<div class="ui-g ui-fluid ui-g-nopad">
+							<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+								<div class="ui-g-8">	
+									<p:outputLabel  value="Compañía Seguro" styleClass="dsLabel1"/>
+									<p:inputText   type="text" styleClass="dsInput1 dsTextoCentro" value="#{mbmantenimientooperaciongarantia.oEPolizaGarantiaData.descripcionCiaSeguro}" disabled="true">
+									</p:inputText>
+								</div>
+								<div class="ui-g-4">	
+									<p:outputLabel  value="Brocker Seguros" styleClass="dsLabel1"/>
+									<p:inputText   type="text" styleClass="dsInput1 dsTextoCentro" value="#{mbmantenimientooperaciongarantia.oEPolizaGarantiaData.descripcionBrockerSeguro}" disabled="true">
+									</p:inputText>
+								</div>
+							</div>
+							<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+								<div class="ui-g-4">	
+									<p:outputLabel  value="Número Póliza" styleClass="dsLabel1"/>
+									<p:inputText   type="text" styleClass="dsInput1 dsTextoCentro" value="#{mbmantenimientooperaciongarantia.oEPolizaGarantiaData.numeroPoliza}" disabled="true">
+									</p:inputText>
+								</div>
+								<div class="ui-g-4">	
+									<p:outputLabel  value="Correlativo" styleClass="dsLabel1"/>
+									<p:inputText   type="text" styleClass="dsInput1 dsTextoCentro" value="#{mbmantenimientooperaciongarantia.oEPolizaGarantiaData.correlativoPoliza}" disabled="true">
+									</p:inputText>
+								</div>
+								<div class="ui-g-4">	
+									<p:outputLabel  value="Valor Póliza" styleClass="dsLabel1"/>
+									<p:inputText   type="text" styleClass="dsInput1 dsTextoCentro" value="#{mbmantenimientooperaciongarantia.oEPolizaGarantiaData.abreviacionMonedaPoliza} #{mbmantenimientooperaciongarantia.oEPolizaGarantiaData.valorPoliza}" disabled="true">
+									</p:inputText>
+								</div>
+							</div>
+							<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+								<div class="ui-g-4">
+									<p:outputLabel value="Fecha Inicio Vigencia" styleClass="dsLabel1"/>
+									<p:calendar value="#{mbmantenimientooperaciongarantia.oEPolizaGarantiaData.fechaInicioPoliza}" navigator="true" pattern="dd-MM-yyyy" disabled="true" autocomplete="off"></p:calendar>
+						   		</div>
+						   		<div class="ui-g-4">
+									<p:outputLabel value="Fecha Fin Vigencia" styleClass="dsLabel1"/>
+									<p:calendar value="#{mbmantenimientooperaciongarantia.oEPolizaGarantiaData.fechaVencimientoPoliza}" navigator="true" pattern="dd-MM-yyyy" disabled="true" autocomplete="off"></p:calendar>
+						   		</div>
+						   		<div class="ui-g-4">	
+									<p:outputLabel  value="Certificado Endoso" styleClass="dsLabel1"/>
+									<p:inputText   type="text" styleClass="dsInput1 dsTextoCentro" value="#{mbmantenimientooperaciongarantia.oEPolizaGarantiaData.numeroEndoso}" disabled="true">
+									</p:inputText>
+								</div>
+							</div>
+							<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+								<div class="ui-g-4">
+									<p:outputLabel value="Fecha Endoso" styleClass="dsLabel1"/>
+									<p:calendar value="#{mbmantenimientooperaciongarantia.oEPolizaGarantiaData.fechaEndoso}" navigator="true" pattern="dd-MM-yyyy" disabled="true" autocomplete="off"></p:calendar>
+						   		</div>
+								<div class="ui-g-4">	
+									<p:outputLabel  value="Estado" styleClass="dsLabel1"/>
+									<p:inputText   type="text" styleClass="dsInput1 dsTextoCentro" value="#{mbmantenimientooperaciongarantia.oEPolizaGarantiaData.descripcionEstadoPoliza}" disabled="true">
+									</p:inputText>
+								</div>
+							</div>
+							
+						</div>
+					</p:panel>		    	
 			    	
+			    </div>
+			    <div  class="ui-g-12">			    	
 			    	<p:panel id="idInmuebleAdicional" styleClass="dsPanel2" widgetVar="pnl3" toggleable="true" toggleSpeed="500" closeSpeed="500" style="#{mbmantenimientooperaciongarantia.visualizarInmuebleAdicional ? 'display:block;' : 'display:none;'}">
 			    	 	<f:facet name="header" >
 				            <i class="fas fa-home"></i> Inmuebles Adicionales  
@@ -2104,10 +2169,6 @@
 								<h:outputText value="#{item.descripcionEstadoCredito}">
 				                     <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
 				                </h:outputText>
-							</p:column>	
-							<p:column headerText="Póliza" styleClass="dsTextoCentro" width="5%">
-								<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-search" title="Consultar Póliza" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbmantenimientooperaciongarantia.consultarPolizaPrestamo(item)}" update="form:tabView1:pnlPolizaPrestamo" immediate="true">
-						      	</p:commandButton>	
 							</p:column>				
 				            <p:columnGroup type="footer">
 				                <p:row>
@@ -2143,66 +2204,8 @@
 						</p:dataTable>
 					</p:panel>
 				</div>
-				<div class="ui-g-12">
-					<p:panel id="pnlPolizaPrestamo" styleClass="dsPanel2" widgetVar="pnl5" toggleable="true" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
-				        <f:facet name="header" >
-				            <i class="fa fa-hospital"></i> Póliza Asociada a un Préstamo
-				        </f:facet>
-						<div class="ui-g ui-fluid ui-g-nopad">
-							<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
-								<div class="ui-g-4">	
-									<p:outputLabel  value="Nro. Operación" styleClass="dsLabel1"/>
-									<p:inputText   type="text" styleClass="dsInput1 dsTextoCentro" value="#{mbmantenimientooperaciongarantia.oEPolizaPrestamoData.numeroOperacion}" disabled="true">
-									</p:inputText>
-								</div>
-								<div class="ui-g-8">	
-									<p:outputLabel  value="Compañía Seguro" styleClass="dsLabel1"/>
-									<p:inputText   type="text" styleClass="dsInput1 dsTextoCentro" value="#{mbmantenimientooperaciongarantia.oEPolizaPrestamoData.descripcionCiaSeguro}" disabled="true">
-									</p:inputText>
-								</div>
-							</div>
-							<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
-								<div class="ui-g-8">	
-									<p:outputLabel  value="Brocker Seguros" styleClass="dsLabel1"/>
-									<p:inputText   type="text" styleClass="dsInput1 dsTextoCentro" value="#{mbmantenimientooperaciongarantia.oEPolizaPrestamoData.descripcionBrockerSeguro}" disabled="true">
-									</p:inputText>
-								</div>
-								<div class="ui-g-4">	
-									<p:outputLabel  value="Número Póliza" styleClass="dsLabel1"/>
-									<p:inputText   type="text" styleClass="dsInput1 dsTextoCentro" value="#{mbmantenimientooperaciongarantia.oEPolizaPrestamoData.numeroPoliza}" disabled="true">
-									</p:inputText>
-								</div>
-							</div>
-							<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
-								<div class="ui-g-4">
-									<p:outputLabel value="Fecha Inicio Vigencia" styleClass="dsLabel1"/>
-									<p:calendar value="#{mbmantenimientooperaciongarantia.oEPolizaPrestamoData.fechaInicioPoliza}" navigator="true" pattern="dd-MM-yyyy" disabled="true" autocomplete="off"></p:calendar>
-						   		</div>
-						   		<div class="ui-g-4">
-									<p:outputLabel value="Fecha Fin Vigencia" styleClass="dsLabel1"/>
-									<p:calendar value="#{mbmantenimientooperaciongarantia.oEPolizaPrestamoData.fechaVencimientoPoliza}" navigator="true" pattern="dd-MM-yyyy" disabled="true" autocomplete="off"></p:calendar>
-						   		</div>
-						   		<div class="ui-g-4">	
-									<p:outputLabel  value="Moneda Prima Neta" styleClass="dsLabel1"/>
-									<p:inputText   type="text" styleClass="dsInput1 dsTextoCentro" value="#{mbmantenimientooperaciongarantia.oEPolizaPrestamoData.descripcionMonedaPrimaNeta}" disabled="true">
-									</p:inputText>
-								</div>
-							</div>
-							<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
-								<div class="ui-g-4">	
-									<p:outputLabel  value="Prima Neta Anual" styleClass="dsLabel1"/>
-									<p:inputText   type="text" styleClass="dsInput1 dsTextoCentro" value="#{mbmantenimientooperaciongarantia.oEPolizaPrestamoData.montoPrimaNetaAnual}" disabled="true">
-									</p:inputText>
-								</div>
-								<div class="ui-g-4">
-									<p:outputLabel value="Fecha Orden Pago" styleClass="dsLabel1"/>
-									<p:calendar value="#{mbmantenimientooperaciongarantia.oEPolizaPrestamoData.fechaOrdenPago}" navigator="true" pattern="dd-MM-yyyy" disabled="true" autocomplete="off"></p:calendar>
-						   		</div>
-							</div>
-							
-						</div>
-					</p:panel>
-				</div>
+			
+				
 	 	    </div>
 	 	</p:tab>
 	 	<p:tab id="tab1-4" title="Cumplimiento Requisitos Legal" rendered="#{mbmantenimientooperaciongarantia.visualizarTabCumplimiento}">
@@ -2563,7 +2566,7 @@
 
 	</p:dialog>
 
-	<p:dialog widgetVar="dlgMantenimientoTercero" style="overflow:auto;max-height: 100%;" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">
+	<p:dialog widgetVar="dlgMantenimientoTercero" style="overflow:auto;max-height: 90%;" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">
 	<h:form id="frmDlgMantenimientoTercero">
 		<div class="dsDlgMantenimientoNotario dsDialogo4">
 	 		<div class="cabecera">
@@ -2571,7 +2574,9 @@
 					<p:outputLabel styleClass="dsLabel2" value="Mantenimiento Tercero"/>
 				</div>
 	 			<div class="dlgDerecha">
-	 				<p:commandLink styleClass="dsCmdlink5" onclick="PF('dlgMantenimientoTercero').hide();"><i class="fas fa-times"></i></p:commandLink>
+	 				<p:commandLink styleClass="dsCmdlink5" process="@this" onclick="PF('dlgMantenimientoTercero').hide();"><i class="fas fa-times"></i>
+	 					<p:ajax update="frmDlgMantenimientoTercero" resetValues="true" />
+	 			    </p:commandLink>
 	 			</div>	
 			</div>
 			<div class="dsLineaHorizontal"></div>
@@ -2584,41 +2589,56 @@
 								<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oETerceroData.codigoCliente}" autocomplete="off" disabled="true"></p:inputText>
 					   		</div>
 					   		<div class="ui-g-4">
-								<p:outputLabel  value="Tipo Doc." styleClass="dsLabel1"/>
-								<p:selectOneMenu value="#{mbmantenimientooperaciongarantia.oETerceroData.codigoTipoDocumento}" >
+								<p:outputLabel for="idTipoDocTercero" value="Tipo Doc." styleClass="dsLabel1"/>
+								<p:selectOneMenu id="idTipoDocTercero" value="#{mbmantenimientooperaciongarantia.oETerceroData.codigoTipoDocumento}" required="true" requiredMessage="Campo Obligatorio">
 									<p:ajax event="change" listener="#{mbmantenimientooperaciongarantia.validarDocumentoIdentidad()}" update="frmDlgMantenimientoTercero" />
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbmantenimientooperaciongarantia.lstTipoDocumento}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
 				            	</p:selectOneMenu>
+				            	<p:message for="idTipoDocTercero"/>
 							</div>	
 							<div class="ui-g-4">
-								<p:outputLabel  value="Documento:" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oETerceroData.documento}" autocomplete="off" maxlength="11"></p:inputText>
+								<p:outputLabel for="idNroDocTercero" value="Documento:" styleClass="dsLabel1"/>
+								<p:inputText id="idNroDocTercero" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oETerceroData.documento}" 
+								autocomplete="off" 
+								maxlength="#{mbmantenimientooperaciongarantia.maxLgnNumeroDocumentoTercero}"
+								requiredMessage="#{mbmantenimientooperaciongarantia.oETerceroData.codigoTipoDocumento eq '4' ? 'validaRuc'
+									:mbmantenimientooperaciongarantia.oETerceroData.codigoTipoDocumento eq 'D' or mbmantenimientooperaciongarantia.oETerceroData.codigoTipoDocumento eq '1' ? 'validaDni':'validaOtros'}"
+								validator="#{vlgeneral.validarDocumento}"></p:inputText>
+								<p:message for="idNroDocTercero"/>
 					   		</div>
 						</div>
 						<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad"  style="#{mbmantenimientooperaciongarantia.visualizarDatosPN ? 'display: block;' : 'display:none;'}">
 							<div class="ui-g-4">
-								<p:outputLabel  value="Ape. Paterno" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oETerceroData.apellidoPaterno}" autocomplete="off" maxlength="40"></p:inputText>
+								<p:outputLabel for="idApePatTercero" value="Ape. Paterno" styleClass="dsLabel1"/>
+								<p:inputText id="idApePatTercero" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oETerceroData.apellidoPaterno}" autocomplete="off" maxlength="40" required="true" requiredMessage="Campo Obligatorio" 
+								rendered="#{mbmantenimientooperaciongarantia.visualizarDatosPN}"></p:inputText>
+								<p:message for="idApePatTercero"/>
 					   		</div>
 					   		<div class="ui-g-4">
-								<p:outputLabel  value="Ape. Materno" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oETerceroData.apellidoMaterno}" autocomplete="off" maxlength="40"></p:inputText>
+								<p:outputLabel for="idApeMatTercero" value="Ape. Materno" styleClass="dsLabel1"/>
+								<p:inputText id="idApeMatTercero" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oETerceroData.apellidoMaterno}" autocomplete="off" maxlength="40" required="true" requiredMessage="Campo Obligatorio" 
+								rendered="#{mbmantenimientooperaciongarantia.visualizarDatosPN}"></p:inputText>
+								<p:message for="idApeMatTercero"/>
 					   		</div>
 					   		<div class="ui-g-4">
-								<p:outputLabel  value="Nombres" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oETerceroData. nombres}" autocomplete="off" maxlength="60"></p:inputText>
+								<p:outputLabel for="idNombresTercero" value="Nombres" styleClass="dsLabel1"/>
+								<p:inputText id="idNombresTercero" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oETerceroData. nombres}" autocomplete="off" maxlength="60" required="true" requiredMessage="Campo Obligatorio" 
+								rendered="#{mbmantenimientooperaciongarantia.visualizarDatosPN}"></p:inputText>
+								<p:message for="idNombresTercero"/>
 					   		</div>
 						</div>
 
 						<div class="ui-g-12 ui-md-12 ui-lg-12 " style="#{mbmantenimientooperaciongarantia.visualizarDatosPJ ? 'display: block;' : 'display:none;'}"> 	
-							<p:outputLabel  value="Nombres y Apellidos" styleClass="dsLabel1"/>
-							<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oETerceroData.nombreSuperLargo}" autocomplete="off" maxlength="140"></p:inputText>											
+							<p:outputLabel for="idNombApellTercero" value="Nombres y Apellidos" styleClass="dsLabel1"/>
+							<p:inputText id="idNombApellTercero" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oETerceroData.nombreSuperLargo}" autocomplete="off" maxlength="140" required="true" requiredMessage="Campo Obligatorio" rendered="#{mbmantenimientooperaciongarantia.visualizarDatosPJ}"></p:inputText>	
+							<p:message for="idNombApellTercero"/>																		
 					    </div>
 					    <div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
 							<div class="ui-g-6">
-								<p:outputLabel  value="Dirección" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oETerceroData.direccion}" autocomplete="off" maxlength="50"></p:inputText>
+								<p:outputLabel for="idDireccionTercero" value="Dirección" styleClass="dsLabel1"/>
+								<p:inputText id="idDireccionTercero" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oETerceroData.direccion}" autocomplete="off" maxlength="50" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
+								<p:message for="idDireccionTercero"/>	
 					   		</div>
 					   		<div class="ui-g-3">
 								<p:outputLabel  value="RUC" styleClass="dsLabel1"/>
@@ -2635,28 +2655,31 @@
 					   <div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
 							<div class="ui-g-4">
 								<p:outputLabel for="idDepartamentoTercero" value="Departamento" styleClass="dsLabel1"/>
-								<p:selectOneMenu id="idDepartamentoTercero" value="#{mbmantenimientooperaciongarantia.codigoDepartamentoGarantiaTercero}">
+								<p:selectOneMenu id="idDepartamentoTercero" value="#{mbmantenimientooperaciongarantia.codigoDepartamentoGarantiaTercero}" required="true" requiredMessage="Campo Obligatorio">
 									<p:ajax event="change" listener="#{mbmantenimientooperaciongarantia.obtenerDepartamentoGarantiaTercero()}" update="frmDlgMantenimientoTercero:cbProvinciaTercero" />
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbmantenimientooperaciongarantia.lstDepartamentoGarantiaTercero}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					            </p:selectOneMenu>
+					             <p:message for="idDepartamentoTercero"/>
 					            
 							</div>				
 							<div class="ui-g-4">
 								<p:outputLabel for="cbProvinciaTercero" value="Provincia" styleClass="dsLabel1"/>
-								<p:selectOneMenu id="cbProvinciaTercero" value="#{mbmantenimientooperaciongarantia.codigoProvinciaGarantiaTercero}" >
+								<p:selectOneMenu id="cbProvinciaTercero" value="#{mbmantenimientooperaciongarantia.codigoProvinciaGarantiaTercero}" required="true" requiredMessage="Campo Obligatorio">
 									<p:ajax event="change" listener="#{mbmantenimientooperaciongarantia.obtenerProvinciaGarantiaTercero()}" update="frmDlgMantenimientoTercero:cbDistritoTercero" />
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbmantenimientooperaciongarantia.lstProvinciaGarantiaTercero}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					            </p:selectOneMenu>
+					             <p:message for="cbProvinciaTercero"/>
 					            
 							</div>					
 							<div class="ui-g-4">
 								<p:outputLabel for="cbDistritoTercero" value="Distrito" styleClass="dsLabel1"/>
-								<p:selectOneMenu id="cbDistritoTercero" value="#{mbmantenimientooperaciongarantia.codigoDistritoGarantiaTercero}">
+								<p:selectOneMenu id="cbDistritoTercero" value="#{mbmantenimientooperaciongarantia.codigoDistritoGarantiaTercero}" required="true" requiredMessage="Campo Obligatorio">
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbmantenimientooperaciongarantia.lstDistritoGarantiaTercero}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					            </p:selectOneMenu>
+					            <p:message for="cbDistritoTercero"/>
 							</div>	
 						
 					    </div>
@@ -2678,8 +2701,9 @@
 						</div>
 						<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
 							<div class="ui-g-8">	
-								<p:outputLabel  value="Dirección Postal" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oETerceroData.direccionPostal}" autocomplete="off" maxlength="50"></p:inputText>											
+								<p:outputLabel for="idDireccionPostalTercero" value="Dirección Postal" styleClass="dsLabel1"/>
+								<p:inputText id="idDireccionPostalTercero" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oETerceroData.direccionPostal}" autocomplete="off" maxlength="50" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
+								<p:message for="idDireccionPostalTercero"/>											
 					   		</div>
 					   		<div class="ui-g-4">
 								<p:outputLabel  value="Zona Postal" styleClass="dsLabel1"/>
@@ -2693,28 +2717,30 @@
 					    <div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
 							<div class="ui-g-4">
 								<p:outputLabel for="idDepartamentoPostalTercero" value="Departamento P." styleClass="dsLabel1"/>
-								<p:selectOneMenu id="idDepartamentoPostalTercero" value="#{mbmantenimientooperaciongarantia.codigoDepartamentoGarantiaPostalTercero}">
+								<p:selectOneMenu id="idDepartamentoPostalTercero" value="#{mbmantenimientooperaciongarantia.codigoDepartamentoGarantiaPostalTercero}" required="true" requiredMessage="Campo Obligatorio">
 									<p:ajax event="change" listener="#{mbmantenimientooperaciongarantia.obtenerDepartamentoGarantiaPostalTercero()}" update="frmDlgMantenimientoTercero:cbProvinciaPostalTercero" />
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbmantenimientooperaciongarantia.lstDepartamentoGarantiaPostalTercero}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					            </p:selectOneMenu>
-					            
+					             <p:message for="idDepartamentoPostalTercero"/>  
 							</div>				
 							<div class="ui-g-4">
 								<p:outputLabel for="cbProvinciaPostalTercero" value="Provincia P." styleClass="dsLabel1"/>
-								<p:selectOneMenu id="cbProvinciaPostalTercero" value="#{mbmantenimientooperaciongarantia.codigoProvinciaGarantiaPostalTercero}" >
+								<p:selectOneMenu id="cbProvinciaPostalTercero" value="#{mbmantenimientooperaciongarantia.codigoProvinciaGarantiaPostalTercero}" required="true" requiredMessage="Campo Obligatorio">
 									<p:ajax event="change" listener="#{mbmantenimientooperaciongarantia.obtenerProvinciaGarantiaPostalTercero()}" update="frmDlgMantenimientoTercero:cbDistritoPostalTercero" />
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbmantenimientooperaciongarantia.lstProvinciaGarantiaPostalTercero}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					            </p:selectOneMenu>
+					            <p:message for="cbProvinciaPostalTercero"/>
 					            
 							</div>					
 							<div class="ui-g-4">
 								<p:outputLabel for="cbDistritoPostalTercero" value="Distrito P." styleClass="dsLabel1"/>
-								<p:selectOneMenu id="cbDistritoPostalTercero" value="#{mbmantenimientooperaciongarantia.codigoDistritoGarantiaPostalTercero}">
+								<p:selectOneMenu id="cbDistritoPostalTercero" value="#{mbmantenimientooperaciongarantia.codigoDistritoGarantiaPostalTercero}" required="true" requiredMessage="Campo Obligatorio">
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbmantenimientooperaciongarantia.lstDistritoGarantiaPostalTercero}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					            </p:selectOneMenu>
+					            <p:message for="cbDistritoPostalTercero"/>
 							</div>		
 						
 					    </div>
@@ -2735,14 +2761,12 @@
 					    	<div class="ui-g-3">
 								<p:outputLabel  value="Proveedor" styleClass="dsLabel1"/>
 								<p:selectOneMenu value="#{mbmantenimientooperaciongarantia.oETerceroData.tipoProveedor}">
-									<f:selectItem itemLabel="-Seleccione-" itemValue="-1" />
 									<f:selectItems value="#{mbmantenimientooperaciongarantia.lstProveedor}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					            </p:selectOneMenu>
 							</div>	
 							<div class="ui-g-3">
 								<p:outputLabel  value="Aceptante" styleClass="dsLabel1"/>
 								<p:selectOneMenu value="#{mbmantenimientooperaciongarantia.oETerceroData.tipoAceptante}">
-									<f:selectItem itemLabel="-Seleccione-" itemValue="-1" />
 									<f:selectItems value="#{mbmantenimientooperaciongarantia.lstAceptante}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					            </p:selectOneMenu>
 							</div>	
@@ -2766,28 +2790,31 @@
 
  						<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
 							<div class="ui-g-4">
-								<p:outputLabel  value="Clase Persona" styleClass="dsLabel1"/>
-								<p:selectOneMenu value="#{mbmantenimientooperaciongarantia.oETerceroData.codigoTipoPersona}">
+								<p:outputLabel for="idClasePersonaTercero" value="Clase Persona" styleClass="dsLabel1"/>
+								<p:selectOneMenu id="idClasePersonaTercero" value="#{mbmantenimientooperaciongarantia.oETerceroData.codigoTipoPersona}" required="true" requiredMessage="Campo Obligatorio">
 								<p:ajax event="change" listener="#{mbmantenimientooperaciongarantia.validarClasePersona()}" update="frmDlgMantenimientoTercero:pnlPersonaNatural" />
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbmantenimientooperaciongarantia.lstClasePersona}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
 					            </p:selectOneMenu>
+					            <p:message for="idClasePersonaTercero"/>
 							</div>	
 							<h:panelGroup id="pnlPersonaNatural"  layout="block" style="#{mbmantenimientooperaciongarantia.visualizarDatosPersonaNatural ? 'display:block;' : 'display:none'}">
 								 <div class="ui-g-8 ui-md-8 ui-lg-8 ui-g-nopad">
 								 	<div class="ui-g-6">
-										<p:outputLabel  value="Estado Civ." styleClass="dsLabel1"/>
-										<p:selectOneMenu value="#{mbmantenimientooperaciongarantia.oETerceroData.codigoEstadoCivil}">
+										<p:outputLabel for="idEstCivTercero" value="Estado Civ." styleClass="dsLabel1"/>
+										<p:selectOneMenu id="idEstCivTercero" value="#{mbmantenimientooperaciongarantia.oETerceroData.codigoEstadoCivil}" required="true" requiredMessage="Campo Obligatorio" rendered="#{mbmantenimientooperaciongarantia.visualizarDatosPersonaNatural}">
 											<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 											<f:selectItems value="#{mbmantenimientooperaciongarantia.lstEstadoCivil}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
 							            </p:selectOneMenu>
+							             <p:message for="idEstCivTercero"/>
 									</div>	
 									<div class="ui-g-6">
-										<p:outputLabel  value="Sexo" styleClass="dsLabel1"/>
-										<p:selectOneMenu value="#{mbmantenimientooperaciongarantia.oETerceroData.codigoSexo}">
+										<p:outputLabel for="idSexoTercero" value="Sexo" styleClass="dsLabel1"/>
+										<p:selectOneMenu id="idSexoTercero" value="#{mbmantenimientooperaciongarantia.oETerceroData.codigoSexo}" required="true" requiredMessage="Campo Obligatorio" rendered="#{mbmantenimientooperaciongarantia.visualizarDatosPersonaNatural}">
 											<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 											<f:selectItems value="#{mbmantenimientooperaciongarantia.lstSexo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
 							            </p:selectOneMenu>
+							            <p:message for="idSexoTercero"/>
 									</div>	
 								 </div>				
 							</h:panelGroup>
@@ -2802,9 +2829,11 @@
 
 			</div>
 			<div class="pie">
-				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgMantenimientoTercero').hide();"></p:commandButton>
-				<p:commandButton styleClass="dsBoton1 tamanio4 principal" value="Grabar" onclick="PF('dlgPreload').show();"
-				oncomplete="PF('dlgPreload').hide();PF('dlgMantenimientoTercero').hide();" action="#{mbmantenimientooperaciongarantia.grabarTercero()}" update=":frmDlgMensajeOperacionAjax">
+				<p:commandButton styleClass="dsBoton1 secundario" process="@this" value="Cancelar" onclick="PF('dlgMantenimientoTercero').hide();">
+					<p:ajax update="frmDlgMantenimientoTercero" resetValues="true" />
+				</p:commandButton>
+				<p:commandButton styleClass="dsBoton1 tamanio4 principal" value="Grabar" process="@form" onclick="PF('dlgPreload').show();"
+				oncomplete="PF('dlgPreload').hide();" action="#{mbmantenimientooperaciongarantia.grabarTercero()}" update=":frmDlgMensajeOperacionAjax,frmDlgMantenimientoTercero">
 				</p:commandButton>
 			</div>
 		</div>
@@ -3337,83 +3366,7 @@
 
 
     <script type="text/javascript">
-		 window.onload = function() {
-		 	
-		 	var nroGarantia= document.getElementById("form:idNroGarantia") != null ? document.getElementById("form:idNroGarantia") : "";
-		 	var areaTerreno= document.getElementById("form:idAreaTerreno_input") != null ? document.getElementById("form:idAreaTerreno_input") : "";
-		 	var areaConstruida= document.getElementById("form:idAreaConstruida_input") != null ? document.getElementById("form:idAreaConstruida_input") : "";
-		 	var pisos= document.getElementById("form:idPisos_input") != null ? document.getElementById("form:idPisos_input") : "";
-		 	var valorGravPre= document.getElementById("form:idValorGravamenPredio_input") != null ? document.getElementById("form:idValorGravamenPredio_input") : "";
-		 	var limitePred= document.getElementById("form:idLimitePredio_input") != null ? document.getElementById("form:idLimitePredio_input") : "";
-		 	var ValActPred= document.getElementById("form:idValorActualPredio_input") != null ? document.getElementById("form:idValorActualPredio_input") : "";
-		 	var ValRealPred= document.getElementById("form:idValorRealizPredio_input") != null ? document.getElementById("form:idValorRealizPredio_input") : "";
-		 	var CorrelPolPred= document.getElementById("form:idCorrelPoliPredio_input") != null ? document.getElementById("form:idCorrelPoliPredio_input") : "";
-		 	var idInforTasPred = document.getElementById("form:idInforTasPred_input") != null ? document.getElementById("form:idInforTasPred_input") : "";
-
-		 	var ValorRealizVeh= document.getElementById("form:ValorRealizVeh_input") != null ? document.getElementById("form:ValorRealizVeh_input") : "";
-		 	var idValorGravVeh= document.getElementById("form:idValorGravVeh_input") != null ? document.getElementById("form:idValorGravVeh_input") : "";
-		 	var idLimiteVeh= document.getElementById("form:idLimiteVeh_input") != null ? document.getElementById("form:idLimiteVeh_input") : "";
-		 	var idValorActVeh= document.getElementById("form:idValorActVeh_input") != null ? document.getElementById("form:idValorActVeh_input") : "";
-		 	var idFabricacVeh= document.getElementById("form:idFabricacVeh_input") != null ? document.getElementById("form:idFabricacVeh_input") : "";
-			var idCorrelPoliVeh= document.getElementById("form:idCorrelPoliVeh_input") != null ? document.getElementById("form:idCorrelPoliVeh_input") : "";
-			var idInfTasVeh = document.getElementById("form:idInfTasVeh_input") != null ? document.getElementById("form:idInfTasVeh_input") : "";
-
-			var idCantidadAcciones= document.getElementById("form:idCantidadAcciones_input") != null ? document.getElementById("form:idCantidadAcciones_input") : "";
-		 	var idValorNomAcc= document.getElementById("form:idValorNomAcc_input") != null ? document.getElementById("form:idValorNomAcc_input") : "";
-		 	var idValorMercAcc= document.getElementById("form:idValorMercAcc_input") != null ? document.getElementById("form:idValorMercAcc_input") : "";
-		 	var idTotalValNomAcc= document.getElementById("form:idTotalValNomAcc_input") != null ? document.getElementById("form:idTotalValNomAcc_input") : "";
-		 	var idTotalValMercAcc= document.getElementById("form:idTotalValMercAcc_input") != null ? document.getElementById("form:idTotalValMercAcc_input") : "";
-		 	var idValorActAcc= document.getElementById("form:idValorActAcc_input") != null ? document.getElementById("form:idValorActAcc_input") : "";
-		 	var idInfTasAcc = document.getElementById("form:idInfTasAcc_input") != null ? document.getElementById("form:idInfTasAcc_input") : "";
-		 	var idMontoFianFianza= document.getElementById("form:idMontoFianFianza_input") != null ? document.getElementById("form:idMontoFianFianza_input") : "";
-		 	var idInfTasFian = document.getElementById("form:idInfTasFian_input") != null ? document.getElementById("form:idInfTasFian_input") : ""; 
-
-		 	var idCantidadMaq= document.getElementById("form:idCantidadMaq_input") != null ? document.getElementById("form:idCantidadMaq_input") : "";
-		 	var idValGravMaq= document.getElementById("form:idValGravMaq_input") != null ? document.getElementById("form:idValGravMaq_input") : "";
-		 	var idLimiteMaq= document.getElementById("form:idLimiteMaq_input") != null ? document.getElementById("form:idLimiteMaq_input") : "";
-		 	var idValorRealMaq= document.getElementById("form:idValorRealMaq_input") != null ? document.getElementById("form:idValorRealMaq_input") : "";
-		 	var idValorActMaq= document.getElementById("form:idValorActMaq_input") != null ? document.getElementById("form:idValorActMaq_input") : "";
-		 	var idInfTasMaq = document.getElementById("form:idInfTasMaq_input") != null ? document.getElementById("form:idInfTasMaq_input") : "";
-		 	var idCorrelPolMaq = document.getElementById("form:idCorrelPolMaq_input") != null ? document.getElementById("form:idCorrelPolMaq_input") : "";
-
-		 	var idCantidadMer= document.getElementById("form:idCantidadMer_input") != null ? document.getElementById("form:idCantidadMer_input") : "";
-		 	var idValTasaMer= document.getElementById("form:idValTasaMer_input") != null ? document.getElementById("form:idValTasaMer_input") : "";
-		 	var idValGravMer= document.getElementById("form:idValGravMer_input") != null ? document.getElementById("form:idValGravMer_input") : "";
-		 	var idValorActMer= document.getElementById("form:idValorActMer_input") != null ? document.getElementById("form:idValorActMer_input") : "";
-		 	var idValActualMer= document.getElementById("form:idValActualMer_input") != null ? document.getElementById("form:idValActualMer_input") : "";
-		 	var idCorrelPolMer= document.getElementById("form:idCorrelPolMer_input") != null ? document.getElementById("form:idCorrelPolMer_input") : "";
-
-		 	var camposInputTextPredio = [nroGarantia,areaTerreno,areaConstruida,pisos,valorGravPre,
-		 	limitePred,ValActPred,ValRealPred,CorrelPolPred,idInforTasPred];
-		 	if(camposInputTextPredio != null){
-				limpiarCampoInputText(camposInputTextPredio);
-		 	}
-		 	var camposInputTextVehiculo = [ValorRealizVeh,idValorGravVeh,idLimiteVeh,idValorActVeh,idFabricacVeh,idCorrelPoliVeh,idInfTasVeh];
-		 	if(camposInputTextVehiculo != null){
-				limpiarCampoInputText(camposInputTextVehiculo);
-		 	}
-		 		
-		 	var camposInputTextAcciones = [idCantidadAcciones,idValorNomAcc,idValorMercAcc,idTotalValNomAcc,idTotalValMercAcc,idValorActAcc,idInfTasAcc];
-		 	if(camposInputTextAcciones != null){
-				limpiarCampoInputText(camposInputTextAcciones);
-		 	}
-		 		 	
-		 	var camposInputTextFianzas = [idMontoFianFianza,idInfTasFian];
-		 	if(camposInputTextFianzas != null){
-				limpiarCampoInputText(camposInputTextFianzas);
-		 	}		 	
-		 	
-		 	var camposInputTextMaquinaria = [idCantidadMaq,idValGravMaq,idLimiteMaq,idValorRealMaq,idValorActMaq,idInfTasMaq,idCorrelPolMaq];
-		 	if(camposInputTextMaquinaria != null){
-				limpiarCampoInputText(camposInputTextMaquinaria);
-		 	}
-		 	
-		 	var camposInputTextMercaderia = [idCantidadMer,idValTasaMer,idValGravMer,idValorActMer,idValActualMer,idCorrelPolMer];
-		 	if(camposInputTextMercaderia != null){
-				limpiarCampoInputText(camposInputTextMercaderia);
-		 	}
-			
-        }
+		
 	
 	</script>
 </f:view>

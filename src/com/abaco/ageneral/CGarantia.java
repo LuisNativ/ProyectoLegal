@@ -2478,14 +2478,14 @@ public class CGarantia {
 		return resultado;
 	}
 	
-	public EPoliza buscarPolizaAsociadoPrestamoMaxCorrelativo(long numeroOperacion){
+	public EPoliza buscarPolizaAsociadoGarantiaMaxCorrelativo(long codigoGarantia){
 		IConexion oIConexion = null;
 		EPoliza resultado = null;
 		DAOGarantia oDAOGarantia= null;
 		try {
 			oIConexion = FabricaConexion.creaConexion();			
 			oDAOGarantia = new DAOGarantia(oIConexion);
-			resultado = oDAOGarantia.buscarPolizaAsociadoPrestamoMaxCorrelativo(numeroOperacion);	
+			resultado = oDAOGarantia.buscarPolizaAsociadoGarantiaMaxCorrelativo(codigoGarantia);	
 			
 		} catch (Exception e) {
 			UManejadorLog.error("Control: Error al obtener: " + e.getMessage());

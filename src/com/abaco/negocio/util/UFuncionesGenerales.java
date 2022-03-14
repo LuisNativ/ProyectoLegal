@@ -58,11 +58,12 @@ public class UFuncionesGenerales {
 	}
 
 	public static String revisaCadena(String strCadena) {
-		String strResultado = strCadena;
-		if (strResultado == null || strResultado.trim().length() == 0) {
-			strResultado = "";
+		String strResultado = "";
+		if (strCadena == null || strCadena.trim().length() == 0) {
+			strCadena = "";
 		}
-		return strResultado.trim();
+		strResultado = strCadena.trim();
+		return strResultado;
 	}
 
 	public static EMensaje formateaErrorSQL(String strErrorSQL) {

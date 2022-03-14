@@ -401,8 +401,8 @@ public class BOGarantia {
 		EDocumentoGenerado lista=oCGarantia.buscarMaestroDocumentoGeneradoF7420(eDocumentoGenerado);
 		return lista;
 	}
-	public EPoliza buscarPolizaAsociadoPrestamoMaxCorrelativo(long numeroOperacion){					
-		EPoliza lista=oCGarantia.buscarPolizaAsociadoPrestamoMaxCorrelativo(numeroOperacion);
+	public EPoliza buscarPolizaAsociadoGarantiaMaxCorrelativo(long codigoGarantia){					
+		EPoliza lista=oCGarantia.buscarPolizaAsociadoGarantiaMaxCorrelativo(codigoGarantia);
 		return lista;
 	}
 	public List<ESaldoServicio> obtenerSaldosServiciosCliente(int codigoCliente){

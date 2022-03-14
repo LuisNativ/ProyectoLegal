@@ -78,7 +78,7 @@ public class DAOGarantia extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_BUS_MAESTROCONTRATO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_MAESTROCONTRATO("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_ULTIMOCONTRATOGARANTIAGENERADO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_ULTIMOCONTRATOGARANTIAGENERADO() }";
 	private static final String SP_ABACOINLEGAL_BUS_MAESTRODOCUMENTOGENERADO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_MAESTRODOCUMENTOGENERADO("+parametrosSP(4)+") }";
-	private static final String SP_ABACOINLEGAL_BUS_POLIZAASOCIADOPRESTAMO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_POLIZAASOCIADOPRESTAMO("+parametrosSP(1)+") }";
+	private static final String SP_ABACOINLEGAL_BUS_POLIZAASOCIADAGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_POLIZAASOCIADAGARANTIA("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_GARANTIAPORLIBERAR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_GARANTIAPORLIBERAR("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_GARANTIAPORCONSTITUIR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_GARANTIAPORCONSTITUIR("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_GARANTIASOLICITUD="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_GARANTIASOLICITUD("+parametrosSP(1)+") }";
@@ -3232,40 +3232,41 @@ public class DAOGarantia extends InstanciaAcceso{
 		return oEODocumentoGenerado;
 	}
 	
-	public EPoliza buscarPolizaAsociadoPrestamoMaxCorrelativo(long numeroOperacion){
+	public EPoliza buscarPolizaAsociadoGarantiaMaxCorrelativo(long codigoGarantia){
 		List<Object> lstParametrosEntrada;
 		ResultSet oResultSet = null;
-		EPoliza oEPolizaPrestamo= null;
+		EPoliza oEPolizaGarantia= null;
 		
 		try {
 			lstParametrosEntrada = new ArrayList<Object>();	
-			lstParametrosEntrada.add(numeroOperacion);
-			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_BUS_POLIZAASOCIADOPRESTAMO, lstParametrosEntrada, null);
+			lstParametrosEntrada.add(codigoGarantia);
+			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_BUS_POLIZAASOCIADAGARANTIA, lstParametrosEntrada, null);
 			if (oResultSet != null) {
 				while (oResultSet.next()) {
-					oEPolizaPrestamo = new EPoliza();
-					oEPolizaPrestamo.setNumeroOperacion(oResultSet.getLong("NUMPRE"));
-					oEPolizaPrestamo.setCodigoCiaSeguro(oResultSet.getInt("CIAS22"));
-					oEPolizaPrestamo.setNumeroPoliza(UFuncionesGenerales.revisaCadena(oResultSet.getString("POLIZA")));
-					oEPolizaPrestamo.setCorrelativoPoliza(oResultSet.getInt("CORP22"));
-					oEPolizaPrestamo.setTipoPoliza(oResultSet.getInt("TIPP22"));
-					oEPolizaPrestamo.setCodigoBrocker(oResultSet.getInt("BROC22"));
-					oEPolizaPrestamo.setFechaInicioPoliza(oResultSet.getDate("FECIPO"));
-					oEPolizaPrestamo.setFechaVencimientoPoliza(oResultSet.getDate("FECPOL"));
-					oEPolizaPrestamo.setFechaRenovacion(oResultSet.getDate("FECREN"));
-					oEPolizaPrestamo.setFechaOrdenPago(oResultSet.getDate("FECPAG"));
-					oEPolizaPrestamo.setMontoPrimaNetaAnual(oResultSet.getDouble("PNETAA"));
-					oEPolizaPrestamo.setDescripcionCiaSeguro(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCCIASEG")));
-					oEPolizaPrestamo.setDescripcionTipoPoliza(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCTIPPOL")));
-					oEPolizaPrestamo.setDescripcionBrockerSeguro(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCBROC")));
-					oEPolizaPrestamo.setAbreviacionMonedaPrimaNeta(UFuncionesGenerales.revisaCadena(oResultSet.getString("ABRVMON")));
-					oEPolizaPrestamo.setDescripcionMonedaPrimaNeta(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCMON")));
+					oEPolizaGarantia = new EPoliza();
+					oEPolizaGarantia.setCodigoCiaSeguro(oResultSet.getInt("CIASEG"));
+					oEPolizaGarantia.setNumeroPoliza(UFuncionesGenerales.revisaCadena(oResultSet.getString("POLIZA")));
+					oEPolizaGarantia.setCorrelativoPoliza(oResultSet.getInt("CORPOL"));
+					oEPolizaGarantia.setTipoPoliza(oResultSet.getInt("TIPPOL"));
+					oEPolizaGarantia.setCodigoBrocker(oResultSet.getInt("BROCKE"));
+					oEPolizaGarantia.setFechaInicioPoliza(oResultSet.getDate("FECIPO"));
+					oEPolizaGarantia.setFechaVencimientoPoliza(oResultSet.getDate("FECPOL"));
+					oEPolizaGarantia.setValorPoliza(oResultSet.getDouble("VALPOL"));
+					oEPolizaGarantia.setCodigoMonedaGarantia(oResultSet.getInt("MONEDA"));
+					oEPolizaGarantia.setNumeroEndoso(UFuncionesGenerales.revisaCadena(oResultSet.getString("ENDOSO")));
+					oEPolizaGarantia.setFechaEndoso(oResultSet.getDate("FECEND"));
+					oEPolizaGarantia.setDescripcionCiaSeguro(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCCIASEG")));
+					oEPolizaGarantia.setDescripcionTipoPoliza(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCTIPPOL")));
+					oEPolizaGarantia.setDescripcionBrockerSeguro(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCBROC")));
+					oEPolizaGarantia.setAbreviacionMonedaPoliza(UFuncionesGenerales.revisaCadena(oResultSet.getString("ABRVMON")));
+					oEPolizaGarantia.setDescripcionMonedaPoliza(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCMON")));
+					oEPolizaGarantia.setDescripcionEstadoPoliza(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCEST")));
 				}											
 		    }
 		} catch(Exception objEx) {
 			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
 		}
-		return oEPolizaPrestamo;
+		return oEPolizaGarantia;
 	}
 	
 	public List<ESaldoServicio> obtenerSaldosServiciosCliente(int codigoCliente) {
