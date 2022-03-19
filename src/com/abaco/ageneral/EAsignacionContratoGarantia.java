@@ -46,9 +46,9 @@ public @Data class EAsignacionContratoGarantia {
 	//Adicionales
 	private String abreviacionMoneda;
 	private String descripcionMoneda;
-	private Double montoSaldoCredito;
-	private Double montoCoberturado;
-	private Double porcentajeCoberturado;
+	private double montoSaldoCredito;
+	private double montoCoberturado;
+	private double porcentajeCoberturado;
 	private String descripcionEstadoCredito;
 
 	

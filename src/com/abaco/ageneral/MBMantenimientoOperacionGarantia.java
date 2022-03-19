@@ -270,6 +270,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	@Getter @Setter private boolean visualizarDatosPersonaNatural;
 	@Getter @Setter private boolean visualizarDatosPN,visualizarDatosPJ;
 	@Getter @Setter private boolean renderizarBotonTercero;
+	@Getter @Setter private boolean renderizarPolizaGarantia;
 	
 	@PostConstruct
 	public void inicio() {
@@ -363,6 +364,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				switch(oETipoGarantiaLoad.getCodigo2()){
 				case  UTipoGarantia.PREDIO:
 					 indicadorPnlDetalleGarantiaPredio= true;
+					 renderizarPolizaGarantia = true;
 					 listarUbigeoGarantia();			 
 					 break;
 				case  UTipoGarantia.VEHICULAR: indicadorPnlDetalleGarantiaVehicular= true; break;
@@ -376,7 +378,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				case  UTipoGarantia.FLUJOS: 
 				case  UTipoGarantia.SALDOCUENTA:
 				case  UTipoGarantia.INVENTARIO:
-					indicadorPnlDetalleGarantiaOtros = true; break;
+					indicadorPnlDetalleGarantiaOtros = true;
+					break;
 				default:	
 					 indicadorPnlDetalleGarantiaPredio= false;
 					 indicadorPnlDetalleGarantiaVehicular= false;
@@ -430,6 +433,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 					oEGarantiaData.setMontoComercial(oEGarantiaAnexoData.getMontoComercial());
 					oEGarantiaData.setLstPropietario(oEGarantiaAnexoData.getLstPropietario());
 					oEGarantiaData.setCodigoAsignacionInmueble(oEGarantiaAnexoData.getCodigoAsignacionInmueble());
+					oEGarantiaData.setMontoValorizacion(oEGarantiaAnexoData.getMontoValorizacion());
 				}
 				
 				EPersona ePersona = new EPersona();
@@ -442,7 +446,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				//Habilitar Paneles de Acuerdo al Tipo de Garantía
 				switch(oEGarantiaLoad.getCodigoTipoGarantia()){
 				case  UTipoGarantia.PREDIO:
-					 indicadorPnlDetalleGarantiaPredio= true;		
+					 indicadorPnlDetalleGarantiaPredio= true;
+					 renderizarPolizaGarantia=true;
 					 listarUbigeoGarantia();
 					 visualizarGenerarContratoPrivado = true;
 					 EGarantiaSolicitud obj = oBOGarantia.buscarSolicitudxGarantia(oEGarantiaData.getCodigoGarantia());
@@ -455,18 +460,20 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 					 }
 					 visualizarInmuebleAdicional = oEGarantiaData.getCodigoAsignacionInmueble() == 1 ? true : false; 
 					break;
-				case  UTipoGarantia.VEHICULAR: indicadorPnlDetalleGarantiaVehicular= true; break;
+				case  UTipoGarantia.VEHICULAR: indicadorPnlDetalleGarantiaVehicular= true; renderizarPolizaGarantia=true; break;
 				case  UTipoGarantia.ACCIONES: indicadorPnlDetalleGarantiaAcciones=true; break;
 				case  UTipoGarantia.FIANZAS: indicadorPnlDetalleGarantiaFianzas=true; break;
-				case  UTipoGarantia.MAQUINARIA: indicadorPnlDetalleGarantiaMaquinaria=true; break;
-				case  UTipoGarantia.MERCADERIAS: indicadorPnlDetalleGarantiaMercaderia=true; break;
+				case  UTipoGarantia.MAQUINARIA: indicadorPnlDetalleGarantiaMaquinaria=true;renderizarPolizaGarantia=true;break;
+				case  UTipoGarantia.MERCADERIAS: indicadorPnlDetalleGarantiaMercaderia=true;renderizarPolizaGarantia=true; break;
 				case  UTipoGarantia.WARRANT: indicadorPnlDetalleGarantiaWarrant = true; break;
-				case  UTipoGarantia.DOCUMENTOS_POR_COBRAR: indicadorPnlDetalleGarantiaDocPorCobrar = true; break;
-				case  UTipoGarantia.FIDEICOMISO_BIENES: indicadorPnlDetalleGarantiaFideicomiso = true; break;
+				case  UTipoGarantia.DOCUMENTOS_POR_COBRAR: indicadorPnlDetalleGarantiaDocPorCobrar = true;renderizarPolizaGarantia=true; break;
+				case  UTipoGarantia.FIDEICOMISO_BIENES: indicadorPnlDetalleGarantiaFideicomiso = true;renderizarPolizaGarantia=true; break;
 				case  UTipoGarantia.FLUJOS: 
 				case  UTipoGarantia.SALDOCUENTA:
 				case  UTipoGarantia.INVENTARIO:
-					indicadorPnlDetalleGarantiaOtros = true; break;
+					indicadorPnlDetalleGarantiaOtros = true; 
+					renderizarPolizaGarantia=true;
+					break;
 				default:	
 					 indicadorPnlDetalleGarantiaPredio= false;
 					 indicadorPnlDetalleGarantiaVehicular= false;
@@ -581,6 +588,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		 visualizarBotonEditarEliminarReqLegal = false;
 		 visualizarEditarInmueble = true;
 		 visualizarEliminarInmueble = true;
+		 renderizarPolizaGarantia = false;
 		 
 		 mensajeTablaPolizaPrestamo = UMensajeTabla.MSJ_1;
 	}

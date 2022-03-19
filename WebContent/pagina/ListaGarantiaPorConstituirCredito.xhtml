@@ -61,14 +61,19 @@
 				<p:tab id="tab2-1" title="Garantía Real Nueva">
 				<p:dataTable id="tblGarantia" value="#{mblistagarantiaporconstituircredito.lstGarantiaSolicitudNueva}" var="item" styleClass="dsTabla1" paginator="true" rows="12" paginatorPosition="bottom"
 							 rowKey="#{item.numeroSolicitud}" reflow="true" tableStyle="table-layout:auto">
-					<p:column headerText="N°Sol" width="10%">
+					<p:column headerText="N°Sol" width="5%">
 						<div class="dsTextoCentro">
 							<h:outputText value="#{item.numeroSolicitud}"/>
 						</div>	
 					</p:column>
-					<p:column headerText="Nombre del Socio" width="25%">
+					<p:column headerText="Código" width="10%">
+						<div class="dsTextoCorto dsTextoCentro">
+							<h:outputText value="#{item.codigoCliente}"/>
+						</div>	
+					</p:column>
+					<p:column headerText="Nombre del Socio" width="20%">
 						<div class="dsTextoCorto">
-							<h:outputText value="#{item.codigoCliente}, #{item.nombreLargo}"/>
+							<h:outputText value="#{item.nombreLargo}"/>
 						</div>
 					</p:column>
 					
@@ -101,10 +106,11 @@
 							styleClass="#{item.codigoEstadoGarantiaSolicitud eq 52 ? 'dsText3 red'
 										:item.codigoEstadoGarantiaSolicitud eq 53 ? 'dsText3 blue'
 										:item.codigoEstadoGarantiaSolicitud eq 54 ? 'dsText3 green'
+										:item.codigoEstadoGarantiaSolicitud eq 59 ? 'dsText3 sky'
 										:null}"/>					
 					</p:column>
 					<p:column headerText="" width="5%">
-						<p:commandButton styleClass="dsBoton5 green" icon="fa fa-pencil" title="Evaluar Garantía" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituircredito.evaluarSolicitud(item)}" style="#{item.codigoEstadoGarantiaSolicitud eq 54 ? 'display:none;' : 'display:block;'}"></p:commandButton>
+						<p:commandButton styleClass="dsBoton5 green" icon="fa fa-pencil" title="Evaluar Garantía" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituircredito.evaluarSolicitud(item)}"  rendered="#{item.codigoEstadoGarantiaSolicitud eq 54 or item.codigoEstadoGarantiaSolicitud eq 53 ? false : true}"></p:commandButton>
 			     	</p:column>
 				</p:dataTable>
 			    </p:tab>
@@ -157,10 +163,11 @@
 								styleClass="#{item.codigoEstadoGarantiaSolicitud eq 52 ? 'dsText3 red'
 											:item.codigoEstadoGarantiaSolicitud eq 53 ? 'dsText3 blue'
 											:item.codigoEstadoGarantiaSolicitud eq 54 ? 'dsText3 green'
+											:item.codigoEstadoGarantiaSolicitud eq 59 ? 'dsText3 sky'
 											:null}"/>					
 						</p:column>
 						<p:column headerText="" width="5%">
-							<p:commandButton styleClass="dsBoton5 green" icon="fa fa-pencil" title="Evaluar Garantía" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituircredito.evaluarSolicitud(item)}" style="#{item.codigoEstadoGarantiaSolicitud eq 54 ? 'display:none;' : 'display:block;'}"></p:commandButton>
+							<p:commandButton styleClass="dsBoton5 green" icon="fa fa-pencil" title="Evaluar Garantía" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituircredito.evaluarSolicitud(item)}" rendered="#{item.codigoEstadoGarantiaSolicitud eq 54 or item.codigoEstadoGarantiaSolicitud eq 53 ? false : true}"></p:commandButton>
 				     	</p:column>
 					</p:dataTable>
 		    	</p:tab>
@@ -233,7 +240,7 @@
 			</p:panel>
 			</h:form>	   
 		</p:tab>
-		<p:tab id="tab1-3" title="Pólizas Asociadas a Garantías" rendered="true">
+		<p:tab id="tab1-3" title="Pólizas Asociadas a Garantías" rendered="false">
 			<h:form id="formPoliza">
 			<p:panel styleClass="dsPanel2" widgetVar="pnl2" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
 			    <f:facet name="header" >

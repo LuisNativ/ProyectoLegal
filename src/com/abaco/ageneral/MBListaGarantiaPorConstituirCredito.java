@@ -23,6 +23,7 @@ import com.abaco.negocio.util.UConstante.UAccionExterna;
 import com.abaco.negocio.util.UConstante.UAccionInterna;
 import com.abaco.negocio.util.UConstante.UClaseGarantia;
 import com.abaco.negocio.util.UConstante.UEstado;
+import com.abaco.negocio.util.UConstante.UTipoCredito;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
 import com.abaco.negocio.util.UFuncionesGenerales;
 import com.abaco.negocio.util.UGeneradorQueryString;
@@ -60,9 +61,19 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 
 	/* Variables Interfaz */
 	@Getter @Setter private String tipoGarantiaBuscar;
-	@Getter @Setter private int codigoBuscar,codigoBuscarH,codigoBuscarP,codigoBuscarPoliza,codigoEstadoGarSolicitud,codigoBuscarSocio;
+	@Getter @Setter private int codigoBuscar;
+	@Getter @Setter private int codigoBuscarH;
+	@Getter @Setter private int codigoBuscarP;
+	@Getter @Setter private int codigoBuscarPoliza;
+	@Getter @Setter private int codigoEstadoGarSolicitud;
+	@Getter @Setter private int codigoBuscarSocio;
 	@Getter @Setter private int codigoTabviewIndex;
-	@Getter @Setter private String descripcionBuscar,descripcionBuscarH,descripcionBuscarP,descripcionBuscarPoliza,descripcionBuscarPoliza2,descripcionBuscarSocio;
+	@Getter @Setter private String descripcionBuscar;
+	@Getter @Setter private String descripcionBuscarH;
+	@Getter @Setter private String descripcionBuscarP;
+	@Getter @Setter private String descripcionBuscarPoliza;
+	@Getter @Setter private String descripcionBuscarPoliza2;
+	@Getter @Setter private String descripcionBuscarSocio;
 	@Getter @Setter private int indicadorTabView;
 	@Getter @Setter private int indicadorCiaSeguro; 
 	@Getter @Setter private long codigoGarantia;
@@ -139,7 +150,8 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 		List<EGarantiaSolicitud> lstGarantiaSol = oBOGarantia.listarSolicitudAsociadaGarantia(0, "");
 		if(lstGarantiaSol != null){
 			for(EGarantiaSolicitud obj: lstGarantiaSol){
-				if(obj.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS && obj.getCodigoEstadoEvaluacionLegal().equals("1")){
+				if(obj.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS && (obj.getCodigoTipoCredito() != UTipoCredito.ABAUTOSCOMERCIAL 
+						&& obj.getCodigoTipoCredito() != UTipoCredito.ABAUTOSCONSUMO) && obj.getCodigoEstadoEvaluacionLegal().equals("1")){
 					lstGarantiaSolicitudNueva.add(obj);
 				}
 			}
@@ -153,7 +165,8 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 	
 		if(lstGarantiaSol != null){
 			for(EGarantiaSolicitud obj: lstGarantiaSol){
-				if(obj.getCodigoEstadoGarantiaSolicitud() != UEstado.REGISTRADOGARANTIAPENDIENTE && 
+				if(obj.getCodigoEstadoGarantiaSolicitud() != UEstado.EVALUADOGARANTIA && (obj.getCodigoTipoCredito() != UTipoCredito.ABAUTOSCOMERCIAL 
+						&& obj.getCodigoTipoCredito() != UTipoCredito.ABAUTOSCONSUMO) && 
 				   obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES && obj.getCodigoEstadoEvaluacionLegal().equals("1")){
 					    	lstGarantiaSolicitudExistente.add(obj);			
 				}
@@ -181,7 +194,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 			lstGarantiaSolicitudExistente = new ArrayList<EGarantiaSolicitud>();
 			if(lstGarantiaSol != null){
 				for(EGarantiaSolicitud obj: lstGarantiaSol){
-					if(obj.getCodigoEstadoGarantiaSolicitud() != UEstado.REGISTRADOGARANTIAPENDIENTE &&
+					if(obj.getCodigoEstadoGarantiaSolicitud() != UEstado.EVALUADOGARANTIA &&
 						obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES && obj.getCodigoEstadoEvaluacionLegal().equals("1")){
 						lstGarantiaSolicitudExistente.add(obj);
 					}

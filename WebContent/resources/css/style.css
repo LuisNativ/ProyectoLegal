@@ -1,3 +1,47 @@
+.ui-inputgroup{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+}
+
+.ui-inputgroup .ui-inputnumber{
+	width: 100% !important;
+}
+
+.ui-inputgroup .ui-inputgroup-addon:first-child, body .ui-inputgroup .ui-inputgroup-addon-checkbox:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.ui-inputgroup .ui-inputgroup-addon, body .ui-inputgroup .ui-inputgroup-addon-checkbox {
+    padding: 0.5rem 0.5rem;
+    border-color: #ced4da;
+    background: #008040;
+    color: #ffffff;
+    min-width: 2.357rem;
+}
+.ui-inputgroup .ui-inputgroup-addon {
+    padding: 0px;
+}
+.ui-inputgroup .ui-inputgroup-addon, .ui-inputgroup .ui-inputgroup-addon-checkbox {
+    /*display: inline-block;*/
+    /*text-align: center;*/
+    /*min-width: 1.5em;*/
+    display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+    min-width: 1.8em;
+    border-width: 1px;
+    border-style: solid;
+	font-size: 12px !important;
+	font-family: latoregular !important;
+	font-weight: lighter !important;	
+	text-shadow: none !important;	
+}
+
+
 .ui-g-1, .ui-g-2, .ui-g-3, .ui-g-4, .ui-g-5, .ui-g-6, .ui-g-7, .ui-g-8, .ui-g-9, .ui-g-10, .ui-g-11, .ui-g-12 {
     float: left;
     box-sizing: border-box;
@@ -34,6 +78,7 @@
 
 .dsFieldSet1{
 	border-color: green !important;
+	width: 100% !important;
 }
 
 
@@ -88,6 +133,11 @@
 }
 .dsText3.red{
 	background-color: #cb2618!important;
+	color: #ffffff !important;
+
+}
+.dsText3.sky{
+	background-color: #37795f!important;
 	color: #ffffff !important;
 
 }
@@ -184,6 +234,7 @@
 
 /**********************************************************************************************/
 /**********************************************************************************************/
+
 /*
 ui-outputlabel ui-widget
 ui-outputlabel-rfi
@@ -2674,10 +2725,10 @@ ui-button-icon-left ui-icon ui-c fa fa-file-pdf-o
 /*ComandLink Icono para tablas o Formulario*/
 /*Se usa para icono para buscar o cerrar sesion*/
 .dsCmdlink1{
-	color: #5f666c !important;
+	color: #FFFFFF !important;
 	box-shadow: none !important;
 	font-size: 13px !important;
-	padding-right: 5px;
+	
 }
 /*Se usa como icono para barra de opciones en el panel: el color lo establece el panel*/
 .dsCmdlink2{
@@ -3155,7 +3206,7 @@ ui-message-error-detail
 	.dsDlgMantenimientoFirmantes{width:800px; height:auto;}
 	.dsDlgDetalleComprobante{width:800px; height:auto;}
 	.dsDlgRepresentanteCIA{width:600px; height:auto;}
-	.dsDlgObservacionSolicitud{width:800px; height:auto;}
+	.dsDlgObservacionSolicitud{width:600px; height:auto;}
 
 }
 
@@ -3177,7 +3228,7 @@ ui-message-error-detail
 	.dsDlgMantenimientoFirmantes{width:600px; height:auto;}
 	.dsDlgDetalleComprobante{width:600px; height:auto;}
 	.dsDlgRepresentanteCIA{width:400px; height:auto;}
-	.dsDlgObservacionSolicitud{width:600px; height:auto;}
+	.dsDlgObservacionSolicitud{width:400px; height:auto;}
 	
 }
 
@@ -3199,7 +3250,7 @@ ui-message-error-detail
 	.dsDlgMantenimientoFirmantes{width:400px; height:auto;}
 	.dsDlgDetalleComprobante{width:400px; height:auto;}
 	.dsDlgRepresentanteCIA{width:200px; height:auto;}
-	.dsDlgObservacionSolicitud{width:400px; height:auto;}
+	.dsDlgObservacionSolicitud{width:200px; height:auto;}
 }
 
 

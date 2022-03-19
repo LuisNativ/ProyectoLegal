@@ -168,6 +168,7 @@ public @Data class EGarantia {
     private List<EPersona> lstPropietario;
     private String descripcionD;
     private long numeroSolicitudCredito;
+    private double montoValorizacion;
 	
 	
 	

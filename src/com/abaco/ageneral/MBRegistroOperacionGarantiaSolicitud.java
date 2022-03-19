@@ -24,7 +24,9 @@ import com.abaco.negocio.util.UConstante.UClaseGarantia;
 import com.abaco.negocio.util.UConstante.UCreditos;
 import com.abaco.negocio.util.UConstante.UEstado;
 import com.abaco.negocio.util.UConstante.UMensajeValidacion;
+import com.abaco.negocio.util.UConstante.UModoIngreso;
 import com.abaco.negocio.util.UConstante.UMoneda;
+import com.abaco.negocio.util.UConstante.UTipoCredito;
 import com.abaco.negocio.util.UConstante.UTipoGarantia;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
 import com.abaco.negocio.util.UFuncionesGenerales;
@@ -60,6 +62,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	@Getter @Setter private List<EGarantia> lstGarantiaVinculada ;
 	@Getter @Setter private List<EAsignacionContratoGarantia> lstGarantiaDetalle ;
 	@Getter @Setter private List<EAsignacionContratoGarantia> lstCreditoGarantia;
+	@Getter @Setter private List<EGarantiaSolicitud> lstObservacionSolicitudGarantia;
 	
 	//Datos de formulario Garantia
 	@Getter @Setter private int codigoDepartamentoGarantia,codigoDepartamentoGarantiaConsulta;
@@ -112,12 +115,14 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	@Getter @Setter private boolean indicadorPnlBloqueoReq;
 	@Getter @Setter private boolean indicadorLegalFirma;
 	@Getter @Setter private int indicadorBotonRegistro;
+	@Getter @Setter private int indicadorBotonNoConforme;
 	@Getter @Setter private int indicadorBoton;
 	@Getter @Setter private int indicadorSalir;
 	@Getter @Setter private boolean deshabilitarHipoteca;
 	@Getter @Setter private boolean deshabilitarCampoAdicional,deshabilitarPorcentaje;
 	@Getter @Setter private boolean deshabilitarCampo, deshabilitarDlgCampo,deshabilitarCampoTramite; 
 	@Getter @Setter private boolean deshabilitarCampoDetGenGarantia;
+	@Getter @Setter private boolean deshabilitarObservacionSolicitud;
 	@Getter @Setter private boolean visualizarFrmGarantiaVehicular;
 	@Getter @Setter private boolean visualizarFrmGarantiaPredio;
 	@Getter @Setter private boolean visualizarFrmGarantiaMaquinaria;
@@ -129,6 +134,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	@Getter @Setter private boolean renderizarTab1;
 	@Getter @Setter private boolean renderizarTab2;
 	@Getter @Setter private boolean renderizarTab3;
+	@Getter @Setter private boolean renderizarPanelValorizacionGarantia;
 	@Getter @Setter private boolean visualizarBotonInfFinanciera;
 	@Getter @Setter private boolean visualizarBtnBuscarPoliza;
 	@Getter @Setter private boolean visualizarBotonPolizaGarantia;
@@ -148,6 +154,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	/* Variables Internas */
 	private int accionExterna;
 	private int indexPropietario;
+	private int indicadorSalida;
+	@Getter @Setter private String observacionConformidad,observacionSolicitud;
 	
 
 	@PostConstruct
@@ -188,6 +196,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		lstGarantiaVinculada = new ArrayList<EGarantia>();
 		lstGarantiaDetalle = new ArrayList<EAsignacionContratoGarantia>();
 		lstCreditoGarantia = new ArrayList<EAsignacionContratoGarantia>();
+		lstObservacionSolicitudGarantia = new ArrayList<EGarantiaSolicitud>();
 			
 		oEUsuario = (EUsuario) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.USUARIO);
 		inicializar();
@@ -254,6 +263,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 						deshabilitarCampoDetGenGarantia= true;
 						visualizarBotonPolizaGarantia = false;
 						visualizarBotonTasadorGarantia = false;
+						indicadorBotonNoConforme = 0;
+						renderizarPanelValorizacionGarantia = true;
 						if(oEGarantiaSolicitudLoad.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS){
 							visualizarFrmdeLegal = false;
 							renderizarTab2 = false;
@@ -292,8 +303,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 								oEGarantiaData.getLstPropietario().add(0, ePersona);
 							}
 							
-							if(oEGarantiaAsociadaSolicitudData.getPorcentajeAsignado() != 0){
-								oEGarantiaAsociadaSolicitudData.setPorcentajeAsignado(oEGarantiaData.getPorcentajeDisponible());
+							if(oEGarantiaAsociadaSolicitudData.getPorcentajeCubiertoGarantia() != 0){
+								oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoGarantia(oEGarantiaData.getPorcentajeDisponible());
 							}
 							
 							//Visualizar Panel según Tipo de Garantías
@@ -328,13 +339,18 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 						visualizarBtnBuscarPoliza = false;
 						visualizarBotonPolizaGarantia = true;
 						visualizarBotonTasadorGarantia = true;
+						indicadorBotonNoConforme = 1;
+						
+						renderizarPanelValorizacionGarantia = (oEGarantiaSolicitudLoad.getCodigoTipoCredito() != UTipoCredito.ABAUTOSCOMERCIAL && 
+								                               oEGarantiaSolicitudLoad.getCodigoTipoCredito() != UTipoCredito.ABAUTOSCONSUMO) ? true : false;
+						
 						if(oEGarantiaSolicitudLoad.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS){
 							renderizarTab3 = false;
 							indicadorBoton = 3;
 							indicadorBotonRegistro = 1;
 							oEGarantiaAnexoData = new EGarantia();
 							oEGarantiaData = oBOGarantia.buscarGarantiaSolicitudCompleto(oEGarantiaSolicitudLoad.getNumeroSolicitud(), oEGarantiaSolicitudLoad.getSecuenciaGarantia());
-							oEGarantiaData.setPorcentajeCubierto(oEGarantiaAsociadaSolicitudData.getPorcentajeAsignado());
+							oEGarantiaData.setPorcentajeCubierto(oEGarantiaAsociadaSolicitudData.getPorcentajeCubiertoGarantia());
 							oEGarantiaData.setCodigoCiaSeguro(oEGarantiaAsociadaSolicitudData.getCodigoCiaSeguro());
 							oEGarantiaData.setDescripcionCiaSeguro(oEGarantiaAsociadaSolicitudData.getDescripcionCiaSeguro());
 							oEGarantiaData.setPoliza(oEGarantiaAsociadaSolicitudData.getPoliza());
@@ -422,7 +438,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 					
 				}
 			}
-			
+			listarObservacionSolicitudGarantia();
 			listarDesplegable();
 		}
 	}
@@ -458,6 +474,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		descripcionBuscar2 = "";
 		montoAcumuladoSaldoCredito = 0;
 		visualizarBotonPolizaGarantia = false;
+		indicadorSalida = 0;
+		deshabilitarObservacionSolicitud = true;
 	}
 	
 	public void listarDesplegable(){
@@ -482,6 +500,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		lstTipoRegistral = oUManejadorListaDesplegable.obtieneTipoRegistral();
 		lstValorSiNo = oUManejadorListaDesplegable.obtieneValorSiNo();
 	}
+	
 	
 	
 	//Metodo para Registrar o Actualizar Solicitud y/o Garantia
@@ -529,6 +548,9 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 			if(oEUsuario.getCodigoArea() == UArea.CREDITOS){
 				oEGarantiaAsociadaSolicitud.setCodigoEstadoGarantiaSolicitud(UEstado.SOLICITAGARANTIAREGISTRO);
 				oEMensaje = oBOGarantia.modificarGarantiaSolicitud(oEGarantiaAsociadaSolicitud);
+				
+				indicadorSalida = 1;//Redirecciona Lista Solicitudes Asoc. Garantia
+				
 			}else if(oEUsuario.getCodigoArea() == UArea.LEGAL){
 				
 				oEGarantia.setUbicacion2(distribuirObservacionGarantia().getUbicacion2());
@@ -538,14 +560,40 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 				oEGarantia.setDescripcionD(distribuirObservacionGarantia().getDescripcionD());
 				oEGarantia.setComentario(distribuirObservacionGarantia().getComentario());
 
-				oEGarantiaSolicitud.setCodigoEstadoGarantiaSolicitud(UEstado.REGISTRADOGARANTIAPENDIENTE);
+				oEGarantiaSolicitud.setCodigoEstadoGarantiaSolicitud(UEstado.EVALUADOGARANTIA);
 				oEMensaje = oBOGarantia.agregarGarantiaPendienteRegistro(oEGarantiaSolicitud,oEGarantia);
+				
+				if(oEMensaje.getIdMensaje() == 0){
+					indicadorSalida = 2; //Redirecciona Mantenimiento Garantia
+				}else{
+					indicadorSalida = 3; //Redirecciona Lista de Solicitudes Asoc. Garantia
+				}
+				
 			}
 			
 		}
 		
 		UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 		RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacion').show();");
+	}
+	
+	public void grabarNoConformidadSolicitud(){
+		if(oEGarantiaAsociadaSolicitudData != null){
+			EGarantiaSolicitud eGarantiaSolicitud = oEGarantiaAsociadaSolicitudData;
+			eGarantiaSolicitud.setObservacionConformidad(observacionConformidad);
+			eGarantiaSolicitud.setUsuarioRegistro(oEUsuario);
+			eGarantiaSolicitud.setCodigoEstadoGarantiaSolicitud(UEstado.OBSERVADOGARANTIA);
+			
+			if(oEUsuario.getCodigoArea() == UArea.LEGAL){
+				oEMensaje = oBOGarantia.agregarObservacionSolicitudGarantiayModificarSolicitud(eGarantiaSolicitud);
+				
+				indicadorSalida = 3;
+				
+				UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
+				RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacion').show();");
+			}
+			
+		}
 	}
 	
 	//Método para Actualizar Información de la Solicitud 
@@ -571,6 +619,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 				//Actualizará Datos del Archivo F7325,F7363 y GarantiaAnexoF7325
 				oEMensaje = oBOGarantia.actualizarGarantiaSolicitud(oEGarantiaSolicitud,
 						oEGarantiaDetalleSolicitud,oEGarantiaAsociadaSolicitud);
+				indicadorSalida = 1;//Redirecciona Lista Solicitudes Asoc. Garantia
 			}
 			
 		}
@@ -580,7 +629,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		
 	}
 	
-	//Método para Registrar Asiento (No se Usa Por el Momento)
+	//Método para Registrar Asiento 
 	public void registrarAsientoGarantia(){
 		//double montoAcumAsignadoCredito= 0;
 		double montoAcumSaldoCredito = 0;
@@ -640,8 +689,13 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
     				oEGarantia.setDescripcionC(distribuirObservacionGarantia().getDescripcionC());
     				oEGarantia.setComentario(distribuirObservacionGarantia().getComentario());
 					
-					oEGarantiaAsociadaSolicitud.setCodigoEstadoGarantiaSolicitud(UEstado.REGISTRADOGARANTIAPENDIENTE);
+					oEGarantiaAsociadaSolicitud.setCodigoEstadoGarantiaSolicitud(UEstado.EVALUADOGARANTIA);
 					oEMensaje = oBOGarantia.modificarSolicitudyGenerarAsientoyDocumentacionGarantia(oEGarantiaAsientoTramite,oEGarantiaAsociadaSolicitud,oEGarantia,oESolicitudDesembolsoGarantia);
+					if(oEMensaje.getIdMensaje() == 0){
+						indicadorSalida = 4; //Redirecciona Tramite Garantia
+					}else{
+						indicadorSalida = 3; //Redirecciona Lista de Solicitudes Asoc. Garantia
+					}
 
 				}
 								
@@ -665,14 +719,14 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		
 		
 		if(oEUsuario.getCodigoArea() == UArea.LEGAL){
-			if(indicadorBotonRegistro == 1){
+			if(indicadorSalida == 2){
 				ruta = "MantenimientoOperacionGarantia.xhtml";
 				EGarantia eGarantia = oBOGarantia.buscarGarantia(oBOGarantia.buscarGarantiaAsociadaSolicitud
 						(oEGarantiaSolicitudLoad.getNumeroSolicitud(), oEGarantiaSolicitudLoad.getSecuenciaGarantia()).getCodigoNroIngresoGarantia()); 
 						;
 				UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.EDITAR);
 				UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.FICHA_PARAMETRO, eGarantia);
-			}else if(indicadorBoton == 4){
+			}else if(indicadorSalida == 4){
 				UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.EDITAR);
 				UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.FICHA_PARAMETRO, oEGarantiaData);
 				ruta = "TramiteOperacionGarantia.xhtml";
@@ -681,7 +735,10 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 			}
 			
 		}else if(oEUsuario.getCodigoArea() == UArea.CREDITOS){
-			ruta = "ListaGarantiaPorConstituirCredito.xhtml";
+			if(indicadorSalida == 1){
+				ruta = "ListaGarantiaPorConstituirCredito.xhtml";
+			}
+			
 		}else{
 			ruta = "BandejaOperacionOtros.xhtml";
 		}
@@ -692,7 +749,16 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		UManejadorSesionWeb.redirigePagina(objUGeneradorQueryString.obtieneUrlConParametros());
 	}
 	
+	public void listarObservacionSolicitudGarantia(){
+		lstObservacionSolicitudGarantia = oBOGarantia.listarObservacionSolicitudAsociadaGarantia(oEGarantiaSolicitudLoad);
+	}
 	
+	public void consultarObservacionSolicitud(EGarantiaSolicitud oEGarantiaSolicitudItem){
+		if(oEGarantiaSolicitudItem != null){
+			observacionSolicitud = oEGarantiaSolicitudItem.getObservacionConformidad();
+			deshabilitarObservacionSolicitud = true;
+		}
+	}
 	
 	//*****************************************************//
 	//Begin: Metodos para la Solicitud Asociada a la Garantía (TAB=1)
@@ -819,9 +885,14 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	*/
 	
 	public void calcularPorcentaje(){
+		double saldoCubiertoSolicitud = 0;
+		double porcentajeCubiertoSolicitud = 0;
+		double saldoDisponibleGarantia = 0;
+		double porcentajeCubiertoGarantia = 0;
+		double porcentajeDisponibleGarantia = 0;
 		double porcentajeGarantia = 0;
-		double montoSolicitud = oEGarantiaSolicitudData.getMontoSolicitud() != 0 ? oEGarantiaSolicitudData.getMontoSolicitud() : 1;
-		double montoVRI = oEGarantiaAsociadaSolicitudData.getMontoValorRealizacion() != 0 ? oEGarantiaAsociadaSolicitudData.getMontoValorRealizacion() : 1;
+		double montoSolicitud = oEGarantiaSolicitudData.getMontoSolicitud() != 0 ? oEGarantiaSolicitudData.getMontoSolicitud() : 0;
+		double montoVRI = oEGarantiaAsociadaSolicitudData.getMontoValorRealizacion() != 0 ? oEGarantiaAsociadaSolicitudData.getMontoValorRealizacion() : 0;
 		//double montoGarantia = oEGarantiaSolicitudData.getMontoGarantia() != 0 ? oEGarantiaSolicitudData.getMontoGarantia(): 1;
 		double montoDisponible = 0;
 		
@@ -829,16 +900,28 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		if(oEGarantiaSolicitudData.getCodigoMonedaGarantia() == oEGarantiaSolicitudData.getCodigoMonedaSolicitud() ){
 			
 			//Evaluamos los Montos de Solicitud y Garantia
-			if( montoSolicitud != 0 && montoVRI !=0){
-				porcentajeGarantia = montoVRI / montoSolicitud;
-				montoDisponible =  montoVRI - montoSolicitud;
-				oEGarantiaAsociadaSolicitudData.setPorcentajeAsignado(porcentajeGarantia);
-				oEGarantiaAsociadaSolicitudData.setSaldoDisponible(montoDisponible);
+			if( montoSolicitud > 0 && montoVRI > 0){
+				saldoCubiertoSolicitud = (montoSolicitud - montoVRI) < 0 ? 0 :  (montoSolicitud - montoVRI); 
+				porcentajeCubiertoSolicitud = (montoSolicitud - montoVRI) < 0 ? 100 : (montoVRI/montoSolicitud)*100;
+				saldoDisponibleGarantia = (montoVRI - montoSolicitud) < 0 ? 0 : (montoVRI - montoSolicitud);
+				porcentajeCubiertoGarantia = (montoVRI - montoSolicitud) < 0 ? 100 : (montoSolicitud/montoVRI)*100;
+				porcentajeDisponibleGarantia = porcentajeCubiertoGarantia == 100 ? 0 : (100 - porcentajeCubiertoGarantia);
+			
+				oEGarantiaAsociadaSolicitudData.setSaldoMontoSolicitud(saldoCubiertoSolicitud);
+				oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoSolicitud(porcentajeCubiertoSolicitud);
+				oEGarantiaAsociadaSolicitudData.setSaldoDisponibleGarantia(saldoDisponibleGarantia);
+				oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoGarantia(porcentajeCubiertoGarantia);
+				oEGarantiaAsociadaSolicitudData.setPorcentajeDisponible(porcentajeDisponibleGarantia);
+				
 				mensajePorcentaje = UMensajeValidacion.MSJ_7;
 				
 			}else{	
-				porcentajeGarantia = 0;
-				oEGarantiaAsociadaSolicitudData.setPorcentajeAsignado(porcentajeGarantia);
+				oEGarantiaAsociadaSolicitudData.setSaldoMontoSolicitud(0);
+				oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoSolicitud(0);
+				oEGarantiaAsociadaSolicitudData.setSaldoDisponibleGarantia(0);
+				oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoGarantia(0);
+				oEGarantiaAsociadaSolicitudData.setPorcentajeDisponible(0);
+			//	oEGarantiaAsociadaSolicitudData.setPorcentajeAsignado(porcentajeGarantia);
 				mensajePorcentaje = UMensajeValidacion.MSJ_10;
 			}
 						
@@ -849,16 +932,28 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 				montoSolicitud = montoSolicitud / (oETipoCambioData.getTipoCambioSBS() !=0 ? oETipoCambioData.getTipoCambioSBS():1);
 				
 				//Evaluamos los Montos de Solicitud y Garantia
-				if( montoSolicitud != 0 && montoVRI !=0){
-					porcentajeGarantia = montoVRI / montoSolicitud;
-					montoDisponible =  montoVRI - montoSolicitud;
-					oEGarantiaAsociadaSolicitudData.setPorcentajeAsignado(porcentajeGarantia);
-					oEGarantiaAsociadaSolicitudData.setSaldoDisponible(montoDisponible);
+				if( montoSolicitud > 0 && montoVRI > 0){
+					saldoCubiertoSolicitud = (montoSolicitud - montoVRI) < 0 ? 0 :  (montoSolicitud - montoVRI); 
+					porcentajeCubiertoSolicitud = (montoSolicitud - montoVRI) < 0 ? 100 : (montoVRI/montoSolicitud)*100;
+					saldoDisponibleGarantia = (montoVRI - montoSolicitud) < 0 ? 0 : (montoVRI - montoSolicitud);
+					porcentajeCubiertoGarantia = (montoVRI - montoSolicitud) < 0 ? 100 : (montoSolicitud/montoVRI)*100;
+					porcentajeDisponibleGarantia = porcentajeCubiertoGarantia == 100 ? 0 : (100 - porcentajeCubiertoGarantia);
+				
+					oEGarantiaAsociadaSolicitudData.setSaldoMontoSolicitud(saldoCubiertoSolicitud);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoSolicitud(porcentajeCubiertoSolicitud);
+					oEGarantiaAsociadaSolicitudData.setSaldoDisponibleGarantia(saldoDisponibleGarantia);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoGarantia(porcentajeCubiertoGarantia);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeDisponible(porcentajeDisponibleGarantia);
+					
 					mensajePorcentaje = UMensajeValidacion.MSJ_7;
 					
 				}else{	
-					porcentajeGarantia = 0;
-					oEGarantiaAsociadaSolicitudData.setPorcentajeAsignado(porcentajeGarantia);
+					oEGarantiaAsociadaSolicitudData.setSaldoMontoSolicitud(0);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoSolicitud(0);
+					oEGarantiaAsociadaSolicitudData.setSaldoDisponibleGarantia(0);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoGarantia(0);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeDisponible(0);
+				//	oEGarantiaAsociadaSolicitudData.setPorcentajeAsignado(porcentajeGarantia);
 					mensajePorcentaje = UMensajeValidacion.MSJ_10;
 				}
 				
@@ -868,16 +963,24 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 				montoSolicitud = montoSolicitud * (oETipoCambioData.getTipoCambioSBS() !=0 ? oETipoCambioData.getTipoCambioSBS():1);
 				
 				//Evaluamos los Montos de Solicitud y Garantia
-				if( montoSolicitud != 0 && montoVRI !=0){
-					porcentajeGarantia = montoVRI / montoSolicitud;
-					montoDisponible =  montoVRI - montoSolicitud;
-					oEGarantiaAsociadaSolicitudData.setPorcentajeAsignado(porcentajeGarantia);
-					oEGarantiaAsociadaSolicitudData.setSaldoDisponible(montoDisponible);
+				if( montoSolicitud > 0 && montoVRI > 0){
+					saldoCubiertoSolicitud = (montoSolicitud - montoVRI) < 0 ? 0 :  (montoSolicitud - montoVRI); 
+					porcentajeCubiertoSolicitud = (montoSolicitud - montoVRI) < 0 ? 100 : (montoVRI/montoSolicitud)*100;
+					saldoDisponibleGarantia = (montoVRI - montoSolicitud) < 0 ? 0 : (montoVRI - montoSolicitud);
+					porcentajeCubiertoGarantia = (montoVRI - montoSolicitud) < 0 ? 100 : (montoSolicitud/montoVRI)*100;
+					porcentajeDisponibleGarantia = porcentajeCubiertoGarantia == 100 ? 0 : (100 - porcentajeCubiertoGarantia);
+				
+					oEGarantiaAsociadaSolicitudData.setSaldoMontoSolicitud(saldoCubiertoSolicitud);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoSolicitud(porcentajeCubiertoSolicitud);
+					oEGarantiaAsociadaSolicitudData.setSaldoDisponibleGarantia(saldoDisponibleGarantia);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoGarantia(porcentajeCubiertoGarantia);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeDisponible(porcentajeDisponibleGarantia);
+					
 					mensajePorcentaje = UMensajeValidacion.MSJ_7;
 					
 				}else{	
 					porcentajeGarantia = 0;
-					oEGarantiaAsociadaSolicitudData.setPorcentajeAsignado(porcentajeGarantia);
+				//	oEGarantiaAsociadaSolicitudData.setPorcentajeAsignado(porcentajeGarantia);
 					mensajePorcentaje = UMensajeValidacion.MSJ_10;
 				}
 			}
@@ -1073,14 +1176,14 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
   		EGarantiaSolicitud eGarantiaSolicitud = oEGarantiaAsociadaSolicitudData;
   		if(deshabilitarPorcentaje == true) {
   			deshabilitarPorcentaje = false;
-  			eGarantiaSolicitud.setTipoIngreso("MANUAL");
+  			eGarantiaSolicitud.setTipoIngreso(UModoIngreso.MANUAL);
   			eGarantiaSolicitud.setUsuarioRegistro(oEUsuario);
   			oEMensaje = oBOGarantia.modificarTipoIngresoPorcentaje(eGarantiaSolicitud);
   			mensajePorcentaje = "";	
   		}
   		else {		
   			deshabilitarPorcentaje = true;
-  			eGarantiaSolicitud.setTipoIngreso("AUTOMATICO");
+  			eGarantiaSolicitud.setTipoIngreso(UModoIngreso.AUTOMATICO);
   			eGarantiaSolicitud.setUsuarioRegistro(oEUsuario);
   			oEMensaje = oBOGarantia.modificarTipoIngresoPorcentaje(eGarantiaSolicitud);
   			calcularPorcentaje();
@@ -1110,8 +1213,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	}
 	
 	public void asignarPersona(){
-		if(oEPersonaSelected != null){
-			switch (indicadorPersona) {
+
+		switch (indicadorPersona) {
 			case 1:
 				oEGarantiaData.setCodigoTasador(oEPersonaSelected.getCodigo());
 				oEGarantiaData.setDescripcionTasador(oEPersonaSelected.getNombreCorte());
@@ -1128,15 +1231,17 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 				oEGarantiaTramiteData.setCodigoNotario(oEPersonaSelected.getCodigo());
 				oEGarantiaTramiteData.setDescripcionNotario(oEPersonaSelected.getNombreCorte());
 				break;
-
+			case 5:
+				oEGarantiaAsociadaSolicitudData.setCodigoTasador(oEPersonaSelected.getCodigo());
+				oEGarantiaAsociadaSolicitudData.setDescripcionTasador(oEPersonaSelected.getNombreCorte());
+				break;
 			default:
 				oEGarantiaData.setCodigoCliente(oEPersonaSelected.getCodigo());
 				oEGarantiaData.setNombreCorto(oEPersonaSelected.getNombreCorte());
-				break;
-			}
-			
-			
 		}
+			
+			
+		
 	}	
 	public void asignarPersona(EPersona ePersonaItem){
 		if(ePersonaItem != null){
@@ -1157,7 +1262,10 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 				oEGarantiaTramiteData.setCodigoNotario(ePersonaItem.getCodigo());
 				oEGarantiaTramiteData.setDescripcionNotario(ePersonaItem.getNombreCorte());
 				break;
-
+			case 5:
+				oEGarantiaAsociadaSolicitudData.setCodigoTasador(ePersonaItem.getCodigo());
+				oEGarantiaAsociadaSolicitudData.setDescripcionTasador(ePersonaItem.getNombreCorte());
+				break;
 			default:
 				oEGarantiaData.setCodigoCliente(ePersonaItem.getCodigo());
 				oEGarantiaData.setNombreCorto(ePersonaItem.getNombreCorte());

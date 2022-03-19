@@ -31,6 +31,7 @@ import com.abaco.negocio.util.UConstante.UArea;
 import com.abaco.negocio.util.UConstante.UClaseGarantia;
 import com.abaco.negocio.util.UConstante.UCriterioBusqueda;
 import com.abaco.negocio.util.UConstante.UEstado;
+import com.abaco.negocio.util.UConstante.UTipoCredito;
 import com.abaco.negocio.util.UConstante.UTipoDocumentoGarantia;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
 import com.abaco.negocio.util.UFuncionesGenerales;
@@ -230,7 +231,9 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 		List<EGarantiaSolicitud> lstGarantiaSol = oBOGarantia.listarSolicitudAsociadaGarantia(0, "");
 		if(lstGarantiaSol != null){
 			for(EGarantiaSolicitud obj: lstGarantiaSol){
-				if(obj.getCodigoEstadoGarantiaSolicitud() != UEstado.PENDIENTEGARANTIAREGISTRO &&
+				if((obj.getCodigoEstadoGarantiaSolicitud() == UEstado.SOLICITAGARANTIAREGISTRO 
+						|| obj.getCodigoTipoCredito() == UTipoCredito.ABAUTOSCOMERCIAL 
+						|| obj.getCodigoTipoCredito() == UTipoCredito.ABAUTOSCONSUMO) &&
 						obj.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS ){
 					lstGarantiaSolicitudNueva.add(obj);
 				}
@@ -243,8 +246,10 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 		List<EGarantiaSolicitud> lstGarantiaSol = oBOGarantia.listarSolicitudAsociadaGarantia(0, "");
 		if(lstGarantiaSol != null){
 			for(EGarantiaSolicitud obj: lstGarantiaSol){
-				if(obj.getCodigoEstadoGarantiaSolicitud() != UEstado.PENDIENTEGARANTIAREGISTRO && 
-				   obj.getCodigoEstadoGarantiaSolicitud() != UEstado.REGISTRADOGARANTIAPENDIENTE &&
+				if((obj.getCodigoEstadoGarantiaSolicitud() == UEstado.SOLICITAGARANTIAREGISTRO 
+						|| obj.getCodigoTipoCredito() == UTipoCredito.ABAUTOSCOMERCIAL 
+						|| obj.getCodigoTipoCredito() == UTipoCredito.ABAUTOSCONSUMO)&& 
+				   obj.getCodigoEstadoGarantiaSolicitud() != UEstado.EVALUADOGARANTIA &&
 				   obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES ){
 					lstGarantiaSolicitudExistente.add(obj);
 				}

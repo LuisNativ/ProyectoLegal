@@ -194,6 +194,14 @@ public class BOGarantia {
 		EMensaje resultado=oCGarantia.agregarDetalleFlagRequisitoLegal(eFlagRequisitoLegal);
 		return resultado;
 	}
+	public EMensaje agregarObservacionSolicitudAsociadaGarantia(EGarantiaSolicitud eGarantiaSolicitud){
+		EMensaje resultado=oCGarantia.agregarObservacionSolicitudAsociadaGarantia(eGarantiaSolicitud);
+		return resultado;
+	}
+	public EMensaje agregarObservacionSolicitudGarantiayModificarSolicitud(EGarantiaSolicitud eGarantiaSolicitud){
+		EMensaje resultado=oCGarantia.agregarObservacionSolicitudGarantiayModificarSolicitud(eGarantiaSolicitud);
+		return resultado;
+	}
 	
 	public EMensaje modificarGarantiaSolicitud(EGarantiaSolicitud eGarantiaSolicitud){
 		EMensaje resultado=oCGarantia.modificarGarantiaSolicitud(eGarantiaSolicitud);
@@ -290,6 +298,10 @@ public class BOGarantia {
 	}
 	public List<EFlagReqLegal> listarDetalleFlagRequisitoLegal(long numeroSolicitud){					
 		List<EFlagReqLegal> lista=oCGarantia.listarDetalleFlagRequisitoLegal(numeroSolicitud);
+		return lista;
+	}
+	public List<EGarantiaSolicitud> listarObservacionSolicitudAsociadaGarantia(EGarantiaSolicitud eGarantiaSolicitud){					
+		List<EGarantiaSolicitud> lista=oCGarantia.listarObservacionSolicitudAsociadaGarantia(eGarantiaSolicitud);
 		return lista;
 	}
 	public EMensaje eliminarDetalleSolicitudDocumentoGarantia(EGarantia eGarantia){

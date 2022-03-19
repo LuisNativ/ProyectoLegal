@@ -49,14 +49,17 @@
 		    <p:tabView id="tabView2" dynamic="true" widgetVar="tabs2" activeIndex="0">
 		    <p:ajax event="tabChange" listener="#{mblistagarantiaporconstituir.onTabChangeGarantiaRE}"/>
 		    	<p:tab id="tab2-1" title="Garantía Real Nueva">    		
-						<p:dataTable id="tblGarantia" value="#{mblistagarantiaporconstituir.lstGarantiaSolicitudNueva}" var="item" styleClass="dsTabla3" paginator="true" rows="12" paginatorPosition="bottom"
+						<p:dataTable id="tblGarantia" value="#{mblistagarantiaporconstituir.lstGarantiaSolicitudNueva}" var="item" styleClass="dsTabla1" paginator="true" rows="12" paginatorPosition="bottom"
 									 rowKey="#{item.codigoGarantia}" reflow="true" tableStyle="table-layout:auto">
 							<p:column headerText="N°Sol" styleClass="dsTextoCentro" width="10%">
 								<h:outputText value="#{item.numeroSolicitud}"/>
 							</p:column>
-							<p:column headerText="Nombre del Socio" styleClass="dsTextoCentro" width="25%">
+							<p:column headerText="Cod. Soc." styleClass="dsTextoCentro" width="10%">
+								<h:outputText value="#{item.codigoCliente}"/>
+							</p:column>
+							<p:column headerText="Nombre del Socio" styleClass="dsTextoCentro" width="15%">
 								<div class="dsTextoCorto">
-									<h:outputText value="#{item.codigoCliente}, #{item.nombreLargo}"/>
+									<h:outputText value="#{item.nombreLargo}"/>
 								</div>
 							</p:column>
 							<p:column headerText="Fecha Rev." styleClass="dsTextoCentro" width="10%">
@@ -80,9 +83,10 @@
 							</p:column>
 							<p:column headerText="Estado"  styleClass="dsTextoCentro" width="15%">
 									<h:outputText value="#{item.descripcionEstadoGarantiaSolicitud}" 
-									styleClass="#{item.codigoEstadoGarantiaSolicitud eq 52 ? 'dsText3 orange'
+									styleClass="#{item.codigoEstadoGarantiaSolicitud eq 52 ? 'dsText3 red'
 												:item.codigoEstadoGarantiaSolicitud eq 53 ? 'dsText3 blue'
 												:item.codigoEstadoGarantiaSolicitud eq 54 ? 'dsText3 green'
+												:item.codigoEstadoGarantiaSolicitud eq 59 ? 'dsText3 sky'
 												:null}"/>					
 							</p:column>
 							<p:column headerText="" width="5%">
@@ -91,7 +95,7 @@
 						</p:dataTable>
 		    	</p:tab>
 		    	<p:tab id="tab2-2" title="Garantía Real Existente">
-		    	   <p:dataTable id="tblGarantiaExistente" value="#{mblistagarantiaporconstituir.lstGarantiaSolicitudExistente}" var="item" styleClass="dsTabla3" paginator="true" rows="12" paginatorPosition="bottom"
+		    	   <p:dataTable id="tblGarantiaExistente" value="#{mblistagarantiaporconstituir.lstGarantiaSolicitudExistente}" var="item" styleClass="dsTabla1" paginator="true" rows="12" paginatorPosition="bottom"
 							 rowKey="#{item.codigoGarantia}" reflow="true" tableStyle="table-layout:auto">
 						<p:column headerText="N°Sol" styleClass="dsTextoCentro" width="10%">
 							<h:outputText value="#{item.numeroSolicitud}"/>
@@ -131,9 +135,10 @@
 						
 						<p:column headerText="Estado"  styleClass="dsTextoCentro" width="10%">
 								<h:outputText value="#{item.descripcionEstadoGarantiaSolicitud}" 
-								styleClass="#{item.codigoEstadoGarantiaSolicitud eq 52 ? 'dsText3 orange'
+								styleClass="#{item.codigoEstadoGarantiaSolicitud eq 52 ? 'dsText3 red'
 											:item.codigoEstadoGarantiaSolicitud eq 53 ? 'dsText3 blue'
 											:item.codigoEstadoGarantiaSolicitud eq 54 ? 'dsText3 green'
+											:item.codigoEstadoGarantiaSolicitud eq 59 ? 'dsText3 sky'
 											:null}"/>					
 						</p:column>
 						<p:column headerText="" width="5%">
@@ -156,38 +161,35 @@
 				update=":frmDlgBuscarTipoGarantia:tblTipoGarantia" disabled="#{mblistagarantiaporconstituir.indicadorBoton}"></p:commandButton>
 		    </f:facet>
 		    <div class="ui-g ui-fluid ui-g-nopad">
-			<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
-				<p:outputLabel value="Tipo de Búsqueda" styleClass="dsLabel1"/>				
-				<p:selectOneMenu value="#{mblistagarantiaporconstituir.codigoBuscarGarantia}">
-					<p:ajax event="change" listener="#{mblistagarantiaporconstituir.validarLongitudCaracteres()}" update=":tabView1:formMantenimiento:idDescripcionGarantia" />
-	            	<f:selectItem itemLabel="[Seleccione]" itemValue="0" />
-	            	<f:selectItem itemLabel="Código Socio" itemValue="1" />
-	            	<f:selectItem itemLabel="Nombre Socio" itemValue="2" />
-	            	<f:selectItem itemLabel="Código de Garantía" itemValue="3" />
-	            	<f:selectItem itemLabel="Partida Registral" itemValue="4" />
-	            </p:selectOneMenu>
-			</div>
-			<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
-				<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
-				<p:inputText id="idDescripcionGarantia" type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.descripcionBuscarGarantia}" autocomplete="off" maxlength="#{mblistagarantiaporconstituir.cantidadCaracteres}" onkeypress="if (event.keyCode == 13) { return false;}">
-				</p:inputText>
-			</div>
-			<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
-				<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Buscar" onclick="PF('dlgPreload').show();" 
-				oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.buscarGarantiaVigente()}" 
-				update=":tabView1:formMantenimiento:tblGarantiaMantenimiento, :tabView1:formMantenimiento,:frmDlgMensaje"></p:commandButton>
-			</div>
-			
-			<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-4">
-				<p:outputLabel value="Socio" styleClass="dsLabel1"/>
-				<p:inputText  type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.oEGarantiaData.codigoNombreSocio()}" disabled="true">
-				</p:inputText>
-			</div>
-			
-			<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
-				<div class="ui-g-4">
-					<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
-						<p:fieldset legend="Créditos Directos" toggleable="true" toggleSpeed="500" styleClass="dsFieldSet1">
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+					<p:outputLabel value="Tipo de Búsqueda" styleClass="dsLabel1"/>				
+					<p:selectOneMenu value="#{mblistagarantiaporconstituir.codigoBuscarGarantia}">
+						<p:ajax event="change" listener="#{mblistagarantiaporconstituir.validarLongitudCaracteres()}" update=":tabView1:formMantenimiento:idDescripcionGarantia" />
+		            	<f:selectItem itemLabel="[Seleccione]" itemValue="0" />
+		            	<f:selectItem itemLabel="Código Socio" itemValue="1" />
+		            	<f:selectItem itemLabel="Nombre Socio" itemValue="2" />
+		            	<f:selectItem itemLabel="Código de Garantía" itemValue="3" />
+		            	<f:selectItem itemLabel="Partida Registral" itemValue="4" />
+		            </p:selectOneMenu>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+					<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
+					<p:inputText id="idDescripcionGarantia" type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.descripcionBuscarGarantia}" autocomplete="off" maxlength="#{mblistagarantiaporconstituir.cantidadCaracteres}" onkeypress="if (event.keyCode == 13) { return false;}">
+					</p:inputText>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+					<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Buscar" onclick="PF('dlgPreload').show();" 
+					oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.buscarGarantiaVigente()}" 
+					update=":tabView1:formMantenimiento:tblGarantiaMantenimiento, :tabView1:formMantenimiento,:frmDlgMensaje"></p:commandButton>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-4">
+					<p:outputLabel value="Socio" styleClass="dsLabel1"/>
+					<p:inputText  type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.oEGarantiaData.codigoNombreSocio()}" disabled="true">
+					</p:inputText>
+				</div>			
+				<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
+					<div class="ui-g-4">					
+						<p:fieldset legend="Créditos Directos" toggleable="false" toggleSpeed="500" styleClass="dsFieldSet1" style="width: 90% !important;">
 							<div class="ui-g-6">
 								<p:outputLabel value="Moneda Nacional" styleClass="dsLabel1"/>
 								<p:inputText type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.creditoDirMonedaNacional}" disabled="true">
@@ -201,11 +203,9 @@
 								</p:inputText>
 							</div>
 					    </p:fieldset>
-				    </div>
-				</div>
-				<div class="ui-g-4">
-					<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
-						<p:fieldset legend="Créditos Indirectos" toggleable="true" toggleSpeed="500" styleClass="dsFieldSet1">
+					</div>
+					<div class="ui-g-4">
+						<p:fieldset legend="Créditos Indirectos" toggleable="false" toggleSpeed="500" styleClass="dsFieldSet1" style="width: 90% !important;">
 							<div class="ui-g-6">
 								<p:outputLabel value="Moneda Nacional" styleClass="dsLabel1"/>
 								<p:inputText type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.creditoIndMonedaNacional}" disabled="true">
@@ -219,11 +219,9 @@
 								</p:inputText>
 							</div>
 					    </p:fieldset>
-				    </div>
-				</div>
-				<div class="ui-g-4">
-					<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
-						<p:fieldset legend="Garantías" toggleable="true" toggleSpeed="500" styleClass="dsFieldSet1"> 
+					</div>
+					<div class="ui-g-4">
+						<p:fieldset legend="Garantías" toggleable="false" toggleSpeed="500" styleClass="dsFieldSet1" style="width: 90% !important;"> 
 							<div class="ui-g-6">
 								<p:outputLabel value="Moneda Nacional" styleClass="dsLabel1"/>
 								<p:inputText type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.garantiaMonedaNacional}" disabled="true">
@@ -237,12 +235,8 @@
 								</p:inputText>
 							</div>
 					    </p:fieldset>
-				    </div>
+					</div>		   
 				</div>
-		   
-			</div>
-
-
 			</div>
 			<p:dataTable id="tblGarantiaMantenimiento" value="#{mblistagarantiaporconstituir.lstGarantiaVigente}" var="item" styleClass="dsTabla3" paginator="true" rows="5" paginatorPosition="bottom" 
 						 rowKey="#{item.codigoGarantia}" reflow="true">

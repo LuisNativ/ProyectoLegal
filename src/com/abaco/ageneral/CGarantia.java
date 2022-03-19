@@ -1431,6 +1431,67 @@ public class CGarantia {
 		return mensaje;
 	}
 	
+	public EMensaje agregarObservacionSolicitudAsociadaGarantia(EGarantiaSolicitud eGarantiaSolicitud) {
+		IConexion oIConexion = null;
+		EMensaje mensaje = new EMensaje();
+		DAOGarantia oDAOGarantia= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();
+			oIConexion.iniciaTransaccion();
+			oDAOGarantia= new DAOGarantia(oIConexion);
+
+			mensaje = oDAOGarantia.agregarObservacionSolicitudAsociadaGarantia(eGarantiaSolicitud);
+			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+				throw new Exception(mensaje.getDescMensaje());
+			}
+			
+			oIConexion.ejecutaCommit();
+		} catch (Exception e) {
+			if (oIConexion != null) {
+				oIConexion.ejecutaRollback();
+			}
+			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
+			UManejadorLog.error("Control: Error al agregar: " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return mensaje;
+	}
+	public EMensaje agregarObservacionSolicitudGarantiayModificarSolicitud(EGarantiaSolicitud eGarantiaSolicitud) {
+		IConexion oIConexion = null;
+		EMensaje mensaje = new EMensaje();
+		DAOGarantia oDAOGarantia= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();
+			oIConexion.iniciaTransaccion();
+			oDAOGarantia= new DAOGarantia(oIConexion);
+			
+			mensaje = oDAOGarantia.modificarGarantiaSolicitud(eGarantiaSolicitud);
+			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+				throw new Exception(mensaje.getDescMensaje());
+			}
+
+			mensaje = oDAOGarantia.agregarObservacionSolicitudAsociadaGarantia(eGarantiaSolicitud);
+			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+				throw new Exception(mensaje.getDescMensaje());
+			}
+			
+			oIConexion.ejecutaCommit();
+		} catch (Exception e) {
+			if (oIConexion != null) {
+				oIConexion.ejecutaRollback();
+			}
+			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
+			UManejadorLog.error("Control: Error al agregar: " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return mensaje;
+	}
 	
 	public EMensaje modificarGarantiaSolicitud(EGarantiaSolicitud eGarantiaSolicitud){
 		IConexion oIConexion = null;
@@ -1890,6 +1951,24 @@ public class CGarantia {
 			oIConexion = FabricaConexion.creaConexion();			
 			oDAOGarantia = new DAOGarantia(oIConexion);
 			resultado = oDAOGarantia.listarDetalleFlagRequisitoLegal(numeroSolicitud);			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al listar: " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
+	public List<EGarantiaSolicitud> listarObservacionSolicitudAsociadaGarantia(EGarantiaSolicitud eGarantiaSolicitud){
+		IConexion oIConexion = null;
+		List<EGarantiaSolicitud> resultado = null;
+		DAOGarantia oDAOGarantia= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();			
+			oDAOGarantia = new DAOGarantia(oIConexion);
+			resultado = oDAOGarantia.listarObservacionSolicitudAsociadaGarantia(eGarantiaSolicitud);			
 		} catch (Exception e) {
 			UManejadorLog.error("Control: Error al listar: " + e.getMessage());
 		} finally {
