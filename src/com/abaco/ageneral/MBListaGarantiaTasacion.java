@@ -17,10 +17,8 @@ import javax.faces.context.FacesContext;
 import lombok.Getter;
 import lombok.Setter;
 
-import org.primefaces.component.tabview.TabView;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.TabChangeEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -54,9 +52,9 @@ import com.abaco.negocio.util.UManejadorSesionWeb;
 import com.abaco.negocio.util.UtilWeb;
 import com.abaco.servicio.laserfiche.Documento;
 
-@ManagedBean(name = "mblistaconsultagarantia")
+@ManagedBean(name = "mblistagarantiatasacion")
 @ViewScoped
-public class MBListaConsultaGarantia implements Serializable {
+public class MBListaGarantiaTasacion implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private EMensaje oEMensaje;
 	private EGarantia oEGarantiaData;
@@ -68,11 +66,9 @@ public class MBListaConsultaGarantia implements Serializable {
 	/* Variables Interfaz */
 	@Getter @Setter private int codigoBuscar;
 	@Getter @Setter private String descripcionBuscar;
-	@Getter @Setter private int codigoTabviewIndex;
 
 	
-	@Getter @Setter private List<EGarantia> lstGarantiaVigente;
-	@Getter @Setter private List<EGarantia> lstGarantiaLiberada;
+	@Getter @Setter private List<EGarantia> lstGarantia;
 	
 	@Getter @Setter private int cantidadCaracteres;
 
@@ -84,8 +80,7 @@ public class MBListaConsultaGarantia implements Serializable {
 		oEGarantiaData = new EGarantia();
 		oUManejadorListaDesplegable = new UManejadorListaDesplegable();
 		
-		lstGarantiaVigente = new ArrayList<EGarantia>();
-		lstGarantiaLiberada = new ArrayList<EGarantia>();
+		lstGarantia = new ArrayList<EGarantia>();
 	
 		oEUsuario = (EUsuario) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.USUARIO);
 		listarDesplegable();
@@ -104,26 +99,11 @@ public class MBListaConsultaGarantia implements Serializable {
 	}
 	
 	public void listarGarantias(){
-		lstGarantiaVigente = oBOGarantia.listarGarantia(0, "", UFiltroGarantia.VIGENTE);
-		lstGarantiaLiberada = oBOGarantia.listarGarantia(0, "", UFiltroGarantia.LIBERADA);
-	}
-	
-	//Método para Identificar el Cambio de un Tab dentro de un Tabview para las Garantías Vigentes y Liberadas
-	public void onTabChangeGarantiaVL(TabChangeEvent event){
-		TabView tv = (TabView) event.getTab().getParent();		
-		if(tv.getActiveIndex() == 0) codigoTabviewIndex = 0;
-		else codigoTabviewIndex = 1;
+		lstGarantia = oBOGarantia.listarGarantia(0, "",UFiltroGarantia.VIGENTE);
 	}
 	
 	public void buscarGarantia(){
-		if(codigoTabviewIndex == 0){
-			lstGarantiaVigente = oBOGarantia.listarGarantia(codigoBuscar, descripcionBuscar.trim(), UFiltroGarantia.VIGENTE);
-		}else if(codigoTabviewIndex == 1){
-			lstGarantiaLiberada = oBOGarantia.listarGarantia(codigoBuscar, descripcionBuscar.trim(), UFiltroGarantia.LIBERADA);
-		}else{
-			lstGarantiaVigente = new ArrayList<EGarantia>();
-			lstGarantiaLiberada = new ArrayList<EGarantia>();
-		}
+		lstGarantia = oBOGarantia.listarGarantia(codigoBuscar, descripcionBuscar.trim(),UFiltroGarantia.VIGENTE);
 	}
 	
 	/*Metodo para Obtener la cantidad maxima de caracteres por cada opcion
@@ -138,12 +118,13 @@ public class MBListaConsultaGarantia implements Serializable {
 		}
 	}
 	
-	public void consultarGarantia(EGarantia oEGarantiaItem) {
+	public void modificarGarantia(EGarantia oEGarantiaItem) {
 		String ruta = "";
 		if (oEGarantiaItem != null) {
+			oEGarantiaItem.setIndicadorAccion(1);
 			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.EDITAR);
 			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.FICHA_PARAMETRO, oEGarantiaItem);
-			
+
 			ruta = "MantenimientoOperacionGarantia.xhtml";
 			UGeneradorQueryString objUGeneradorQueryString = new UGeneradorQueryString(ruta);
 			UManejadorSesionWeb.redirigePagina(objUGeneradorQueryString.obtieneUrlConParametros());

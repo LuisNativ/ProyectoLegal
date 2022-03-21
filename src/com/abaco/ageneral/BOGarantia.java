@@ -304,6 +304,10 @@ public class BOGarantia {
 		List<EGarantiaSolicitud> lista=oCGarantia.listarObservacionSolicitudAsociadaGarantia(eGarantiaSolicitud);
 		return lista;
 	}
+	public List<ETasacion> listarDetalleTasacionGarantia(EGarantia eGarantia){					
+		List<ETasacion> lista=oCGarantia.listarDetalleTasacionGarantia(eGarantia);
+		return lista;
+	}
 	public EMensaje eliminarDetalleSolicitudDocumentoGarantia(EGarantia eGarantia){
 		EMensaje resultado = oCGarantia.eliminarDetalleSolicitudDocumentoGarantia(eGarantia);
 		return resultado;
@@ -353,8 +357,8 @@ public class BOGarantia {
 		List<EGarantia> lista=oCGarantia.listarGarantiaVigente(codigo, descripcion);
 		return lista;
 	}
-	public List<EGarantia> listarGarantia(int codigo, String descripcion){					
-		List<EGarantia> lista=oCGarantia.listarGarantia(codigo, descripcion);
+	public List<EGarantia> listarGarantia(int codigo, String descripcion,int tipoFiltro){					
+		List<EGarantia> lista=oCGarantia.listarGarantia(codigo, descripcion,tipoFiltro);
 		return lista;
 	}
 	public List<EGarantiaSolicitud> listarGarantiaSolicitud(long numeroSolicitud){					

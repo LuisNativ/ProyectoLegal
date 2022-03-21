@@ -341,25 +341,22 @@
 						   		</div>
 					    	</div>
 							<div class="ui-g-12 ui-md-7 ui-lg-7 ui-g-nopad">
-								
-								<div class="ui-g-7">		
+								<div class="ui-g-8">		
 									<p:outputLabel  value="Tasador" styleClass="dsLabel1"/>
-									<p:inputText id="idDescripcionTasadorT" type="text"  styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.descripcionTasador}" disabled="true" autocomplete="off"></p:inputText> 
-								</div>
-								<div class="ui-g-1">
-								    <br />
-								   	<div class="">
-										<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
+									<div class="ui-inputgroup">	
+										<p:inputText id="idDescripcionTasadorT" type="text"  styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.descripcionTasador}" disabled="true" autocomplete="off"></p:inputText>  
+										<div class="ui-inputgroup-addon">
+											<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
 											oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbregistrooperaciongarantiasolicitud.buscarIndicadorPersona(5)}" disabled="#{mbregistrooperaciongarantiasolicitud.deshabilitarCampoAdicional}" immediate="true"
 											update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
+										</div>
 									</div>
-								</div>
-								
+								</div>								
 								<div class="ui-g-4">
 									<p:outputLabel value="Fecha Valor Comercial" styleClass="dsLabel1"/>
 									<p:calendar inputStyleClass="dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.fechaComercial}" navigator="true" pattern="dd-MM-yyyy"  disabled="#{mbregistrooperaciongarantiasolicitud.deshabilitarCampoAdicional}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
 						   		</div>
-						   		<p:fieldset id="idMontosSolicitud" legend="Solicitud" toggleable="false" toggleSpeed="500" styleClass="dsFieldSet1"> 		
+						   		<p:fieldset id="idMontosSolicitud" legend="Solicitud" toggleable="false" toggleSpeed="500" styleClass="dsFieldSet1" style="width: 90% !important;"> 		
 									<div class="ui-g-4">
 										<p:outputLabel value="Monto Solicitado Crédito" styleClass="dsLabel1"/>
 										<p:inputNumber  type="text" inputStyleClass="dsInput1 dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.montoSolicitud}" symbol="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaSolicitud}" decimalSeparator="." thousandSeparator="," disabled="true" autocomplete="off">
@@ -378,7 +375,7 @@
 										</p:inputNumber>
 									</div> 
 								</p:fieldset>
-								<p:fieldset id="idMontosGarantia" legend="Garantía" toggleable="false" toggleSpeed="500" styleClass="dsFieldSet1"> 
+								<p:fieldset id="idMontosGarantia" legend="Garantía" toggleable="false" toggleSpeed="500" styleClass="dsFieldSet1" style="width: 90% !important;"> 
 									<div class="ui-g-4" style="#{mbregistrooperaciongarantiasolicitud.visualizarPorcentaje ? 'display:block;' : 'display:none;'}">
 										<p:outputLabel value="Saldo Disp. Garantía" styleClass="dsLabel1"/>
 										<p:inputNumber id="idSaldoDisponible" type="text" inputStyleClass="dsInput1 dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.saldoDisponibleGarantia}" placeholder="0.00"  decimalSeparator="." thousandSeparator="," disabled="#{mbregistrooperaciongarantiasolicitud.deshabilitarPorcentaje}" autocomplete="off" symbol="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaGarantia}">

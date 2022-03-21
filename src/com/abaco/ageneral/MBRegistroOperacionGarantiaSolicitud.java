@@ -360,6 +360,10 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 							oEGarantiaData.setMontoGravamen(oEGarantiaAsociadaSolicitudData.getMontoGravamen());
 							oEGarantiaData.setMontoEjecucion(oEGarantiaAsociadaSolicitudData.getMontoValorRealizacion());
 							oEGarantiaData.setLstPropietario(new ArrayList<EPersona>());
+							oEGarantiaData.setMontoDisponible(oEGarantiaAsociadaSolicitudData.getSaldoDisponibleGarantia());
+							oEGarantiaData.setSaldoDisponible(oEGarantiaAsociadaSolicitudData.getSaldoDisponibleGarantia());
+							oEGarantiaData.setPorcentajeDisponible(oEGarantiaAsociadaSolicitudData.getPorcentajeDisponible());
+							oEGarantiaData.setTipocambio(oETipoCambioData.getTipoCambioSBS());
 							deshabilitarCampo = false;
 						}
 						else if(oEGarantiaSolicitudLoad.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES){ 
@@ -368,6 +372,10 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 							visualizarPorcentaje = false;
 							oEGarantiaData = oBOGarantia.buscarGarantia(oEGarantiaSolicitudLoad.getNumeroGarantiaReal());
 							oEGarantiaData.setLstPropietario(new ArrayList<EPersona>());
+							oEGarantiaData.setMontoDisponible(oEGarantiaAsociadaSolicitudData.getSaldoDisponibleGarantia());
+							oEGarantiaData.setSaldoDisponible(oEGarantiaAsociadaSolicitudData.getSaldoDisponibleGarantia());
+							oEGarantiaData.setPorcentajeDisponible(oEGarantiaAsociadaSolicitudData.getPorcentajeDisponible());
+							oEGarantiaData.setTipocambio(oETipoCambioData.getTipoCambioSBS());
 							//Data de F92011
 							oEGarantiaAnexoData = oBOGarantia.buscarAnexoGarantia(oEGarantiaSolicitudLoad.getNumeroGarantiaReal());
 							if(oEGarantiaAnexoData != null){
@@ -524,7 +532,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		oEGarantiaSolicitud.setFechaRegistro(new Date());
 		oEGarantiaSolicitud.setUsuarioRegistro(oEUsuario);
 		oEGarantia.setUsuarioRegistro(oEUsuario);
-		oEGarantia.setPorcentajeDisponible(obtenerPorcentajeDisponibleGarantia());
+
 		oEGarantiaDetalleSolicitud.setCodigoUbigeo(UFuncionesGenerales.convierteCadenaAEntero(
 				UFuncionesGenerales.convertirEnteroACadenaUbigeo(codigoDepartamentoGarantia) + 
 				UFuncionesGenerales.convertirEnteroACadenaUbigeo(codigoProvinciaGarantia) + 
@@ -1160,7 +1168,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	}
 	
 	
-	//Metodo para Obtener el Porcentaje Disponible de una Garantía 
+	//Metodo para Obtener el Porcentaje Disponible de una Garantía
+	/*
     private double obtenerPorcentajeDisponibleGarantia(){
     	double porcentaje = 0;
     	if(oEGarantiaData.getPorcentajeDisponible() != 0){
@@ -1170,7 +1179,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
     	}
 		return porcentaje;
 	}
-	
+	*/
     //Método para Habilitar Edición manual del Porcentaje de la Garantía
   	public void editarPorcentaje(){		
   		EGarantiaSolicitud eGarantiaSolicitud = oEGarantiaAsociadaSolicitudData;

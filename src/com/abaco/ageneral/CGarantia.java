@@ -1978,6 +1978,23 @@ public class CGarantia {
 		}
 		return resultado;
 	}
+	public List<ETasacion> listarDetalleTasacionGarantia(EGarantia eGarantia){
+		IConexion oIConexion = null;
+		List<ETasacion> resultado = null;
+		DAOGarantia oDAOGarantia= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();			
+			oDAOGarantia = new DAOGarantia(oIConexion);
+			resultado = oDAOGarantia.listarDetalleTasacionGarantia(eGarantia);			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al listar: " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
 	
 	public EMensaje eliminarDetalleSolicitudDocumentoGarantia(EGarantia eGarantia) {
 		IConexion oIConexion = null;
@@ -2235,14 +2252,14 @@ public class CGarantia {
 		return resultado;
 	}
 	
-	public List<EGarantia> listarGarantia(int codigo, String descripcion){
+	public List<EGarantia> listarGarantia(int codigo, String descripcion,int tipoFiltro){
 		IConexion oIConexion = null;
 		List<EGarantia> resultado = null;
 		DAOGarantia oDAOGarantia= null;
 		try {
 			oIConexion = FabricaConexion.creaConexion();			
 			oDAOGarantia = new DAOGarantia(oIConexion);
-			resultado = oDAOGarantia.listarGarantia(codigo, descripcion);			
+			resultado = oDAOGarantia.listarGarantia(codigo, descripcion,tipoFiltro);			
 		} catch (Exception e) {
 			UManejadorLog.error("Control: Error al listar Garantias " + e.getMessage());
 		} finally {

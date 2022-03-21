@@ -31,6 +31,7 @@ import com.abaco.negocio.util.UConstante.UArea;
 import com.abaco.negocio.util.UConstante.UClaseGarantia;
 import com.abaco.negocio.util.UConstante.UCriterioBusqueda;
 import com.abaco.negocio.util.UConstante.UEstado;
+import com.abaco.negocio.util.UConstante.UFiltroGarantia;
 import com.abaco.negocio.util.UConstante.UTipoCredito;
 import com.abaco.negocio.util.UConstante.UTipoDocumentoGarantia;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
@@ -288,7 +289,7 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 				garantiaMonedaNacional = 0;
 				garantiaMonedaExtranjera = 0; 
 				
-				lstGarantiaVigente = oBOGarantia.listarGarantiaVigente(codigoBuscarGarantia, descripcionBuscarGarantia.trim());
+				lstGarantiaVigente = oBOGarantia.listarGarantia(codigoBuscarGarantia, descripcionBuscarGarantia.trim(),UFiltroGarantia.VIGENTE);
 				if(lstGarantiaVigente == null || lstGarantiaVigente.isEmpty()){
 					lstGarantiaVigente = new ArrayList<EGarantia>();
 					lstPersona = new ArrayList<EPersona>();
@@ -325,7 +326,6 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 									if(garantiaMonedaExtranjera == 0) garantiaMonedaExtranjera = eSaldoServicio.getCodigoMoneda() == 2 ? eSaldoServicio.getMontoSaldo() : 0;
 									break;
 								default:
-									break;
 								}							
 							}
 						}

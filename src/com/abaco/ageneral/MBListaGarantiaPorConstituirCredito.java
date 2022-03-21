@@ -116,7 +116,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 		listarGarantiaSolicitudNueva();
 		listarGarantiaSolicitudExistente();
 		//listarHistoricoGarantiaSolicitud();
-		listarPolizasconGarantia();
+		//listarPolizasconGarantia();
 		listarDesplegable();
 	}
 	
@@ -291,11 +291,11 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 	
 	//Listado de Garantias para el Llenado de Pólizas
 	public void listarPolizasconGarantia(){
-		lstGarantiaPoliza = oBOGarantia.listarGarantia(0, "");
+		//lstGarantiaPoliza = oBOGarantia.listarGarantia(0, "");
 	}
 	
 	public void buscarPolizaconGarantia(){
-		lstGarantiaPoliza = oBOGarantia.listarGarantia(codigoBuscarP, descripcionBuscarP);
+		//lstGarantiaPoliza = oBOGarantia.listarGarantia(codigoBuscarP, descripcionBuscarP);
 	}
 	
 	//Begin: Para Dialog: dlgBuscarCiaSeguro

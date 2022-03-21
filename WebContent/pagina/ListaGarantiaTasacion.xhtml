@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui"
+	  template="/pagina/maestra.xhtml">
+<ui:define name="contenido">
+<h:head>
+<style>
+</style>
+</h:head> 
+<f:view>
+	<h:form id="form">
+    
+	<div class="ui-g ui-fluid">
+        <div class="dsCuadrarCentroInicio tituloIzquieda">
+            <h4><i class="fa fa-folder-open"></i> M&#243;dulo : Garantías <small> > Lista de Garantías para Mantenimiento de Tasación y Valorización </small></h4>
+        </div>
+    </div>				
+		
+	<p:panel styleClass="dsPanel2" widgetVar="pnl2" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+		    <f:facet name="header" >
+		        <i class="fa fa-table"></i> Lista de Garantías para Mantenimiento de Tasación y Valorización
+		    </f:facet>
+		    <div class="ui-g ui-fluid ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+					<p:outputLabel value="Tipo de Búsqueda" styleClass="dsLabel1"/>				
+					<p:selectOneMenu value="#{mblistagarantiatasacion.codigoBuscar}">
+						<p:ajax event="change" listener="#{mblistagarantiatasacion.validarLongitudCaracteres()}" update="form:idDescripcionGarantia" />
+		            	<f:selectItem itemLabel="[Seleccione]" itemValue="0" />
+		            	<f:selectItem itemLabel="Código Socio" itemValue="1" />
+		            	<f:selectItem itemLabel="Nombre Socio" itemValue="2" />
+		            	<f:selectItem itemLabel="Código de Garantía" itemValue="3" />
+		            	<f:selectItem itemLabel="Partida Registral" itemValue="4" />
+	            	</p:selectOneMenu>
+	            </div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+					<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
+					<p:inputText id="idDescripcionGarantia"  type="text" styleClass="dsInput1" value="#{mblistagarantiatasacion.descripcionBuscar}" autocomplete="off" maxlength="#{mblistagarantiatasacion.cantidadCaracteres}">
+					</p:inputText>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+					<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Buscar" onclick="PF('dlgPreload').show();" 
+					oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiatasacion.buscarGarantia()}" 
+					update="form:tblGarantia"></p:commandButton>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid ui-g-nopad">
+				<div class="ui-g-12 ui-md-12 ui-lg-12">
+					<p:dataTable id="tblGarantia" value="#{mblistagarantiatasacion.lstGarantia}" var="item" styleClass="dsTabla1" paginator="true" rows="12" paginatorPosition="bottom" 
+						 rowKey="#{item.codigoSolicitud}" reflow="false" >
+						<p:column headerText="Nro. Garantía" styleClass="dsTextoCentro" responsivePriority="2" width="10%">
+							<h:outputText value="#{item.codigoServicio} - #{item.codigoGarantia}"/>
+						</p:column>
+						<p:column headerText="Descripción" styleClass="dsTextoCentro" responsivePriority="3" width="25%">
+						    <div class="dsTextoCorto">
+								<h:outputText value="#{item.descripcionGarantia}"/>
+						    </div>
+						</p:column>
+						<p:column headerText="Tipo" styleClass="dsTextoCentro" responsivePriority="4" width="15%">
+						    <div class="dsTextoCorto">
+								<h:outputText value="#{item.descripcionTipoGarantia}"/>
+						    </div>
+						</p:column>
+						<p:column headerText="Fecha Ingreso" styleClass="dsTextoCentro" width="10%">
+							<h:outputText value="#{item.fechaIngreso}" />
+						</p:column>
+						<p:column headerText="Mon." styleClass="dsTextoCentro" width="5%">
+							<h:outputText value="#{item.abreviacionMoneda}" />
+						</p:column>
+						<p:column headerText="Grav." styleClass="dsTextoCentro" width="10%">
+							<h:outputText value="#{item.montoGravamen}">
+								<f:convertNumber type="currency" currencySymbol="#{item.abreviacionMoneda}" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Estado" styleClass="dsTextoCentro" width="10%">
+							<h:outputText value="#{item.descripcionEstadoGarantia}"/>
+						</p:column>
+						<p:column headerText="Situación" styleClass="dsTextoCentro" width="10%">
+							<h:outputText value="#{item.descripcionSituacion}"/>
+						</p:column>
+						<p:column headerText="" styleClass="dsTextoCentro" width="5%">
+							<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-edit" title="Modificar Garantía" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiatasacion.modificarGarantia(item)}"></p:commandButton>
+				     	</p:column>
+					</p:dataTable>
+				</div>
+			</div>		
+		</p:panel>
+	</h:form>
+
+
+
+
+</f:view>
+</ui:define>
+</ui:composition>

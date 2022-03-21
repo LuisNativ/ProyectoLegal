@@ -791,6 +791,11 @@ public class UConstante {
 		int PERMUTA = 8;
 	}
 	
+	public static interface UFiltroGarantia{
+		int VIGENTE = 1;
+		int LIBERADA = 2;
+	}
+	
 	public static interface UTipoSuscripcionPago {
 		String ACCIONISTAS = "1";
 		String PARTICIPACIONISTAS = "2";

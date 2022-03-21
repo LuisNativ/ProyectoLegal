@@ -122,6 +122,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	
 	//Indicadores para Habilitar/Deshabilitar 
 	@Getter @Setter private boolean deshabilitarCampo,deshabilitarCampoInmuebleAdicional,deshabilitarCampoAsignacion;
+	@Getter @Setter private boolean deshabilitarCampoTasacion;
 	@Getter @Setter private boolean deshabilitarBusqueda;
 	@Getter @Setter private boolean deshabilitarBotonEnviar;
 	@Getter @Setter private boolean visualizarCamposOtrasGarantias;
@@ -194,6 +195,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	@Getter @Setter private List<EGarantia> lstInmueblesAdicionales;
 	@Getter @Setter private List<EGarantia> lstInmueblesAdicionalesFiltro;
 	@Getter @Setter private List<EFlagReqLegal> lstDetalleFlagsReqLegal;
+	@Getter @Setter private List<ETasacion> lstDetalleTasacion;
+	
 	
 	//Atributos para Búsqueda de Socio y Poliza
 	@Getter @Setter private List<EPersona> lstPersona;
@@ -270,7 +273,9 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	@Getter @Setter private boolean visualizarDatosPersonaNatural;
 	@Getter @Setter private boolean visualizarDatosPN,visualizarDatosPJ;
 	@Getter @Setter private boolean renderizarBotonTercero;
+	
 	@Getter @Setter private boolean renderizarPolizaGarantia;
+	@Getter @Setter private boolean renderizarDetalleTasacion;
 	
 	@PostConstruct
 	public void inicio() {
@@ -286,6 +291,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		oEPolizaGarantiaData = new EPoliza();
 		oEOperacionDocumentoNotariaData = new EOperacionDocumento();
 		oEFlagRequisitoLegalData = new EFlagReqLegal();
+
 		oUManejadorListaDesplegable = new UManejadorListaDesplegable();
 		oBOGarantia = new BOGarantia();
 		oBOCliente = new BOCliente();
@@ -339,6 +345,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		lstInmueblesAdicionales = new ArrayList<EGarantia>();
 		lstInmueblesAdicionalesFiltro = new ArrayList<EGarantia>();
 		lstDetalleFlagsReqLegal = new ArrayList<EFlagReqLegal>();
+		lstDetalleTasacion = new ArrayList<ETasacion>();
 
 		inicializar();
 
@@ -358,6 +365,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				visualizarBotonIrTramite = false;
 				visualizarBtnAgregarPropietario = true;
 				visualizarBtnEliminarPropietario = true;
+				renderizarDetalleTasacion = false;
 				//Data de F5101 o F5151
 				EPersona ePersona = oBOCliente.listarSocioyTercero(1, oETipoGarantiaLoad.getCodigo3()+"").get(0);
 				//Habilitar Paneles de Acuerdo al Tipo de Garantía
@@ -448,6 +456,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				case  UTipoGarantia.PREDIO:
 					 indicadorPnlDetalleGarantiaPredio= true;
 					 renderizarPolizaGarantia=true;
+					 renderizarDetalleTasacion = true;
 					 listarUbigeoGarantia();
 					 visualizarGenerarContratoPrivado = true;
 					 EGarantiaSolicitud obj = oBOGarantia.buscarSolicitudxGarantia(oEGarantiaData.getCodigoGarantia());
@@ -495,6 +504,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				visualizarTabPrestamos = true;
 				visualizarTabCumplimiento = true;
 				listarDesplegable();
+				listarDetalleTasacionGarantia();
 				listarSolicitudDocumento();
 				listarInmueblesAdicionales();
 				listarDocumentoNotario();
@@ -509,9 +519,16 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				   oEUsuario.getCodigoArea()==104   ||
 				   oEUsuario.getCodigoArea()==105 ||
 				   oEUsuario.getCodigoArea()== UArea.CREDITOS){
+					if(oEGarantiaLoad.getIndicadorAccion() == 1){
+						deshabilitarCampoTasacion = false;
+						deshabilitarBotonEnviar = false;
+					}else{
+						deshabilitarCampoTasacion = true;
+						deshabilitarBotonEnviar = true;
+					}
 					deshabilitarCampo = true;
 					deshabilitarCampoAsignacion = true;
-					deshabilitarBotonEnviar = true;
+					
 					visualizarBtnAgregarPropietario = false;
 					visualizarBtnEliminarPropietario = false;
 					visualizarGenerarDocumento = false;
@@ -544,6 +561,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		 indicadorPnlDetalleGarantiaFideicomiso = false;
 		 indicadorPnlDetalleGarantiaOtros = false;
 		 deshabilitarCampo = false;
+		 deshabilitarCampoTasacion = false;
 		 deshabilitarCampoAsignacion = false;
 		 visualizarCamposOtrasGarantias = false;
 		 visualizarTextoRegistro = false;
@@ -589,6 +607,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		 visualizarEditarInmueble = true;
 		 visualizarEliminarInmueble = true;
 		 renderizarPolizaGarantia = false;
+		 renderizarDetalleTasacion = false;
 		 
 		 mensajeTablaPolizaPrestamo = UMensajeTabla.MSJ_1;
 	}
@@ -736,7 +755,12 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				 oEUsuario.getCodigoArea()  == 105){
 			ruta = "ListaConsultaGarantia.xhtml";
 		}else if (oEUsuario.getCodigoArea()  == UArea.CREDITOS){
-			ruta = "ListaConsultaGarantia.xhtml";
+			if(oEGarantiaLoad.getIndicadorAccion() == 1){
+				ruta = "ListaGarantiaTasacion.xhtml";		
+			}else{
+				ruta = "ListaConsultaGarantia.xhtml";
+			}
+			
 		}
 		else {
 			ruta = "BandejaOperacionOtros.xhtml";
@@ -924,6 +948,12 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		lstDistritoGarantia = oUManejadorListaDesplegable.obtieneDistrito(codigoDepartamentoGarantia, codigoProvinciaGarantia);
 	}
 	//End : Métodos de Ubigeo
+	
+	//Begin: Métodos Tasacion
+	public void listarDetalleTasacionGarantia(){
+		lstDetalleTasacion = oBOGarantia.listarDetalleTasacionGarantia(oEGarantiaData);
+	}
+	//End: Métodos Tasacion
 	
 	//*************************************//
   	//End: Metodos para Garantia (TAB=1)
@@ -2903,6 +2933,9 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		this.oEPolizaGarantiaData = oEPolizaGarantiaData;
 	}
 
+
+
+	
 	
 	
 
