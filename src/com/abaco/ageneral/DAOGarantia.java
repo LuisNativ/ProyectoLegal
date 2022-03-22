@@ -2828,20 +2828,21 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEContratoGarantia.setMontoImporteDocMonedaOrigen2(oResultSet.getDouble("IMPORS"));
 					oEContratoGarantia.setMontoImporteCubierto2(oResultSet.getDouble("IMPCUS"));
 					oEContratoGarantia.setMontoSaldoGarantia2(oResultSet.getDouble("SLDGAS"));
-					oEContratoGarantia.setCodigoCliente(oResultSet.getInt("CODSOCIO"));
-					oEContratoGarantia.setNombreCliente(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMSOCIO")));
+					oEContratoGarantia.setCodigoCliente(oResultSet.getInt("CODCLI"));
+					oEContratoGarantia.setNombreCliente(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMADC")));
 					oEContratoGarantia.setObservacion1(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSE01")));
 					oEContratoGarantia.setObservacion2(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSE02")));
 					oEContratoGarantia.setEstadoRegistro(UFuncionesGenerales.revisaCadena(oResultSet.getString("ESTARE")));
 					oEContratoGarantia.setTipoRegistro(UFuncionesGenerales.revisaCadena(oResultSet.getString("TIREGI")));
 					oEContratoGarantia.setFechaRegistro(oResultSet.getDate("FECREG"));
 					oEContratoGarantia.setHoraRegistro(UFuncionesGenerales.convertirEnteroATime(oResultSet.getInt("HORREG")));
-					oEContratoGarantia.setMontoSaldoCredito(oResultSet.getDouble("SALDOCREDITO"));
 					EUsuario eUsuario = new EUsuario();
 					eUsuario.setNombreUsuario(UFuncionesGenerales.revisaCadena(oResultSet.getString("USUARI")));
 					oEContratoGarantia.setUsuarioRegistro(eUsuario);
-					oEContratoGarantia.setDescripcionEstadoCredito(UFuncionesGenerales.revisaCadena(oResultSet.getString("ESTADOCREDITO")));
-
+					oEContratoGarantia.setDescripcionOperacion(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCOPE")));
+					oEContratoGarantia.setAbreviacionMoneda(UFuncionesGenerales.revisaCadena(oResultSet.getString("ABRVMON")));
+					oEContratoGarantia.setCodigoProducto(oResultSet.getInt("CPRODU"));
+					oEContratoGarantia.setCodigoSubProducto(oResultSet.getInt("SUBPRO"));
 					
 					lstCreditoGarantia.add(oEContratoGarantia);
 				}								
@@ -3465,9 +3466,9 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantiaDocumentoSolicitado.setCodigoTipoOrigenTraido(UFuncionesGenerales.revisaCadena(oResultSet.getString("TRAOCP")));
 					oEGarantiaDocumentoSolicitado.setFechaTraido(oResultSet.getDate("FECINS"));
 					oEGarantiaDocumentoSolicitado.setFechaIngreso(oResultSet.getDate("FECTRS"));
-					oEGarantiaDocumentoSolicitado.setHoraIngreso(oResultSet.getString("HORINS"));
+					oEGarantiaDocumentoSolicitado.setHoraIngreso(UFuncionesGenerales.convertirEnteroATime(oResultSet.getInt("HORINS")));
 					oEGarantiaDocumentoSolicitado.setFechaRegistro(oResultSet.getDate("FECREG"));
-					oEGarantiaDocumentoSolicitado.setHoraRegistro(UFuncionesGenerales.revisaCadena(oResultSet.getString("HORREG")));
+					oEGarantiaDocumentoSolicitado.setHoraRegistro(UFuncionesGenerales.convertirEnteroATime(oResultSet.getInt("HORREG")));
 					
 					oEGarantiaDocumentoSolicitado.setDescripcionTipoDocumento(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCTDO")));
 					oEGarantiaDocumentoSolicitado.setDescripcionTipoOrigenSolicitado(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCTORISOL")));

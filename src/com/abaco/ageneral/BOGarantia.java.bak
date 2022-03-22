@@ -141,6 +141,11 @@ public class BOGarantia {
 		return resultado;
 	}
 	
+	public EMensaje agregarDocumentoGarantia(EGarantia eGarantia,List<EDocumentoCarga> lstDocumentoCarga){
+		EMensaje resultado=oCGarantia.agregarDocumentoGarantia(eGarantia,lstDocumentoCarga);
+		return resultado;
+	}
+	
 	public EMensaje agregarSolicitudDocumentoGarantia(EGarantia eGarantia,List<EDocumentoCarga> lstDocumentoCarga){
 		EMensaje resultado=oCGarantia.agregarSolicitudDocumentoGarantia(eGarantia,lstDocumentoCarga);
 		return resultado;
@@ -187,6 +192,14 @@ public class BOGarantia {
 	}
 	public EMensaje agregarDetalleFlagRequisitoLegal(EFlagReqLegal eFlagRequisitoLegal){
 		EMensaje resultado=oCGarantia.agregarDetalleFlagRequisitoLegal(eFlagRequisitoLegal);
+		return resultado;
+	}
+	public EMensaje agregarObservacionSolicitudAsociadaGarantia(EGarantiaSolicitud eGarantiaSolicitud){
+		EMensaje resultado=oCGarantia.agregarObservacionSolicitudAsociadaGarantia(eGarantiaSolicitud);
+		return resultado;
+	}
+	public EMensaje agregarObservacionSolicitudGarantiayModificarSolicitud(EGarantiaSolicitud eGarantiaSolicitud){
+		EMensaje resultado=oCGarantia.agregarObservacionSolicitudGarantiayModificarSolicitud(eGarantiaSolicitud);
 		return resultado;
 	}
 	
@@ -287,7 +300,10 @@ public class BOGarantia {
 		List<EFlagReqLegal> lista=oCGarantia.listarDetalleFlagRequisitoLegal(numeroSolicitud);
 		return lista;
 	}
-	
+	public List<EGarantiaSolicitud> listarObservacionSolicitudAsociadaGarantia(EGarantiaSolicitud eGarantiaSolicitud){					
+		List<EGarantiaSolicitud> lista=oCGarantia.listarObservacionSolicitudAsociadaGarantia(eGarantiaSolicitud);
+		return lista;
+	}
 	public EMensaje eliminarDetalleSolicitudDocumentoGarantia(EGarantia eGarantia){
 		EMensaje resultado = oCGarantia.eliminarDetalleSolicitudDocumentoGarantia(eGarantia);
 		return resultado;
@@ -395,6 +411,10 @@ public class BOGarantia {
 	}
 	public EDocumentoGenerado buscarMaestroDocumentoGeneradoF7420(EDocumentoGenerado eDocumentoGenerado){					
 		EDocumentoGenerado lista=oCGarantia.buscarMaestroDocumentoGeneradoF7420(eDocumentoGenerado);
+		return lista;
+	}
+	public EPoliza buscarPolizaAsociadoGarantiaMaxCorrelativo(long codigoGarantia){					
+		EPoliza lista=oCGarantia.buscarPolizaAsociadoGarantiaMaxCorrelativo(codigoGarantia);
 		return lista;
 	}
 	public List<ESaldoServicio> obtenerSaldosServiciosCliente(int codigoCliente){

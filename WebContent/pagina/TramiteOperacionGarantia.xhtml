@@ -95,13 +95,10 @@
 								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciontramitegarantia.oEGarantiaTramiteData.usuarioElaboracionContrato}" disabled="#{mbregistrooperaciontramitegarantia.deshabilitarCampo}" autocomplete="off" maxlength="140"></p:inputText>
 						    </div>
 						    <div class="ui-g-12 ui-md-12 ui-lg-12">
-								<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">		
-										<p:outputLabel value="Notario" styleClass="dsLabel1"/>
-										<p:inputText type="text" id="idDescripcionNotario" styleClass="dsInput1" value="#{mbregistrooperaciontramitegarantia.oEGarantiaTramiteData.descripcionNotario}" disabled="true" autocomplete="off"></p:inputText>
-								</div>
-								<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
-									<br />
-									<div class="dsCuadrarCentro">
+								<p:outputLabel value="Notario" styleClass="dsLabel1"/>
+								<div class="ui-inputgroup">
+									<p:inputText type="text" id="idDescripcionNotario" styleClass="dsInput1" value="#{mbregistrooperaciontramitegarantia.oEGarantiaTramiteData.descripcionNotario}" disabled="true" autocomplete="off"></p:inputText>
+									<div class="ui-inputgroup-addon">
 									     <p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
 												oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbregistrooperaciontramitegarantia.buscarNotario()}" immediate="true"
 												update=":frmDlgBuscarNotario,:frmDlgBuscarNotario:tblNotario"><i class="fas fa-search"></i></p:commandLink>
@@ -331,13 +328,10 @@
 								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciontramitegarantia.oEGarantiaTramiteAsientoData.usuarioElaboracionContrato}" disabled="#{mbregistrooperaciontramitegarantia.deshabilitarCampoAsientoTramiteGarantia}" autocomplete="off" maxlength="140"></p:inputText>
 						    </div>
 						    <div class="ui-g-12 ui-md-12 ui-lg-12">
-								<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">		
-										<p:outputLabel value="Notario" styleClass="dsLabel1"/>
-										<p:inputText type="text" id="idDescripcionNotarioA" styleClass="dsInput1" value="#{mbregistrooperaciontramitegarantia.oEGarantiaTramiteAsientoData.descripcionNotario}" disabled="true" autocomplete="off"></p:inputText>
-								</div>
-								<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
-									<br />
-									<div class="dsCuadrarCentro">
+								<p:outputLabel value="Notario" styleClass="dsLabel1"/>
+								<div class="ui-inputgroup">
+									<p:inputText type="text" id="idDescripcionNotarioA" styleClass="dsInput1" value="#{mbregistrooperaciontramitegarantia.oEGarantiaTramiteAsientoData.descripcionNotario}" disabled="true" autocomplete="off"></p:inputText>
+									<div class="ui-inputgroup-addon">
 									     <p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
 												oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbregistrooperaciontramitegarantia.buscarNotarioAsiento()}" immediate="true"
 												update=":frmDlgBuscarNotario"><i class="fas fa-search"></i></p:commandLink>

@@ -34,6 +34,7 @@
 				autocomplete="off" maxlength="50" onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
 					<p:ajax event="change" onstart="PF('blkPanel').show();" onsuccess="PF('blkPanel').hide();"
 					listener="#{mblistaoperacionsolicitudcredito.listarSolicitud()}" update=":form:tabView1:tblSolicitudPendiente, :form:tabView1:tblSolicitudHistorico"/>
+					<p:keyFilter regEx="/[A-Z]/i"/>
 				</p:inputText>
 				</div>
 			</div>
@@ -44,6 +45,7 @@
 					autocomplete="off" maxlength="10" onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
 						<p:ajax event="change" onstart="PF('blkPanel').show();" onsuccess="PF('blkPanel').hide();"
 						listener="#{mblistaoperacionsolicitudcredito.listarSolicitud()}" update=":form:tabView1:tblSolicitudPendiente, :form:tabView1:tblSolicitudHistorico"/>
+						<p:keyFilter regEx="/[0123456789]/i"/>
 					</p:inputText>
 				</div>
 				<div class="ui-g-6">
@@ -229,18 +231,15 @@
 					<p:outputLabel value="Seleccione cliente" styleClass="dsLabel3"/>
 				</div>
 				<div class="ui-g-12">
-					<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
-						<p:outputLabel for="hidNombreCliente" value="Nombre" styleClass="dsLabel1"/>
+					<p:outputLabel for="hidNombreCliente" value="Nombre" styleClass="dsLabel1"/>
+					<div class="ui-inputgroup">
 						<p:inputText type="text" id="txtNombreCliente" styleClass="dsInput1" value="#{mblistaoperacionsolicitudcredito.oEClienteData.nombreLargo}" disabled="true"></p:inputText>
 						<p:inputText type="text" id="hidNombreCliente" styleClass="dsInput1" value="#{mblistaoperacionsolicitudcredito.oEClienteData.nombreLargo}" required="true" requiredMessage="Campo Obligatorio" style="display:none"></p:inputText>
-						<h:message for="hidNombreCliente" styleClass="dsMessage1"/>
-					</div>
-					<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
-						<br />
-						<div class="dsCuadrarCentro">
-						<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide(); PF('dlgBuscarPersona').show()" actionListener="#{mblistaoperacionsolicitudcredito.buscarPersona()}" update=":frmDlgBuscarPersona"><i class="fas fa-search"></i></p:commandLink>
+						<div class="ui-inputgroup-addon">
+							<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide(); PF('dlgBuscarPersona').show()" actionListener="#{mblistaoperacionsolicitudcredito.buscarPersona()}" update=":frmDlgBuscarPersona"><i class="fas fa-search"></i></p:commandLink>
 						</div>
 					</div>
+					<h:message for="hidNombreCliente" styleClass="dsMessage1"/>
 				</div>
 			</div>
 			<div class="ui-g ui-fluid pie">

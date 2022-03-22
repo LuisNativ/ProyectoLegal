@@ -83,7 +83,7 @@ public class UConstante {
 	
 	public static interface URutaCarpetaCompartida{
 		//Local
-		
+		/*
 		String rutaBaseLinux =  File.separator + File.separator + "192.168.1.60" + 
 					              File.separator +  "Documentos" + 
 						          File.separator +  "Analistas" +
@@ -100,9 +100,9 @@ public class UConstante {
 						          File.separator +  "Socio" +
 						          File.separator +  "FichaSocio" +
 						          File.separator ;
-		        
+		*/         
 		//Desarrollo .130
-        /*
+        
 		String rutaBaseLinux =  File.separator + "media" + 
 				                File.separator + "unidad" +
 				              //  File.separator +  "Documentos" + 
@@ -122,7 +122,7 @@ public class UConstante {
 					                File.separator +  "FichaSocio" +
 					                File.separator ;
         
-        */
+        
         String rutaBaseWindows2 = "\\\\192.168.1.60\\Documentos\\Analistas\\Analistas\\ModelosAbacoTesting\\Socio\\FichaSocio\\";
 	}
 	
@@ -567,6 +567,17 @@ public class UConstante {
 		int SALDOCUENTA = 21;
 		int OTROS = 22;
 		int DEPOSITOS = 88;
+	}
+	
+	public static interface UTipoProducto {
+		int PRD_200 = 200;
+		int PRD_301 = 301;
+		int PRD_302 = 302;
+		int PRD_81 = 81;
+	}
+	
+	public static interface UTipoSubProducto {
+		int SBPRD_8 = 8;
 	}
 	
 	public static interface UTipoServicioPrestamo {

@@ -70,14 +70,11 @@
 			</div>
 
 			<div class="ui-g-12 ui-md-6 ui-lg-3">
-				<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
-					<p:outputLabel value="Usuario de Consulta (*)" styleClass="dsLabel1"/>
+				<p:outputLabel value="Usuario de Consulta (*)" styleClass="dsLabel1"/>
+				<div class="ui-inputgroup">
 					<p:inputText type="text" id="txtDescripcionEmisor" styleClass="dsInput1" value="#{mbrevisionmanual.oERevisionSolicitudData.descripcionEmisor}" disabled="true"></p:inputText>
-				</div>
-				<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
-					<br />
-					<div class="dsCuadrarCentro">
-					<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbrevisionmanual.buscarUsuarioEmisor()}" update=":frmDlgBuscarUsuarioEmisor"><i class="fas fa-search"></i></p:commandLink>
+					<div class="ui-inputgroup-addon">
+						<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbrevisionmanual.buscarUsuarioEmisor()}" update=":frmDlgBuscarUsuarioEmisor"><i class="fas fa-search"></i></p:commandLink>
 					</div>
 				</div>
 			</div>
@@ -111,14 +108,11 @@
 			</h:panelGroup>
 			
 			<h:panelGroup id="pnlgNombrePersona" styleClass="ui-g-12 ui-md-6 ui-lg-3" layout="block" style="#{mbrevisionmanual.visualizarNombrePersona ? 'display:block;' : 'display:none'}">
-				<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
-					<p:outputLabel value="Nombre de Persona (*)" styleClass="dsLabel1"/>
+				<p:outputLabel value="Nombre de Persona (*)" styleClass="dsLabel1"/>
+				<div class="ui-inputgroup">
 					<p:inputText type="text" id="txtNombrePersona" styleClass="dsInput1" value="#{mbrevisionmanual.oERevisionSolicitudData.nombrePersona}" autocomplete="off" maxlength="50" disabled="#{mbrevisionmanual.deshabilitarNombrePersona}"></p:inputText>
-				</div>
-				<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
-					<br />
-					<div class="dsCuadrarCentro">
-					<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide(); PF('dlgBuscarPersona').show()" actionListener="#{mbrevisionmanual.buscarPersona()}" update=":frmDlgBuscarPersona" disabled="#{mbrevisionmanual.deshabilitarBuscarPersona}"><i class="fas fa-search"></i></p:commandLink>
+					<div class="ui-inputgroup-addon">
+						<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide(); PF('dlgBuscarPersona').show()" actionListener="#{mbrevisionmanual.buscarPersona()}" update=":frmDlgBuscarPersona" disabled="#{mbrevisionmanual.deshabilitarBuscarPersona}"><i class="fas fa-search"></i></p:commandLink>
 					</div>
 				</div>
 			</h:panelGroup>

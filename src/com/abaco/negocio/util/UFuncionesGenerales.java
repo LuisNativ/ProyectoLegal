@@ -59,10 +59,24 @@ public class UFuncionesGenerales {
 
 	public static String revisaCadena(String strCadena) {
 		String strResultado = "";
-		if (strCadena == null || strCadena.trim().length() == 0) {
-			strCadena = "";
+	    if (strCadena == null || strCadena.trim().length() == 0) {
+	        strCadena = "";
+	    }
+	    strResultado = strCadena.trim();
+	    return strResultado;
+	}
+	
+	public static String revisaCadenaSaltoLinea(String strCadena) {
+		String strResultado = "";
+		
+	    if (strCadena == null || strCadena.trim().length() == 0) {
+	        strCadena = "";
+	    }
+	    
+		if(!strCadena.equals("")){
+			strResultado = strCadena +"\n";
 		}
-		strResultado = strCadena.trim();
+		
 		return strResultado;
 	}
 
@@ -345,6 +359,7 @@ public class UFuncionesGenerales {
 	        List<String> lista = new ArrayList<String>(Arrays.asList(valor.split("\n")));
 	        try {
 	        	strResultado = lista.get(linea);
+	        	strResultado = strResultado.replaceAll("\\R", "");
 	        }catch (Exception objEx){
 	        	strResultado = "";
 	        }

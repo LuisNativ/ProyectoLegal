@@ -560,18 +560,14 @@
 								<p:calendar value="#{mblistagarantiaporconstituircredito.oEPolizaData.fechaEndoso}" navigator="true" pattern="dd-MM-yyyy"  autocomplete="off"></p:calendar>
 					   		</div>
 					   		<div class="ui-g-6">
-								<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">	
-									<p:outputLabel for="idDescripcionSocio" value="Usuario. Ult. Endoso" styleClass="dsLabel1"/>
+					   			<p:outputLabel for="idDescripcionSocio" value="Usuario. Ult. Endoso" styleClass="dsLabel1"/>
+					   			<div class="ui-inputgroup">
 									<p:inputText  id="idDescripcionSocio" type="text" styleClass="dsInput1 dsTextoCentro" value="#{mblistagarantiaporconstituircredito.oEPolizaData.codigoClienteUltimoEndoso} #{mblistagarantiaporconstituircredito.oEPolizaData.nombreClienteUltimoEndoso}" disabled="true"></p:inputText>
-								</div>												
-								<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
-										<br />
-										<div class="dsCuadrarCentro">
-										  <p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
-													oncomplete="PF('dlgPreload').hide();"  actionListener="#{mblistagarantiaporconstituircredito.buscarIndicadorPersona(1)}" immediate="true"
-													update=":frmDlgBuscarSocio"><i class="fas fa-search" ></i></p:commandLink>
-										</div>
-
+									<div class="ui-inputgroup-addon">
+									  <p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
+												oncomplete="PF('dlgPreload').hide();"  actionListener="#{mblistagarantiaporconstituircredito.buscarIndicadorPersona(1)}" immediate="true"
+												update=":frmDlgBuscarSocio"><i class="fas fa-search" ></i></p:commandLink>
+									</div>
 								</div>
 					   		</div>
 						</div>	

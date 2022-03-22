@@ -340,4 +340,58 @@ public class CSolicitudCredito {
 		}
 		return resultado;
 	}
+	
+	public ECredito buscarCreditoPrestamo(int codigoServicio, long numeroOperacion) {
+		IConexion oIConexion = null;
+		ECredito resultado = null;
+		DAOSolicitudCredito oDAOSolicitudCredito= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();			
+			oDAOSolicitudCredito = new DAOSolicitudCredito(oIConexion);
+			resultado = oDAOSolicitudCredito.buscarCreditoPrestamo(codigoServicio, numeroOperacion);			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al obtener credito " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
+	public ECredito buscarCreditoAbamoshi(int codigoServicio, long numeroOperacion, int numeroGrupo) {
+		IConexion oIConexion = null;
+		ECredito resultado = null;
+		DAOSolicitudCredito oDAOSolicitudCredito= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();			
+			oDAOSolicitudCredito = new DAOSolicitudCredito(oIConexion);
+			resultado = oDAOSolicitudCredito.buscarCreditoAbamoshi(codigoServicio, numeroOperacion, numeroGrupo);			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al obtener credito " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
+	public ECredito buscarCreditoCartaFianza(int codigoServicio, int codigoMoneda, long numeroOperacion){
+		IConexion oIConexion = null;
+		ECredito resultado = null;
+		DAOSolicitudCredito oDAOSolicitudCredito= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();			
+			oDAOSolicitudCredito = new DAOSolicitudCredito(oIConexion);
+			resultado = oDAOSolicitudCredito.buscarCreditoCartaFianza(codigoServicio, codigoMoneda, numeroOperacion);			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al obtener credito " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
 }

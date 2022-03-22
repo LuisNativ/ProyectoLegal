@@ -168,6 +168,7 @@ public @Data class EGarantia {
     private List<EPersona> lstPropietario;
     private String descripcionD;
     private long numeroSolicitudCredito;
+    private double montoValorizacion;
 	
 	
 	
@@ -207,6 +208,15 @@ public @Data class EGarantia {
 	private int codigoAccion;
 	private String descripcionOficinaRegistral;
 	private String descripcionTipoRegistral;
+	
+	public String codigoNombreSocio(){
+		String nombre = "";
+		switch(codigoCliente){
+		case 0 : nombre = ""; break; 
+		default: nombre = codigoCliente + " - " + nombreCorto;
+		}
+		return nombre;
+	}
 	
 	
 }

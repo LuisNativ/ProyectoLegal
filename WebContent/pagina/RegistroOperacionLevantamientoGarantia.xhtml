@@ -193,9 +193,12 @@
 				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
 					<div class="ui-g-4">
 						<p:outputLabel value="Valor Gravamen" styleClass="dsLabel1"/>
-						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoGravamen}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
-							<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
-						</p:inputText>
+						<div class="ui-inputgroup">
+							<div class="ui-inputgroup-addon">#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.abreviacionMoneda}</div>
+							<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoGravamen}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
+								<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
+							</p:inputText>
+						</div>
 			   		</div>
 			   		<div class="ui-g-4">
 						<p:outputLabel value="Fecha Gravamen" styleClass="dsLabel1"/>

@@ -561,10 +561,10 @@ public class DAORepresentanteLegal extends InstanciaAcceso{
 					oERepresentanteLegal.setFechaIngreso(oResultSet.getDate("FECING"));
 					oERepresentanteLegal.setNumeroFichaPoder(UFuncionesGenerales.revisaCadena(oResultSet.getString("FICPOD")));
 					oERepresentanteLegal.setRegistroPoder(UFuncionesGenerales.revisaCadena(oResultSet.getString("REGPOD")));
-					oERepresentanteLegal.setInscripcionPoder1(UFuncionesGenerales.revisaCadena(oResultSet.getString("IN1POD")) +"\n"+
+					oERepresentanteLegal.setInscripcionPoder1(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("IN1POD")))+
 															UFuncionesGenerales.revisaCadena(oResultSet.getString("IN2POD")));
 					oERepresentanteLegal.setInscripcionPoder2(UFuncionesGenerales.revisaCadena(oResultSet.getString("PIEPOD")));
-					oERepresentanteLegal.setObservacion(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER1")) +"\n"+
+					oERepresentanteLegal.setObservacion(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER1")))+
 														UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER2")));
 					
 					oERepresentanteLegal.setApellidoPaternoRepresentante(UFuncionesGenerales.revisaCadena(oResultSet.getString("APATRL")));

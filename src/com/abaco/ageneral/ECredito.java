@@ -20,6 +20,7 @@ public @Data class ECredito {
 	
 	private int codigoMoneda;
 	private double montoDesembolso;
+	private double saldoCredito;
 	private int codigoProducto;
 	private int codigoTipoProducto;
 	private int codigoTipoCredito;
@@ -45,4 +46,6 @@ public @Data class ECredito {
 	private String descripcionMoneda;
 	private String descripcionTipoCredito;
 	private String abreviacionMoneda;
+	private String descripcionEstado;
+	private String descripcionSituacion;
 }

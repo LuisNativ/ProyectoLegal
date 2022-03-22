@@ -102,7 +102,7 @@
 				<div class="ui-g-3">
 					<p:outputLabel for="idNroRuc" value="RUC" styleClass="dsLabel1"/>
 					<p:inputText id="idNroRuc" type="text" styleClass="dsInput1" value="#{mbregistrooperacioncliente.oEOperacionClienteData.ruc}" disabled="#{mbregistrooperacioncliente.deshabilitarFrmContratante}" autocomplete="off" maxlength="11">
-						<p:keyFilter mask="num"></p:keyFilter>
+						<p:keyFilter regEx="/[0123456789]/i"/>
 					</p:inputText>
 					<h:message for="idNroRuc" styleClass="dsMessage1"/>
 				</div>
@@ -296,13 +296,10 @@
 					<p:calendar value="#{mbregistrooperacioncliente.oEInformeLegalAdicionalData.fechaConstitucion}" disabled="#{mbregistrooperacioncliente.deshabilitarFrmContratante}" navigator="true" pattern="dd-MM-yyyy"></p:calendar>
 				</div>
 			    <div class="ui-g-12 ui-md-12 ui-lg-6">
-					<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">		
-							<p:outputLabel value="Notario" styleClass="dsLabel1"/>
-							<p:inputText type="text" id="idDescripcionNotario" styleClass="dsInput1" value="#{mbregistrooperacioncliente.oEInformeLegalAdicionalData.descripcionNotario}" maxlength="40" disabled="true" autocomplete="off"></p:inputText>
-					</div>
-					<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
-						<br />
-						<div class="dsCuadrarCentro">
+					<p:outputLabel value="Notario" styleClass="dsLabel1"/>
+					<div class="ui-inputgroup">
+						<p:inputText type="text" id="idDescripcionNotario" styleClass="dsInput1" value="#{mbregistrooperacioncliente.oEInformeLegalAdicionalData.descripcionNotario}" maxlength="40" disabled="true" autocomplete="off"></p:inputText>
+						<div class="ui-inputgroup-addon">
 						     <p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
 									oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacioncliente.buscarNotario()}" immediate="true"
 									update=":frmDlgBuscarNotario"><i class="fas fa-search"></i></p:commandLink>
@@ -958,7 +955,7 @@
 					<div class="ui-g-12 ui-md-3 ui-lg-3">
 						<p:outputLabel for="idNroRucR" value="RUC" styleClass="dsLabel1"/>
 						<p:inputText id="idNroRucR" type="text" styleClass="dsInput1" value="#{mbregistrooperacioncliente.oERepresentanteLegalData.ruc}" disabled="#{mbregistrooperacioncliente.deshabilitarFrmRepresentante}" autocomplete="off" maxlength="11">
-							<p:keyFilter mask="num"></p:keyFilter>
+							<p:keyFilter regEx="/[0123456789]/i"/>
 						</p:inputText>
 						<h:message for="idNroRucR" styleClass="dsMessage1"/>
 					</div>
@@ -970,17 +967,14 @@
 						</div>
 						
 						<div class="ui-g-12 ui-md-3 ui-lg-3">
-							<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
-								<p:outputLabel for="txtCargoLabR" value="Cargo" styleClass="dsLabel1"/>
+							<p:outputLabel for="txtCargoLabR" value="Cargo" styleClass="dsLabel1"/>
+							<div class="ui-inputgroup">
 								<p:inputText id="txtCargoLabR" type="text" styleClass="dsInput1" value="#{mbregistrooperacioncliente.oERepresentanteLegalData.cargoLaboral}" disabled="#{mbregistrooperacioncliente.deshabilitarFrmRepresentante}" autocomplete="off" required="false" requiredMessage="Campo Obligatorio" rendered="#{mbregistrooperacioncliente.visualizarFrmRepresentantePN}"></p:inputText>
-								<h:message for="txtCargoLabR" styleClass="dsMessage1"/>
-							</div>
-							<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
-								<br />
-								<div class="dsCuadrarCentro">
-								<p:commandLink styleClass="dsCmdlink1" disabled="#{mbregistrooperacioncliente.deshabilitarFrmRepresentante}" immediate="true" process="@form" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacioncliente.buscarCargoLaboral()}" update=":frmDlgBuscarCargoLaboral"><i class="fas fa-search"></i></p:commandLink>
+								<div class="ui-inputgroup-addon">
+									<p:commandLink styleClass="dsCmdlink1" disabled="#{mbregistrooperacioncliente.deshabilitarFrmRepresentante}" immediate="true" process="@form" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacioncliente.buscarCargoLaboral()}" update=":frmDlgBuscarCargoLaboral"><i class="fas fa-search"></i></p:commandLink>
 								</div>
 							</div>
+							<h:message for="txtCargoLabR" styleClass="dsMessage1"/>
 						</div>
 						 
 			        	<div class="ui-g-12 ui-md-3 ui-lg-3" style="#{mbregistrooperacioncliente.visualizarFrmContratantePN ? 'display:block;' : 'display:none'}">
@@ -1395,14 +1389,11 @@
 				</div>
 				
 				<div class="ui-g-12 ui-md-6 ui-lg-6">
-					<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
-						<p:outputLabel value="Servicio" styleClass="dsLabel1"/>
+					<p:outputLabel value="Servicio" styleClass="dsLabel1"/>
+					<div class="ui-inputgroup">
 						<p:inputText type="text" id="txtDescripcionServicio" styleClass="dsInput1" value="#{mbregistrooperacioncliente.oEFacultadPoderData.descripcionServicio}" disabled="true"></p:inputText>
-					</div>
-					<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
-						<br />
-						<div class="dsCuadrarCentro">
-						<p:commandLink styleClass="dsCmdlink1" immediate="true" process="@form" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacioncliente.buscarServicio()}" update=":frmDlgBuscarServicio"><i class="fas fa-search"></i></p:commandLink>
+						<div class="ui-inputgroup-addon">
+							<p:commandLink styleClass="dsCmdlink1" immediate="true" process="@form" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacioncliente.buscarServicio()}" update=":frmDlgBuscarServicio"><i class="fas fa-search"></i></p:commandLink>
 						</div>
 					</div>
 				</div>
@@ -1426,14 +1417,11 @@
 					</div>
 					
 					<div class="ui-g-12 ui-md-6 ui-lg-6">
-						<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
-							<p:outputLabel value="Representante Relacionado" styleClass="dsLabel1"/>
+						<p:outputLabel value="Representante Relacionado" styleClass="dsLabel1"/>
+						<div class="ui-inputgroup">
 							<p:inputText type="text" id="txtDescripcionRepresentanteRelacion" styleClass="dsInput1" value="#{mbregistrooperacioncliente.oEFacultadPoderData.descripcionRepresentanteRelacion}" disabled="true"></p:inputText>
-						</div>
-						<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
-							<br />
-							<div class="dsCuadrarCentro">
-							<p:commandLink styleClass="dsCmdlink1" immediate="true" process="@form" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacioncliente.buscarRepresentanteLegalRelacion()}" update=":frmDlgBuscarRepresentanteRelacion"><i class="fas fa-search"></i></p:commandLink>
+							<div class="ui-inputgroup-addon">
+								<p:commandLink styleClass="dsCmdlink1" immediate="true" process="@form" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacioncliente.buscarRepresentanteLegalRelacion()}" update=":frmDlgBuscarRepresentanteRelacion"><i class="fas fa-search"></i></p:commandLink>
 							</div>
 						</div>
 					</div>
@@ -1463,17 +1451,14 @@
         	<p:tab id="tab3-1" title="Datos Generales">
 			<div class="ui-g ui-fluid contenido">
 				<div class="ui-g-12 ui-md-6 ui-lg-6">
-					<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
-						<p:outputLabel for="txtCodigoDeudor" value="Código Deudor" styleClass="dsLabel1"/>
+					<p:outputLabel for="txtCodigoDeudor" value="Código Deudor" styleClass="dsLabel1"/>
+					<div class="ui-inputgroup">
 						<p:inputText type="text" id="txtCodigoDeudor" styleClass="dsInput1" value="#{mbregistrooperacioncliente.oEDeudorData.tercero.codigoCliente}" disabled="true" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
-						<h:message for="txtCodigoDeudor" styleClass="dsMessage1"/>
-					</div>
-					<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
-						<br />
-						<div class="dsCuadrarCentro">
-						<p:commandLink styleClass="dsCmdlink1" immediate="true" process="@form" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacioncliente.buscarTercero()}" update=":frmDlgBuscarTercero"><i class="fas fa-search"></i></p:commandLink>
+						<div class="ui-inputgroup-addon">
+							<p:commandLink styleClass="dsCmdlink1" immediate="true" process="@form" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacioncliente.buscarTercero()}" update=":frmDlgBuscarTercero"><i class="fas fa-search"></i></p:commandLink>
 						</div>
 					</div>
+					<h:message for="txtCodigoDeudor" styleClass="dsMessage1"/>
 				</div>
 				
 				<div class="ui-g-12 ui-md-6 ui-lg-6">
@@ -1494,14 +1479,11 @@
 				</div>
 				
 				<div class="ui-g-12 ui-md-3 ui-lg-3">
-					<div class="ui-g-11 ui-md-10 ui-lg-11 ui-g-nopad">
-						<p:outputLabel value="CIIU" styleClass="dsLabel1"/>
+					<p:outputLabel value="CIIU" styleClass="dsLabel1"/>
+					<div class="ui-inputgroup">
 						<p:inputText type="text" id="txtCodigoCIIU" styleClass="dsInput1" value="#{mbregistrooperacioncliente.codigoCIIUDeudor}" disabled="true"></p:inputText>
-					</div>
-					<div class="ui-g-1 ui-md-2 ui-lg-1 ui-g-nopad">
-						<br />
-						<div class="dsCuadrarCentro">
-						<p:commandLink styleClass="dsCmdlink1" immediate="true" process="@form" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacioncliente.buscarCIIU()}" update=":frmDlgBuscarCIIU" disabled="#{mbregistrooperacioncliente.deshabilitarFrmDeudor}"><i class="fas fa-search"></i></p:commandLink>
+						<div class="ui-inputgroup-addon">
+							<p:commandLink styleClass="dsCmdlink1" immediate="true" process="@form" onclick="PF('dlgPreload').show()" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacioncliente.buscarCIIU()}" update=":frmDlgBuscarCIIU" disabled="#{mbregistrooperacioncliente.deshabilitarFrmDeudor}"><i class="fas fa-search"></i></p:commandLink>
 						</div>
 					</div>
 				</div>
@@ -1530,7 +1512,9 @@
 					</div>
 					<div class="ui-g-4">
 						<p:outputLabel value="Anexo" styleClass="dsLabel1"/>
-						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacioncliente.oEDeudorData.tercero.anexo}" autocomplete="off" disabled="#{mbregistrooperacioncliente.deshabilitarFrmDeudor}"></p:inputText>
+						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacioncliente.oEDeudorData.tercero.anexo}" autocomplete="off" disabled="#{mbregistrooperacioncliente.deshabilitarFrmDeudor}">
+							<p:keyFilter regEx="/[0123456789]/i"/>
+						</p:inputText>
 					</div>
 					<div class="ui-g-4">
 						<p:outputLabel value="Fax" styleClass="dsLabel1"/>
@@ -1784,7 +1768,9 @@
 					   		</div>
 					   		<div class="ui-g-3">
 								<p:outputLabel  value="RUC" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacioncliente.oETerceroData.ruc}" autocomplete="off" maxlength="11"></p:inputText>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacioncliente.oETerceroData.ruc}" autocomplete="off" maxlength="11">
+									<p:keyFilter regEx="/[0123456789]/i"/>
+								</p:inputText>
 					   		</div>
 					   		<div class="ui-g-3">
 								<p:outputLabel  value="Zona" styleClass="dsLabel1"/>

@@ -780,27 +780,27 @@ public class DAOOperacion extends InstanciaAcceso{
 					oEOperacionCliente.setIndicadorAvalarTercero(UFuncionesGenerales.revisaCadena(oResultSet.getString("AVATER")));
 					oEOperacionCliente.setIndicadorGrabarBien(UFuncionesGenerales.revisaCadena(oResultSet.getString("GRABIE")));
 					oEOperacionCliente.setDescripcionAvalarTercero(UFuncionesGenerales.revisaCadena(oResultSet.getString("AVATFI")));
-					oEOperacionCliente.setObservacionAvalarTercero(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1AVT"))+"\n"+
-																				  UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2AVT"))+"\n"+
-																				  UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3AVT")));
-					oEOperacionCliente.setObservacionGrabarBien(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1GRA"))+"\n"+
-																			   UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2GRA"))+"\n"+
-																			   UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3GRA")));
-					oEOperacionCliente.setObservacionConstanciaSocial(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT1PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT2PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT3PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT4PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT5PJ")));
-					oEOperacionCliente.setObservacionSolicitud(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL01"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL02"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL03"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL04"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL05"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL06"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL07"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL08"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL09"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL10")));
+					oEOperacionCliente.setObservacionAvalarTercero(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1AVT")))+
+																	UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2AVT")))+
+																	UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3AVT")));
+					oEOperacionCliente.setObservacionGrabarBien(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1GRA")))+
+																UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2GRA")))+
+																UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3GRA")));
+					oEOperacionCliente.setObservacionConstanciaSocial(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT1PJ")))+
+																		UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT2PJ")))+
+																		UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT3PJ")))+
+																		UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT4PJ")))+
+																		UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT5PJ")));
+					oEOperacionCliente.setObservacionSolicitud(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL01")))+
+																UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL02")))+
+																UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL03")))+
+																UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL04")))+
+																UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL05")))+
+																UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL06")))+
+																UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL07")))+
+																UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL08")))+
+																UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL09")))+
+																UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL10")));
 					
 					//oEOperacionCliente.setUsuarioEvaluacionLegal(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMUSUEVALG")));
 					oEOperacionCliente.setFechaRegistroLegal(oResultSet.getDate("FECREGL"));
@@ -1204,26 +1204,26 @@ public class DAOOperacion extends InstanciaAcceso{
 					oEOperacionSolicitudCredito.setIndicadorAvalarTercero(UFuncionesGenerales.revisaCadena(oResultSet.getString("AVATER")));
 					oEOperacionSolicitudCredito.setIndicadorGrabarBien(UFuncionesGenerales.revisaCadena(oResultSet.getString("GRABIE")));
 					oEOperacionSolicitudCredito.setDescripcionAvalarTercero(UFuncionesGenerales.revisaCadena(oResultSet.getString("AVATFI")));
-					oEOperacionSolicitudCredito.setObservacionAvalarTercero(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1AVT"))+"\n"+
-																				  UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2AVT"))+"\n"+
-																				  UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3AVT")));
-					oEOperacionSolicitudCredito.setObservacionGrabarBien(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1GRA"))+"\n"+
-																			   UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2GRA"))+"\n"+
-																			   UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3GRA")));
-					oEOperacionSolicitudCredito.setObservacionConstanciaSocial(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT1PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT2PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT3PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT4PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT5PJ")));
-					oEOperacionSolicitudCredito.setObservacionSolicitud(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL01"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL02"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL03"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL04"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL05"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL06"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL07"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL08"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL09"))+"\n"+
+					oEOperacionSolicitudCredito.setObservacionAvalarTercero(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1AVT")))+
+																			UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2AVT")))+
+																			UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3AVT")));
+					oEOperacionSolicitudCredito.setObservacionGrabarBien(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1GRA")))+
+																		 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2GRA")))+
+																		 UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3GRA")));
+					oEOperacionSolicitudCredito.setObservacionConstanciaSocial(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT1PJ")))+
+																				UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT2PJ")))+
+																				UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT3PJ")))+
+																				UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT4PJ")))+
+																				UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT5PJ")));
+					oEOperacionSolicitudCredito.setObservacionSolicitud(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL01")))+
+																			 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL02")))+
+																			 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL03")))+
+																			 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL04")))+
+																			 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL05")))+
+																			 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL06")))+
+																			 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL07")))+
+																			 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL08")))+
+																			 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL09")))+
 																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL10")));
 					
 					//oEOperacionSolicitudCredito.setUsuarioEvaluacionLegal(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMUSUEVALG")));

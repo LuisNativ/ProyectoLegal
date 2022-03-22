@@ -30,7 +30,7 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_INS_EVALUACIONXNIVEL_MAESTRA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_EVALUACIONXNIVEL_MAESTRA("+parametrosSP(8)+") }";
 	private static final String SP_ABACOINLEGAL_INS_EVALUACIONXNIVEL_DETALLE="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_EVALUACIONXNIVEL_DETALLE("+parametrosSP(7)+") }";
 	
-	private static final String SP_ABACOINLEGAL_UPD_DEUDOR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_DEUDOR("+parametrosSP(34)+") }";
+	private static final String SP_ABACOINLEGAL_UPD_DEUDOR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_DEUDOR("+parametrosSP(50)+") }";
 	
 	private static final String SP_ABACOINLEGAL_DEL_DEUDOR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_DEUDOR("+parametrosSP(5)+") }";
 	private static final String SP_ABACOINLEGAL_DEL_EVALUACIONXNIVEL_DETALLE="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_EVALUACIONXNIVEL_DETALLE("+parametrosSP(5)+") }";
@@ -56,6 +56,9 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_BUS_SOLICITUDXCARTAFIANZA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_SOLICITUDXCARTAFIANZA("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_SOLCREDITO_SOCIO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_SOLCREDITO_SOCIO("+parametrosSP(1)+") }";
 	
+	private static final String SP_ABACOINLEGAL_BUS_CRD_PRESTAMO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_CRD_PRESTAMO("+parametrosSP(2)+") }";
+	private static final String SP_ABACOINLEGAL_BUS_CRD_ABAMOSHI="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_CRD_ABAMOSHI("+parametrosSP(2)+") }";
+	private static final String SP_ABACOINLEGAL_BUS_CRD_CARTAFIANZA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_CRD_CARTAFIANZA("+parametrosSP(3)+") }";
 	
 	private static String parametrosSP(int numeroDeParametros) {
         StringBuilder cadena = new StringBuilder();
@@ -260,8 +263,26 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 			
 			lstParametrosEntrada.add(eDeudor.getEstado().getCodigoEstadoUltimo());
 			lstParametrosEntrada.add(eDeudor.getEstado().getCodigoEstado());
-			lstParametrosEntrada.add(eDeudor.getEstado().getObservacionUltimo());
-			lstParametrosEntrada.add(eDeudor.getEstado().getObservacion());
+			
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacionUltimo(),0));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacionUltimo(),1));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacionUltimo(),2));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacionUltimo(),3));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacionUltimo(),4));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacionUltimo(),5));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacionUltimo(),6));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacionUltimo(),7));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacionUltimo(),8));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacion(),0));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacion(),1));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacion(),2));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacion(),3));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacion(),4));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacion(),5));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacion(),6));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacion(),7));
+			lstParametrosEntrada.add(UFuncionesGenerales.obtieneDescripcionPorSaltoLinea(eDeudor.getEstado().getObservacion(),8));
+			
 			lstParametrosEntrada.add(eDeudor.getEstado().getUsuarioUltimo());
 			lstParametrosEntrada.add(eDeudor.getEstado().getFechaRegistroUltimo());
 			lstParametrosEntrada.add(eDeudor.getEstado().getHoraRegistroUltimo());
@@ -585,9 +606,12 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 					oESolicitudCredito.setCodigoMonedaSolicitud(oResultSet.getInt("MONSOL"));
 					oESolicitudCredito.setDescripcionMonedaSolicitud(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCMONSOL")));
 					oESolicitudCredito.setObjeto(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBJETO")));
-					oESolicitudCredito.setCriterios(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER1"))+"\n"+UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER2"))+"\n"+
-							UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER3"))+"\n"+UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER4"))+"\n"+
-							UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER5"))+"\n"+UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER6")));
+					oESolicitudCredito.setCriterios(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER1"))+"\n"+
+													UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER2"))+"\n"+
+													UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER3"))+"\n"+
+													UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER4"))+"\n"+
+													UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER5"))+"\n"+
+													UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER6")));
 					oESolicitudCredito.setNombreUsuarioPromotor(UFuncionesGenerales.revisaCadena(oResultSet.getString("USREVF")));
 					oESolicitudCredito.setReferenciaLineaCredito(oResultSet.getInt("REFLIN"));
 					oESolicitudCredito.setPlazoSolicitud(oResultSet.getInt("PLZSOL"));
@@ -656,9 +680,12 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 					oESolicitudCredito.setMontoFianza(oResultSet.getDouble("MONTAV"));
 					oESolicitudCredito.setFechaVigenciaFianza(oResultSet.getDate("FECVIG"));
 					oESolicitudCredito.setFechaVencimientoFianza(oResultSet.getDate("FECVENC"));
-					oESolicitudCredito.setCriterios(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER1"))+"\n"+UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER2"))+"\n"+
-							UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER3"))+"\n"+UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER4"))+"\n"+
-							UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER5"))+"\n"+UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER6")));
+					oESolicitudCredito.setCriterios(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER1"))+"\n"+
+													UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER2"))+"\n"+
+													UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER3"))+"\n"+
+													UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER4"))+"\n"+
+													UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER5"))+"\n"+
+													UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER6")));
 					oESolicitudCredito.setTasaSolicitud(oResultSet.getInt("TASSOL"));
 					oESolicitudCredito.setPlazoSolicitud(oResultSet.getInt("PLZSOL"));
 
@@ -761,27 +788,27 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 					oEEvaluacionSolicitudCreditoLegal.setIndicadorAvalarTercero(UFuncionesGenerales.revisaCadena(oResultSet.getString("AVATER")));
 					oEEvaluacionSolicitudCreditoLegal.setIndicadorGrabarBien(UFuncionesGenerales.revisaCadena(oResultSet.getString("GRABIE")));
 					oEEvaluacionSolicitudCreditoLegal.setDescripcionAvalarTercero(UFuncionesGenerales.revisaCadena(oResultSet.getString("AVATFI")));
-					oEEvaluacionSolicitudCreditoLegal.setObservacionAvalarTercero(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1AVT"))+"\n"+
-																				  UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2AVT"))+"\n"+
+					oEEvaluacionSolicitudCreditoLegal.setObservacionAvalarTercero(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1AVT")))+
+																				 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2AVT")))+
 																				  UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3AVT")));
-					oEEvaluacionSolicitudCreditoLegal.setObservacionGrabarBien(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1GRA"))+"\n"+
-																			   UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2GRA"))+"\n"+
+					oEEvaluacionSolicitudCreditoLegal.setObservacionGrabarBien(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1GRA")))+
+																			   UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2GRA")))+
 																			   UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3GRA")));
-					oEEvaluacionSolicitudCreditoLegal.setObservacionConstanciaSocial(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT1PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT2PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT3PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT4PJ"))+"\n"+
-																					 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT5PJ")));
-					oEEvaluacionSolicitudCreditoLegal.setObservacionSolicitud(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL01"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL02"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL03"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL04"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL05"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL06"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL07"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL08"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL09"))+"\n"+
-																			 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL10")));
+					oEEvaluacionSolicitudCreditoLegal.setObservacionConstanciaSocial(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT1PJ")))+
+																					UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT2PJ")))+
+																					UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT3PJ")))+
+																					UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT4PJ")))+
+																					UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT5PJ")));
+					oEEvaluacionSolicitudCreditoLegal.setObservacionSolicitud(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL01")))+
+																			UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL02")))+
+																			UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL03")))+
+																			UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL04")))+
+																			UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL05")))+
+																			UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL06")))+
+																			UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL07")))+
+																			UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL08")))+
+																			UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL09")))+
+																			UFuncionesGenerales.revisaCadena(oResultSet.getString("OBEL10")));
 					
 					oEEvaluacionSolicitudCreditoLegal.setUsuarioEvaluacionLegal(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMUSUEVALG")));
 					oEEvaluacionSolicitudCreditoLegal.setFechaRegistroLegal(oResultSet.getDate("FECREGL"));
@@ -816,9 +843,12 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 				while (oResultSet.next()) {
 					oEObservacionNegocios = new EObservacionNegocios();
 					oEObservacionNegocios.setSecuencia(oResultSet.getInt("SENEVA"));
-					oEObservacionNegocios.setObservacion(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE1"))+"\n"+UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE2"))+"\n"+
-							UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE3"))+"\n"+UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE4"))+"\n"+
-							UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE5"))+"\n"+UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE6")));
+					oEObservacionNegocios.setObservacion(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE1")))+
+														 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE2")))+
+														 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE3")))+
+														 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE4")))+
+														 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE5")))+
+														 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE6")));
 					oEObservacionNegocios.setNombreUsuario(UFuncionesGenerales.revisaCadena(oResultSet.getString("USNEVA")));
 					oEObservacionNegocios.setFechaEvaluacion(oResultSet.getDate("FECEVA"));
 					oEObservacionNegocios.setHoraEvaluacion(UFuncionesGenerales.convertirEnteroATime(oResultSet.getInt("HONEVA")));
@@ -989,7 +1019,15 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 					oEDeudorEstado.setUsuarioUltimo(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMUSU")));
 					oEDeudorEstado.setFechaRegistroUltimo(oResultSet.getDate("FECREG"));
 					oEDeudorEstado.setHoraRegistroUltimo(UFuncionesGenerales.convertirEnteroATime(oResultSet.getInt("HORREG")));
-					oEDeudorEstado.setObservacionUltimo(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSERVACION")));
+					oEDeudorEstado.setObservacionUltimo(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSERV1")))+
+														UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSERV2")))+
+														UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSERV3")))+
+														UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSERV4")))+
+														UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSERV5")))+
+														UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSERV6")))+
+														UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSERV7")))+
+														UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSERV8")))+
+														UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSERV9")));
 				}						
 			}						
 			
@@ -1041,15 +1079,101 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 			if (oResultSet != null) {
 				while (oResultSet.next()) {
 					oEObservacionNegocios=new EObservacionNegocios();
-					oEObservacionNegocios.setObservacion(oResultSet.getString("OBSNE1")+"\n"+oResultSet.getString("OBSNE2")+"\n"+
-														oResultSet.getString("OBSNE3")+"\n"+oResultSet.getString("OBSNE4")+"\n"+
-														oResultSet.getString("OBSNE5")+"\n"+oResultSet.getString("OBSNE6"));
-				}							
+					oEObservacionNegocios.setObservacion(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE1")))+
+														 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE2")))+
+														 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE3")))+
+														 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE4")))+
+														 UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE5")))+
+														 UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSNE6")));
+				}
+			}				
+		
+		} catch(Exception objEx) {
+			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
+		}
+		return oEObservacionNegocios;
+	}
+	
+	public ECredito buscarCreditoPrestamo(int codigoServicio, long numeroOperacion) {
+		List<Object> lstParametrosEntrada;
+		ResultSet oResultSet = null;
+		ECredito oECredito= null;
+		
+		try {
+			lstParametrosEntrada = new ArrayList<Object>();
+			lstParametrosEntrada.add(codigoServicio);
+			lstParametrosEntrada.add(numeroOperacion);
+			
+			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_BUS_CRD_PRESTAMO, lstParametrosEntrada, null);
+			if (oResultSet != null) {
+				while (oResultSet.next()) {
+					oECredito=new ECredito();
+					oECredito.setNumeroPagare(oResultSet.getInt("NUMOPE"));
+					oECredito.setDescripcionEstado(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCEST")));
+					oECredito.setDescripcionSituacion(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCSIT")));
+					oECredito.setSaldoCredito(oResultSet.getDouble("SALDOD"));
+				}						
 			}						
 			
 		} catch(Exception objEx) {
 			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
 		}
-		return oEObservacionNegocios;
+		return oECredito;
+	}
+	
+	public ECredito buscarCreditoAbamoshi(int codigoServicio, long numeroOperacion, int numeroGrupo) {
+		List<Object> lstParametrosEntrada;
+		ResultSet oResultSet = null;
+		ECredito oECredito= null;
+		
+		try {
+			lstParametrosEntrada = new ArrayList<Object>();
+			lstParametrosEntrada.add(codigoServicio);
+			lstParametrosEntrada.add(numeroOperacion);
+			lstParametrosEntrada.add(numeroGrupo);
+			
+			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_BUS_CRD_ABAMOSHI, lstParametrosEntrada, null);
+			if (oResultSet != null) {
+				while (oResultSet.next()) {
+					oECredito=new ECredito();
+					oECredito.setNumeroPagare(oResultSet.getInt("NUMOPE"));
+					oECredito.setDescripcionEstado(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCEST")));
+					oECredito.setDescripcionSituacion(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCSIT")));
+					oECredito.setSaldoCredito(oResultSet.getDouble("SALDOD"));
+				}						
+			}						
+			
+		} catch(Exception objEx) {
+			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
+		}
+		return oECredito;
+	}
+	
+	public ECredito buscarCreditoCartaFianza(int codigoServicio, int codigoMoneda, long numeroOperacion) {
+		List<Object> lstParametrosEntrada;
+		ResultSet oResultSet = null;
+		ECredito oECredito= null;
+		
+		try {
+			lstParametrosEntrada = new ArrayList<Object>();
+			lstParametrosEntrada.add(codigoServicio);
+			lstParametrosEntrada.add(codigoMoneda);
+			lstParametrosEntrada.add(numeroOperacion);
+			
+			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_BUS_CRD_CARTAFIANZA, lstParametrosEntrada, null);
+			if (oResultSet != null) {
+				while (oResultSet.next()) {
+					oECredito=new ECredito();
+					oECredito.setNumeroPagare(oResultSet.getInt("NUMERO"));
+					oECredito.setDescripcionEstado(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCEST")));
+					oECredito.setDescripcionSituacion(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCSIT")));
+					oECredito.setSaldoCredito(oResultSet.getDouble("MONCRE"));
+				}						
+			}						
+			
+		} catch(Exception objEx) {
+			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
+		}
+		return oECredito;
 	}
 }

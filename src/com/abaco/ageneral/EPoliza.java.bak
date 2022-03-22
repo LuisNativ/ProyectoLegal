@@ -38,9 +38,17 @@ public @Data class EPoliza {
 	
 	
 	//Adicional
+	private int codigoPoliza;
+	private int codigoMonedaPrimaNeta;
+	private long numeroOperacion;
+	private double montoPrimaNetaAnual;
+	private Date fechaOrdenPago;
 	private String descripcionCiaSeguro;
 	private String descripcionTipoPoliza;
-	private int codigoPoliza;
+	private String descripcionBrockerSeguro;
+	private String abreviacionMonedaPrimaNeta;
+	private String descripcionMonedaPrimaNeta;
+	
 	
 	
 

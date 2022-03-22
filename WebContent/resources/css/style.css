@@ -2762,6 +2762,13 @@ ui-button-icon-left ui-icon ui-c fa fa-file-pdf-o
 	font-family: latolight !important;
 	font-weight: lighter !important;
 }
+/*Se usa como icono cerrar sesion*/
+.dsCmdlink6{
+	color: #5f666c !important;
+	box-shadow: none !important;
+	font-size: 13px !important;
+	padding-right: 5px;
+}
 
 /**********************************************************************************************/
 /**********************************************************************************************/

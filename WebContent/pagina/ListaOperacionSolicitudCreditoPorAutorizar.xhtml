@@ -41,6 +41,7 @@
 					autocomplete="off" maxlength="10" onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
 						<p:ajax event="change" onstart="PF('blkPanel').show();" onsuccess="PF('blkPanel').hide();"
 						listener="#{mblistaoperacionsolicitudcreditoporautorizar.listarSolicitud()}" update=":form:tblSolicitud"/>
+						<p:keyFilter regEx="/[0123456789]/i"/>
 					</p:inputText>
 				</div>
 				<div class="ui-g-6">

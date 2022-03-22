@@ -77,4 +77,16 @@ public class BOSolicitudCredito {
 		String resultado=oCSolicitudCredito.buscarObservacionNegocios(numeroSolicitud, secuencia);
 		return resultado;
 	}
+	public ECredito buscarCreditoPrestamo(int codigoServicio, long numeroOperacion) {
+		ECredito resultado=oCSolicitudCredito.buscarCreditoPrestamo(codigoServicio, numeroOperacion);
+		return resultado;
+	}
+	public ECredito buscarCreditoAbamoshi(int codigoServicio, long numeroOperacion, int numeroGrupo) {
+		ECredito resultado=oCSolicitudCredito.buscarCreditoAbamoshi(codigoServicio, numeroOperacion, numeroGrupo);
+		return resultado;
+	}
+	public ECredito buscarCreditoCartaFianza(int codigoServicio, int codigoMoneda, long numeroOperacion){
+		ECredito resultado=oCSolicitudCredito.buscarCreditoCartaFianza(codigoServicio, codigoMoneda, numeroOperacion);
+		return resultado;
+	}	
 }

@@ -1178,17 +1178,17 @@ public class DAOCliente extends InstanciaAcceso{
 					oEClienteAdicional.setIndicadorAvalarTercero(UFuncionesGenerales.revisaCadena(oResultSet.getString("AVATER")));
 					oEClienteAdicional.setIndicadorGrabarBien(UFuncionesGenerales.revisaCadena(oResultSet.getString("GRABIE")));
 					oEClienteAdicional.setDescripcionAvalarTercero(UFuncionesGenerales.revisaCadena(oResultSet.getString("AVATFI")));
-					oEClienteAdicional.setObservacionAvalarTercero(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1AVT"))+"\n"+
-							  UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2AVT"))+"\n"+
-							  UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3AVT")));
-					oEClienteAdicional.setObservacionGrabarBien(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1GRA"))+"\n"+
-							   UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2GRA"))+"\n"+
-							   UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3GRA")));
-					oEClienteAdicional.setObservacionConstanciaSocial(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT1PJ"))+"\n"+
-									 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT2PJ"))+"\n"+
-									 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT3PJ"))+"\n"+
-									 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT4PJ"))+"\n"+
-									 UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT5PJ")));
+					oEClienteAdicional.setObservacionAvalarTercero(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1AVT")))+
+																	UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2AVT")))+
+																	UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3AVT")));
+					oEClienteAdicional.setObservacionGrabarBien(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB1GRA")))+
+																UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("OB2GRA")))+
+																UFuncionesGenerales.revisaCadena(oResultSet.getString("OB3GRA")));
+					oEClienteAdicional.setObservacionConstanciaSocial(UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT1PJ")))+
+																		UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT2PJ")))+
+																		UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT3PJ")))+
+																		UFuncionesGenerales.revisaCadenaSaltoLinea(UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT4PJ")))+
+																		UFuncionesGenerales.revisaCadena(oResultSet.getString("DAT5PJ")));
 					
 					oEClienteAdicional.setCodigoTipoDuracionPartida(oResultSet.getInt("CODTPART"));
 					oEClienteAdicional.setRegistroPartida(UFuncionesGenerales.revisaCadena(oResultSet.getString("REGPART")));
