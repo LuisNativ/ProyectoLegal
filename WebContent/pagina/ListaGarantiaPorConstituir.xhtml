@@ -100,9 +100,12 @@
 						<p:column headerText="N°Sol" styleClass="dsTextoCentro" width="10%">
 							<h:outputText value="#{item.numeroSolicitud}"/>
 						</p:column>
-						<p:column headerText="Nombre del Socio" styleClass="dsTextoCentro" width="25%">
+						<p:column headerText="Cod. Soc." styleClass="dsTextoCentro" width="10%">
+							<h:outputText value="#{item.codigoCliente}"/>
+						</p:column>
+						<p:column headerText="Nombre del Socio" styleClass="dsTextoCentro" width="15%">
 							<div class="dsTextoCorto">
-								<h:outputText value="#{item.codigoCliente}, #{item.nombreLargo}"/>
+								<h:outputText value="#{item.nombreLargo}"/>
 							</div>
 						</p:column>
 						<p:column headerText="Fecha" styleClass="dsTextoCentro" width="10%">
@@ -317,9 +320,12 @@
 							 <p:column headerText="Garant." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
 								<h:outputText value="#{item.codigoGarantia}"/>
 							</p:column>
-							<p:column headerText="Socio" priority="1" width="25%">
+							<p:column headerText="Cod. Soc." styleClass="dsTextoCentro" visible="true" priority="3" width="10%">
+								<h:outputText value="#{item.codigoCliente}"/>
+							</p:column>
+							<p:column headerText="Socio" priority="1" width="20%">
 							    <div class="dsTextoCorto">
-								    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
+								    <h:outputText value="#{item.nombreCliente}"/>
 							    </div>
 							</p:column>
 							<p:column headerText="Estado" styleClass="dsTextoCentro" width="10%">
@@ -341,7 +347,7 @@
 									<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
 								</div>	
 							</p:column>
-							<p:column headerText="Acciones" styleClass="dsTextoCentro" width="10%">
+							<p:column headerText="Acciones" styleClass="dsTextoCentro" width="5%">
 						      <p:commandButton styleClass="dsBoton5 green" icon="fa fa-search" title="Visualizar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.visualizarDocumentoSolicitud(item)}" update=":frmDlgDocumentacion">
 						      </p:commandButton>
 						      <p:commandButton styleClass="dsBoton5 blue" icon="fa fa-arrow-right" title="Ir a Mantenimiento" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.evaluarSolicitudDocumento(item)}">
@@ -358,7 +364,10 @@
 							 <p:column headerText="Garant." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
 								<h:outputText value="#{item.codigoGarantia}"/>
 							</p:column>
-							<p:column headerText="Socio" priority="1" width="25%">
+							<p:column headerText="Cod. Soc." styleClass="dsTextoCentro" visible="true" priority="3" width="10%">
+								<h:outputText value="#{item.codigoCliente}"/>
+							</p:column>
+							<p:column headerText="Socio" priority="1" width="20%">
 							    <div class="dsTextoCorto">
 								    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
 							    </div>
@@ -382,7 +391,7 @@
 									<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
 								</div>	
 							</p:column>
-							<p:column headerText="Acciones" styleClass="dsTextoCentro" width="10%">
+							<p:column headerText="Acciones" styleClass="dsTextoCentro" width="5%">
 						      <p:commandButton styleClass="dsBoton5 green" icon="fa fa-search" title="Visualizar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.visualizarDocumentoSolicitud(item)}" update=":frmDlgDocumentacion">
 						      </p:commandButton>
 						      <p:commandButton styleClass="dsBoton5 blue" icon="fa fa-arrow-right" title="Ir a Mantenimiento" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.evaluarSolicitudDocumento(item)}">

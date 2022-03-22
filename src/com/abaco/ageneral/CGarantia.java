@@ -1996,6 +1996,24 @@ public class CGarantia {
 		return resultado;
 	}
 	
+	public List<EGarantiaSolicitud> listarSolicitudAnexoGarantia(long nroSolicitud){
+		IConexion oIConexion = null;
+		List<EGarantiaSolicitud> resultado = null;
+		DAOGarantia oDAOGarantia= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();			
+			oDAOGarantia = new DAOGarantia(oIConexion);
+			resultado = oDAOGarantia.listarSolicitudAnexoGarantia(nroSolicitud);			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al listar: " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
 	public EMensaje eliminarDetalleSolicitudDocumentoGarantia(EGarantia eGarantia) {
 		IConexion oIConexion = null;
 		EMensaje mensaje = new EMensaje();

@@ -63,6 +63,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	@Getter @Setter private List<EAsignacionContratoGarantia> lstGarantiaDetalle ;
 	@Getter @Setter private List<EAsignacionContratoGarantia> lstCreditoGarantia;
 	@Getter @Setter private List<EGarantiaSolicitud> lstObservacionSolicitudGarantia;
+	@Getter @Setter private List<EGarantiaSolicitud> lstSolicitudGarantiaSaldos;
 	
 	//Datos de formulario Garantia
 	@Getter @Setter private int codigoDepartamentoGarantia,codigoDepartamentoGarantiaConsulta;
@@ -197,6 +198,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		lstGarantiaDetalle = new ArrayList<EAsignacionContratoGarantia>();
 		lstCreditoGarantia = new ArrayList<EAsignacionContratoGarantia>();
 		lstObservacionSolicitudGarantia = new ArrayList<EGarantiaSolicitud>();
+		lstSolicitudGarantiaSaldos = new ArrayList<EGarantiaSolicitud>();
 			
 		oEUsuario = (EUsuario) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.USUARIO);
 		inicializar();
@@ -222,6 +224,9 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 						this.oEGarantiaSolicitudData = new EGarantiaSolicitud();
 					}
 					
+					
+					
+					
 					oEGarantiaSolicitudData.setCodigoCliente(oEGarantiaSolicitudLoad.getCodigoCliente());
 					oEGarantiaSolicitudData.setNombreLargo(oEGarantiaSolicitudLoad.getNombreLargo());
 					oEGarantiaSolicitudData.setCodigoMonedaSolicitud(oEGarantiaSolicitudLoad.getCodigoMonedaSolicitud());
@@ -229,6 +234,33 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 					oEGarantiaSolicitudData.setDescripcionMonedaSolicitud(oEGarantiaSolicitudLoad.getDescripcionMonedaSolicitud());
 					oEGarantiaSolicitudData.setMontoSolicitud(oEGarantiaSolicitudLoad.getMontoSolicitud());
 					
+					lstSolicitudGarantiaSaldos = oBOGarantia.listarSolicitudAnexoGarantia(oEGarantiaSolicitudLoad.getNumeroSolicitud());
+					/*
+					if(lstSolicitudGarantiaSaldos != null){
+						if(lstSolicitudGarantiaSaldos.size()>1){
+							for (int i=0;i<lstSolicitudGarantiaSaldos.size();i++){
+								if(lstSolicitudGarantiaSaldos.get(i).getSaldoMontoSolicitud()>0 && lstSolicitudGarantiaSaldos.get(i).getPorcentajeCubiertoSolicitud()==0){
+									for (int j=0;j<lstSolicitudGarantiaSaldos.size();j++){
+										if(lstSolicitudGarantiaSaldos.get(j).getSaldoMontoSolicitud()>0){
+											if(lstSolicitudGarantiaSaldos.get(i).getSaldoMontoSolicitud()<=lstSolicitudGarantiaSaldos.get(j).getSaldoMontoSolicitud()){
+												oEGarantiaSolicitudData.setMontoSolicitud(lstSolicitudGarantiaSaldos.get(i).getSaldoMontoSolicitud());
+											}
+											
+										}
+									}
+									
+								}else{
+									if(lstSolicitudGarantiaSaldos.get(i).getPorcentajeCubiertoSolicitud()==100 && lstSolicitudGarantiaSaldos.get(i).getSecuenciaGarantia()==oEGarantiaSolicitudData.getSecuenciaGarantia()){
+										oEGarantiaSolicitudData.setMontoSolicitud(lstSolicitudGarantiaSaldos.get(i).getSaldoMontoSolicitud());
+										break;
+									}
+									
+								}
+							}
+						}
+						
+					}
+					*/
 
 					if(oEGarantiaDetalleSolicitudData == null){
 						this.oEGarantiaDetalleSolicitudData = new EGarantiaDetalleSolicitud();

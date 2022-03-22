@@ -308,6 +308,10 @@ public class BOGarantia {
 		List<ETasacion> lista=oCGarantia.listarDetalleTasacionGarantia(eGarantia);
 		return lista;
 	}
+	public List<EGarantiaSolicitud> listarSolicitudAnexoGarantia(long nroSolicitud){					
+		List<EGarantiaSolicitud> lista=oCGarantia.listarSolicitudAnexoGarantia(nroSolicitud);
+		return lista;
+	}
 	public EMensaje eliminarDetalleSolicitudDocumentoGarantia(EGarantia eGarantia){
 		EMensaje resultado = oCGarantia.eliminarDetalleSolicitudDocumentoGarantia(eGarantia);
 		return resultado;
