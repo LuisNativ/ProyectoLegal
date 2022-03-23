@@ -189,7 +189,7 @@ public class MBListaDesembolsoGarantia implements Serializable {
 		if(codigoBuscar == 3 ) {
 			descripcionBuscar = codigoEstadoDesembolsoGarantia+"";
 		}
-		lstOperacionDocumentoDesembolso = oBOGarantia.listarSolicitudDesembolsoGarantia(codigoBuscar,descripcionBuscar, eGarantia);
+		lstOperacionDocumentoDesembolso = oBOGarantia.listarSolicitudDesembolsoGarantia(codigoBuscar,descripcionBuscar.trim(), eGarantia);
 	}
 
 	public void visualizarDetalleCumplimientoReqLegal(EOperacionDocumento eOperacionDocumentoItem){

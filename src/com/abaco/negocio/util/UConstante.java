@@ -100,7 +100,7 @@ public class UConstante {
 						          File.separator +  "Socio" +
 						          File.separator +  "FichaSocio" +
 						          File.separator ;
-		       
+		    
 		//Desarrollo .130
         /*
 		String rutaBaseLinux =  File.separator + "media" + 
@@ -121,8 +121,8 @@ public class UConstante {
 					                File.separator +  "Socio" +
 					                File.separator +  "FichaSocio" +
 					                File.separator ;
-        */
         
+        */
         String rutaBaseWindows2 = "\\\\192.168.1.60\\Documentos\\Analistas\\Analistas\\ModelosAbacoTesting\\Socio\\FichaSocio\\";
 	}
 	

@@ -945,15 +945,18 @@
 								   		</div>		
 				        			</div>
 				        			<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
-				        				<p:outputLabel value="Tasador" styleClass="dsLabel1"/>
-				        				<div class="ui-inputgroup">	
-											<p:inputText type="text" id="idDescripcionTasadorM" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionTasador}" disabled="true" autocomplete="off"></p:inputText>
-											<div class="ui-inputgroup-addon">
-												<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
-														oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(1)}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoTasacion}" immediate="true"
-														update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
-											</div>
-										</div>		   						   		
+				        				<div class="ui-g-12">
+				        					<p:outputLabel value="Tasador" styleClass="dsLabel1"/>
+					        				<div class="ui-inputgroup">	
+												<p:inputText type="text" id="idDescripcionTasadorM" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionTasador}" disabled="true" autocomplete="off"></p:inputText>
+												<div class="ui-inputgroup-addon">
+													<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
+															oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(1)}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoTasacion}" immediate="true"
+															update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
+												</div>
+											</div>	
+				        				</div>
+				        					   						   		
 									</div>	
 				        		</p:fieldset>				            								   		  			 		
 				           </div>
@@ -2902,34 +2905,14 @@
 				</div>
 			</div>
 			<div class="pie">
-				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbmantenimientooperaciongarantia.actualizarDatosAjax()}" update=":form:tabView1:tblSolicitudDocumento, frmDlgDescripcionDocumentoCarga,:form:tabView1:tblDocumentoNotaria,:form:tabView1:tblOperacionDocumentoLegal,:form:tabView1:tblOperacionDocumentoNegocios,:form:tabView1:idConfDesemb,:form:tabView1:tblSolicitudDesembolso,:frmDlgBuscarSocio:tblSocio"></p:commandButton> 
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbmantenimientooperaciongarantia.actualizarDatosAjax()}" update=":form:tabView1:tblSolicitudDocumento,:form:tabView1:tblDocumentoNotaria,:form:tabView1:tblOperacionDocumentoLegal,:form:tabView1:tblOperacionDocumentoNegocios,:form:tabView1:idConfDesemb,:form:tabView1:tblSolicitudDesembolso,:frmDlgBuscarSocio:tblSocio"></p:commandButton> 
 			</div>
 		</div>
 	</h:form>
 	</p:dialog>
 
 
-	<p:dialog widgetVar="dlgDescripcionDocumentoCarga" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
-	<h:form id="frmDlgDescripcionDocumentoCarga">
-		<div class="dsDlgDescripcionDocumentoCarga dsDialogo4">
-	 		<div class="cabecera">
-				<div class="dlgIzquierda">
-					<p:outputLabel styleClass="dsLabel2" value="Ingrese Descripción"/>
-				</div>
-			</div>
-			<div class="dsLineaHorizontal"></div>
-			<div class="ui-g ui-fluid contenido">
-				<div class="ui-g-12 ui-md-12 ui-lg-12">
-					<p:outputLabel for="txtDescripcionDocumentoCarga" value="Descripcion" styleClass="dsLabel1"/>
-					<p:inputText type="text" id="txtDescripcionDocumentoCarga" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.descripcionDocumentoCarga}" autocomplete="off" maxlength="20" required="true"></p:inputText>
-				</div>
-			</div>
-			<div class="ui-g ui-fluid pie">
-				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbmantenimientooperaciongarantia.listarDocumentoCargaSimple()}" update=":form:tabView1:tblDocumentoCarga, frmDlgDescripcionDocumentoCarga"></p:commandButton>
-			</div>
-		</div>
-	</h:form>
-	</p:dialog>
+	
 
 	<p:dialog widgetVar="dlgFirma" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
 	<h:form id="frmDlgFirma">

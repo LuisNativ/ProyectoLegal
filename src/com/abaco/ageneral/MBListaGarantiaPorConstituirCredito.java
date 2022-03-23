@@ -180,12 +180,13 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 		
 		if(codigoBuscar == 5 ) descripcionBuscar = codigoEstadoGarSolicitud+"";
 		
-		List<EGarantiaSolicitud> lstGarantiaSol = oBOGarantia.listarSolicitudAsociadaGarantia(codigoBuscar, descripcionBuscar);
+		List<EGarantiaSolicitud> lstGarantiaSol = oBOGarantia.listarSolicitudAsociadaGarantia(codigoBuscar, descripcionBuscar.trim());
 		if(codigoTabviewIndex == 0){
 			lstGarantiaSolicitudNueva = new ArrayList<EGarantiaSolicitud>();
 			if(lstGarantiaSol != null){
 				for(EGarantiaSolicitud obj: lstGarantiaSol){
-					if(obj.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS && obj.getCodigoEstadoEvaluacionLegal().equals("1")){
+					if(obj.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS && (obj.getCodigoTipoCredito() != UTipoCredito.ABAUTOSCOMERCIAL 
+							&& obj.getCodigoTipoCredito() != UTipoCredito.ABAUTOSCONSUMO) && obj.getCodigoEstadoEvaluacionLegal().equals("1")){
 						lstGarantiaSolicitudNueva.add(obj);
 					}
 				}
@@ -194,8 +195,9 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 			lstGarantiaSolicitudExistente = new ArrayList<EGarantiaSolicitud>();
 			if(lstGarantiaSol != null){
 				for(EGarantiaSolicitud obj: lstGarantiaSol){
-					if(obj.getCodigoEstadoGarantiaSolicitud() != UEstado.EVALUADOGARANTIA &&
-						obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES && obj.getCodigoEstadoEvaluacionLegal().equals("1")){
+					if(obj.getCodigoEstadoGarantiaSolicitud() != UEstado.EVALUADOGARANTIA && (obj.getCodigoTipoCredito() != UTipoCredito.ABAUTOSCOMERCIAL 
+							&& obj.getCodigoTipoCredito() != UTipoCredito.ABAUTOSCONSUMO) && 
+							   obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES && obj.getCodigoEstadoEvaluacionLegal().equals("1")){
 						lstGarantiaSolicitudExistente.add(obj);
 					}
 				}

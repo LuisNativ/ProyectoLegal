@@ -200,13 +200,15 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 	
 	//Buscar Solicitudes según Codigo y Descripcion
 	public void buscarGarantiaSolicitud(){
-		List<EGarantiaSolicitud> lstGarantiaSol = oBOGarantia.listarSolicitudAsociadaGarantia(codigoBuscarSolicitud, descripcionBuscarSolicitud);
+		List<EGarantiaSolicitud> lstGarantiaSol = oBOGarantia.listarSolicitudAsociadaGarantia(codigoBuscarSolicitud, descripcionBuscarSolicitud.trim());
 		if(codigoTabview2Index == 0){
 			lstGarantiaSolicitudNueva = new ArrayList<EGarantiaSolicitud>();
 			if(lstGarantiaSol != null){
 				for(EGarantiaSolicitud obj: lstGarantiaSol){
-					if(obj.getCodigoEstadoGarantiaSolicitud() != UEstado.PENDIENTEGARANTIAREGISTRO && 
-					   obj.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS ){
+					if((obj.getCodigoEstadoGarantiaSolicitud() == UEstado.SOLICITAGARANTIAREGISTRO 
+							|| obj.getCodigoTipoCredito() == UTipoCredito.ABAUTOSCOMERCIAL 
+							|| obj.getCodigoTipoCredito() == UTipoCredito.ABAUTOSCONSUMO) &&
+							obj.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS ){
 						lstGarantiaSolicitudNueva.add(obj);
 					}
 				}
@@ -215,8 +217,11 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 			lstGarantiaSolicitudExistente = new ArrayList<EGarantiaSolicitud>();
 			if(lstGarantiaSol != null){
 				for(EGarantiaSolicitud obj: lstGarantiaSol){
-					if(obj.getCodigoEstadoGarantiaSolicitud() != UEstado.PENDIENTEGARANTIAREGISTRO &&
-					   obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES){
+					if((obj.getCodigoEstadoGarantiaSolicitud() == UEstado.SOLICITAGARANTIAREGISTRO 
+							|| obj.getCodigoTipoCredito() == UTipoCredito.ABAUTOSCOMERCIAL 
+							|| obj.getCodigoTipoCredito() == UTipoCredito.ABAUTOSCONSUMO)&& 
+					   obj.getCodigoEstadoGarantiaSolicitud() != UEstado.EVALUADOGARANTIA &&
+					   obj.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES ){
 						lstGarantiaSolicitudExistente.add(obj);
 					}
 				}
@@ -522,7 +527,7 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 		EGarantia eGarantia = new EGarantia();
 		eGarantia.setUsuarioRegistro(oEUsuario);
 		eGarantia.setTipoDocumento(UTipoDocumentoGarantia.CONSTITUCION);
-		lstDocumentoGarantia = oBOGarantia.listarSolicitudDocumentoGarantia(codigoBuscarDocumento, descripcionBuscarDocumento, eGarantia);
+		lstDocumentoGarantia = oBOGarantia.listarSolicitudDocumentoGarantia(codigoBuscarDocumento, descripcionBuscarDocumento.trim(), eGarantia);
 		
 		if(codigoTabview3Index == 0){
 			lstDocumentoGarantiaPendiente = new ArrayList<EOperacionDocumento>();
