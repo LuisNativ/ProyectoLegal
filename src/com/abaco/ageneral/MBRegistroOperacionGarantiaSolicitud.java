@@ -233,17 +233,17 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 					oEGarantiaSolicitudData.setAbreviacionMonedaSolicitud(oEGarantiaSolicitudLoad.getAbreviacionMonedaSolicitud());
 					oEGarantiaSolicitudData.setDescripcionMonedaSolicitud(oEGarantiaSolicitudLoad.getDescripcionMonedaSolicitud());
 					oEGarantiaSolicitudData.setMontoSolicitud(oEGarantiaSolicitudLoad.getMontoSolicitud());
-					
-					lstSolicitudGarantiaSaldos = oBOGarantia.listarSolicitudAnexoGarantia(oEGarantiaSolicitudLoad.getNumeroSolicitud());
 					/*
+					lstSolicitudGarantiaSaldos = oBOGarantia.listarSolicitudAnexoGarantia(oEGarantiaSolicitudLoad.getNumeroSolicitud());
+					
 					if(lstSolicitudGarantiaSaldos != null){
 						if(lstSolicitudGarantiaSaldos.size()>1){
 							for (int i=0;i<lstSolicitudGarantiaSaldos.size();i++){
-								if(lstSolicitudGarantiaSaldos.get(i).getSaldoMontoSolicitud()>0 && lstSolicitudGarantiaSaldos.get(i).getPorcentajeCubiertoSolicitud()==0){
+								if(lstSolicitudGarantiaSaldos.get(i).getSaldoDisponibleMontoSolicitud()>0 && lstSolicitudGarantiaSaldos.get(i).getPorcentajeCubiertoSolicitud()==0){
 									for (int j=0;j<lstSolicitudGarantiaSaldos.size();j++){
-										if(lstSolicitudGarantiaSaldos.get(j).getSaldoMontoSolicitud()>0){
-											if(lstSolicitudGarantiaSaldos.get(i).getSaldoMontoSolicitud()<=lstSolicitudGarantiaSaldos.get(j).getSaldoMontoSolicitud()){
-												oEGarantiaSolicitudData.setMontoSolicitud(lstSolicitudGarantiaSaldos.get(i).getSaldoMontoSolicitud());
+										if(lstSolicitudGarantiaSaldos.get(j).getSaldoDisponibleMontoSolicitud()>0){
+											if(lstSolicitudGarantiaSaldos.get(i).getSaldoDisponibleMontoSolicitud()<=lstSolicitudGarantiaSaldos.get(j).getSaldoDisponibleMontoSolicitud()){
+												oEGarantiaSolicitudData.setMontoSolicitud(lstSolicitudGarantiaSaldos.get(i).getSaldoDisponibleMontoSolicitud());
 											}
 											
 										}
@@ -251,7 +251,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 									
 								}else{
 									if(lstSolicitudGarantiaSaldos.get(i).getPorcentajeCubiertoSolicitud()==100 && lstSolicitudGarantiaSaldos.get(i).getSecuenciaGarantia()==oEGarantiaSolicitudData.getSecuenciaGarantia()){
-										oEGarantiaSolicitudData.setMontoSolicitud(lstSolicitudGarantiaSaldos.get(i).getSaldoMontoSolicitud());
+										oEGarantiaSolicitudData.setMontoSolicitud(lstSolicitudGarantiaSaldos.get(i).getSaldoDisponibleMontoSolicitud());
 										break;
 									}
 									
@@ -261,6 +261,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 						
 					}
 					*/
+					
 
 					if(oEGarantiaDetalleSolicitudData == null){
 						this.oEGarantiaDetalleSolicitudData = new EGarantiaDetalleSolicitud();
@@ -931,7 +932,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		double porcentajeCubiertoGarantia = 0;
 		double porcentajeDisponibleGarantia = 0;
 		double porcentajeGarantia = 0;
-		double montoSolicitud = oEGarantiaSolicitudData.getMontoSolicitud() != 0 ? oEGarantiaSolicitudData.getMontoSolicitud() : 0;
+		double montoSolicitud = oEGarantiaAsociadaSolicitudData.getMontoSaldoSolicitud() != 0 ? oEGarantiaAsociadaSolicitudData.getMontoSaldoSolicitud() : 0;
 		double montoVRI = oEGarantiaAsociadaSolicitudData.getMontoValorRealizacion() != 0 ? oEGarantiaAsociadaSolicitudData.getMontoValorRealizacion() : 0;
 		//double montoGarantia = oEGarantiaSolicitudData.getMontoGarantia() != 0 ? oEGarantiaSolicitudData.getMontoGarantia(): 1;
 		double montoDisponible = 0;
@@ -947,8 +948,9 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 				porcentajeCubiertoGarantia = (montoVRI - montoSolicitud) < 0 ? 100 : (montoSolicitud/montoVRI)*100;
 				porcentajeDisponibleGarantia = porcentajeCubiertoGarantia == 100 ? 0 : (100 - porcentajeCubiertoGarantia);
 			
-				oEGarantiaAsociadaSolicitudData.setSaldoMontoSolicitud(saldoCubiertoSolicitud);
+				oEGarantiaAsociadaSolicitudData.setSaldoDisponibleMontoSolicitud(saldoCubiertoSolicitud);
 				oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoSolicitud(porcentajeCubiertoSolicitud);
+				oEGarantiaAsociadaSolicitudData.setPorcentajeDisponibleSolicitud(100-porcentajeCubiertoSolicitud);
 				oEGarantiaAsociadaSolicitudData.setSaldoDisponibleGarantia(saldoDisponibleGarantia);
 				oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoGarantia(porcentajeCubiertoGarantia);
 				oEGarantiaAsociadaSolicitudData.setPorcentajeDisponible(porcentajeDisponibleGarantia);
@@ -956,8 +958,9 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 				mensajePorcentaje = UMensajeValidacion.MSJ_7;
 				
 			}else{	
-				oEGarantiaAsociadaSolicitudData.setSaldoMontoSolicitud(0);
+				oEGarantiaAsociadaSolicitudData.setSaldoDisponibleMontoSolicitud(0);
 				oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoSolicitud(0);
+				oEGarantiaAsociadaSolicitudData.setPorcentajeDisponibleSolicitud(0);
 				oEGarantiaAsociadaSolicitudData.setSaldoDisponibleGarantia(0);
 				oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoGarantia(0);
 				oEGarantiaAsociadaSolicitudData.setPorcentajeDisponible(0);
@@ -979,8 +982,9 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 					porcentajeCubiertoGarantia = (montoVRI - montoSolicitud) < 0 ? 100 : (montoSolicitud/montoVRI)*100;
 					porcentajeDisponibleGarantia = porcentajeCubiertoGarantia == 100 ? 0 : (100 - porcentajeCubiertoGarantia);
 				
-					oEGarantiaAsociadaSolicitudData.setSaldoMontoSolicitud(saldoCubiertoSolicitud);
+					oEGarantiaAsociadaSolicitudData.setSaldoDisponibleMontoSolicitud(saldoCubiertoSolicitud);
 					oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoSolicitud(porcentajeCubiertoSolicitud);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeDisponibleSolicitud(100-porcentajeCubiertoSolicitud);
 					oEGarantiaAsociadaSolicitudData.setSaldoDisponibleGarantia(saldoDisponibleGarantia);
 					oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoGarantia(porcentajeCubiertoGarantia);
 					oEGarantiaAsociadaSolicitudData.setPorcentajeDisponible(porcentajeDisponibleGarantia);
@@ -988,8 +992,9 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 					mensajePorcentaje = UMensajeValidacion.MSJ_7;
 					
 				}else{	
-					oEGarantiaAsociadaSolicitudData.setSaldoMontoSolicitud(0);
+					oEGarantiaAsociadaSolicitudData.setSaldoDisponibleMontoSolicitud(0);
 					oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoSolicitud(0);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeDisponibleSolicitud(0);
 					oEGarantiaAsociadaSolicitudData.setSaldoDisponibleGarantia(0);
 					oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoGarantia(0);
 					oEGarantiaAsociadaSolicitudData.setPorcentajeDisponible(0);
@@ -1010,8 +1015,9 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 					porcentajeCubiertoGarantia = (montoVRI - montoSolicitud) < 0 ? 100 : (montoSolicitud/montoVRI)*100;
 					porcentajeDisponibleGarantia = porcentajeCubiertoGarantia == 100 ? 0 : (100 - porcentajeCubiertoGarantia);
 				
-					oEGarantiaAsociadaSolicitudData.setSaldoMontoSolicitud(saldoCubiertoSolicitud);
+					oEGarantiaAsociadaSolicitudData.setSaldoDisponibleMontoSolicitud(saldoCubiertoSolicitud);
 					oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoSolicitud(porcentajeCubiertoSolicitud);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeDisponibleSolicitud(100-porcentajeCubiertoSolicitud);
 					oEGarantiaAsociadaSolicitudData.setSaldoDisponibleGarantia(saldoDisponibleGarantia);
 					oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoGarantia(porcentajeCubiertoGarantia);
 					oEGarantiaAsociadaSolicitudData.setPorcentajeDisponible(porcentajeDisponibleGarantia);
@@ -1019,7 +1025,12 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 					mensajePorcentaje = UMensajeValidacion.MSJ_7;
 					
 				}else{	
-					porcentajeGarantia = 0;
+					oEGarantiaAsociadaSolicitudData.setSaldoDisponibleMontoSolicitud(0);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoSolicitud(0);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeDisponibleSolicitud(0);
+					oEGarantiaAsociadaSolicitudData.setSaldoDisponibleGarantia(0);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeCubiertoGarantia(0);
+					oEGarantiaAsociadaSolicitudData.setPorcentajeDisponible(0);
 				//	oEGarantiaAsociadaSolicitudData.setPorcentajeAsignado(porcentajeGarantia);
 					mensajePorcentaje = UMensajeValidacion.MSJ_10;
 				}

@@ -41,7 +41,7 @@ public class DAOGarantia extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_INS_OBSERVACIONSOLICITUDASOCIADAGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OBSERVACIONSOLICITUDASOCIADAGARANTIA("+parametrosSP(7)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_LIBERARGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_LIBERARGARANTIA("+parametrosSP(6)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_GARANTIAMANTENIMIENTO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_GARANTIAMANTENIMIENTO("+parametrosSP(71)+") }"; 
-	private static final String SP_ABACOINLEGAL_UPD_GARANTIASOLICITUD="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_GARANTIASOLICITUD("+parametrosSP(21)+") }";
+	private static final String SP_ABACOINLEGAL_UPD_GARANTIASOLICITUD="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_GARANTIASOLICITUD("+parametrosSP(22)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_GARANTIASOLICITUDSIAF="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_GARANTIASOLICITUDSIAF("+parametrosSP(34)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_TIPOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_TIPOGARANTIA("+parametrosSP(4)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_GARANTIAPOLIZA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_GARANTIAPOLIZA("+parametrosSP(6)+") }";
@@ -1238,8 +1238,9 @@ public class DAOGarantia extends InstanciaAcceso{
 			lstParametrosEntrada.add(eGarantiaSolicitud.getFechaTasacion());
 			lstParametrosEntrada.add(eGarantiaSolicitud.getCodigoTasador());
 			lstParametrosEntrada.add(eGarantiaSolicitud.getFechaComercial());
-			lstParametrosEntrada.add(eGarantiaSolicitud.getSaldoMontoSolicitud());
-			lstParametrosEntrada.add(eGarantiaSolicitud.getPorcentajeCubiertoSolicitud());
+			lstParametrosEntrada.add(eGarantiaSolicitud.getMontoSaldoSolicitud());
+			lstParametrosEntrada.add(eGarantiaSolicitud.getSaldoDisponibleMontoSolicitud());
+			lstParametrosEntrada.add(eGarantiaSolicitud.getPorcentajeDisponibleSolicitud());
 			lstParametrosEntrada.add(eGarantiaSolicitud.getSaldoDisponibleGarantia());
 			lstParametrosEntrada.add(eGarantiaSolicitud.getPorcentajeDisponible());
 			lstParametrosEntrada.add(eGarantiaSolicitud.getPorcentajeCubiertoGarantia());
@@ -2256,8 +2257,9 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantiaSolicitud.setMontoGravamen(oResultSet.getDouble("MONGRA"));
 					oEGarantiaSolicitud.setMontoValorizacion(oResultSet.getDouble("MONVAL"));
 					oEGarantiaSolicitud.setMontoSolicitud(oResultSet.getDouble("MTOSOL"));
-					oEGarantiaSolicitud.setSaldoMontoSolicitud(oResultSet.getDouble("SALSOL"));
-					oEGarantiaSolicitud.setPorcentajeCubiertoSolicitud(oResultSet.getDouble("PORSOL"));
+					oEGarantiaSolicitud.setMontoSaldoSolicitud(oResultSet.getDouble("MTOSAL"));
+					oEGarantiaSolicitud.setSaldoDisponibleMontoSolicitud(oResultSet.getDouble("SALSOL"));
+					oEGarantiaSolicitud.setPorcentajeDisponibleSolicitud(oResultSet.getDouble("PORSOL"));
 					oEGarantiaSolicitud.setSaldoDisponibleGarantia(oResultSet.getDouble("SLDDIS"));
 					oEGarantiaSolicitud.setPorcentajeDisponible(oResultSet.getDouble("PORDIS"));
 					oEGarantiaSolicitud.setPorcentajeCubiertoGarantia(oResultSet.getDouble("PORGAR"));
@@ -3882,8 +3884,9 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEGarantiaSolicitud.setCodigoTasador(oResultSet.getInt("CODTAS"));
 					oEGarantiaSolicitud.setFechaComercial(oResultSet.getDate("FECCOM"));
 					oEGarantiaSolicitud.setMontoSolicitud(oResultSet.getDouble("MTOSOL"));
-					oEGarantiaSolicitud.setSaldoMontoSolicitud(oResultSet.getDouble("SALSOL"));
-					oEGarantiaSolicitud.setPorcentajeCubiertoSolicitud(oResultSet.getDouble("PORSOL"));
+					oEGarantiaSolicitud.setMontoSaldoSolicitud(oResultSet.getDouble("MTOSAL"));
+					oEGarantiaSolicitud.setSaldoDisponibleMontoSolicitud(oResultSet.getDouble("SALSOL"));
+					oEGarantiaSolicitud.setPorcentajeDisponibleSolicitud(oResultSet.getDouble("PORSOL"));
 					oEGarantiaSolicitud.setSaldoDisponibleGarantia(oResultSet.getDouble("SLDDIS"));
 					oEGarantiaSolicitud.setPorcentajeDisponible(oResultSet.getDouble("PORDIS"));
 					oEGarantiaSolicitud.setPorcentajeCubiertoGarantia(oResultSet.getDouble("PORGAR"));

@@ -102,9 +102,11 @@ public @Data class EGarantiaSolicitud {
 	private double montoTasacion;
 	private double montoGravamen;
 	private double montoSolicitud; //Monto Solicitado de Credito
+	private double montoSaldoSolicitud;
 	private double montoValorRealizacion; //VRI
-	private double saldoMontoSolicitud;
+	private double saldoDisponibleMontoSolicitud;
 	private double porcentajeCubiertoSolicitud;
+	private double porcentajeDisponibleSolicitud;
 	private double porcentajeDisponible;
 	private double porcentajeCubiertoGarantia;
 	private String usuarioCredito;

@@ -23,6 +23,7 @@ import com.abaco.negocio.util.UConstante.UAccionExterna;
 import com.abaco.negocio.util.UConstante.UAccionInterna;
 import com.abaco.negocio.util.UConstante.UClaseGarantia;
 import com.abaco.negocio.util.UConstante.UEstado;
+import com.abaco.negocio.util.UConstante.UEstadoGarantia;
 import com.abaco.negocio.util.UConstante.UTipoCredito;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
 import com.abaco.negocio.util.UFuncionesGenerales;
@@ -48,6 +49,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 	@Getter @Setter private List<EGarantiaSolicitud> lstGarantiaSolicitudNueva;
 	@Getter @Setter private List<EGarantiaSolicitud> lstGarantiaSolicitudExistente;
 	@Getter @Setter private List<EGarantiaSolicitud> lstHistoricoGarantiaSolicitud;
+	@Getter @Setter private List<EGarantiaSolicitud> lstSolicitudGarantiaSaldos;
 	@Getter @Setter private List<EGarantia> lstGarantiaPoliza;
 	@Getter @Setter private List<EGeneral> lstTipoGarantia;
 	@Getter @Setter private List<EGeneral> lstTipoGarantiaFiltro;
@@ -100,6 +102,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 		lstGarantiaSolicitudNueva = new ArrayList<EGarantiaSolicitud>();
 		lstGarantiaSolicitudExistente = new ArrayList<EGarantiaSolicitud>();
 		lstHistoricoGarantiaSolicitud = new ArrayList<EGarantiaSolicitud>();
+		lstSolicitudGarantiaSaldos = new ArrayList<EGarantiaSolicitud>();
 		lstGarantiaPoliza = new ArrayList<EGarantia>();
 		lstTipoGarantia = new ArrayList<EGeneral>();
 		lstTipoGarantiaFiltro = new ArrayList<EGeneral>();
@@ -260,12 +263,36 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 	public void evaluarSolicitud(EGarantiaSolicitud oEGarantiaSolicitudItem) {
 		String ruta = "";
 		if (oEGarantiaSolicitudItem != null) {
-			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.NUEVO);
-			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.FICHA_PARAMETRO, oEGarantiaSolicitudItem);
 			
-			ruta = "RegistroOperacionGarantiaSolicitud.xhtml";
-			UGeneradorQueryString objUGeneradorQueryString = new UGeneradorQueryString(ruta);
-			UManejadorSesionWeb.redirigePagina(objUGeneradorQueryString.obtieneUrlConParametros());
+			if(oEGarantiaSolicitudItem.getSecuenciaGarantia()>1){
+				lstSolicitudGarantiaSaldos = oBOGarantia.listarSolicitudAnexoGarantia(oEGarantiaSolicitudItem.getNumeroSolicitud());
+				for(int i=0;i<lstSolicitudGarantiaSaldos.size();i++){
+					if((oEGarantiaSolicitudItem.getSecuenciaGarantia()-1) == lstSolicitudGarantiaSaldos.get(i).getSecuenciaGarantia()){	
+						if(lstSolicitudGarantiaSaldos.get(i).getCodigoEstadoGarantiaSolicitud() == UEstado.PENDIENTEGARANTIAREGISTRO){
+							oEMensaje.setDescMensaje("Evalue la Solicitud en Orden de Secuencia de Garantía y envíe a Legal. \n");
+							RequestContext.getCurrentInstance().execute("PF('dlgMensaje').show();");
+							break;
+						}else{
+							UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.NUEVO);
+							UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.FICHA_PARAMETRO, oEGarantiaSolicitudItem);
+							
+							ruta = "RegistroOperacionGarantiaSolicitud.xhtml";
+							UGeneradorQueryString objUGeneradorQueryString = new UGeneradorQueryString(ruta);
+							UManejadorSesionWeb.redirigePagina(objUGeneradorQueryString.obtieneUrlConParametros());
+							break;
+						}
+					}
+				}		
+			}else{
+				UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.NUEVO);
+				UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.FICHA_PARAMETRO, oEGarantiaSolicitudItem);
+				
+				ruta = "RegistroOperacionGarantiaSolicitud.xhtml";
+				UGeneradorQueryString objUGeneradorQueryString = new UGeneradorQueryString(ruta);
+				UManejadorSesionWeb.redirigePagina(objUGeneradorQueryString.obtieneUrlConParametros());
+			}
+			
+		
 		}
 	}
 	

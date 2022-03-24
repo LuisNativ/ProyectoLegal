@@ -109,7 +109,7 @@
 										:null}"/>					
 					</p:column>
 					<p:column headerText="" width="5%">
-						<p:commandButton styleClass="dsBoton5 green" icon="fa fa-pencil" title="Evaluar Garantía" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituircredito.evaluarSolicitud(item)}"  rendered="#{item.codigoEstadoGarantiaSolicitud eq 54 or item.codigoEstadoGarantiaSolicitud eq 53 ? false : true}"></p:commandButton>
+						<p:commandButton styleClass="dsBoton5 green" icon="fa fa-pencil" title="Evaluar Garantía" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituircredito.evaluarSolicitud(item)}"  rendered="#{item.codigoEstadoGarantiaSolicitud eq 54 or item.codigoEstadoGarantiaSolicitud eq 53 ? false : true}" update=":frmDlgMensaje"></p:commandButton>
 			     	</p:column>
 				</p:dataTable>
 			    </p:tab>
@@ -171,7 +171,7 @@
 											:null}"/>					
 						</p:column>
 						<p:column headerText="" width="5%">
-							<p:commandButton styleClass="dsBoton5 green" icon="fa fa-pencil" title="Evaluar Garantía" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituircredito.evaluarSolicitud(item)}" rendered="#{item.codigoEstadoGarantiaSolicitud eq 54 or item.codigoEstadoGarantiaSolicitud eq 53 ? false : true}"></p:commandButton>
+							<p:commandButton styleClass="dsBoton5 green" icon="fa fa-pencil" title="Evaluar Garantía" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituircredito.evaluarSolicitud(item)}" rendered="#{item.codigoEstadoGarantiaSolicitud eq 54 or item.codigoEstadoGarantiaSolicitud eq 53 ? false : true}" update=":frmDlgMensaje"></p:commandButton>
 				     	</p:column>
 					</p:dataTable>
 		    	</p:tab>
