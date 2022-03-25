@@ -109,34 +109,34 @@
         </f:facet>
 	    <div class="ui-g ui-fluid ui-g-nopad">
 	    	<h:panelGroup layout="block" rendered="#{mbregistrooperacionlevantamientogarantia.visualizarFrmGarantiaPredio}">
-	           <div class="ui-g-12 ui-md-12 ui-lg-4">
+	            <div class="ui-g-12 ui-md-12 ui-lg-6">
 					<p:outputLabel value="Ubicación" styleClass="dsLabel1"/>
 					<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.ubicacion1}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
-			   </div>
-			   <div class="ui-g-12 ui-md-12 ui-lg-4 ui-g-nopad">
-				<div class="ui-g-4">
-					<p:outputLabel value="Departamento" styleClass="dsLabel1"/>
-					<p:selectOneMenu id="idDepartamentoPredio" value="#{mbregistrooperacionlevantamientogarantia.codigoDepartamentoGarantia}" disabled="true">
-						<f:selectItem itemLabel="-Seleccione-" itemValue="" />
-						<f:selectItems value="#{mbregistrooperacionlevantamientogarantia.lstDepartamentoGarantia}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
-		            </p:selectOneMenu>
-				</div>				
-				<div class="ui-g-4">
-					<p:outputLabel value="Provincia" styleClass="dsLabel1"/>
-					<p:selectOneMenu id="cbProvinciaPredio" value="#{mbregistrooperacionlevantamientogarantia.codigoProvinciaGarantia}" disabled="true">
-						<f:selectItem itemLabel="-Seleccione-" itemValue="" />
-						<f:selectItems value="#{mbregistrooperacionlevantamientogarantia.lstProvinciaGarantia}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
-		            </p:selectOneMenu>
-				</div>					
-				<div class="ui-g-4">
-					<p:outputLabel value="Distrito" styleClass="dsLabel1"/>
-					<p:selectOneMenu id="cbDistritoGarantia" value="#{mbregistrooperacionlevantamientogarantia.codigoDistritoGarantia}" disabled="true">
-						<f:selectItem itemLabel="-Seleccione-" itemValue="" />
-						<f:selectItems value="#{mbregistrooperacionlevantamientogarantia.lstDistritoGarantia}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
-		            </p:selectOneMenu>
-				</div>
 			    </div>
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+			    <div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+					<div class="ui-g-4">
+						<p:outputLabel value="Departamento" styleClass="dsLabel1"/>
+						<p:selectOneMenu id="idDepartamentoPredio" value="#{mbregistrooperacionlevantamientogarantia.codigoDepartamentoGarantia}" disabled="true">
+							<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+							<f:selectItems value="#{mbregistrooperacionlevantamientogarantia.lstDepartamentoGarantia}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+			            </p:selectOneMenu>
+					</div>				
+					<div class="ui-g-4">
+						<p:outputLabel value="Provincia" styleClass="dsLabel1"/>
+						<p:selectOneMenu id="cbProvinciaPredio" value="#{mbregistrooperacionlevantamientogarantia.codigoProvinciaGarantia}" disabled="true">
+							<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+							<f:selectItems value="#{mbregistrooperacionlevantamientogarantia.lstProvinciaGarantia}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+			            </p:selectOneMenu>
+					</div>					
+					<div class="ui-g-4">
+						<p:outputLabel value="Distrito" styleClass="dsLabel1"/>
+						<p:selectOneMenu id="cbDistritoGarantia" value="#{mbregistrooperacionlevantamientogarantia.codigoDistritoGarantia}" disabled="true">
+							<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+							<f:selectItems value="#{mbregistrooperacionlevantamientogarantia.lstDistritoGarantia}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
+			            </p:selectOneMenu>
+					</div>
+			    </div>
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-6">
 						<p:outputLabel value="Área de Terreno" styleClass="dsLabel1"/>
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoVariable2}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
@@ -150,7 +150,7 @@
 						</p:inputText>
 			   		</div>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-4">
 						<p:outputLabel value="Uso" styleClass="dsLabel1"/>
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.descripcionA}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
@@ -167,7 +167,7 @@
 				        </p:selectOneMenu>
 			   		</div>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-4">
 						<p:outputLabel value="Moneda" styleClass="dsLabel1"/>
 						<p:selectOneMenu value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.codigoMoneda}" disabled="true">
@@ -184,13 +184,13 @@
 						<p:calendar value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.fechaValoracion}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:calendar>
 			   		</div>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-12">
 						<p:outputLabel value="Tasador" styleClass="dsLabel1"/>
 						<p:inputText type="text" id="idDescripcionTasador" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.descripcionTasador}" disabled="true"></p:inputText>
 			   		</div>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-4">
 						<p:outputLabel value="Valor Gravamen" styleClass="dsLabel1"/>
 						<div class="ui-inputgroup">
@@ -206,34 +206,43 @@
 			   		</div>
 			   		<div class="ui-g-4">
 						<p:outputLabel value="Límite" styleClass="dsLabel1"/>
-						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoVariable1}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
-							<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
-						</p:inputText>
+						<div class="ui-inputgroup">
+							<div class="ui-inputgroup-addon">#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.abreviacionMoneda}</div>
+							<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoVariable1}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
+								<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
+							</p:inputText>
+						</div>
 			   		</div>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-4">
 						<p:outputLabel value="Fecha Nva. Valor." styleClass="dsLabel1"/>
 						<p:calendar value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.fechaVariable1}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:calendar>
 			   		</div>
 			   		<div class="ui-g-4">
 						<p:outputLabel value="Valor Actual" styleClass="dsLabel1"/>
-						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
+						<div class="ui-inputgroup">
+							<div class="ui-inputgroup-addon">#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.abreviacionMoneda}</div>
+							<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
 							<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
-						</p:inputText>
+							</p:inputText>
+						</div>
 			   		</div>
 			   		<div class="ui-g-4">
 						<p:outputLabel value="Valor Realización" styleClass="dsLabel1"/>
-						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoValoracion}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
-						<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
-						</p:inputText>
+						<div class="ui-inputgroup">
+							<div class="ui-inputgroup-addon">#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.abreviacionMoneda}</div>
+							<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoValoracion}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
+								<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
+							</p:inputText>
+						</div>
 					</div>
 				</div>
-			    <div class="ui-g-12 ui-md-6 ui-lg-4">
+			    <div class="ui-g-12 ui-md-6 ui-lg-6">
 					<p:outputLabel value="Propietario Bien" styleClass="dsLabel1"/>
 					<p:inputText type="text" styleClass="dsInput1" vvalue="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.descripcionPropietario}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
 			    </div>
-			    <div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+			    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-4">
 						<p:outputLabel value="Cia. De Seguros" styleClass="dsLabel1"/>
 						<p:selectOneMenu value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.codigoCiaSeguro}" disabled="true">
@@ -280,7 +289,7 @@
 	    	</h:panelGroup>
 	    	
 	    	<h:panelGroup layout="block" rendered="#{mbregistrooperacionlevantamientogarantia.visualizarFrmGarantiaVehicular}">
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-4">
 						<p:outputLabel value="Placa" styleClass="dsLabel1"/>
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.placa}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
@@ -294,7 +303,7 @@
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.marca}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
 			   		</div>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-3">
 						<p:outputLabel value="Modelo" styleClass="dsLabel1"/>
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.modelo}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
@@ -312,7 +321,7 @@
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.comentario}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
 			   		</div>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-4">
 						<p:outputLabel value="Nro. Serie" styleClass="dsLabel1"/>
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.ubicacion1}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
@@ -326,7 +335,7 @@
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.descripcionTipoBien}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
 			   		</div>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-4">
 						<p:outputLabel value="Moneda" styleClass="dsLabel1"/>
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.descripcionMoneda}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
@@ -341,12 +350,15 @@
 
 			   		</div>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-4">
 						<p:outputLabel value="Valor Realización" styleClass="dsLabel1"/>
-						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoValoracion}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
-							<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
-						</p:inputText>
+						<div class="ui-inputgroup">
+							<div class="ui-inputgroup-addon">#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.abreviacionMoneda}</div>
+							<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoValoracion}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
+								<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
+							</p:inputText>
+						</div>
 			   		</div>
 			   		<div class="ui-g-8">
 						<p:outputLabel value="Tasador" styleClass="dsLabel1"/>
@@ -354,12 +366,15 @@
 			   		</div>
 				
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-4">
 						<p:outputLabel value="Valor Gravamen" styleClass="dsLabel1"/>
-						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoGravamen}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
-							<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
-						</p:inputText>
+						<div class="ui-inputgroup">
+							<div class="ui-inputgroup-addon">#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.abreviacionMoneda}</div>
+							<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoGravamen}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
+								<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
+							</p:inputText>
+						</div>
 			   		</div>
 			   		<div class="ui-g-4">
 						<p:outputLabel value="Fecha Gravamen" styleClass="dsLabel1"/>
@@ -367,36 +382,42 @@
 			   		</div>
 			   		<div class="ui-g-4">
 						<p:outputLabel value="Límite" styleClass="dsLabel1"/>
-						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoVariable1}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
-							<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
-						</p:inputText>
+						<div class="ui-inputgroup">
+							<div class="ui-inputgroup-addon">#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.abreviacionMoneda}</div>
+							<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoVariable1}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
+								<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
+							</p:inputText>
+						</div>
 			   		</div>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-4">
 						<p:outputLabel value="Fecha Nva. Valor." styleClass="dsLabel1"/>
 						<p:calendar  value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.fechaVariable1}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:calendar>
 			   		</div>
 			   		<div class="ui-g-4">
 						<p:outputLabel value="Valor Actual" styleClass="dsLabel1"/>
-						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
+						<div class="ui-inputgroup">
+							<div class="ui-inputgroup-addon">#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.abreviacionMoneda}</div>
+							<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}">
 							<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
-						</p:inputText>
+							</p:inputText>
+						</div>
 			   		</div>
 					<div class="ui-g-4">
 						<p:outputLabel value="Fabricación" styleClass="dsLabel1"/>
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.anioFabricacion}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>							
 					</div>
 				</div>
-			    <div class="ui-g-12 ui-md-6 ui-lg-4">
+			    <div class="ui-g-12 ui-md-6 ui-lg-6">
 					<p:outputLabel value="Propietario Bien" styleClass="dsLabel1"/>
 					<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.descripcionPropietario}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
 			    </div>
-			    <div class="ui-g-12 ui-md-6 ui-lg-4">
+			    <div class="ui-g-12 ui-md-6 ui-lg-6">
 					<p:outputLabel value="Depositario" styleClass="dsLabel1"/>
 					<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.descripcionDepositario}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
 			    </div>
-			    <div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+			    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-8">
 						<p:outputLabel value="Cia. De Seguros" styleClass="dsLabel1"/>
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.descripcionCiaSeguro}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
@@ -421,7 +442,7 @@
 					<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.descripcionC}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
 				</div>
 				-->
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-4">
 						<p:outputLabel value="Correl. Poli" styleClass="dsLabel1"/>
 						<p:inputNumber styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.codigoInspector}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}" autocomplete="off" minValue="0" maxValue="999">
@@ -444,7 +465,7 @@
 			</h:panelGroup>
 			
 			<h:panelGroup layout="block" rendered="#{mbregistrooperacionlevantamientogarantia.visualizarFrmGarantiaMaquinaria}">
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-12">
 						<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.descripcionC}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
@@ -475,7 +496,7 @@
 				   	</div>
 			    </div>
 			           		
-			    <div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+			    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-4">
 						<p:outputLabel value="Marca" styleClass="dsLabel1"/>
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.marca}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
@@ -490,7 +511,10 @@
 			   		</div>
 					<div class="ui-g-4">
 						<p:outputLabel value="Valor de Gravamen" styleClass="dsLabel1"/>
-						<p:inputNumber type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoGravamen}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}" decimalSeparator="." thousandSeparator=","></p:inputNumber>
+						<div class="ui-inputgroup">
+							<div class="ui-inputgroup-addon">#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.abreviacionMoneda}</div>
+							<p:inputNumber type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoGravamen}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}" decimalSeparator="." thousandSeparator=","></p:inputNumber>
+						</div>
 			   		</div>
 			   		<div class="ui-g-4">
 						<p:outputLabel value="Fecha de Gravamen" styleClass="dsLabel1"/>
@@ -498,7 +522,10 @@
 			   		</div>
 			   		<div class="ui-g-4">
 						<p:outputLabel value="Límite" styleClass="dsLabel1"/>
-						<p:inputNumber type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoVariable1}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}" decimalSeparator="." thousandSeparator=","></p:inputNumber>
+						<div class="ui-inputgroup">
+							<div class="ui-inputgroup-addon">#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.abreviacionMoneda}</div>
+							<p:inputNumber type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoVariable1}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}" decimalSeparator="." thousandSeparator=","></p:inputNumber>
+						</div>
 			   		</div>
 					<div class="ui-g-12">
 						<p:outputLabel value="Depositario" styleClass="dsLabel1"/>
@@ -514,7 +541,7 @@
 			   		</div>
 				</div>
 				
-				<div class="ui-g-12 ui-md-6 ui-lg-4 ui-g-nopad">
+				<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 					<div class="ui-g-4">
 						<p:outputLabel value="Nro. Motor" styleClass="dsLabel1"/>
 						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.descripcionA}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
@@ -529,11 +556,17 @@
 			   		</div>
 					<div class="ui-g-4">
 						<p:outputLabel value="Valor Actual" styleClass="dsLabel1"/>
-						<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
+						<div class="ui-inputgroup">
+							<div class="ui-inputgroup-addon">#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.abreviacionMoneda}</div>
+							<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoEjecucion}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}"></p:inputText>
+						</div>
 			   		</div>
 					<div class="ui-g-4">
 						<p:outputLabel value="Valor Relización" styleClass="dsLabel1"/>
-						<p:inputNumber type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoValoracion}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}" decimalSeparator="." thousandSeparator=","></p:inputNumber>
+						<div class="ui-inputgroup">
+							<div class="ui-inputgroup-addon">#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.abreviacionMoneda}</div>
+							<p:inputNumber type="text" styleClass="dsInput1" value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.montoValoracion}" disabled="#{mbregistrooperacionlevantamientogarantia.deshabilitarFrmGarantia}" decimalSeparator="." thousandSeparator=","></p:inputNumber>
+						</div>
 			   		</div>
 					<div class="ui-g-12">
 						<p:outputLabel value="Propietario Bien" styleClass="dsLabel1"/>
@@ -546,7 +579,7 @@
 				</div>
 			</h:panelGroup>
 
-			<div class="ui-g-12 ui-md-12 ui-lg-12" style="#{mbregistrooperacionlevantamientogarantia.visualizarComentario ? 'display:block;' : 'display:none'}">
+			<div class="ui-g-12 ui-md-12 ui-lg-6" style="#{mbregistrooperacionlevantamientogarantia.visualizarComentario ? 'display:block;' : 'display:none'}">
 				<p:outputLabel value="Comentarios" styleClass="dsLabel1"/>
 				<p:inputTextarea type="text" styleClass="dsInput1" 
 				value="#{mbregistrooperacionlevantamientogarantia.descripcionMensaje}"
@@ -658,77 +691,125 @@
 	</div>
 
 	<div class="ui-g-12" style="#{mbregistrooperacionlevantamientogarantia.visualizarPnlCreditoRelacionado ? 'display:block;' : 'display:none'}">
+	<p:panel styleClass="dsPanel2" widgetVar="pnl6" toggleable="true" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+        <f:facet name="header" >
+            <i class="fa fa-table"></i> Clientes Asociados a la Garantía
+        </f:facet>
+		<p:dataTable value="#{mbregistrooperacionlevantamientogarantia.lstClienteGarantia}" var="item" styleClass="dsTabla1" paginator="true" rows="5" paginatorPosition="bottom" rowKey="#{item.codigoCliente}" reflow="false">
+			<p:column headerText="Codigo" styleClass="dsTextoCentro" width="5%">
+				<div class="dsTextoCorto">
+					<h:outputText value="#{item.codigoCliente}" title="#{item.codigoCliente}"/>
+				</div>
+			</p:column>
+			<p:column headerText="Nombre">
+				<div class="dsTextoCorto">
+					<h:outputText value="#{item.nombreCliente}" title="#{item.nombreCliente}"/>
+				</div>
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+	</div>
+
+	<div class="ui-g-12" style="#{mbregistrooperacionlevantamientogarantia.visualizarPnlCreditoRelacionado ? 'display:block;' : 'display:none'}">
 		<p:panel styleClass="dsPanel2" widgetVar="pnl4" toggleable="true" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
 	        <f:facet name="header" >
 	            <i class="fa fa-table"></i> Préstamos Asociados a la Garantía
 	        </f:facet>
 			<p:dataTable  value="#{mbregistrooperacionlevantamientogarantia.lstCreditoGarantia}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom" reflow="false" resizableColumns="true" resizeMode="expand">
-				<p:column headerText="Descripción" styleClass="dsTextoCentro" width="5%">
-					<h:outputText value="#{item.servicio} - #{item.numeroOperacion}"/>
-				</p:column>
-				<p:column headerText="Fec. Asig." styleClass="dsTextoCentro">
-					<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
-				</p:column>
-				<p:column headerText="Socio" styleClass="dsTextoCentro" width="20%">
-					 <div class="dsTextoCorto">
-					 	<h:outputText value="#{item.codigoCliente} #{item.nombreCliente}" title="#{item.codigoCliente} #{item.nombreCliente}"/>
-					 </div>	
-				</p:column>
-				<p:column headerText="Importe Asig." styleClass="dsTextoCentro" >
-					<h:outputText value="#{item.montoImporteCubierto}">
-	                     <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
-	                </h:outputText>
-				</p:column>
-				<p:column headerText="Saldo Crédito" styleClass="dsTextoCentro" >
-					<h:outputText value="#{item.montoSaldoCredito}">
-	                     <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
-	                </h:outputText>
-				</p:column>
-				<p:column headerText="% Coberturado" styleClass="dsTextoCentro" >
-					<h:outputText value="#{item.porcentajeCoberturado}">
-	                     <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
-	                </h:outputText>
-				</p:column>
-				<p:column headerText="Monto Coberturado" styleClass="dsTextoCentro" >
-					<h:outputText value="#{item.montoCoberturado}">
-	                     <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
-	                </h:outputText>
-				</p:column>	
-				<p:column headerText="Estado" styleClass="dsTextoCentro" >
-					<h:outputText value="#{item.descripcionEstadoCredito}">
-	                     <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
-	                </h:outputText>
-				</p:column>				
-	            <p:columnGroup type="footer">
-	                <p:row>
-		                <p:column  style="text-align:right"/>
-		                <p:column  style="text-align:right"/>
-	                    <p:column  style="text-align:right" footerText="TOTAL:"/>
-	                    <p:column>
-	                        <f:facet name="footer">
-	                            <h:outputText value="#{mbregistrooperacionlevantamientogarantia.montoAcumuladoAsignadoCredito}">
-	                                <f:convertNumber type="currency" currencySymbol="$"/>
-	                            </h:outputText>
-	                        </f:facet>
-	                    </p:column>
-	                    <p:column>
-	                        <f:facet name="footer">
-	                            <h:outputText value="#{mbregistrooperacionlevantamientogarantia.montoAcumuladoSaldoCredito}">
-	                                <f:convertNumber type="currency" currencySymbol="$"/>
-	                            </h:outputText>
-	                        </f:facet>
-	                    </p:column>
-	                    <p:column  style="text-align:right"/>
-		                 <p:column>
-	                        <f:facet name="footer">
-	                            <h:outputText value="#{mbregistrooperacionlevantamientogarantia.montoAcumuladoCoberturado}">
-	                                <f:convertNumber type="currency" currencySymbol="$"/>
-	                            </h:outputText>
-	                        </f:facet>
-	                    </p:column>
-	                    <p:column  style="text-align:right"/>
-	                </p:row>
-				</p:columnGroup>
+						<p:column headerText="Descripción" styleClass="dsTextoCentro" width="5%">
+							<h:outputText value="#{item.descripcionOperacion}"/>
+						</p:column>
+						<p:column headerText="Fec. Asig." styleClass="dsTextoCentro" width="10%">
+						 	<div class="dsTextoCorto">
+								<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
+							</div>
+						</p:column>
+						<p:column headerText="Cod.Socio" styleClass="dsTextoCentro" width="5%">
+							 <h:outputText value="#{item.codigoCliente}"/>	
+						</p:column>
+						<p:column headerText="Socio" styleClass="dsTextoCentro" width="15%">
+							 <div class="dsTextoCorto">
+							 	<h:outputText value="#{item.nombreCliente}"/>
+							 </div>	
+						</p:column>
+						<p:column headerText="Moneda" styleClass="dsTextoCentro" width="4%">
+							<h:outputText value="#{item.abreviacionMoneda}"/>
+						</p:column>
+						<p:column headerText="Importe Asig." styleClass="dsTextoCentro" width="9%">
+							<h:outputText value="#{item.montoImporteCubierto}">
+			                    <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
+			                </h:outputText>
+						</p:column>
+						<p:column headerText="Saldo Crédito" styleClass="dsTextoCentro" width="9%">
+							<h:outputText value="#{item.montoSaldoCredito}">
+			                    <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
+			                </h:outputText>
+						</p:column>
+						<!--
+						<p:column headerText="Mto.Coberturado" styleClass="dsTextoCentro" width="9%">
+							<h:outputText value="#{item.montoCoberturado}">
+			                	<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
+			                </h:outputText>
+						</p:column>
+						-->
+						<p:column headerText="Mto.Coberturado" styleClass="dsTextoCentro" width="9%">
+							<h:outputText value="#{item.montoConversionCoberturado}">
+			                	<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
+			                </h:outputText>
+						</p:column>
+						<p:column headerText="% Coberturado" styleClass="dsTextoCentro" width="9%">
+							<h:outputText value="#{item.porcentajeCoberturado}">
+			                    <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
+			                </h:outputText>
+						</p:column>
+						<p:column headerText="Estado" styleClass="dsTextoCentro">
+							<div class="dsTextoCorto">
+								<h:outputText value="#{item.descripcionSituacionCredito}"/>
+							</div>
+						</p:column>
+						<p:column headerText="Relación" styleClass="dsTextoCentro">
+							<div class="dsTextoCorto">
+								<h:outputText value="#{item.descripcionRelacion}" title="#{item.descripcionRelacion}"
+								styleClass="#{item.descripcionRelacion eq 'Enlazado' ? 'dsText3 green'
+											:item.descripcionRelacion eq 'Desenlazado' ? 'dsText3 red'
+											:null}"/>
+							</div>	
+						</p:column>
+						<!--		
+				            <p:columnGroup type="footer">
+				                <p:row>
+					              <p:column  style="text-align:right"/>
+					              <p:column  style="text-align:right"/>
+				                    <p:column  style="text-align:right" footerText="TOTAL:"/>
+				                    <p:column>
+				                        <f:facet name="footer">
+				                            <h:outputText value="#{mbmantenimientooperaciongarantia.montoAcumuladoAsignadoCredito}">
+				                                <f:convertNumber type="currency" currencySymbol="$"/>
+				                            </h:outputText>
+				                        </f:facet>
+				                    </p:column>
+				                    <p:column>
+				                        <f:facet name="footer">
+				                            <h:outputText value="#{mbmantenimientooperaciongarantia.montoAcumuladoSaldoCredito}">
+				                                <f:convertNumber type="currency" currencySymbol="$"/>
+				                            </h:outputText>
+				                        </f:facet>
+				                    </p:column>
+				                    <p:column  style="text-align:right"/>
+					              <p:column>
+				                        <f:facet name="footer">
+				                            <h:outputText value="#{mbmantenimientooperaciongarantia.montoAcumuladoCoberturado}">
+				                                <f:convertNumber type="currency" currencySymbol="$"/>
+				                            </h:outputText>
+				                        </f:facet>
+				                    </p:column>
+				                    <p:column  style="text-align:right"/>
+				                    <p:column  style="text-align:right"/>
+				                    <p:column  style="text-align:right"/>
+				                    <p:column  style="text-align:right"/>
+				                </p:row>
+	      				</p:columnGroup>
+	      				-->
 			</p:dataTable>
 		</p:panel>
 	</div>

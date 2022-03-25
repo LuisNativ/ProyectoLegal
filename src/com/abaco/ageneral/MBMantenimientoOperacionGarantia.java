@@ -980,8 +980,12 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
   	//*************************************//
 	
 	public void listarCreditosAsociadosGarantia(){
+		montoAcumuladoCoberturado = 0.0;
+		montoAcumuladoAsignadoCredito = 0.0;
 		double montoConversionCoberturado = 0;
+		double montoConversionAsignado = 0;
 		double montoTotalConversionCoberturado = 0;
+		double montoTotalConversionAsignado = 0;
 		
 		//Data de Tipo de Cambio
 		ETipoCambio oETipoCambioData = new ETipoCambio();
@@ -993,9 +997,30 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		lstCreditoGarantia = oBOGarantia.listarCreditosAsociadosGarantia(oEGarantiaData.getCodigoGarantia());
 		for(int i=0;i<lstCreditoGarantia.size();i++){
 			montoConversionCoberturado = 0;
+			montoConversionAsignado = 0;
 			double montoCoberturado = 0;
 			
 			ECredito oECredito = new ECredito();
+			
+			if(lstCreditoGarantia.get(i).getServicioBase() == 800 || lstCreditoGarantia.get(i).getServicioBase() == 801){
+				oECredito = oBOSolicitudCredito.buscarCreditoLineaCredito(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroPlanilla());
+			}else {
+				if(lstCreditoGarantia.get(i).getCodigoProducto() == 200){
+					if(lstCreditoGarantia.get(i).getCodigoSubProducto() == 8){
+						oECredito = oBOSolicitudCredito.buscarCreditoPrestamo(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacion());
+					}else{
+						oECredito = oBOSolicitudCredito.buscarCreditoPrestamo(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacion());
+					}	
+				}else if(lstCreditoGarantia.get(i).getCodigoProducto() == 301){
+					oECredito = oBOSolicitudCredito.buscarCreditoAbamoshi(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacionTanomoshi(), lstCreditoGarantia.get(i).getNumeroLista());
+				}else if(lstCreditoGarantia.get(i).getCodigoProducto() == 302){
+					oECredito = oBOSolicitudCredito.buscarCreditoAbamoshi(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacionTanomoshi(), lstCreditoGarantia.get(i).getNumeroLista());
+				}else if(lstCreditoGarantia.get(i).getCodigoProducto() == 81){
+					oECredito = oBOSolicitudCredito.buscarCreditoCartaFianza(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getCodigoMoneda(), lstCreditoGarantia.get(i).getNumeroOperacion());
+				}
+			}
+			
+			/*
 			if(lstCreditoGarantia.get(i).getCodigoProducto() == 200 && lstCreditoGarantia.get(i).getCodigoSubProducto() == 8){
 				montoCoberturado = 0;
 			}else {
@@ -1007,6 +1032,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 					oECredito = oBOSolicitudCredito.buscarCreditoPrestamo(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacion());
 				}
 			}
+			*/
 			
 			if(oECredito != null){
 				lstCreditoGarantia.get(i).setMontoSaldoCredito(oECredito.getSaldoCredito());
@@ -1022,17 +1048,24 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			
 			if(oEGarantiaData.getCodigoMoneda() == lstCreditoGarantia.get(i).getCodigoMoneda()){
 				montoConversionCoberturado += montoCoberturado;
+				montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto();
 			}else{
 				if(oEGarantiaData.getCodigoMoneda() == UMoneda.COD_SOLES && lstCreditoGarantia.get(i).getCodigoMoneda() == UMoneda.COD_DOLARES){
 					montoConversionCoberturado += montoCoberturado * oETipoCambioData.getTipoCambioSBS();
+					montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto() * oETipoCambioData.getTipoCambioSBS();
 				}else if(oEGarantiaData.getCodigoMoneda() == UMoneda.COD_DOLARES && lstCreditoGarantia.get(i).getCodigoMoneda() == UMoneda.COD_SOLES){
 					montoConversionCoberturado += montoCoberturado / oETipoCambioData.getTipoCambioSBS();
+					montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto() / oETipoCambioData.getTipoCambioSBS();
 				}
 			}
 			lstCreditoGarantia.get(i).setMontoCoberturado(montoCoberturado);
 			lstCreditoGarantia.get(i).setMontoConversionCoberturado(montoConversionCoberturado);
 			montoTotalConversionCoberturado = montoTotalConversionCoberturado + montoConversionCoberturado;
+			montoTotalConversionAsignado = montoTotalConversionAsignado + montoConversionAsignado;
 		}
+		
+		montoAcumuladoCoberturado = montoTotalConversionCoberturado;
+		montoAcumuladoAsignadoCredito = montoTotalConversionAsignado;
 		
 		for(int j=0;j<lstCreditoGarantia.size();j++){
 			double porcentajeCoberturado = 0;

@@ -96,6 +96,8 @@ public class DAOGarantia extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_SEL_CREDITOVIGENTERELACIONADOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CREDITOVIGENTERELACIONADOGARANTIA("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_CREDITOCANCELADORELACIONADOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CREDITOCANCELADORELACIONADOGARANTIA("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_CREDITOSASOCIADOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CREDITOSASOCIADOGARANTIA("+parametrosSP(1)+") }";
+	private static final String SP_ABACOINLEGAL_SEL_CREDITOSASOCIADOGARANTIA2="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CREDITOSASOCIADOGARANTIA2("+parametrosSP(1)+") }";
+	private static final String SP_ABACOINLEGAL_SEL_CLIENTEASOCIADOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CLIENTEASOCIADOGARANTIA("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_DEL_POLIZA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_POLIZA("+parametrosSP(5)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_GARANTIALIBERADA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_GARANTIALIBERADA("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_SOLICITUDDOCUMENTOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_SOLICITUDDOCUMENTOGARANTIA("+parametrosSP(4)+") }";
@@ -3051,6 +3053,103 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEContratoGarantia.setAbreviacionMoneda(UFuncionesGenerales.revisaCadena(oResultSet.getString("ABRVMON")));
 					oEContratoGarantia.setCodigoProducto(oResultSet.getInt("CPRODU"));
 					oEContratoGarantia.setCodigoSubProducto(oResultSet.getInt("SUBPRO"));
+					
+					lstCreditoGarantia.add(oEContratoGarantia);
+				}								
+			}						
+			
+		} catch(Exception objEx) {
+			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
+		}
+		return lstCreditoGarantia;
+	}
+	
+	public List<EAsignacionContratoGarantia> listarCreditosAsociadosGarantia2(long codigoGarantia) {
+		List<Object> lstParametrosEntrada;
+		ResultSet oResultSet = null;
+		EAsignacionContratoGarantia oEContratoGarantia= null;
+		List<EAsignacionContratoGarantia> lstCreditoGarantia = null;
+		
+		try {
+			lstParametrosEntrada = new ArrayList<Object>();
+			lstParametrosEntrada.add(codigoGarantia);
+				
+			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_SEL_CREDITOSASOCIADOGARANTIA2, lstParametrosEntrada, null);
+			if (oResultSet != null) {
+				lstCreditoGarantia = new ArrayList<EAsignacionContratoGarantia>();
+				while (oResultSet.next()) {
+					oEContratoGarantia= new EAsignacionContratoGarantia();
+					
+					oEContratoGarantia.setNumeroContrato(oResultSet.getInt("NROCOT"));
+					oEContratoGarantia.setNumeroContratoOtro(oResultSet.getInt("NROCOO"));
+					oEContratoGarantia.setSecuenciaAsignacion(oResultSet.getInt("SECASI"));
+					oEContratoGarantia.setTipoPrenda(oResultSet.getInt("TIPPDI"));
+					oEContratoGarantia.setServicioBase(oResultSet.getInt("SEBASE"));
+					oEContratoGarantia.setCodigoMonedaBaseAsignacion(oResultSet.getInt("MOBASE"));
+					oEContratoGarantia.setServicio(oResultSet.getInt("SERVIC"));
+					oEContratoGarantia.setCodigoMoneda(oResultSet.getInt("MONEDA"));
+					oEContratoGarantia.setNumeroOperacion(oResultSet.getLong("NUMOPE"));
+					oEContratoGarantia.setNumeroPlanilla(oResultSet.getLong("PLANIL"));
+					oEContratoGarantia.setNumeroFianza(oResultSet.getInt("NUMERO"));
+					oEContratoGarantia.setNumeroOperacionTanomoshi(oResultSet.getInt("NOPTAN"));
+					oEContratoGarantia.setNumeroLista(oResultSet.getInt("NROGRP"));
+					oEContratoGarantia.setNumeroDocumentoDPF(oResultSet.getInt("NUMDOC"));
+					oEContratoGarantia.setNumeroConsecutivoDPF(oResultSet.getInt("CONSEC"));
+					oEContratoGarantia.setNumeroCuenta(oResultSet.getInt("CUENTA"));
+					oEContratoGarantia.setMontoImporteDocMonedaOrigen(oResultSet.getDouble("IMPORI"));
+					oEContratoGarantia.setTipoCambio(oResultSet.getDouble("CAMBTI"));
+					oEContratoGarantia.setMontoImporteCubierto(oResultSet.getDouble("IMPCUB"));
+					oEContratoGarantia.setMontoSaldoGarantia(oResultSet.getDouble("SLDGAR"));
+					oEContratoGarantia.setPorcentajeCubiertoGarantia(oResultSet.getDouble("PORGAR"));
+					oEContratoGarantia.setMontoImporteDocMonedaOrigen2(oResultSet.getDouble("IMPORS"));
+					oEContratoGarantia.setMontoImporteCubierto2(oResultSet.getDouble("IMPCUS"));
+					oEContratoGarantia.setMontoSaldoGarantia2(oResultSet.getDouble("SLDGAS"));
+					oEContratoGarantia.setCodigoCliente(oResultSet.getInt("CODCLI"));
+					oEContratoGarantia.setNombreCliente(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMADC")));
+					oEContratoGarantia.setObservacion1(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSE01")));
+					oEContratoGarantia.setObservacion2(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSE02")));
+					oEContratoGarantia.setEstadoRegistro(UFuncionesGenerales.revisaCadena(oResultSet.getString("ESTARE")));
+					oEContratoGarantia.setTipoRegistro(UFuncionesGenerales.revisaCadena(oResultSet.getString("TIREGI")));
+					oEContratoGarantia.setFechaRegistro(oResultSet.getDate("FECREG"));
+					oEContratoGarantia.setHoraRegistro(UFuncionesGenerales.convertirEnteroATime(oResultSet.getInt("HORREG")));
+					EUsuario eUsuario = new EUsuario();
+					eUsuario.setNombreUsuario(UFuncionesGenerales.revisaCadena(oResultSet.getString("USUARI")));
+					oEContratoGarantia.setUsuarioRegistro(eUsuario);
+					oEContratoGarantia.setDescripcionOperacion(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCOPE")));
+					oEContratoGarantia.setDescripcionRelacion(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCREL")));
+					oEContratoGarantia.setAbreviacionMoneda(UFuncionesGenerales.revisaCadena(oResultSet.getString("ABRVMON")));
+					oEContratoGarantia.setCodigoProducto(oResultSet.getInt("CPRODU"));
+					oEContratoGarantia.setCodigoSubProducto(oResultSet.getInt("SUBPRO"));
+					
+					lstCreditoGarantia.add(oEContratoGarantia);
+				}								
+			}						
+			
+		} catch(Exception objEx) {
+			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
+		}
+		return lstCreditoGarantia;
+	}
+	
+	public List<EAsignacionContratoGarantia> listarClienteAsociadosGarantia(long codigoGarantia) {
+		List<Object> lstParametrosEntrada;
+		ResultSet oResultSet = null;
+		EAsignacionContratoGarantia oEContratoGarantia= null;
+		List<EAsignacionContratoGarantia> lstCreditoGarantia = null;
+		
+		try {
+			lstParametrosEntrada = new ArrayList<Object>();
+			lstParametrosEntrada.add(codigoGarantia);
+				
+			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_SEL_CLIENTEASOCIADOGARANTIA, lstParametrosEntrada, null);
+			if (oResultSet != null) {
+				lstCreditoGarantia = new ArrayList<EAsignacionContratoGarantia>();
+				while (oResultSet.next()) {
+					oEContratoGarantia= new EAsignacionContratoGarantia();
+					
+					oEContratoGarantia.setNumeroContrato(oResultSet.getInt("NROCOT"));
+					oEContratoGarantia.setCodigoCliente(oResultSet.getInt("CODCLI"));
+					oEContratoGarantia.setNombreCliente(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMADC")));
 					
 					lstCreditoGarantia.add(oEContratoGarantia);
 				}								

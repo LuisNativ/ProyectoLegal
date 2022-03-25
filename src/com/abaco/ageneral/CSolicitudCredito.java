@@ -359,6 +359,24 @@ public class CSolicitudCredito {
 		return resultado;
 	}
 	
+	public ECredito buscarCreditoLineaCredito(int codigoServicio, long numeroPlanilla) {
+		IConexion oIConexion = null;
+		ECredito resultado = null;
+		DAOSolicitudCredito oDAOSolicitudCredito= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();			
+			oDAOSolicitudCredito = new DAOSolicitudCredito(oIConexion);
+			resultado = oDAOSolicitudCredito.buscarCreditoLineaCredito(codigoServicio, numeroPlanilla);			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al obtener credito " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
 	public ECredito buscarCreditoAbamoshi(int codigoServicio, long numeroOperacion, int numeroGrupo) {
 		IConexion oIConexion = null;
 		ECredito resultado = null;

@@ -81,6 +81,10 @@ public class BOSolicitudCredito {
 		ECredito resultado=oCSolicitudCredito.buscarCreditoPrestamo(codigoServicio, numeroOperacion);
 		return resultado;
 	}
+	public ECredito buscarCreditoLineaCredito(int codigoServicio, long numeroPlanilla) {
+		ECredito resultado=oCSolicitudCredito.buscarCreditoLineaCredito(codigoServicio, numeroPlanilla);
+		return resultado;
+	}
 	public ECredito buscarCreditoAbamoshi(int codigoServicio, long numeroOperacion, int numeroGrupo) {
 		ECredito resultado=oCSolicitudCredito.buscarCreditoAbamoshi(codigoServicio, numeroOperacion, numeroGrupo);
 		return resultado;

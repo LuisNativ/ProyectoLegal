@@ -2474,6 +2474,44 @@ public class CGarantia {
 		return resultado;
 	}
 	
+	public List<EAsignacionContratoGarantia> listarCreditosAsociadosGarantia2(long codigoGarantia){
+		IConexion oIConexion = null;
+		List<EAsignacionContratoGarantia> resultado = null;
+		DAOGarantia oDAOGarantia= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();			
+			oDAOGarantia = new DAOGarantia(oIConexion);
+			resultado = oDAOGarantia.listarCreditosAsociadosGarantia2(codigoGarantia);			
+			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al listar  " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
+	public List<EAsignacionContratoGarantia> listarClienteAsociadosGarantia(long codigoGarantia){
+		IConexion oIConexion = null;
+		List<EAsignacionContratoGarantia> resultado = null;
+		DAOGarantia oDAOGarantia= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();			
+			oDAOGarantia = new DAOGarantia(oIConexion);
+			resultado = oDAOGarantia.listarClienteAsociadosGarantia(codigoGarantia);			
+			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al listar  " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
 	public EMensaje eliminarPoliza(EPoliza ePoliza) {
 		IConexion oIConexion = null;
 		EMensaje mensaje = new EMensaje();

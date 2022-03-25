@@ -117,6 +117,11 @@ public @Data class EGarantia {
 	private double tipocambio;
 	private double porcentajeDisponible;
 	private Date fechaPoliza;
+	private double saldoMontoSolicitud;
+	private double porcentajeCubiertoSolicitud;
+	private double porcentajeCubiertoGarantia;
+	private double porcentajeCubierto;
+	private double montoCubierto;
 	
 	//Atributos de Registro
 	private Date fechaRegistro;
@@ -149,8 +154,6 @@ public @Data class EGarantia {
 	private String obervacionGarantia;
 	
 	//Atributos adicionales
-	private double porcentajeCubierto;
-	private double montoCubierto;
 	private long numeroSolicitud;
 	//private Date fechaPoliza;
 	private String ubicacion1Largo;
@@ -169,6 +172,7 @@ public @Data class EGarantia {
     private String descripcionD;
     private long numeroSolicitudCredito;
     private double montoValorizacion;
+    private int indicadorAccion;
 	
 	
 	

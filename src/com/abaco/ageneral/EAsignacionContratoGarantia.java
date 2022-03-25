@@ -52,9 +52,9 @@ public @Data class EAsignacionContratoGarantia {
 	private String descripcionEstadoCredito;
 	private String descripcionSituacionCredito;
 	private String descripcionOperacion;
+	private String descripcionRelacion;
 	private double montoConversionCoberturado;
 	private int codigoProducto;
 	private int codigoSubProducto;
-
 	
 }

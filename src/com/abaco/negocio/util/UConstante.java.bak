@@ -100,7 +100,7 @@ public class UConstante {
 						          File.separator +  "Socio" +
 						          File.separator +  "FichaSocio" +
 						          File.separator ;
-		*/         
+		 */     
 		//Desarrollo .130
         
 		String rutaBaseLinux =  File.separator + "media" + 
@@ -800,6 +800,11 @@ public class UConstante {
 		int EJECUTADA = 6;
 		int ANULADA = 7;
 		int PERMUTA = 8;
+	}
+	
+	public static interface UFiltroGarantia{
+		int VIGENTE = 1;
+		int LIBERADA = 2;
 	}
 	
 	public static interface UTipoSuscripcionPago {

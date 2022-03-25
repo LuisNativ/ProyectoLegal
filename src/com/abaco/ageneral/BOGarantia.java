@@ -365,6 +365,14 @@ public class BOGarantia {
 		List<EAsignacionContratoGarantia> lista=oCGarantia.listarCreditosAsociadosGarantia(codigoGarantia);
 		return lista;
 	}
+	public List<EAsignacionContratoGarantia> listarCreditosAsociadosGarantia2(long codigoGarantia) {					
+		List<EAsignacionContratoGarantia> lista=oCGarantia.listarCreditosAsociadosGarantia2(codigoGarantia);
+		return lista;
+	}
+	public List<EAsignacionContratoGarantia> listarClienteAsociadosGarantia(long codigoGarantia) {					
+		List<EAsignacionContratoGarantia> lista=oCGarantia.listarClienteAsociadosGarantia(codigoGarantia);
+		return lista;
+	}
 	public EMensaje eliminarPoliza(EPoliza ePoliza) {
 		EMensaje resultado=oCGarantia.eliminarPoliza(ePoliza);
 		return resultado;

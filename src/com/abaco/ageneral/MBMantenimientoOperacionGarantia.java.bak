@@ -111,6 +111,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	private EPersona oEPersonaSelected;
 	private EPoliza oEPolizaSelected;
 	private EPoliza oEPolizaGarantiaData;
+	private EOperacionDocumento oEOperacionDocumentoData;
 	private EOperacionDocumento oEOperacionDocumentoNotariaData;
 	private EFlagReqLegal oEFlagRequisitoLegalData;
 	//BO
@@ -122,6 +123,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	
 	//Indicadores para Habilitar/Deshabilitar 
 	@Getter @Setter private boolean deshabilitarCampo,deshabilitarCampoInmuebleAdicional,deshabilitarCampoAsignacion;
+	@Getter @Setter private boolean deshabilitarCampoTasacion;
 	@Getter @Setter private boolean deshabilitarBusqueda;
 	@Getter @Setter private boolean deshabilitarBotonEnviar;
 	@Getter @Setter private boolean visualizarCamposOtrasGarantias;
@@ -194,6 +196,9 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	@Getter @Setter private List<EGarantia> lstInmueblesAdicionales;
 	@Getter @Setter private List<EGarantia> lstInmueblesAdicionalesFiltro;
 	@Getter @Setter private List<EFlagReqLegal> lstDetalleFlagsReqLegal;
+	@Getter @Setter private List<ETasacion> lstDetalleTasacion;
+	@Getter @Setter private List<EOperacionDocumento> lstOperacionDocumentoGeneralGarantia;
+	
 	
 	//Atributos para Búsqueda de Socio y Poliza
 	@Getter @Setter private List<EPersona> lstPersona;
@@ -217,11 +222,12 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	private String rutaBasePlantilla;
 	
 	/* Variables de carga File */
-	private EOperacionDocumento oEOperacionDocumento,oEOperacionDocumentoDetalle,oEOperacionDocumentoDesembolso;
+	private EOperacionDocumento oEOperacionDocumento,oEOperacionDocumentoDetalle,oEOperacionDocumentoDesembolso,oEOpDocDesemb;
 	@Getter @Setter private StreamedContent fileDownload;
 	@Getter @Setter private List<UploadedFile> files;
 	@Getter @Setter private List<EDocumentoCarga> lstDocumentoCarga;
 	@Getter @Setter private List<EDocumentoCarga> lstDocumentoCargaNotaria;
+	@Getter @Setter private List<EDocumentoCarga> lstDocumentoCargaGeneral;
 	@Getter @Setter private String descripcionDocumentoCarga;
 	@Getter @Setter private String descripcionDocumento,observacionDocumento;
 	@Getter @Setter private int codigoFirmaSiNo,codigoFirmaDocumento;
@@ -255,6 +261,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	@Getter @Setter private boolean renderizarBotonAñadirInmueble;
 	@Getter @Setter private boolean renderizarBotonCancelarInmueble;
 	@Getter @Setter private boolean renderizarBotonNuevoInmueble;
+	@Getter @Setter private boolean renderizarAdjuntarDocumentos;
 	@Getter @Setter private boolean visualizarGenerarContratoPrivado;
 	@Getter @Setter private boolean visualizarBotonAnadirCondicionLegal;
 	@Getter @Setter private boolean deshabilitarCampoFlagReqLeg;
@@ -270,7 +277,9 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	@Getter @Setter private boolean visualizarDatosPersonaNatural;
 	@Getter @Setter private boolean visualizarDatosPN,visualizarDatosPJ;
 	@Getter @Setter private boolean renderizarBotonTercero;
+	
 	@Getter @Setter private boolean renderizarPolizaGarantia;
+	@Getter @Setter private boolean renderizarDetalleTasacion;
 	
 	@PostConstruct
 	public void inicio() {
@@ -286,6 +295,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		oEPolizaGarantiaData = new EPoliza();
 		oEOperacionDocumentoNotariaData = new EOperacionDocumento();
 		oEFlagRequisitoLegalData = new EFlagReqLegal();
+		oEOperacionDocumentoData = new EOperacionDocumento();
+		oEOpDocDesemb = null;
 		oUManejadorListaDesplegable = new UManejadorListaDesplegable();
 		oBOGarantia = new BOGarantia();
 		oBOCliente = new BOCliente();
@@ -328,6 +339,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	    lstSexo = new ArrayList<EGeneral>();
 		lstDocumentoCarga = new ArrayList<EDocumentoCarga>();
 		lstDocumentoCargaNotaria = new ArrayList<EDocumentoCarga>();
+		lstDocumentoCargaGeneral = new ArrayList<EDocumentoCarga>();
 		lstDocumentoNotaria = new ArrayList<EOperacionDocumento>();
 		files = new ArrayList<UploadedFile>(); 
 		lstOperacionDocumento = new ArrayList<EOperacionDocumento>();
@@ -339,6 +351,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		lstInmueblesAdicionales = new ArrayList<EGarantia>();
 		lstInmueblesAdicionalesFiltro = new ArrayList<EGarantia>();
 		lstDetalleFlagsReqLegal = new ArrayList<EFlagReqLegal>();
+		lstDetalleTasacion = new ArrayList<ETasacion>();
+		lstOperacionDocumentoGeneralGarantia = new ArrayList<EOperacionDocumento>();
 
 		inicializar();
 
@@ -358,6 +372,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				visualizarBotonIrTramite = false;
 				visualizarBtnAgregarPropietario = true;
 				visualizarBtnEliminarPropietario = true;
+				renderizarDetalleTasacion = false;
+				renderizarAdjuntarDocumentos = false;
 				//Data de F5101 o F5151
 				EPersona ePersona = oBOCliente.listarSocioyTercero(1, oETipoGarantiaLoad.getCodigo3()+"").get(0);
 				//Habilitar Paneles de Acuerdo al Tipo de Garantía
@@ -412,7 +428,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				visualizarTextoRegistro = false; 
 				visualizarBotonIrTramite = true;
 				deshabilitarBusqueda = true;
-				
+				renderizarAdjuntarDocumentos = true;
 				visualizarBtnEliminarPropietario = true;	
 				//Data de F9201
 				oEGarantiaData = oBOGarantia.buscarGarantia(oEGarantiaLoad.getCodigoGarantia());
@@ -448,6 +464,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				case  UTipoGarantia.PREDIO:
 					 indicadorPnlDetalleGarantiaPredio= true;
 					 renderizarPolizaGarantia=true;
+					 renderizarDetalleTasacion = true;
 					 listarUbigeoGarantia();
 					 visualizarGenerarContratoPrivado = true;
 					 EGarantiaSolicitud obj = oBOGarantia.buscarSolicitudxGarantia(oEGarantiaData.getCodigoGarantia());
@@ -495,9 +512,11 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				visualizarTabPrestamos = true;
 				visualizarTabCumplimiento = true;
 				listarDesplegable();
+				listarDetalleTasacionGarantia();
 				listarSolicitudDocumento();
 				listarInmueblesAdicionales();
 				listarDocumentoNotario();
+				listarDocumentoGeneralGarantia();
 				listarSolicitudDesembolsoGarantia();
 				listarCreditosAsociadosGarantia();
 				validarConfirmacionDesembolso();
@@ -509,9 +528,17 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				   oEUsuario.getCodigoArea()==104   ||
 				   oEUsuario.getCodigoArea()==105 ||
 				   oEUsuario.getCodigoArea()== UArea.CREDITOS){
+					if(oEGarantiaLoad.getIndicadorAccion() == 1){
+						deshabilitarCampoTasacion = false;
+						deshabilitarBotonEnviar = false;
+						renderizarAdjuntarDocumentos = true;
+					}else{
+						deshabilitarCampoTasacion = true;
+						deshabilitarBotonEnviar = true;
+						renderizarAdjuntarDocumentos = false;
+					}
 					deshabilitarCampo = true;
 					deshabilitarCampoAsignacion = true;
-					deshabilitarBotonEnviar = true;
 					visualizarBtnAgregarPropietario = false;
 					visualizarBtnEliminarPropietario = false;
 					visualizarGenerarDocumento = false;
@@ -544,6 +571,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		 indicadorPnlDetalleGarantiaFideicomiso = false;
 		 indicadorPnlDetalleGarantiaOtros = false;
 		 deshabilitarCampo = false;
+		 deshabilitarCampoTasacion = false;
 		 deshabilitarCampoAsignacion = false;
 		 visualizarCamposOtrasGarantias = false;
 		 visualizarTextoRegistro = false;
@@ -589,6 +617,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		 visualizarEditarInmueble = true;
 		 visualizarEliminarInmueble = true;
 		 renderizarPolizaGarantia = false;
+		 renderizarDetalleTasacion = false;
+		 renderizarAdjuntarDocumentos = false;
 		 
 		 mensajeTablaPolizaPrestamo = UMensajeTabla.MSJ_1;
 	}
@@ -623,13 +653,15 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	
 	public void guardar(){
 
-		//generarCorrelativoDocumentoCarga();
+		generarCorrelativoDocumentoCargaGeneral();
 		
 		//Instancia de Objetos
 		EGarantia oEGarantia = new EGarantia();
 		List<EGarantia> lstInmueblePredios = new ArrayList<EGarantia>();
 		//Pasar Datos Globales a Locales
 		oEGarantia = oEGarantiaData;
+		List<EDocumentoCarga> elstDocumentoCarga = new ArrayList<EDocumentoCarga>();
+		elstDocumentoCarga = lstDocumentoCargaGeneral;
 		
 
 		//Setear atributos de los Objetos Instanciados
@@ -638,6 +670,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 					UFuncionesGenerales.convertirEnteroACadenaUbigeo(codigoProvinciaGarantia) + 
 					UFuncionesGenerales.convertirEnteroACadenaUbigeo(codigoDistritoGarantia))));	
 		oEGarantia.setUsuarioRegistro(oEUsuario);	
+		
 	
 		oEGarantia.setUbicacion2(distribuirObservacionGarantia().getUbicacion2());
 		oEGarantia.setDescripcionA(distribuirObservacionGarantia().getDescripcionA());
@@ -688,11 +721,12 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			}
 			
 		}else if(UAccionExterna.EDITAR == accionExterna){
+			oEGarantia.setTipoDocumento(UTipoDocumentoGarantia.TASACION);
 			if(oEGarantia.getCodigoTipoGarantia() == UTipoGarantia.PREDIO){
 				lstInmueblePredios = lstInmueblesAdicionales;
 				if(oEGarantia.getCodigoAsignacionInmueble() == UAsignacionInmueble.CONJUNTO ){
 					if(lstInmueblesAdicionalesFiltro.size()>=1){
-						oEMensaje = oBOGarantia.modificarGarantiaMantenimientoyInmueblePredios(oEGarantia, lstInmueblePredios);
+						oEMensaje = oBOGarantia.modificarGarantiaMantenimientoyInmueblePrediosyDocumentoGeneral(oEGarantia, lstInmueblePredios,elstDocumentoCarga);
 						UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 						RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacion').show();");
 					}else{
@@ -702,7 +736,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 					
 				}else if (oEGarantia.getCodigoAsignacionInmueble() == UAsignacionInmueble.INDIVIDUAL){
 					if(lstInmueblesAdicionalesFiltro.size() == 0){
-						oEMensaje = oBOGarantia.modificarGarantiaMantenimientoyInmueblePredios(oEGarantia, lstInmueblePredios);
+						oEMensaje = oBOGarantia.modificarGarantiaMantenimientoyInmueblePrediosyDocumentoGeneral(oEGarantia, lstInmueblePredios,elstDocumentoCarga);;
 						UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 						RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacion').show();");
 					}else{
@@ -712,7 +746,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 					}
 				}
 			}else{
-				oEMensaje = oBOGarantia.modificarGarantiaMantenimiento(oEGarantia);
+				oEMensaje = oBOGarantia.modificarGarantiaMantenimientoyDocumentoGeneral(oEGarantia,elstDocumentoCarga);
 				UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 				RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacion').show();");
 			}
@@ -736,7 +770,12 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				 oEUsuario.getCodigoArea()  == 105){
 			ruta = "ListaConsultaGarantia.xhtml";
 		}else if (oEUsuario.getCodigoArea()  == UArea.CREDITOS){
-			ruta = "ListaConsultaGarantia.xhtml";
+			if(oEGarantiaLoad.getIndicadorAccion() == 1){
+				ruta = "ListaGarantiaTasacion.xhtml";		
+			}else{
+				ruta = "ListaConsultaGarantia.xhtml";
+			}
+			
 		}
 		else {
 			ruta = "BandejaOperacionOtros.xhtml";
@@ -755,6 +794,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		listarSolicitudDocumento();
 		listarSolicitudDesembolsoGarantia();
 		listarDocumentoNotario();
+		listarDocumentoGeneralGarantia();
 		if(oEOperacionDocumento != null) listarSolicitudDetalleDocumento(oEOperacionDocumento);
 		
 	}
@@ -925,6 +965,12 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	}
 	//End : Métodos de Ubigeo
 	
+	//Begin: Métodos Tasacion
+	public void listarDetalleTasacionGarantia(){
+		lstDetalleTasacion = oBOGarantia.listarDetalleTasacionGarantia(oEGarantiaData);
+	}
+	//End: Métodos Tasacion
+	
 	//*************************************//
   	//End: Metodos para Garantia (TAB=1)
   	//*************************************//
@@ -934,11 +980,12 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
   	//*************************************//
 	
 	public void listarCreditosAsociadosGarantia(){
-		//double montoAcumAsignadoCredito= 0;
-		//double montoAcumSaldoCredito = 0;
-		//double montoAcumCoberturado = 0;
+		montoAcumuladoCoberturado = 0.0;
+		montoAcumuladoAsignadoCredito = 0.0;
 		double montoConversionCoberturado = 0;
+		double montoConversionAsignado = 0;
 		double montoTotalConversionCoberturado = 0;
+		double montoTotalConversionAsignado = 0;
 		
 		//Data de Tipo de Cambio
 		ETipoCambio oETipoCambioData = new ETipoCambio();
@@ -950,9 +997,30 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		lstCreditoGarantia = oBOGarantia.listarCreditosAsociadosGarantia(oEGarantiaData.getCodigoGarantia());
 		for(int i=0;i<lstCreditoGarantia.size();i++){
 			montoConversionCoberturado = 0;
+			montoConversionAsignado = 0;
 			double montoCoberturado = 0;
 			
 			ECredito oECredito = new ECredito();
+			
+			if(lstCreditoGarantia.get(i).getServicioBase() == 800 || lstCreditoGarantia.get(i).getServicioBase() == 801){
+				oECredito = oBOSolicitudCredito.buscarCreditoLineaCredito(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroPlanilla());
+			}else {
+				if(lstCreditoGarantia.get(i).getCodigoProducto() == 200){
+					if(lstCreditoGarantia.get(i).getCodigoSubProducto() == 8){
+						oECredito = oBOSolicitudCredito.buscarCreditoPrestamo(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacion());
+					}else{
+						oECredito = oBOSolicitudCredito.buscarCreditoPrestamo(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacion());
+					}	
+				}else if(lstCreditoGarantia.get(i).getCodigoProducto() == 301){
+					oECredito = oBOSolicitudCredito.buscarCreditoAbamoshi(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacionTanomoshi(), lstCreditoGarantia.get(i).getNumeroLista());
+				}else if(lstCreditoGarantia.get(i).getCodigoProducto() == 302){
+					oECredito = oBOSolicitudCredito.buscarCreditoAbamoshi(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacionTanomoshi(), lstCreditoGarantia.get(i).getNumeroLista());
+				}else if(lstCreditoGarantia.get(i).getCodigoProducto() == 81){
+					oECredito = oBOSolicitudCredito.buscarCreditoCartaFianza(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getCodigoMoneda(), lstCreditoGarantia.get(i).getNumeroOperacion());
+				}
+			}
+			
+			/*
 			if(lstCreditoGarantia.get(i).getCodigoProducto() == 200 && lstCreditoGarantia.get(i).getCodigoSubProducto() == 8){
 				montoCoberturado = 0;
 			}else {
@@ -964,6 +1032,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 					oECredito = oBOSolicitudCredito.buscarCreditoPrestamo(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacion());
 				}
 			}
+			*/
 			
 			if(oECredito != null){
 				lstCreditoGarantia.get(i).setMontoSaldoCredito(oECredito.getSaldoCredito());
@@ -977,25 +1046,26 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				montoCoberturado = lstCreditoGarantia.get(i).getMontoSaldoCredito();
 			}
 			
-			//Validar Tipo Producto Linea Credito
 			if(oEGarantiaData.getCodigoMoneda() == lstCreditoGarantia.get(i).getCodigoMoneda()){
 				montoConversionCoberturado += montoCoberturado;
+				montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto();
 			}else{
 				if(oEGarantiaData.getCodigoMoneda() == UMoneda.COD_SOLES && lstCreditoGarantia.get(i).getCodigoMoneda() == UMoneda.COD_DOLARES){
 					montoConversionCoberturado += montoCoberturado * oETipoCambioData.getTipoCambioSBS();
+					montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto() * oETipoCambioData.getTipoCambioSBS();
 				}else if(oEGarantiaData.getCodigoMoneda() == UMoneda.COD_DOLARES && lstCreditoGarantia.get(i).getCodigoMoneda() == UMoneda.COD_SOLES){
 					montoConversionCoberturado += montoCoberturado / oETipoCambioData.getTipoCambioSBS();
+					montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto() / oETipoCambioData.getTipoCambioSBS();
 				}
 			}
 			lstCreditoGarantia.get(i).setMontoCoberturado(montoCoberturado);
 			lstCreditoGarantia.get(i).setMontoConversionCoberturado(montoConversionCoberturado);
 			montoTotalConversionCoberturado = montoTotalConversionCoberturado + montoConversionCoberturado;
-			//montoAcumAsignadoCredito += lstCreditoGarantia.get(i).getMontoImporteCubierto();
-			//montoAcumSaldoCredito += lstCreditoGarantia.get(i).getMontoSaldoCredito();
+			montoTotalConversionAsignado = montoTotalConversionAsignado + montoConversionAsignado;
 		}
 		
-		//montoAcumuladoAsignadoCredito=montoAcumAsignadoCredito;
-		//montoAcumuladoSaldoCredito = montoAcumSaldoCredito;
+		montoAcumuladoCoberturado = montoTotalConversionCoberturado;
+		montoAcumuladoAsignadoCredito = montoTotalConversionAsignado;
 		
 		for(int j=0;j<lstCreditoGarantia.size();j++){
 			double porcentajeCoberturado = 0;
@@ -1004,35 +1074,6 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			}
 			lstCreditoGarantia.get(j).setPorcentajeCoberturado(porcentajeCoberturado);
 		}
-		
-		
-
-		/*
-		for(int j=0;j<lstCreditoGarantia.size();j++){
-			//Calculo de Monto Coberturado y % Coberturado
-			double montoCoberturado = 0;
-			double porcentajeCoberturado = 0;
-			
-			if(montoAcumuladoSaldoCredito != 0){
-				if(oEGarantiaData.getCodigoMoneda() == lstCreditoGarantia.get(j).getCodigoMoneda()){
-					montoCoberturado = (lstCreditoGarantia.get(j).getMontoSaldoCredito()/montoAcumuladoSaldoCredito) * oEGarantiaData.getMontoVariable1();
-				}else{
-					if(oEGarantiaData.getCodigoMoneda() == UMoneda.COD_SOLES && lstCreditoGarantia.get(j).getCodigoMoneda() == UMoneda.COD_DOLARES){
-						montoCoberturado = (lstCreditoGarantia.get(j).getMontoSaldoCredito()/montoAcumuladoSaldoCredito) * (oEGarantiaData.getMontoVariable1()*4.1);
-					}else if(oEGarantiaData.getCodigoMoneda() == UMoneda.COD_DOLARES && lstCreditoGarantia.get(j).getCodigoMoneda() == UMoneda.COD_SOLES){
-						montoCoberturado = (lstCreditoGarantia.get(j).getMontoSaldoCredito()/montoAcumuladoSaldoCredito) * (oEGarantiaData.getMontoVariable1()*4.1);
-					}
-				}
-			}
-			lstCreditoGarantia.get(j).setMontoCoberturado(montoCoberturado);
-			if(lstCreditoGarantia.get(j).getMontoSaldoCredito() != 0){
-				porcentajeCoberturado = (lstCreditoGarantia.get(j).getMontoCoberturado() / lstCreditoGarantia.get(j).getMontoSaldoCredito());
-			}
-			lstCreditoGarantia.get(j).setPorcentajeCoberturado(porcentajeCoberturado);
-			montoAcumCoberturado += lstCreditoGarantia.get(j).getMontoCoberturado();
-		}
-		montoAcumuladoCoberturado = montoAcumCoberturado;
-		*/
 	}
 	
 	/*
@@ -1705,7 +1746,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 					}
 				}
 				if(!isValida){
-					oEDocumentoCarga.setNombre(files.get(i).getFileName() + UFuncionesGenerales.obtieneTipoArchivo(files.get(i).getFileName()));
+					oEDocumentoCarga.setNombre(files.get(i).getFileName());
 					oEDocumentoCarga.setNombreOriginal(files.get(i).getFileName());
 					oEDocumentoCarga.setData(files.get(i).getContents());
 					oEDocumentoCarga.setSize(files.get(i).getSize());
@@ -1713,7 +1754,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 					lstDocumentoCarga.add(oEDocumentoCarga);
 				}
 			}else{
-				oEDocumentoCarga.setNombre(files.get(i).getFileName() + UFuncionesGenerales.obtieneTipoArchivo(files.get(i).getFileName()));
+				oEDocumentoCarga.setNombre(files.get(i).getFileName());
 				oEDocumentoCarga.setNombreOriginal(files.get(i).getFileName());
 				oEDocumentoCarga.setData(files.get(i).getContents());
 				oEDocumentoCarga.setSize(files.get(i).getSize());
@@ -1761,6 +1802,38 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		files = new ArrayList<UploadedFile>();
 	}
 	
+	//Documento Carga Documento General
+	public void agregarDocumentoCargaGeneral(FileUploadEvent objUploadEvent) {
+		UploadedFile oUploadedFile = objUploadEvent.getFile();
+		files.add(oUploadedFile);
+		for(int i=0;i<files.size();i++){
+			EDocumentoCarga oEDocumentoCarga = new EDocumentoCarga();
+			if(lstDocumentoCargaGeneral.size() > 0){
+				boolean isValida = false;
+				for(int x=0;x<lstDocumentoCargaGeneral.size();x++){
+					if(lstDocumentoCargaGeneral.get(x).getNombre().equals(UFuncionesGenerales.obtieneTipoArchivo(files.get(i).getFileName()))){
+						isValida = true;
+					}
+				}
+				if(!isValida){
+					oEDocumentoCarga.setNombre(files.get(i).getFileName());
+					oEDocumentoCarga.setNombreOriginal(files.get(i).getFileName());
+					oEDocumentoCarga.setData(files.get(i).getContents());
+					oEDocumentoCarga.setSize(files.get(i).getSize());
+					oEDocumentoCarga.setDescripcionSize(UFuncionesGenerales.getSize(files.get(i).getSize()));
+					lstDocumentoCargaGeneral.add(oEDocumentoCarga);
+				}
+			}else{
+				oEDocumentoCarga.setNombre(files.get(i).getFileName());
+				oEDocumentoCarga.setNombreOriginal(files.get(i).getFileName());
+				oEDocumentoCarga.setData(files.get(i).getContents());
+				oEDocumentoCarga.setSize(files.get(i).getSize());
+				oEDocumentoCarga.setDescripcionSize(UFuncionesGenerales.getSize(files.get(i).getSize()));
+				lstDocumentoCargaGeneral.add(oEDocumentoCarga);
+			}
+		}
+		files = new ArrayList<UploadedFile>();
+	}
 	
 
 	
@@ -1775,6 +1848,10 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		
 	}
 	
+	public void listarDocumentoGeneralGarantia(){
+		lstOperacionDocumentoGeneralGarantia = oBOGarantia.listarDocumentoGeneralGarantia(oEGarantiaLoad.getCodigoGarantia());
+	}
+	
 	public void eliminarDocumentoCarga(EDocumentoCarga oEDocumentoCargaItem){
 		lstDocumentoCarga.remove(oEDocumentoCargaItem);
 		if(lstDocumentoCarga.size()==0 ||lstDocumentoCarga == null) visualizarGrabarDocumento = false;
@@ -1785,6 +1862,27 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		if(lstDocumentoCargaNotaria.size()==0 ||lstDocumentoCargaNotaria == null) deshabilitarGrabarDocumentoNotaria = true;
 	}
 	
+	public void eliminarDocumentoCargaGeneral(EDocumentoCarga oEDocumentoCargaItem){
+		lstDocumentoCargaGeneral.remove(oEDocumentoCargaItem);
+	}
+	
+	public void visualizarEliminarDocumentoGeneral(EOperacionDocumento oEOperacionDocumentoItem){
+		if (oEOperacionDocumentoItem != null) {
+			oEOperacionDocumentoData = oEOperacionDocumentoItem;
+			RequestContext.getCurrentInstance().execute("PF('dlgConfirmacionDocumento').show();");
+		}
+	}
+	
+	public void eliminarDocumentoGeneral(){
+		if(oEOperacionDocumentoData != null){
+			EGarantia eGarantia = new EGarantia();
+			eGarantia.setCodigoGarantia(oEOperacionDocumentoData.getCodigoGarantia());
+			eGarantia.setSecuenciaDocumento(oEOperacionDocumentoData.getCodigoDocumento());
+			oEMensaje = oBOGarantia.eliminarDocumentoGeneralGarantia(eGarantia);
+			UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
+			RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
+		}
+	}
 	
 	public void generarCorrelativoDocumentoCarga() {
 		int correlativoDocumento = 0;
@@ -1793,8 +1891,18 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			String nombreDocumento = lstDocumentoCarga.get(i).getNombre();
 			lstDocumentoCarga.get(i).setNombreLaserFiche(correlativoDocumento+"-"+nombreDocumento);
 		}
+		
+		
 	}
 	
+	public void generarCorrelativoDocumentoCargaGeneral(){
+		int correlativoDocumento = 0;
+		for(int i=0;i<lstDocumentoCargaGeneral.size();i++){
+			correlativoDocumento = correlativoDocumento +1;
+			String nombreDocumento = lstDocumentoCargaGeneral.get(i).getNombre();
+			lstDocumentoCargaGeneral.get(i).setNombreLaserFiche(correlativoDocumento+"-"+nombreDocumento);
+		}
+	}
 	
 	
 	
@@ -2225,6 +2333,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			oEMensaje = oBOGarantia.modificarDetalleFlagRequisitoLegal(eFlagRequisitoLegal);
 		}
 		listarDetalleFlagRequisitoLegal(oEOperacionDocumentoDesembolso);
+		oEOpDocDesemb = oEOperacionDocumentoDesembolso;
 		UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 		RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
 	}
@@ -2267,6 +2376,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			oEMensaje = oBOGarantia.modificarDetalleFlagRequisitoLegal(eFlagRequisitoLegal);
 		}
 		listarDetalleFlagRequisitoLegal(oEOperacionDocumentoDesembolso);
+		oEOpDocDesemb = oEOperacionDocumentoDesembolso;
 		UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 		RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
 	}
@@ -2277,6 +2387,16 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		eGarantia.setUsuarioRegistro(oEUsuario);
 		eGarantia.setTipoDocumento(UTipoDocumentoGarantia.CONSTITUCION);
 		lstOperacionDocumentoDesembolso = oBOGarantia.listarSolicitudDesembolsoXNroGarantia(0,"",eGarantia);
+		
+		for(int i = 0; i<lstOperacionDocumentoDesembolso.size();i++){
+			if(oEOpDocDesemb!=null){
+				if(lstOperacionDocumentoDesembolso.get(i).getCodigoSolicitudCredito()  ==oEOpDocDesemb.getCodigoSolicitudCredito() ){
+					oEOperacionDocumentoDesembolso.setIndicadorConfirmacionDesembolso(lstOperacionDocumentoDesembolso.get(i).getIndicadorConfirmacionDesembolso());
+					break;
+				}
+			}
+			
+		}
 	}
 	
 	

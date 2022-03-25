@@ -78,6 +78,7 @@ public @Data class ESolicitudCredito {
 	private String descripcionServicio;
 	private String descripcionTipoCliente;
 	private String descripcionTipoProducto;
+	private String abreviacionMonedaSolicitud;
 	private String descripcionMonedaSolicitud;
 	private String descripcionTipoDocumento;
 	private String descripcionModalidadLineaCredito;

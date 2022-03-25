@@ -57,6 +57,7 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_SEL_SOLCREDITO_SOCIO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_SOLCREDITO_SOCIO("+parametrosSP(1)+") }";
 	
 	private static final String SP_ABACOINLEGAL_BUS_CRD_PRESTAMO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_CRD_PRESTAMO("+parametrosSP(2)+") }";
+	private static final String SP_ABACOINLEGAL_BUS_CRD_LINEACREDITO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_CRD_LINEACREDITO("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_CRD_ABAMOSHI="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_CRD_ABAMOSHI("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_CRD_CARTAFIANZA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_CRD_CARTAFIANZA("+parametrosSP(3)+") }";
 	
@@ -604,6 +605,7 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 					oESolicitudCredito.setDescripcionTipoProducto(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCTIPPRODU")));
 					oESolicitudCredito.setMontoSolicitud(oResultSet.getDouble("MTOSOL"));
 					oESolicitudCredito.setCodigoMonedaSolicitud(oResultSet.getInt("MONSOL"));
+					oESolicitudCredito.setAbreviacionMonedaSolicitud(UFuncionesGenerales.revisaCadena(oResultSet.getString("ABRVMONSOL")));
 					oESolicitudCredito.setDescripcionMonedaSolicitud(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCMONSOL")));
 					oESolicitudCredito.setObjeto(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBJETO")));
 					oESolicitudCredito.setCriterios(UFuncionesGenerales.revisaCadena(oResultSet.getString("OBSER1"))+"\n"+
@@ -1112,6 +1114,32 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 					oECredito.setDescripcionEstado(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCEST")));
 					oECredito.setDescripcionSituacion(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCSIT")));
 					oECredito.setSaldoCredito(oResultSet.getDouble("SALDOD"));
+				}						
+			}						
+			
+		} catch(Exception objEx) {
+			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
+		}
+		return oECredito;
+	}
+	
+	public ECredito buscarCreditoLineaCredito(int codigoServicio, long numeroPlanilla) {
+		List<Object> lstParametrosEntrada;
+		ResultSet oResultSet = null;
+		ECredito oECredito= null;
+		
+		try {
+			lstParametrosEntrada = new ArrayList<Object>();
+			lstParametrosEntrada.add(codigoServicio);
+			lstParametrosEntrada.add(numeroPlanilla);
+			
+			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_BUS_CRD_LINEACREDITO, lstParametrosEntrada, null);
+			if (oResultSet != null) {
+				while (oResultSet.next()) {
+					oECredito=new ECredito();
+					oECredito.setNumeroPagare(oResultSet.getInt("REFERE"));
+					oECredito.setDescripcionSituacion(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESCSIT")));
+					oECredito.setSaldoCredito(oResultSet.getDouble("SALDLC"));
 				}						
 			}						
 			
