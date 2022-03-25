@@ -448,7 +448,72 @@
 									<p:outputLabel id="displayCreditos" styleClass="dsLabel1" />
 								</div>
 							</div>
-							
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<h:panelGroup layout="block" rendered="#{mbregistrooperaciongarantiasolicitud.renderizarAdjuntarDocumentos}">
+								<p:outputLabel value="Adjuntar documentos" styleClass="dsLabel1"/>
+					       		<!-- Agregar Documento Carga Simple con descripcion -->
+								<p:fileUpload
+										value="#{mbregistrooperaciongarantiasolicitud.files}"
+										style="font-size:11px;"
+							       		sizeLimit="15728640"
+							       		allowTypes="/(\.|\/)(jpe?g|png|pdf|doc|docx|xls|xlsx)$/"
+										accept=".jpg, .jpeg, .png, .pdf, .doc, .docx, .xls, .xlsx"
+										fileUploadListener="#{mbregistrooperaciongarantiasolicitud.agregarDocumentoCarga}"
+										mode="advanced"
+							       		auto="true" 
+							       		multiple="false"
+							       		dragDropSupport="true"
+							       		label="Adjuntar"
+							       		uploadLabel="Cargar"
+							       		cancelLabel="Cancelar"
+							       		invalidFileMessage="Tipo de archivo incorrecto, archivos permitidos jpg, png, jpeg, pdf, docx, xls, xlsx"
+							       		invalidSizeMessage="Tamaño del archivo excede el límite de 15Mbs"
+							       		
+							       		update="form:tabView1:tblDocumentoCarga"
+							       		previewWidth= "20">
+							    </p:fileUpload>
+							   
+								<p:dataTable id="tblDocumentoCarga" value="#{mbregistrooperaciongarantiasolicitud.lstDocumentoCarga}" var="item" styleClass="dsTabla2"
+												 rowKey="#{item.data}" reflow="true" emptyMessage="">
+										<p:column headerText="" styleClass="dsTextoCentro">
+											<div class="contenedorFila">
+											<div>
+											<h:outputText value="#{item.nombre}"/>
+											</div>
+											<div>
+											<h:outputText value="#{item.descripcionSize}"/>
+											</div>
+											<div>
+											<p:commandButton styleClass="dsBoton3" icon="fa fa-remove" process="@this" action="#{mbregistrooperaciongarantiasolicitud.eliminarDocumentoCarga(item)}" update="tblDocumentoCarga" >
+							      			</p:commandButton>
+							      			</div>
+							      			</div>
+										</p:column>
+								</p:dataTable>
+								</h:panelGroup>
+							</div>
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:dataTable id="tblListaDocumentos" value="#{mbregistrooperaciongarantiasolicitud.lstOperacionDocumentoGarantiaTemporal}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom" rowKey="#{item.codigoDocumento}" reflow="true">
+										<p:column headerText="Nombre Doc." styleClass="dsTextoCentro" width="40%">
+										    <div class="dsTextoCorto">
+											    <h:outputText value="#{item.nombreDocumentoOriginal}"/>
+										    </div>
+										</p:column>
+										<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" width="20%">
+											<h:outputText value="#{item.usuarioRegist}"/>
+										</p:column>
+										<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" width="20%">
+											<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
+										</p:column>
+										<p:column headerText="Acciones" styleClass="dsTextoCentro" width="10%">
+											<p:commandButton styleClass="dsBoton5 green" icon="fa fa-download" title="Descargar" actionListener="#{mbregistrooperaciongarantiasolicitud.descargarDocumento(item)}" ajax="false" immediate="true">
+							      				<p:fileDownload value="#{mbregistrooperaciongarantiasolicitud.fileDownload}"/>
+							      			</p:commandButton>
+							      			<p:commandButton styleClass="dsBoton5 red" icon="fa fa-trash" title="Eliminar" actionListener="#{mbregistrooperaciongarantiasolicitud.visualizarEliminarDocumentoTemporal(item)}"  immediate="true" update=":frmDlgMensajeConfirmacionDocumento" rendered="#{mbregistrooperaciongarantiasolicitud.renderizarAdjuntarDocumentos}">
+							      			</p:commandButton>
+										</p:column>
+									</p:dataTable>
+							</div>						
 					    </div>
 					</p:panel>
 				</div>
@@ -714,6 +779,14 @@
 													</p:inputNumber>
 												</div>						
 									   		</div>
+									   		<div class="ui-g-4">
+									   			<p:outputLabel value="Monto Valorización" styleClass="dsLabel1"/>
+									   			<div class="ui-inputgroup">
+													<div class="ui-inputgroup-addon">#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaGarantia}</div>
+													<p:inputNumber   styleClass="dsInput1" inputStyleClass="dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaData.montoValorizacion}" disabled="#{mbregistrooperaciongarantiasolicitud.deshabilitarCampo}" onfocus="this.value == 0 ? this.value='':this.value" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99">
+													</p:inputNumber>
+												</div>							
+									   		</div>	
 										</div>
 									</p:fieldset>
 								  
@@ -1422,6 +1495,29 @@
 	</h:form>
 	</p:dialog>
 
+	<p:dialog widgetVar="dlgConfirmacionDocumento" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">	
+	<h:form id="frmDlgMensajeConfirmacionDocumento">
+		<div class="dsDlgMensajeConfirmacion dsDialogo4">
+	 		<div class="cabecera">
+	 			<div class="dlgIzquierda">
+	 				<p:outputLabel styleClass="dsLabel2" 
+	 				value="Mensaje de Confirmación" />
+	 			</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="ui-g ui-fluid contenido">
+				<div class="mensaje">
+					<p:outputLabel value="¿Está Seguro de Eliminar el Documento?" styleClass="dsLabel3"/>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid pie">
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgConfirmacionDocumento').hide();"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" action="#{mbregistrooperaciongarantiasolicitud.eliminarDocumentoTemporal()}" oncomplete="PF('dlgConfirmacionDocumento').hide();PF('dlgPreload').hide();" update=":frmDlgMensajeOperacionAjax"></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
 	<p:dialog widgetVar="dlgIngresoManual" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">	
 	<h:form id="frmDlgIngresoManual">
 		<div class="dsDlgConfirmacionRegistroGarantia dsDialogo4">
@@ -1481,6 +1577,28 @@
 			</div>
 			<div class="pie">
 				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacion').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperaciongarantiasolicitud.salir()}"></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+	<p:dialog widgetVar="dlgMensajeOperacionAjax" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgMensajeOperacionAjax">
+		<div class="dsDlgMensajeOperacion dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="Mensaje de Operación"/>
+				</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="contenido">
+				<div class="mensaje">
+					<p:outputLabel value="#{mbregistrooperaciongarantiasolicitud.oEMensaje.descMensaje}" styleClass="dsLabel3"/>
+				</div>
+			</div>
+			<div class="pie">
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperaciongarantiasolicitud.actualizarDatosAjax()}" 
+				update=":form:tabView1:tblListaDocumentos"></p:commandButton> 
 			</div>
 		</div>
 	</h:form>

@@ -1685,6 +1685,74 @@
 								    </p:column>
 								</p:dataTable>
 				            </p:fieldset>
+				            <p:fieldset id="idDocumentoGarantia" legend="Información de Documentos de Garantía" toggleable="false" toggleSpeed="500" styleClass="dsFieldSet1">
+				            	<div class="ui-g-12 ui-md-12 ui-lg-12">
+				            		<h:panelGroup layout="block" rendered="#{mbmantenimientooperaciongarantia.renderizarAdjuntarDocumentos}">
+										<p:outputLabel value="Adjuntar documentos" styleClass="dsLabel1"/>
+							       		<!-- Agregar Documento Carga Simple con descripcion -->
+										<p:fileUpload
+												value="#{mbmantenimientooperaciongarantia.files}"
+												style="font-size:11px;"
+									       		sizeLimit="15728640"
+									       		allowTypes="/(\.|\/)(jpe?g|png|pdf|doc|docx|xls|xlsx)$/"
+												accept=".jpg, .jpeg, .png, .pdf, .doc, .docx, .xls, .xlsx"
+												fileUploadListener="#{mbmantenimientooperaciongarantia.agregarDocumentoCargaGeneral}"
+												mode="advanced"
+									       		auto="true" 
+									       		multiple="false"
+									       		dragDropSupport="true"
+									       		label="Adjuntar"
+									       		uploadLabel="Cargar"
+									       		cancelLabel="Cancelar"
+									       		invalidFileMessage="Tipo de archivo incorrecto, archivos permitidos jpg, png, jpeg, pdf, docx, xls, xlsx"
+									       		invalidSizeMessage="Tamaño del archivo excede el límite de 15Mbs"
+									       		
+									       		update="form:tabView1:tblDocumentoCargaGeneral"
+									       		previewWidth= "20">
+									    </p:fileUpload>
+									   
+										<p:dataTable id="tblDocumentoCargaGeneral" value="#{mbmantenimientooperaciongarantia.lstDocumentoCargaGeneral}" var="item" styleClass="dsTabla2" rowKey="#{item.data}" reflow="true" emptyMessage="">
+												<p:column headerText="" styleClass="dsTextoCentro">
+													<div class="contenedorFila">
+													<div>
+													<h:outputText value="#{item.nombre}"/>
+													</div>
+													<div>
+													<h:outputText value="#{item.descripcionSize}"/>
+													</div>
+													<div>
+													<p:commandButton styleClass="dsBoton3" icon="fa fa-remove" process="@this" action="#{mbmantenimientooperaciongarantia.eliminarDocumentoCargaGeneral(item)}" update="tblDocumentoCargaGeneral" >
+									      			</p:commandButton>
+									      			</div>
+									      			</div>
+												</p:column>
+										</p:dataTable>
+									</h:panelGroup>
+				            	</div>
+					            <div class="ui-g-12 ui-md-12 ui-lg-12">
+					            	<p:dataTable id="tblListaDocumentos" value="#{mbmantenimientooperaciongarantia.lstOperacionDocumentoGeneralGarantia}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom" rowKey="#{item.codigoDocumento}" reflow="true">
+										<p:column headerText="Nombre Doc." styleClass="dsTextoCentro" width="40%">
+										    <div class="dsTextoCorto">
+											    <h:outputText value="#{item.nombreDocumentoOriginal}"/>
+										    </div>
+										</p:column>
+										<p:column headerText="Usuario Reg." styleClass="dsTextoCentro" width="20%">
+											<h:outputText value="#{item.usuarioRegistro.nombreUsuario}"/>
+										</p:column>
+										<p:column headerText="Fecha Reg." styleClass="dsTextoCentro" width="20%">
+											<h:outputText value="#{item.fechaRegistro} #{item.horaRegistro}"/>
+										</p:column>
+										<p:column headerText="Acciones" styleClass="dsTextoCentro" width="10%">
+											<p:commandButton styleClass="dsBoton5 green" icon="fa fa-download" title="Descargar" actionListener="#{mbmantenimientooperaciongarantia.descargarDocumento(item)}" ajax="false" immediate="true">
+							      				<p:fileDownload value="#{mbmantenimientooperaciongarantia.fileDownload}"/>
+							      			</p:commandButton>
+							      			<p:commandButton styleClass="dsBoton5 red" icon="fa fa-trash" title="Eliminar" actionListener="#{mbmantenimientooperaciongarantia.visualizarEliminarDocumentoGeneral(item)}"  immediate="true" update=":frmDlgMensajeConfirmacionDocumento" rendered="#{mbmantenimientooperaciongarantia.renderizarAdjuntarDocumentos}">
+							      			</p:commandButton>
+										</p:column>
+									</p:dataTable>
+					            </div>
+				            	
+				        	</p:fieldset>
  						</div>
 				        
 			    	</p:panel>
@@ -2436,8 +2504,6 @@
 	</p:dialog>
 
 
-
-
 	<p:dialog widgetVar="dlgSalir" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">	
 	<h:form id="frmDlgSalir">
 		<div class="dsDlgSalir dsDialogo4">
@@ -2797,8 +2863,6 @@
 	<p:blockUI block="frmDlgMantenimientoTercero" widgetVar="blkDlgMantenimientoTercero"></p:blockUI>
 	</p:dialog>
 
-
-
 	<p:dialog widgetVar="dlgBuscarCiaSeguro" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">
 	<h:form id="frmDlgBuscarCiaSeguro">
 		<div class="dsDlgBuscarSocio dsDialogo4">
@@ -2905,7 +2969,8 @@
 				</div>
 			</div>
 			<div class="pie">
-				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbmantenimientooperaciongarantia.actualizarDatosAjax()}" update=":form:tabView1:tblSolicitudDocumento,:form:tabView1:tblDocumentoNotaria,:form:tabView1:tblOperacionDocumentoLegal,:form:tabView1:tblOperacionDocumentoNegocios,:form:tabView1:idConfDesemb,:form:tabView1:tblSolicitudDesembolso,:frmDlgBuscarSocio:tblSocio"></p:commandButton> 
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbmantenimientooperaciongarantia.actualizarDatosAjax()}" update=":form:tabView1:tblSolicitudDocumento,:form:tabView1:tblDocumentoNotaria,:form:tabView1:tblOperacionDocumentoLegal,:form:tabView1:tblOperacionDocumentoNegocios,:form:tabView1:idConfDesemb,:form:tabView1:tblSolicitudDesembolso,:frmDlgBuscarSocio:tblSocio,
+				:form:tabView1:tblListaDocumentos"></p:commandButton> 
 			</div>
 		</div>
 	</h:form>
@@ -3274,6 +3339,29 @@
 			<div class="ui-g ui-fluid pie">
 				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgConfirmacionEliminarReqLegal').hide();"></p:commandButton>
 				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" action="#{mbmantenimientooperaciongarantia.eliminarFlagRequisitoLegal()}" oncomplete="PF('dlgConfirmacionEliminarReqLegal').hide();PF('dlgPreload').hide();" update=":form:tabView1:tblDetalleFlgReqLegal"></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+	<p:dialog widgetVar="dlgConfirmacionDocumento" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="true" dynamic="true">	
+	<h:form id="frmDlgMensajeConfirmacionDocumento">
+		<div class="dsDlgMensajeConfirmacion dsDialogo4">
+	 		<div class="cabecera">
+	 			<div class="dlgIzquierda">
+	 				<p:outputLabel styleClass="dsLabel2" 
+	 				value="Mensaje de Confirmación" />
+	 			</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="ui-g ui-fluid contenido">
+				<div class="mensaje">
+					<p:outputLabel value="¿Está Seguro de Eliminar el Documento?" styleClass="dsLabel3"/>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid pie">
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgConfirmacionDocumento').hide();"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" action="#{mbmantenimientooperaciongarantia.eliminarDocumentoGeneral()}" oncomplete="PF('dlgConfirmacionDocumento').hide();PF('dlgPreload').hide();" update=":frmDlgMensajeOperacionAjax"></p:commandButton>
 			</div>
 		</div>
 	</h:form>

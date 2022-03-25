@@ -14,6 +14,10 @@ public class BOGarantia {
 		EMensaje resultado=oCGarantia.agregarGarantiaPendienteRegistro(eGarantiaSolicitud,eGarantia);
 		return resultado;
 	}
+	public EMensaje agregarGarantiaPendRegistroyAgregarDocumento(EGarantiaSolicitud eGarantiaSolicitud, EGarantia eGarantia,List<EOperacionDocumento> lstOperacionDocumento){
+		EMensaje resultado=oCGarantia.agregarGarantiaPendRegistroyAgregarDocumento(eGarantiaSolicitud,eGarantia,lstOperacionDocumento);
+		return resultado;
+	}
 	public EMensaje agregarGarantiaMantenimiento(EGarantia eGarantia){
 		EMensaje resultado=oCGarantia.agregarGarantiaMantenimiento(eGarantia);
 		return resultado;
@@ -136,8 +140,12 @@ public class BOGarantia {
 		EMensaje resultado=oCGarantia.modificarGarantiaMantenimiento(eGarantia);
 		return resultado;
 	}
-	public EMensaje modificarGarantiaMantenimientoyInmueblePredios(EGarantia eGarantia,List<EGarantia> lstInmueblesAdicionales){
-		EMensaje resultado=oCGarantia.modificarGarantiaMantenimientoyInmueblePredios(eGarantia,lstInmueblesAdicionales);
+	public EMensaje modificarGarantiaMantenimientoyDocumentoGeneral(EGarantia eGarantia,List<EDocumentoCarga> lstDocumentoCarga){
+		EMensaje resultado=oCGarantia.modificarGarantiaMantenimientoyDocumentoGeneral(eGarantia,lstDocumentoCarga);
+		return resultado;
+	}
+	public EMensaje modificarGarantiaMantenimientoyInmueblePrediosyDocumentoGeneral(EGarantia eGarantia,List<EGarantia> lstInmueblesAdicionales,List<EDocumentoCarga> lstDocumentoCarga){
+		EMensaje resultado=oCGarantia.modificarGarantiaMantenimientoyInmueblePrediosyDocumentoGeneral(eGarantia,lstInmueblesAdicionales,lstDocumentoCarga);
 		return resultado;
 	}
 	
@@ -208,8 +216,17 @@ public class BOGarantia {
 		return resultado;
 	}
 	
-	public EMensaje modificarSolicitudyGenerarAsientoyDocumentacionGarantia(EGarantiaTramite eGarantiaAsientoTramite, EGarantiaSolicitud eGarantiaAsociadaSolicitud,EGarantia eGarantia,EGarantia eSolicitudDesembolsoGarantia){
-		EMensaje resultado=oCGarantia.modificarSolicitudyGenerarAsientoyDocumentacionGarantia(eGarantiaAsientoTramite,eGarantiaAsociadaSolicitud,eGarantia,eSolicitudDesembolsoGarantia);
+	public EMensaje modificarGarantiaSolicitudyAgregarDocGarantiaTemporal(EGarantiaSolicitud eGarantiaSolicitud,List<EDocumentoCarga> lstDocumentoCarga){
+		EMensaje resultado=oCGarantia.modificarGarantiaSolicitudyAgregarDocGarantiaTemporal(eGarantiaSolicitud,lstDocumentoCarga);
+		return resultado;
+	}
+	
+	public EMensaje modificarSolicitudyGenerarAsientoyDocumentacionGarantia(EGarantiaTramite eGarantiaAsientoTramite, 
+			                                                                EGarantiaSolicitud eGarantiaAsociadaSolicitud,
+			                                                                EGarantia eGarantia,
+			                                                                EGarantia eSolicitudDesembolsoGarantia,
+			                                                                List<EOperacionDocumento> lstOperacionDocumento){
+		EMensaje resultado=oCGarantia.modificarSolicitudyGenerarAsientoyDocumentacionGarantia(eGarantiaAsientoTramite,eGarantiaAsociadaSolicitud,eGarantia,eSolicitudDesembolsoGarantia,lstOperacionDocumento);
 		return resultado;
 	}
 	
@@ -219,8 +236,8 @@ public class BOGarantia {
 	}
 	
 	public EMensaje actualizarGarantiaSolicitud(EGarantiaSolicitud eGarantiaSolicitud,
-			EGarantiaDetalleSolicitud eGarantiaDetalleSolicitud,EGarantiaSolicitud oEGarantiaAsociadaSolicitud){
-		EMensaje resultado=oCGarantia.actualizarGarantiaSolicitud(eGarantiaSolicitud,eGarantiaDetalleSolicitud,oEGarantiaAsociadaSolicitud);
+			EGarantiaDetalleSolicitud eGarantiaDetalleSolicitud,EGarantiaSolicitud oEGarantiaAsociadaSolicitud,List<EDocumentoCarga> lstDocumentoCarga){
+		EMensaje resultado=oCGarantia.actualizarGarantiaSolicitud(eGarantiaSolicitud,eGarantiaDetalleSolicitud,oEGarantiaAsociadaSolicitud,lstDocumentoCarga);
 		return resultado;
 	}
 
@@ -312,6 +329,14 @@ public class BOGarantia {
 		List<EGarantiaSolicitud> lista=oCGarantia.listarSolicitudAnexoGarantia(nroSolicitud);
 		return lista;
 	}
+	public List<EOperacionDocumento> listarDocumentoGarantiaTemporal(long numeroSolicitud, int secuenciaGarantia){					
+		List<EOperacionDocumento> lista=oCGarantia.listarDocumentoGarantiaTemporal(numeroSolicitud,secuenciaGarantia);
+		return lista;
+	}
+	public List<EOperacionDocumento> listarDocumentoGeneralGarantia(long codigoGarantia){					
+		List<EOperacionDocumento> lista=oCGarantia.listarDocumentoGeneralGarantia(codigoGarantia);
+		return lista;
+	}
 	public EMensaje eliminarDetalleSolicitudDocumentoGarantia(EGarantia eGarantia){
 		EMensaje resultado = oCGarantia.eliminarDetalleSolicitudDocumentoGarantia(eGarantia);
 		return resultado;
@@ -326,6 +351,14 @@ public class BOGarantia {
 	}
 	public EMensaje eliminarDetalleFlagRequisitoLegal(EFlagReqLegal eFlagRequisitoLegal) {
 		EMensaje resultado = oCGarantia.eliminarDetalleFlagRequisitoLegal(eFlagRequisitoLegal);
+		return resultado;
+	}
+	public EMensaje eliminarDocumentoGarantiaTemporal(EOperacionDocumento oEOperacionDocumento) {
+		EMensaje resultado = oCGarantia.eliminarDocumentoGarantiaTemporal(oEOperacionDocumento);
+		return resultado;
+	}
+	public EMensaje eliminarDocumentoGeneralGarantia(EGarantia oEGarantia) {
+		EMensaje resultado = oCGarantia.eliminarDocumentoGeneralGarantia(oEGarantia);
 		return resultado;
 	}
 	public List<EAsignacionContratoGarantia> listarCreditosAsociadosGarantia(long codigoGarantia) {					

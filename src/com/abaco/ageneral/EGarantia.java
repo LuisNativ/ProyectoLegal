@@ -88,7 +88,7 @@ public @Data class EGarantia {
 	private int numeroVariable1;
 	private int numeroVariable2;
 	private int numeroVariable3;
-	private int numeroVariable4;
+	private long numeroVariable4;
 	private int anioFabricacion;
 	private int tipoAlmacen;
 	private int bancoEmisor;

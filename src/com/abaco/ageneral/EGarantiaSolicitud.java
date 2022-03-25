@@ -134,6 +134,7 @@ public @Data class EGarantiaSolicitud {
 	private String descripcionTipoCredito;
 	private String observacionConformidad;
 	private int secuenciaObservacion;
+	private int secuenciaDocumento;
 	//Atributos para gestion Levantamiento
 	private int codigoEstadoLevantamiento;
 	private String descripcionEstadoLevantamiento;

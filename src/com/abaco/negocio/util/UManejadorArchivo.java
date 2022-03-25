@@ -82,7 +82,7 @@ public class UManejadorArchivo {
 			documento.setTipoCliente(tipocliente);
 			documento.setCodigoSocio(eGarantia.getCodigoCliente()+"");
 			documento.setNombreUsuario(eGarantia.getUsuarioRegistro().getNombreUsuarioSIAF());
-			documento.setNumeroOperacion(eGarantia.getCodigoGarantia()+"");
+			documento.setNumeroOperacion(String.format("%05d", eGarantia.getCodigoGarantia()));
 			documento.setNombreArchivo(eDocumentoCarga.getNombreLaserFiche());
 			documento.setArchivoBinario(eDocumentoCarga.getData());
 			mensaje =  oBOLaserFiche.guardarDocumento(documento);

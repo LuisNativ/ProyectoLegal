@@ -1,5 +1,7 @@
 package com.abaco.ageneral;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +15,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 import com.abaco.entidad.EGeneral;
 import com.abaco.entidad.EMensaje;
@@ -27,13 +33,16 @@ import com.abaco.negocio.util.UConstante.UMensajeValidacion;
 import com.abaco.negocio.util.UConstante.UModoIngreso;
 import com.abaco.negocio.util.UConstante.UMoneda;
 import com.abaco.negocio.util.UConstante.UTipoCredito;
+import com.abaco.negocio.util.UConstante.UTipoDocumentoGarantia;
 import com.abaco.negocio.util.UConstante.UTipoGarantia;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
 import com.abaco.negocio.util.UFuncionesGenerales;
 import com.abaco.negocio.util.UGeneradorQueryString;
+import com.abaco.negocio.util.UManejadorArchivo;
 import com.abaco.negocio.util.UManejadorListaDesplegable;
 import com.abaco.negocio.util.UManejadorLog;
 import com.abaco.negocio.util.UManejadorSesionWeb;
+import com.abaco.servicio.laserfiche.Documento;
 
 @ManagedBean(name = "mbregistrooperaciongarantiasolicitud")
 @ViewScoped
@@ -50,6 +59,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	private EGarantia oEGarantiaData;
 	private EGarantia oEGarantiaAnexoData;
 	private EGarantia oEDlgGarantiaData;
+	private EOperacionDocumento oEOperacionDocumentoData;
 	private EGarantiaDetalleSolicitud oEGarantiaDetalleSolicitudData;
 	private EPersona oEPersonaSelected;
 	private EPoliza oEPolizaSelected;
@@ -64,6 +74,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	@Getter @Setter private List<EAsignacionContratoGarantia> lstCreditoGarantia;
 	@Getter @Setter private List<EGarantiaSolicitud> lstObservacionSolicitudGarantia;
 	@Getter @Setter private List<EGarantiaSolicitud> lstSolicitudGarantiaSaldos;
+	
 	
 	//Datos de formulario Garantia
 	@Getter @Setter private int codigoDepartamentoGarantia,codigoDepartamentoGarantiaConsulta;
@@ -136,6 +147,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	@Getter @Setter private boolean renderizarTab2;
 	@Getter @Setter private boolean renderizarTab3;
 	@Getter @Setter private boolean renderizarPanelValorizacionGarantia;
+	@Getter @Setter private boolean renderizarAdjuntarDocumentos;
 	@Getter @Setter private boolean visualizarBotonInfFinanciera;
 	@Getter @Setter private boolean visualizarBtnBuscarPoliza;
 	@Getter @Setter private boolean visualizarBotonPolizaGarantia;
@@ -158,6 +170,12 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	private int indicadorSalida;
 	@Getter @Setter private String observacionConformidad,observacionSolicitud;
 	
+	//Para Documento
+	@Getter @Setter private List<EDocumentoCarga> lstDocumentoCarga;
+	@Getter @Setter private List<EOperacionDocumento> lstOperacionDocumentoGarantiaTemporal;
+	@Getter @Setter private StreamedContent fileDownload;
+	@Getter @Setter private List<UploadedFile> files;
+	
 
 	@PostConstruct
 	public void inicio() {
@@ -170,6 +188,9 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		this.oEGarantiaData = new EGarantia();
 		this.oEDlgGarantiaData = new EGarantia();
 		this.oEGarantiaDetalleSolicitudData = new EGarantiaDetalleSolicitud();
+		this.oEOperacionDocumentoData = new EOperacionDocumento();
+		
+		files = new ArrayList<UploadedFile>();
 	
 		oEPolizaSelected = new EPoliza();
 		oEPersonaSelected = new EPersona();
@@ -199,6 +220,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		lstCreditoGarantia = new ArrayList<EAsignacionContratoGarantia>();
 		lstObservacionSolicitudGarantia = new ArrayList<EGarantiaSolicitud>();
 		lstSolicitudGarantiaSaldos = new ArrayList<EGarantiaSolicitud>();
+		lstDocumentoCarga = new ArrayList<EDocumentoCarga>();
 			
 		oEUsuario = (EUsuario) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.USUARIO);
 		inicializar();
@@ -298,6 +320,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 						visualizarBotonTasadorGarantia = false;
 						indicadorBotonNoConforme = 0;
 						renderizarPanelValorizacionGarantia = true;
+						renderizarAdjuntarDocumentos = true;
 						if(oEGarantiaSolicitudLoad.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS){
 							visualizarFrmdeLegal = false;
 							renderizarTab2 = false;
@@ -372,10 +395,13 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 						visualizarBtnBuscarPoliza = false;
 						visualizarBotonPolizaGarantia = true;
 						visualizarBotonTasadorGarantia = true;
-						indicadorBotonNoConforme = 1;
+						renderizarAdjuntarDocumentos = false;
 						
-						renderizarPanelValorizacionGarantia = (oEGarantiaSolicitudLoad.getCodigoTipoCredito() != UTipoCredito.ABAUTOSCOMERCIAL && 
+						renderizarPanelValorizacionGarantia = (oEGarantiaSolicitudLoad.getCodigoTipoCredito() != UTipoCredito.ABAUTOSCOMERCIAL &&
 								                               oEGarantiaSolicitudLoad.getCodigoTipoCredito() != UTipoCredito.ABAUTOSCONSUMO) ? true : false;
+						
+						indicadorBotonNoConforme = (oEGarantiaSolicitudLoad.getCodigoTipoCredito() != UTipoCredito.ABAUTOSCOMERCIAL &&
+	                               oEGarantiaSolicitudLoad.getCodigoTipoCredito() != UTipoCredito.ABAUTOSCONSUMO) ? 1 : 0;
 						
 						if(oEGarantiaSolicitudLoad.getCodigoTipoGarantia() == UClaseGarantia.REALNUEVAS){
 							renderizarTab3 = false;
@@ -397,6 +423,11 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 							oEGarantiaData.setSaldoDisponible(oEGarantiaAsociadaSolicitudData.getSaldoDisponibleGarantia());
 							oEGarantiaData.setPorcentajeDisponible(oEGarantiaAsociadaSolicitudData.getPorcentajeDisponible());
 							oEGarantiaData.setTipocambio(oETipoCambioData.getTipoCambioSBS());
+							oEGarantiaData.setCodigoTasador(oEGarantiaAsociadaSolicitudData.getCodigoTasador());
+							oEGarantiaData.setDescripcionTasador(oEGarantiaAsociadaSolicitudData.getDescripcionTasador());
+							oEGarantiaData.setNumeroVariable4(oEGarantiaAsociadaSolicitudData.getInformeTasacion());
+							oEGarantiaData.setFechaVariable1(oEGarantiaAsociadaSolicitudData.getFechaTasacion());
+							oEGarantiaData.setMontoValorizacion(oEGarantiaAsociadaSolicitudData.getMontoValorizacion());
 							deshabilitarCampo = false;
 						}
 						else if(oEGarantiaSolicitudLoad.getCodigoTipoGarantia() == UClaseGarantia.REALEXISTENTES){ 
@@ -409,6 +440,10 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 							oEGarantiaData.setSaldoDisponible(oEGarantiaAsociadaSolicitudData.getSaldoDisponibleGarantia());
 							oEGarantiaData.setPorcentajeDisponible(oEGarantiaAsociadaSolicitudData.getPorcentajeDisponible());
 							oEGarantiaData.setTipocambio(oETipoCambioData.getTipoCambioSBS());
+							oEGarantiaData.setDescripcionTasador(oEGarantiaAsociadaSolicitudData.getDescripcionTasador());
+							oEGarantiaData.setNumeroVariable4(oEGarantiaAsociadaSolicitudData.getInformeTasacion());
+							oEGarantiaData.setFechaVariable1(oEGarantiaAsociadaSolicitudData.getFechaTasacion());
+							oEGarantiaData.setMontoValorizacion(oEGarantiaAsociadaSolicitudData.getMontoValorizacion());
 							//Data de F92011
 							oEGarantiaAnexoData = oBOGarantia.buscarAnexoGarantia(oEGarantiaSolicitudLoad.getNumeroGarantiaReal());
 							if(oEGarantiaAnexoData != null){
@@ -480,6 +515,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 				}
 			}
 			listarObservacionSolicitudGarantia();
+			listarDocumentoGarantiaTemporal();
 			listarDesplegable();
 		}
 	}
@@ -552,6 +588,11 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		EGarantiaDetalleSolicitud oEGarantiaDetalleSolicitud = new EGarantiaDetalleSolicitud();
 		EGarantiaSolicitud oEGarantiaAsociadaSolicitud = new EGarantiaSolicitud();
 		EGarantia oEGarantia = new EGarantia();
+		EOperacionDocumento eOperacionDocumento = new EOperacionDocumento();
+		generarCorrelativoDocumentoCarga();
+		List<EDocumentoCarga> elstDocumentoCarga = new ArrayList<EDocumentoCarga>();
+		elstDocumentoCarga = lstDocumentoCarga;
+		List<EOperacionDocumento> lstOpDocGarantiaTemporal = lstOperacionDocumentoGarantiaTemporal;
 		
 		//Pasar Datos Globales a Locales
 		oEGarantiaSolicitud = oEGarantiaSolicitudData;
@@ -562,6 +603,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		//Setear atributos de los Objetos Instanciados
 		oEGarantiaAsociadaSolicitud.setFechaRegistro(new Date());
 		oEGarantiaAsociadaSolicitud.setUsuarioRegistro(oEUsuario);
+		oEGarantiaAsociadaSolicitud.setCodigoCliente(oEGarantiaSolicitudData.getCodigoCliente());
+		oEGarantiaAsociadaSolicitud.setNombreLargo(oEGarantiaSolicitudData.getNombreLargo());
 		oEGarantiaSolicitud.setFechaRegistro(new Date());
 		oEGarantiaSolicitud.setUsuarioRegistro(oEUsuario);
 		oEGarantia.setUsuarioRegistro(oEUsuario);
@@ -588,8 +631,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		if(UAccionExterna.NUEVO == accionExterna){
 			if(oEUsuario.getCodigoArea() == UArea.CREDITOS){
 				oEGarantiaAsociadaSolicitud.setCodigoEstadoGarantiaSolicitud(UEstado.SOLICITAGARANTIAREGISTRO);
-				oEMensaje = oBOGarantia.modificarGarantiaSolicitud(oEGarantiaAsociadaSolicitud);
-				
+				oEMensaje = oBOGarantia.modificarGarantiaSolicitudyAgregarDocGarantiaTemporal(oEGarantiaAsociadaSolicitud, elstDocumentoCarga);
 				indicadorSalida = 1;//Redirecciona Lista Solicitudes Asoc. Garantia
 				
 			}else if(oEUsuario.getCodigoArea() == UArea.LEGAL){
@@ -602,7 +644,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 				oEGarantia.setComentario(distribuirObservacionGarantia().getComentario());
 
 				oEGarantiaSolicitud.setCodigoEstadoGarantiaSolicitud(UEstado.EVALUADOGARANTIA);
-				oEMensaje = oBOGarantia.agregarGarantiaPendienteRegistro(oEGarantiaSolicitud,oEGarantia);
+				oEMensaje = oBOGarantia.agregarGarantiaPendRegistroyAgregarDocumento(oEGarantiaSolicitud,oEGarantia,lstOpDocGarantiaTemporal);
 				
 				if(oEMensaje.getIdMensaje() == 0){
 					indicadorSalida = 2; //Redirecciona Mantenimiento Garantia
@@ -642,6 +684,10 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		EGarantiaSolicitud oEGarantiaSolicitud = new EGarantiaSolicitud();
 		EGarantiaSolicitud oEGarantiaAsociadaSolicitud = new EGarantiaSolicitud();
 		EGarantiaDetalleSolicitud oEGarantiaDetalleSolicitud = new EGarantiaDetalleSolicitud();
+		EOperacionDocumento eOperacionDocumento = new EOperacionDocumento();
+		generarCorrelativoDocumentoCarga();
+		List<EDocumentoCarga> elstDocumentoCarga = new ArrayList<EDocumentoCarga>();
+		elstDocumentoCarga = lstDocumentoCarga;
 		
 		oEGarantiaSolicitud = oEGarantiaSolicitudData;
 		oEGarantiaDetalleSolicitud = oEGarantiaDetalleSolicitudData;
@@ -649,6 +695,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		
 		oEGarantiaAsociadaSolicitud.setFechaRegistro(new Date());
 		oEGarantiaAsociadaSolicitud.setUsuarioRegistro(oEUsuario);
+		oEGarantiaSolicitud.setUsuarioRegistro(oEUsuario);
 		
 		oEGarantiaDetalleSolicitud.setCodigoUbigeo(UFuncionesGenerales.convierteCadenaAEntero(
 				UFuncionesGenerales.convertirEnteroACadenaUbigeo(codigoDepartamentoGarantia) + 
@@ -659,7 +706,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 			if(oEUsuario.getCodigoArea() == UArea.CREDITOS){
 				//Actualizará Datos del Archivo F7325,F7363 y GarantiaAnexoF7325
 				oEMensaje = oBOGarantia.actualizarGarantiaSolicitud(oEGarantiaSolicitud,
-						oEGarantiaDetalleSolicitud,oEGarantiaAsociadaSolicitud);
+						oEGarantiaDetalleSolicitud,oEGarantiaAsociadaSolicitud,elstDocumentoCarga);
 				indicadorSalida = 1;//Redirecciona Lista Solicitudes Asoc. Garantia
 			}
 			
@@ -688,6 +735,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		EGarantiaSolicitud oEGarantiaAsociadaSolicitud = new EGarantiaSolicitud();
 		EGarantia oEGarantia = new EGarantia();
 		EGarantia oESolicitudDesembolsoGarantia = new EGarantia();
+		List<EOperacionDocumento> lstOpDocGarantiaTemporal = lstOperacionDocumentoGarantiaTemporal;
 		
 		//Pasar Datos Globales a Locales
 		oEGarantiaAsociadaSolicitud = oEGarantiaAsociadaSolicitudData;
@@ -695,15 +743,16 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		oEGarantiaAsociadaSolicitud.setFechaRegistro(new Date());
 		oEGarantiaAsociadaSolicitud.setUsuarioRegistro(oEUsuario);
 		oEGarantia.setUsuarioRegistro(oEUsuario);
+		oEGarantia.setTipoDocumento(UTipoDocumentoGarantia.TASACION);
 		oEGarantia.setCodigoUbigeo(UFuncionesGenerales.convierteCadenaAEntero(
 				UFuncionesGenerales.convertirEnteroACadenaUbigeo(codigoDepartamentoGarantia) + 
 				UFuncionesGenerales.convertirEnteroACadenaUbigeo(codigoProvinciaGarantia) + 
 				UFuncionesGenerales.convertirEnteroACadenaUbigeo(codigoDistritoGarantia)));
-		oEGarantia.setMontoDisponible(oEGarantia.getMontoValoracion());
-		oEGarantia.setSaldoDisponible((oEGarantia.getMontoValoracion() - montoAcumuladoSaldoCredito));
-		if(montoAcumuladoSaldoCredito != 0){
-			oEGarantia.setPorcentajeDisponible((oEGarantia.getMontoValoracion() / montoAcumuladoSaldoCredito));
-		}
+		//oEGarantia.setMontoDisponible(oEGarantia.getMontoValoracion());
+		//oEGarantia.setSaldoDisponible((oEGarantia.getMontoValoracion() - montoAcumuladoSaldoCredito));
+		//if(montoAcumuladoSaldoCredito != 0){
+		//	oEGarantia.setPorcentajeDisponible((oEGarantia.getMontoValoracion() / montoAcumuladoSaldoCredito));
+		//}
 		
 		oESolicitudDesembolsoGarantia.setNumeroSolicitud(oEGarantiaSolicitudLoad.getNumeroSolicitud());
 		oESolicitudDesembolsoGarantia.setCodigoGarantia(oEGarantiaData.getCodigoGarantia());
@@ -731,7 +780,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
     				oEGarantia.setComentario(distribuirObservacionGarantia().getComentario());
 					
 					oEGarantiaAsociadaSolicitud.setCodigoEstadoGarantiaSolicitud(UEstado.EVALUADOGARANTIA);
-					oEMensaje = oBOGarantia.modificarSolicitudyGenerarAsientoyDocumentacionGarantia(oEGarantiaAsientoTramite,oEGarantiaAsociadaSolicitud,oEGarantia,oESolicitudDesembolsoGarantia);
+					oEMensaje = oBOGarantia.modificarSolicitudyGenerarAsientoyDocumentacionGarantia(oEGarantiaAsientoTramite,oEGarantiaAsociadaSolicitud,oEGarantia,oESolicitudDesembolsoGarantia,lstOpDocGarantiaTemporal);
 					if(oEMensaje.getIdMensaje() == 0){
 						indicadorSalida = 4; //Redirecciona Tramite Garantia
 					}else{
@@ -1042,6 +1091,91 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		
 	}
 	
+	
+	//Métodos para Documento Temporal
+	public void generarCorrelativoDocumentoCarga() {
+		int correlativoDocumento = 0;
+		for(int i=0;i<lstDocumentoCarga.size();i++){
+			correlativoDocumento = correlativoDocumento +1;
+			String nombreDocumento = lstDocumentoCarga.get(i).getNombre();
+			lstDocumentoCarga.get(i).setNombreLaserFiche(correlativoDocumento+"-"+nombreDocumento);
+		}
+	}
+	
+	public void listarDocumentoGarantiaTemporal(){
+		lstOperacionDocumentoGarantiaTemporal = oBOGarantia.listarDocumentoGarantiaTemporal(oEGarantiaSolicitudLoad.getNumeroSolicitud(), oEGarantiaSolicitudLoad.getSecuenciaGarantia());
+	}
+	
+	public void agregarDocumentoCarga(FileUploadEvent objUploadEvent) {
+		UploadedFile oUploadedFile = objUploadEvent.getFile();
+		files.add(oUploadedFile);
+		for(int i=0;i<files.size();i++){
+			EDocumentoCarga oEDocumentoCarga = new EDocumentoCarga();
+			if(lstDocumentoCarga.size() > 0){
+				boolean isValida = false;
+				for(int x=0;x<lstDocumentoCarga.size();x++){
+					if(lstDocumentoCarga.get(x).getNombre().equals(UFuncionesGenerales.obtieneTipoArchivo(files.get(i).getFileName()))){
+						isValida = true;
+					}
+				}
+				if(!isValida){
+					oEDocumentoCarga.setNombre(files.get(i).getFileName());
+					oEDocumentoCarga.setNombreOriginal(files.get(i).getFileName());
+					oEDocumentoCarga.setData(files.get(i).getContents());
+					oEDocumentoCarga.setSize(files.get(i).getSize());
+					oEDocumentoCarga.setDescripcionSize(UFuncionesGenerales.getSize(files.get(i).getSize()));
+					lstDocumentoCarga.add(oEDocumentoCarga);
+				}
+			}else{
+				oEDocumentoCarga.setNombre(files.get(i).getFileName());
+				oEDocumentoCarga.setNombreOriginal(files.get(i).getFileName());
+				oEDocumentoCarga.setData(files.get(i).getContents());
+				oEDocumentoCarga.setSize(files.get(i).getSize());
+				oEDocumentoCarga.setDescripcionSize(UFuncionesGenerales.getSize(files.get(i).getSize()));
+				lstDocumentoCarga.add(oEDocumentoCarga);
+			}
+		}
+		
+		files = new ArrayList<UploadedFile>();
+	}
+	
+	public void eliminarDocumentoCarga(EDocumentoCarga oEDocumentoCargaItem){
+		lstDocumentoCarga.remove(oEDocumentoCargaItem);
+	}
+	
+	public void descargarDocumento(EOperacionDocumento oEOperacionDocumentoItem) {
+		if (oEOperacionDocumentoItem != null) {
+			UManejadorArchivo manejoArchivo = new UManejadorArchivo();
+			Documento archivo = manejoArchivo.obtenerDocumento(oEOperacionDocumentoItem.getCodigoDocumentoLaserFiche());
+			if (archivo != null && archivo.getArchivoBinario() != null && archivo.getArchivoBinario().length > 0) {
+				InputStream stream = new ByteArrayInputStream(archivo.getArchivoBinario());
+				fileDownload = new DefaultStreamedContent(stream, "image/png", oEOperacionDocumentoItem.getNombreDocumento());
+			} else {
+				if (oEOperacionDocumentoItem.getDataDocumento() != null && oEOperacionDocumentoItem.getDataDocumento().length > 0) {
+					UFuncionesGenerales.descargaArchivo(oEOperacionDocumentoItem.getNombreDocumento(), oEOperacionDocumentoItem.getDataDocumento());
+				}
+			}
+		}
+	}
+	
+	public void visualizarEliminarDocumentoTemporal(EOperacionDocumento oEOperacionDocumentoItem){
+		if (oEOperacionDocumentoItem != null) {
+			oEOperacionDocumentoData = oEOperacionDocumentoItem;
+			RequestContext.getCurrentInstance().execute("PF('dlgConfirmacionDocumento').show();");
+		}
+	}
+	
+	public void eliminarDocumentoTemporal(){
+		if(oEOperacionDocumentoData != null){
+			oEMensaje = oBOGarantia.eliminarDocumentoGarantiaTemporal(oEOperacionDocumentoData);
+			UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
+			RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
+		}
+	}
+	
+	public void actualizarDatosAjax(){
+		listarDocumentoGarantiaTemporal();
+	}
 	//*****************************************************//
 	//End: Metodos para la Solicitud Asociada a la Garantía (TAB=1)
 	//******************************************************//

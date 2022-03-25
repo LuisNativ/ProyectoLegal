@@ -64,4 +64,5 @@ public @Data class EOperacionDocumento {
 	private int condicionDesembolso2;
 	private int condicionDesembolso3;
 	private int condicionDesembolso4;
+	private int secuenciaGarantia;
 }

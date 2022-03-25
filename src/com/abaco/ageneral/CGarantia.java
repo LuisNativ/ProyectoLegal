@@ -63,6 +63,86 @@ public class CGarantia {
 		return mensaje;
 	}
 	
+	public EMensaje agregarGarantiaPendRegistroyAgregarDocumento(EGarantiaSolicitud eGarantiaSolicitud, EGarantia eGarantia,List<EOperacionDocumento> lstOperacionDocumento){
+		IConexion oIConexion = null;
+		EMensaje mensaje = new EMensaje();
+		Mensaje mensajeLaserFiche = new Mensaje();
+		UManejadorArchivo oUManejadorArchivo = new UManejadorArchivo();
+		EGarantia oEGarantia = new EGarantia();
+		DAOGarantia oDAOGarantia= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();
+			oIConexion.iniciaTransaccion();
+			oDAOGarantia= new DAOGarantia(oIConexion);
+			
+			mensaje = oDAOGarantia.modificarGarantiaSolicitud(eGarantiaSolicitud);
+			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+				throw new Exception(mensaje.getDescMensaje());
+			}
+			
+			mensaje = oDAOGarantia.agregarGarantiaPendienteRegistro(eGarantiaSolicitud,eGarantia);
+			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+				throw new Exception(mensaje.getDescMensaje());
+			}
+			
+			oEGarantia = oDAOGarantia.buscarUltimaGarantiaGenerada();
+			if(oEGarantia != null){
+				oEGarantia.setTipoDocumento(eGarantia.getTipoDocumento());
+				
+				if(lstOperacionDocumento != null){
+					if(lstOperacionDocumento.size() > 0){
+						for(EOperacionDocumento oEOperacionDocumento: lstOperacionDocumento){
+							EDocumentoCarga oEDocumentoCarga = new EDocumentoCarga();
+							oEDocumentoCarga.setNombreLaserFiche(oEOperacionDocumento.getNombreDocumentoOriginal());
+							oEDocumentoCarga.setNombre(oEOperacionDocumento.getNombreDocumentoOriginal());
+							oEDocumentoCarga.setNombreOriginal(oEOperacionDocumento.getNombreDocumentoOriginal());
+							oEDocumentoCarga.setData(oEOperacionDocumento.getDataDocumento());
+							EUsuario eUsuario = new EUsuario();
+							eUsuario.setNombreUsuarioSIAF(oEOperacionDocumento.getUsuarioRegist());
+							eUsuario.setNombreUsuario(oEOperacionDocumento.getUsuarioRegist());
+							oEGarantia.setUsuarioRegistro(eUsuario);
+							
+							mensajeLaserFiche = oUManejadorArchivo.guardarDocumento(oEGarantia, oEDocumentoCarga);
+							if (!UFuncionesGenerales.validaMensajeLaserFiche(mensajeLaserFiche)) {
+								throw new Exception(mensajeLaserFiche.getDescripcion());
+							}
+							
+							oEDocumentoCarga.setCodigoLaserFiche(mensajeLaserFiche.getDocumentoID());
+							mensaje = oDAOGarantia.agregarDocumentoGeneralGarantia(oEGarantia, oEDocumentoCarga);
+							if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+								throw new Exception(mensaje.getDescMensaje());
+							}
+							
+							mensaje = oDAOGarantia.eliminarDocumentoGarantiaTemporal(oEOperacionDocumento);
+							if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+								throw new Exception(mensaje.getDescMensaje());
+							}
+						}
+					}
+				}	
+			}else{
+				mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + "Garantía No Encontrada.");
+				throw new Exception("Garantía no Encontrada. ");
+			}
+			
+			
+			
+			
+			oIConexion.ejecutaCommit();
+		} catch (Exception e) {
+			if (oIConexion != null) {
+				oIConexion.ejecutaRollback();
+			}
+			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
+			UManejadorLog.error("Control: Error al agregar garantía : " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return mensaje;
+	}
+	
 	public EMensaje agregarGarantiaMantenimiento(EGarantia eGarantia){
 		IConexion oIConexion = null;
 		EMensaje mensaje = new EMensaje();
@@ -954,15 +1034,11 @@ public class CGarantia {
 	public EMensaje modificarGarantiaMantenimiento(EGarantia eGarantia){
 		IConexion oIConexion = null;
 		EMensaje mensaje = new EMensaje();
-		Mensaje mensajeLaserFiche = new Mensaje();
 		DAOGarantia oDAOGarantia= null;
-		UManejadorArchivo oUManejadorArchivo = new UManejadorArchivo();
-		DAOOperacion oDAOOperacion= null;
 		try {
 			oIConexion = FabricaConexion.creaConexion();
 			oIConexion.iniciaTransaccion();
 			oDAOGarantia= new DAOGarantia(oIConexion);
-			oDAOOperacion = new DAOOperacion(oIConexion);
 			
 			mensaje = oDAOGarantia.modificarGarantiaMantenimiento(eGarantia);
 			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
@@ -984,7 +1060,55 @@ public class CGarantia {
 		return mensaje;
 	}
 	
-	public EMensaje modificarGarantiaMantenimientoyInmueblePredios(EGarantia eGarantia,List<EGarantia> lstInmueblesAdicionales){
+	public EMensaje modificarGarantiaMantenimientoyDocumentoGeneral(EGarantia eGarantia,List<EDocumentoCarga> lstDocumentoCarga){
+		IConexion oIConexion = null;
+		EMensaje mensaje = new EMensaje();
+		Mensaje mensajeLaserFiche = new Mensaje();
+		DAOGarantia oDAOGarantia= null;
+		UManejadorArchivo oUManejadorArchivo = new UManejadorArchivo();
+		try {
+			oIConexion = FabricaConexion.creaConexion();
+			oIConexion.iniciaTransaccion();
+			oDAOGarantia= new DAOGarantia(oIConexion);
+			
+			mensaje = oDAOGarantia.modificarGarantiaMantenimiento(eGarantia);
+			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+				throw new Exception(mensaje.getDescMensaje());
+			}
+			
+			if(lstDocumentoCarga != null){
+				if(lstDocumentoCarga.size() > 0){
+					for(EDocumentoCarga oEDocumentoCarga: lstDocumentoCarga){
+						mensajeLaserFiche = oUManejadorArchivo.guardarDocumento(eGarantia, oEDocumentoCarga);
+						if (!UFuncionesGenerales.validaMensajeLaserFiche(mensajeLaserFiche)) {
+							throw new Exception(mensajeLaserFiche.getDescripcion());
+						}
+						
+						oEDocumentoCarga.setCodigoLaserFiche(mensajeLaserFiche.getDocumentoID());
+						mensaje = oDAOGarantia.agregarDocumentoGeneralGarantia(eGarantia, oEDocumentoCarga);
+						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+							throw new Exception(mensaje.getDescMensaje());
+						}
+					}
+				}
+			}	
+			
+			oIConexion.ejecutaCommit();
+		} catch (Exception e) {
+			if (oIConexion != null) {
+				oIConexion.ejecutaRollback();
+			}
+			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
+			UManejadorLog.error("Control: Error al modificar garantía : " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return mensaje;
+	}
+	
+	public EMensaje modificarGarantiaMantenimientoyInmueblePrediosyDocumentoGeneral(EGarantia eGarantia,List<EGarantia> lstInmueblesAdicionales,List<EDocumentoCarga> lstDocumentoCarga){
 		IConexion oIConexion = null;
 		EMensaje mensaje = new EMensaje();
 		Mensaje mensajeLaserFiche = new Mensaje();
@@ -1026,6 +1150,24 @@ public class CGarantia {
 					
 				}
 			}
+			
+			if(lstDocumentoCarga != null){
+				if(lstDocumentoCarga.size() > 0){
+					for(EDocumentoCarga oEDocumentoCarga: lstDocumentoCarga){
+						mensajeLaserFiche = oUManejadorArchivo.guardarDocumento(eGarantia, oEDocumentoCarga);
+						if (!UFuncionesGenerales.validaMensajeLaserFiche(mensajeLaserFiche)) {
+							throw new Exception(mensajeLaserFiche.getDescripcion());
+						}
+						
+						oEDocumentoCarga.setCodigoLaserFiche(mensajeLaserFiche.getDocumentoID());
+						mensaje = oDAOGarantia.agregarDocumentoGeneralGarantia(eGarantia, oEDocumentoCarga);
+						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+							throw new Exception(mensaje.getDescMensaje());
+						}
+					}
+				}
+			}	
+			
 			
 			oIConexion.ejecutaCommit();
 		} catch (Exception e) {
@@ -1522,9 +1664,55 @@ public class CGarantia {
 		return mensaje;
 	}
 	
-	public EMensaje modificarSolicitudyGenerarAsientoyDocumentacionGarantia(EGarantiaTramite eGarantiaAsientoTramite, EGarantiaSolicitud eGarantiaAsociadaSolicitud,EGarantia eGarantia,EGarantia eSolicitudDesembolsoGarantia){
+	public EMensaje modificarGarantiaSolicitudyAgregarDocGarantiaTemporal(EGarantiaSolicitud eGarantiaSolicitud,List<EDocumentoCarga> lstDocumentoCarga){
 		IConexion oIConexion = null;
 		EMensaje mensaje = new EMensaje();
+		DAOGarantia oDAOGarantia= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();
+			oIConexion.iniciaTransaccion();
+			oDAOGarantia= new DAOGarantia(oIConexion);
+
+			mensaje = oDAOGarantia.modificarGarantiaSolicitud(eGarantiaSolicitud);
+			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+				throw new Exception(mensaje.getDescMensaje());
+			}
+			
+			if(lstDocumentoCarga != null){
+				if(lstDocumentoCarga.size() > 0){
+					for(EDocumentoCarga oEDocumentoCarga: lstDocumentoCarga){
+						mensaje = oDAOGarantia.agregarDocumentoGarantiaTemporal(eGarantiaSolicitud, oEDocumentoCarga);
+						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+							throw new Exception(mensaje.getDescMensaje());
+						}
+					}
+				}
+			}	
+	
+			oIConexion.ejecutaCommit();
+		} catch (Exception e) {
+			if (oIConexion != null) {
+				oIConexion.ejecutaRollback();
+			}
+			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
+			UManejadorLog.error("Control CGarantia: Error al Modificar Trámite garantía : " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return mensaje;
+	}
+	
+	public EMensaje modificarSolicitudyGenerarAsientoyDocumentacionGarantia(EGarantiaTramite eGarantiaAsientoTramite, 
+			                                                                EGarantiaSolicitud eGarantiaAsociadaSolicitud,
+			                                                                EGarantia eGarantia,
+			                                                                EGarantia eSolicitudDesembolsoGarantia,
+			                                                                List<EOperacionDocumento> lstOperacionDocumento){
+		IConexion oIConexion = null;
+		EMensaje mensaje = new EMensaje();
+		Mensaje mensajeLaserFiche = new Mensaje();
+		UManejadorArchivo oUManejadorArchivo = new UManejadorArchivo();
 		DAOGarantia oDAOGarantia= null;
 		try {
 			oIConexion = FabricaConexion.creaConexion();
@@ -1550,6 +1738,38 @@ public class CGarantia {
 			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
 				throw new Exception(mensaje.getDescMensaje());
 			}
+			
+			if(lstOperacionDocumento != null){
+				if(lstOperacionDocumento.size() > 0){
+					for(EOperacionDocumento oEOperacionDocumento: lstOperacionDocumento){
+						EDocumentoCarga oEDocumentoCarga = new EDocumentoCarga();
+						oEDocumentoCarga.setNombreLaserFiche(oEOperacionDocumento.getNombreDocumentoOriginal());
+						oEDocumentoCarga.setNombre(oEOperacionDocumento.getNombreDocumentoOriginal());
+						oEDocumentoCarga.setNombreOriginal(oEOperacionDocumento.getNombreDocumentoOriginal());
+						oEDocumentoCarga.setData(oEOperacionDocumento.getDataDocumento());
+						EUsuario eUsuario = new EUsuario();
+						eUsuario.setNombreUsuarioSIAF(oEOperacionDocumento.getUsuarioRegist());
+						eUsuario.setNombreUsuario(oEOperacionDocumento.getUsuarioRegist());
+						eGarantia.setUsuarioRegistro(eUsuario);
+						
+						mensajeLaserFiche = oUManejadorArchivo.guardarDocumento(eGarantia, oEDocumentoCarga);
+						if (!UFuncionesGenerales.validaMensajeLaserFiche(mensajeLaserFiche)) {
+							throw new Exception(mensajeLaserFiche.getDescripcion());
+						}
+						
+						oEDocumentoCarga.setCodigoLaserFiche(mensajeLaserFiche.getDocumentoID());
+						mensaje = oDAOGarantia.agregarDocumentoGeneralGarantia(eGarantia, oEDocumentoCarga);
+						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+							throw new Exception(mensaje.getDescMensaje());
+						}
+						
+						mensaje = oDAOGarantia.eliminarDocumentoGarantiaTemporal(oEOperacionDocumento);
+						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+							throw new Exception(mensaje.getDescMensaje());
+						}
+					}
+				}
+			}	
 			
 			oIConexion.ejecutaCommit();
 		} catch (Exception e) {
@@ -1596,7 +1816,7 @@ public class CGarantia {
 	}
 	
 	public EMensaje actualizarGarantiaSolicitud(EGarantiaSolicitud eGarantiaSolicitud,
-			EGarantiaDetalleSolicitud eGarantiaDetalleSolicitud,EGarantiaSolicitud oEGarantiaAsociadaSolicitud){
+			EGarantiaDetalleSolicitud eGarantiaDetalleSolicitud,EGarantiaSolicitud oEGarantiaAsociadaSolicitud,List<EDocumentoCarga> lstDocumentoCarga){
 		IConexion oIConexion = null;
 		EMensaje mensaje = new EMensaje();
 		DAOGarantia oDAOGarantia= null;
@@ -1614,6 +1834,17 @@ public class CGarantia {
 			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
 				throw new Exception(mensaje.getDescMensaje());
 			}
+			
+			if(lstDocumentoCarga != null){
+				if(lstDocumentoCarga.size() > 0){
+					for(EDocumentoCarga oEDocumentoCarga: lstDocumentoCarga){
+						mensaje = oDAOGarantia.agregarDocumentoGarantiaTemporal(eGarantiaSolicitud, oEDocumentoCarga);
+						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+							throw new Exception(mensaje.getDescMensaje());
+						}
+					}
+				}
+			}	
 			
 			oIConexion.ejecutaCommit();
 		} catch (Exception e) {
@@ -2014,6 +2245,42 @@ public class CGarantia {
 		return resultado;
 	}
 	
+	public List<EOperacionDocumento> listarDocumentoGarantiaTemporal(long numeroSolicitud, int secuenciaGarantia){
+		IConexion oIConexion = null;
+		List<EOperacionDocumento> resultado = null;
+		DAOGarantia oDAOGarantia= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();			
+			oDAOGarantia = new DAOGarantia(oIConexion);
+			resultado = oDAOGarantia.listarDocumentoGarantiaTemporal(numeroSolicitud,secuenciaGarantia);			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al listar: " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
+	public List<EOperacionDocumento> listarDocumentoGeneralGarantia(long codigoGarantia){
+		IConexion oIConexion = null;
+		List<EOperacionDocumento> resultado = null;
+		DAOGarantia oDAOGarantia= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();			
+			oDAOGarantia = new DAOGarantia(oIConexion);
+			resultado = oDAOGarantia.listarDocumentoGeneralGarantia(codigoGarantia);			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al listar: " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
 	public EMensaje eliminarDetalleSolicitudDocumentoGarantia(EGarantia eGarantia) {
 		IConexion oIConexion = null;
 		EMensaje mensaje = new EMensaje();
@@ -2111,6 +2378,64 @@ public class CGarantia {
 			oDAOGarantia= new DAOGarantia(oIConexion);
 			
 			mensaje = oDAOGarantia.eliminarDetalleFlagRequisitoLegal(eFlagRequisitoLegal) ;
+			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+				throw new Exception(mensaje.getDescMensaje());
+			}
+			
+			oIConexion.ejecutaCommit();
+		} catch (Exception e) {
+			if (oIConexion != null) {
+				oIConexion.ejecutaRollback();
+			}
+			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
+			UManejadorLog.error("Control: Error al eliminar : " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return mensaje;
+	}
+	
+	public EMensaje eliminarDocumentoGarantiaTemporal(EOperacionDocumento oEOperacionDocumento) {
+		IConexion oIConexion = null;
+		EMensaje mensaje = new EMensaje();
+		DAOGarantia oDAOGarantia= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();
+			oIConexion.iniciaTransaccion();
+			oDAOGarantia= new DAOGarantia(oIConexion);
+			
+			mensaje = oDAOGarantia.eliminarDocumentoGarantiaTemporal(oEOperacionDocumento) ;
+			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+				throw new Exception(mensaje.getDescMensaje());
+			}
+			
+			oIConexion.ejecutaCommit();
+		} catch (Exception e) {
+			if (oIConexion != null) {
+				oIConexion.ejecutaRollback();
+			}
+			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
+			UManejadorLog.error("Control: Error al eliminar : " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return mensaje;
+	}
+	
+	public EMensaje  eliminarDocumentoGeneralGarantia(EGarantia oEGarantia) {
+		IConexion oIConexion = null;
+		EMensaje mensaje = new EMensaje();
+		DAOGarantia oDAOGarantia= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();
+			oIConexion.iniciaTransaccion();
+			oDAOGarantia= new DAOGarantia(oIConexion);
+			
+			mensaje = oDAOGarantia.eliminarDocumentoGeneralGarantia(oEGarantia) ;
 			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
 				throw new Exception(mensaje.getDescMensaje());
 			}
@@ -2813,7 +3138,7 @@ public class CGarantia {
 				 resultado.setMontoVariable3(eGarantiaSolicitudF7363.getAreaConstruida());
 				 resultado.setCodigoTipoBien(eGarantiaSolicitudF7363.getCodigoTipoPrenda2());
 				 resultado.setNumeroVariable1(eGarantiaSolicitudF7363.getNumeroPisos());
-				 resultado.setUbicacion1(eGarantiaSolicitudF7363.getDireccion());	
+				 resultado.setUbicacion1(eGarantiaSolicitudF7363.getDireccion().isEmpty() ? eGarantiaSolicitudF7325.getDescripcionGarantiaReal() : eGarantiaSolicitudF7363.getDireccion() );	
 				// resultado.setDescripcionB("");resultado.setDescripcionC("");
 				 break;
 			 case UTipoGarantia.VEHICULAR:

@@ -227,6 +227,7 @@ public class MBListaConstitucionGarantia implements Serializable {
 			oEGarantia.setCodigoAreaEmisora(oEUsuario.getCodigoArea());
 			oEGarantia.setSecuenciaDocumento(eOperacionDocumento.getCodigoDocumento());
 			oEGarantia.setCodigoGarantia(eOperacionDocumento.getCodigoGarantia());
+			oEGarantia.setCodigoCliente(eOperacionDocumento.getCodigoCliente());
 			oEGarantia.setFirmaDocumento("NO");
 			oEGarantia.setObservacionDocumento("");
 			oEMensaje = oBOGarantia.agregarDetalleSolicitudDocumentoGarantia(oEGarantia, elstDocumentoCarga);
@@ -257,7 +258,7 @@ public class MBListaConstitucionGarantia implements Serializable {
 						}
 					}
 					if(!isValida){
-						oEDocumentoCarga.setNombre(files.get(i).getFileName() + UFuncionesGenerales.obtieneTipoArchivo(files.get(i).getFileName()));
+						oEDocumentoCarga.setNombre(files.get(i).getFileName());
 						oEDocumentoCarga.setNombreOriginal(files.get(i).getFileName());
 						oEDocumentoCarga.setData(files.get(i).getContents());
 						oEDocumentoCarga.setSize(files.get(i).getSize());
@@ -265,7 +266,7 @@ public class MBListaConstitucionGarantia implements Serializable {
 						lstDocumentoCarga.add(oEDocumentoCarga);
 					}
 				}else{
-					oEDocumentoCarga.setNombre(files.get(i).getFileName() + UFuncionesGenerales.obtieneTipoArchivo(files.get(i).getFileName()));
+					oEDocumentoCarga.setNombre(files.get(i).getFileName());
 					oEDocumentoCarga.setNombreOriginal(files.get(i).getFileName());
 					oEDocumentoCarga.setData(files.get(i).getContents());
 					oEDocumentoCarga.setSize(files.get(i).getSize());

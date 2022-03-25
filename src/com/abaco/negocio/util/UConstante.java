@@ -515,6 +515,7 @@ public class UConstante {
 		int CONSTITUCION = 1;
 		int LEVANTAMIENTO = 2;
 		int NOTARIA = 3;
+		int TASACION = 4;
 	}
 	
 	public static interface UTipoPersonaGeneral {
