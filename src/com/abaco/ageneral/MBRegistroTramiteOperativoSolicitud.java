@@ -26,6 +26,7 @@ import com.abaco.negocio.util.UConstante.UAccionExterna;
 import com.abaco.negocio.util.UConstante.UAccionTabla;
 import com.abaco.negocio.util.UConstante.UArea;
 import com.abaco.negocio.util.UConstante.URutaCarpetaCompartida;
+import com.abaco.negocio.util.UConstante.USistemaOperativo;
 import com.abaco.negocio.util.UConstante.UTipoPersona;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
 import com.abaco.negocio.util.UFuncionesGenerales;
@@ -771,7 +772,11 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 	
 	//Generar Documento de Garantia Mobiliaria 
 	public void generarDocumentoGarantiaMobiliaria() {
-		
+		if (USistemaOperativo.ES_WINDOWS) {
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows2;
+		}else if (USistemaOperativo.ES_LINUX) {
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
+		}
 		RequestContext.getCurrentInstance().execute("PF('dlgConfirmacionImpresion').hide();");
 		//Instancia de Atributos Locales
 	
@@ -825,7 +830,7 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 			}
 		}
 		
-		rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
+		
 		rutaBasePlantilla = rutaBaseFormato + "Legal";
 		String rutaPlantilla = rutaBasePlantilla + File.separator + plantilla;
 	
@@ -1059,7 +1064,7 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 
 		String rutaLinuxArchivoWord = rutaBaseFormato + nombreArchivoWord;
 		String rutaLinuxWordGenerado = UtilPoi.generarArchivoWord(documeWord, rutaLinuxArchivoWord);
-		String rutaWindowsWordGenerado = URutaCarpetaCompartida.rutaBaseWindows + nombreArchivoWord;
+		String rutaWindowsWordGenerado = rutaBaseFormato + nombreArchivoWord;
 		String rutaLinuxWordPdfGenerado = rutaBaseFormato + nombreArchivoPdf;
 		
 		

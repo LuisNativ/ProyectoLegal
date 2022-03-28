@@ -75,6 +75,7 @@ import com.abaco.negocio.util.UConstante.UModoIngreso;
 import com.abaco.negocio.util.UConstante.UMoneda;
 import com.abaco.negocio.util.UConstante.UPersonaRelacion;
 import com.abaco.negocio.util.UConstante.URutaCarpetaCompartida;
+import com.abaco.negocio.util.UConstante.USistemaOperativo;
 import com.abaco.negocio.util.UConstante.UTipoCliente;
 import com.abaco.negocio.util.UConstante.UTipoDocumento;
 import com.abaco.negocio.util.UConstante.UTipoDocumentoGarantia;
@@ -619,6 +620,9 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		 renderizarPolizaGarantia = false;
 		 renderizarDetalleTasacion = false;
 		 renderizarAdjuntarDocumentos = false;
+		 codigoDepartamentoGarantia = 0;
+		 codigoProvinciaGarantia = 0;
+		 codigoDistritoGarantia = 0;
 		 
 		 mensajeTablaPolizaPrestamo = UMensajeTabla.MSJ_1;
 	}
@@ -1255,7 +1259,11 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	
 	//Generar Documento de Constitución (Minuta de Hipoteca)
 	public void generarDocumentoMinutaConstitucion(EOperacionDocumento oEOperacionDocumentoItem) {
-		
+		if (USistemaOperativo.ES_WINDOWS) {
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows2;
+		}else if (USistemaOperativo.ES_LINUX) {
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
+		}
 		//Instancia de Atributos Locales
 		String nroDocumento = "";
 		String direccion ="";
@@ -1327,7 +1335,6 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			}
 		}
 		
-		rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
 		rutaBasePlantilla = rutaBaseFormato + "Legal";
 		String rutaPlantilla = rutaBasePlantilla + File.separator + plantilla;
 	
@@ -1345,12 +1352,12 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		String texto8 = nombreSocio;
 		String texto9 = nroDocumento;
 		String texto10 = oEGarantiaData.getUbicacion1();
-		String texto11 =  oUManejadorListaDesplegable.obtieneDepartamento().stream()
-				.filter(x -> x.getCodigo2() == codigoDepartamentoGarantia ).findAny().orElse(null).getDescripcion();
-		String texto12 = oUManejadorListaDesplegable.obtieneProvincia(codigoDepartamentoGarantia).stream()
-				.filter(x -> x.getCodigo2() == codigoProvinciaGarantia ).findAny().orElse(null).getDescripcion();
-		String texto13 = oUManejadorListaDesplegable.obtieneDistrito(codigoDepartamentoGarantia, codigoProvinciaGarantia).stream()
-				.filter(x -> x.getCodigo2() == codigoDistritoGarantia ).findAny().orElse(null).getDescripcion();
+		String texto11 = codigoDepartamentoGarantia > 0 ? oUManejadorListaDesplegable.obtieneDepartamento().stream()
+				.filter(x -> x.getCodigo2() == codigoDepartamentoGarantia ).findAny().orElse(null).getDescripcion() : "";
+		String texto12 = codigoDepartamentoGarantia > 0 ? oUManejadorListaDesplegable.obtieneProvincia(codigoDepartamentoGarantia).stream()
+				.filter(x -> x.getCodigo2() == codigoProvinciaGarantia ).findAny().orElse(null).getDescripcion() : "";
+		String texto13 = codigoDepartamentoGarantia > 0 ? oUManejadorListaDesplegable.obtieneDistrito(codigoDepartamentoGarantia, codigoProvinciaGarantia).stream()
+				.filter(x -> x.getCodigo2() == codigoDistritoGarantia ).findAny().orElse(null).getDescripcion() : "";
 		String texto14 = numLetra.convertir(oEGarantiaData.getMontoGravamen()+"", false, oEGarantiaData.getCodigoMoneda()+"");
 		String texto15 = "("+oUManejadorListaDesplegable.obtieneTipoMoneda().stream()
 				.filter(x -> x.getCodigo2() == oEGarantiaData.getCodigoMoneda()).findAny().orElse(null).getNombreCorto() +" "+ oEGarantiaData.getMontoGravamen()+")";
@@ -1414,7 +1421,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 
 		String rutaLinuxArchivoWord = rutaBaseFormato + nombreArchivoWord;
 		String rutaLinuxWordGenerado = UtilPoi.generarArchivoWord(documeWord, rutaLinuxArchivoWord);
-		String rutaWindowsWordGenerado = URutaCarpetaCompartida.rutaBaseWindows + nombreArchivoWord;
+		String rutaWindowsWordGenerado = rutaBaseFormato + nombreArchivoWord;
 		String rutaLinuxWordPdfGenerado = rutaBaseFormato + nombreArchivoPdf;
 
 		UManejadorArchivo.conviertirArchivoAPDF(rutaLinuxWordGenerado);
@@ -1425,6 +1432,11 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	
 	
 	public void generarDocumentoCreditoHipotecarioBF(EOperacionDocumento oEOperacionDocumentoItem) {
+		if (USistemaOperativo.ES_WINDOWS) {
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows2;
+		}else if (USistemaOperativo.ES_LINUX) {
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
+		}
 		//Instancia de Atributos Locales
 		String nroDocumento = "";
 		String direccion ="";
@@ -1475,15 +1487,11 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			}
 		}
 		
-		rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
 		rutaBasePlantilla = rutaBaseFormato + "Legal";
-			
-		
 		String rutaPlantilla = rutaBasePlantilla + File.separator + plantilla;
 	
 		XWPFDocument documeWord = UtilPoi.obtenerArchivoWord(rutaPlantilla);
-		
-		
+				
 		String nombreSocio = oEOperacionDocumentoItem.getNombreCliente() != null ? oEOperacionDocumentoItem.getNombreCliente():"";
 		String texto1 = nombreSocio;
 		String texto2 = nroDocumento;
@@ -1495,12 +1503,12 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		String texto8 = nombreSocio;
 		String texto9 = nroDocumento;
 		String texto10 = oEGarantiaData.getUbicacion1();
-		String texto11 =  oUManejadorListaDesplegable.obtieneDepartamento().stream()
-				.filter(x -> x.getCodigo2() == codigoDepartamentoGarantia ).findAny().orElse(null).getDescripcion();
-		String texto12 = oUManejadorListaDesplegable.obtieneProvincia(codigoDepartamentoGarantia).stream()
-				.filter(x -> x.getCodigo2() == codigoProvinciaGarantia ).findAny().orElse(null).getDescripcion();
-		String texto13 = oUManejadorListaDesplegable.obtieneDistrito(codigoDepartamentoGarantia, codigoProvinciaGarantia).stream()
-				.filter(x -> x.getCodigo2() == codigoDistritoGarantia ).findAny().orElse(null).getDescripcion();
+		String texto11 = codigoDepartamentoGarantia > 0 ? oUManejadorListaDesplegable.obtieneDepartamento().stream()
+				.filter(x -> x.getCodigo2() == codigoDepartamentoGarantia ).findAny().orElse(null).getDescripcion() : "";
+		String texto12 = codigoDepartamentoGarantia > 0 ? oUManejadorListaDesplegable.obtieneProvincia(codigoDepartamentoGarantia).stream()
+				.filter(x -> x.getCodigo2() == codigoProvinciaGarantia ).findAny().orElse(null).getDescripcion() : "";
+		String texto13 = codigoDepartamentoGarantia > 0 ? oUManejadorListaDesplegable.obtieneDistrito(codigoDepartamentoGarantia, codigoProvinciaGarantia).stream()
+				.filter(x -> x.getCodigo2() == codigoDistritoGarantia ).findAny().orElse(null).getDescripcion() : "";
 		String texto14 = numLetra.convertir(oEGarantiaData.getMontoGravamen()+"", false, oEGarantiaData.getCodigoMoneda()+"");
 		String texto15 = "("+oUManejadorListaDesplegable.obtieneTipoMoneda().stream()
 				.filter(x -> x.getCodigo2() == oEGarantiaData.getCodigoMoneda()).findAny().orElse(null).getNombreCorto() +" "+ oEGarantiaData.getMontoGravamen()+")";
@@ -1536,7 +1544,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 
 		String rutaLinuxArchivoWord = rutaBaseFormato + nombreArchivoWord;
 		String rutaLinuxWordGenerado = UtilPoi.generarArchivoWord(documeWord, rutaLinuxArchivoWord);
-		String rutaWindowsWordGenerado = URutaCarpetaCompartida.rutaBaseWindows + nombreArchivoWord;
+		String rutaWindowsWordGenerado = rutaBaseFormato + nombreArchivoWord;
 		String rutaLinuxWordPdfGenerado = rutaBaseFormato + nombreArchivoPdf;
 
 		UManejadorArchivo.conviertirArchivoAPDF(rutaLinuxWordGenerado);
@@ -1548,6 +1556,11 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	
 	
 	public void generarDocumentoCreditoHipotecarioBP(EOperacionDocumento oEOperacionDocumentoItem) {
+		if (USistemaOperativo.ES_WINDOWS) {
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows2;
+		}else if (USistemaOperativo.ES_LINUX) {
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
+		}
 		//Instancia de Atributos Locales
 		String nroDocumento = "";
 		String direccion ="";
@@ -1609,10 +1622,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			}
 		}
 		
-		rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
-		rutaBasePlantilla = rutaBaseFormato + "Legal";
-			
-		
+		rutaBasePlantilla = rutaBaseFormato + "Legal";	
 		String rutaPlantilla = rutaBasePlantilla + File.separator + plantilla;
 	
 		XWPFDocument documeWord = UtilPoi.obtenerArchivoWord(rutaPlantilla);
@@ -1629,12 +1639,12 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		String texto8 = nombreSocio;
 		String texto9 = nroDocumento;
 		String texto10 = oEGarantiaData.getUbicacion1();
-		String texto11 =  oUManejadorListaDesplegable.obtieneDepartamento().stream()
-				.filter(x -> x.getCodigo2() == codigoDepartamentoGarantia ).findAny().orElse(null).getDescripcion();
-		String texto12 = oUManejadorListaDesplegable.obtieneProvincia(codigoDepartamentoGarantia).stream()
-				.filter(x -> x.getCodigo2() == codigoProvinciaGarantia ).findAny().orElse(null).getDescripcion();
-		String texto13 = oUManejadorListaDesplegable.obtieneDistrito(codigoDepartamentoGarantia, codigoProvinciaGarantia).stream()
-				.filter(x -> x.getCodigo2() == codigoDistritoGarantia ).findAny().orElse(null).getDescripcion();
+		String texto11 = codigoDepartamentoGarantia > 0 ? oUManejadorListaDesplegable.obtieneDepartamento().stream()
+				.filter(x -> x.getCodigo2() == codigoDepartamentoGarantia ).findAny().orElse(null).getDescripcion() : "";
+		String texto12 = codigoDepartamentoGarantia > 0 ? oUManejadorListaDesplegable.obtieneProvincia(codigoDepartamentoGarantia).stream()
+				.filter(x -> x.getCodigo2() == codigoProvinciaGarantia ).findAny().orElse(null).getDescripcion() : "";
+		String texto13 = codigoDepartamentoGarantia > 0 ?  oUManejadorListaDesplegable.obtieneDistrito(codigoDepartamentoGarantia, codigoProvinciaGarantia).stream()
+				.filter(x -> x.getCodigo2() == codigoDistritoGarantia ).findAny().orElse(null).getDescripcion() : "";
 		String texto14 = numLetra.convertir(oEGarantiaData.getMontoGravamen()+"", false, oEGarantiaData.getCodigoMoneda()+"");
 		String texto15 = "("+oUManejadorListaDesplegable.obtieneTipoMoneda().stream()
 				.filter(x -> x.getCodigo2() == oEGarantiaData.getCodigoMoneda()).findAny().orElse(null).getNombreCorto() +" "+ oEGarantiaData.getMontoGravamen()+")";
@@ -1670,7 +1680,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 
 		String rutaLinuxArchivoWord = rutaBaseFormato + nombreArchivoWord;
 		String rutaLinuxWordGenerado = UtilPoi.generarArchivoWord(documeWord, rutaLinuxArchivoWord);
-		String rutaWindowsWordGenerado = URutaCarpetaCompartida.rutaBaseWindows + nombreArchivoWord;
+		String rutaWindowsWordGenerado =rutaBaseFormato + nombreArchivoWord;
 		String rutaLinuxWordPdfGenerado = rutaBaseFormato + nombreArchivoPdf;
 
 		UManejadorArchivo.conviertirArchivoAPDF(rutaLinuxWordGenerado);
