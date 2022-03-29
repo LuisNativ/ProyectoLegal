@@ -2167,20 +2167,28 @@
 						<p:column headerText="Cod.Socio" styleClass="dsTextoCentro" width="5%">
 							 <h:outputText value="#{item.codigoCliente}"/>	
 						</p:column>
-						<p:column headerText="Socio" styleClass="dsTextoCentro" width="25%">
+						<p:column headerText="Socio" styleClass="dsTextoCentro" width="15%">
 							 <div class="dsTextoCorto">
 							 	<h:outputText value="#{item.nombreCliente}"/>
 							 </div>	
 						</p:column>
+						<!--
 						<p:column headerText="Moneda" styleClass="dsTextoCentro" width="5%">
 							<h:outputText value="#{item.abreviacionMoneda}"/>
 						</p:column>
-						<p:column headerText="Importe Asig." styleClass="dsTextoCentro" width="10%">
+						-->
+						<p:column headerText="" styleClass="dsTextoCentro">
+							<h:outputText value="#{item.abreviacionMoneda}"/>
+						</p:column>
+						<p:column headerText="Importe Asig." styleClass="dsTextoCentro" width="9%">
 							<h:outputText value="#{item.montoImporteCubierto}">
 			                     		<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
 			                  	</h:outputText>
 						</p:column>
-						<p:column headerText="Saldo Crédito" styleClass="dsTextoCentro" width="10%">
+						<p:column headerText="" styleClass="dsTextoCentro">
+							<h:outputText value="#{item.abreviacionMoneda}"/>
+						</p:column>
+						<p:column headerText="Saldo Crédito" styleClass="dsTextoCentro" width="9%">
 							<h:outputText value="#{item.montoSaldoCredito}">
 			                     		<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
 			                		</h:outputText>
@@ -2192,7 +2200,10 @@
 			                		</h:outputText>
 						</p:column>
 						-->
-						<p:column headerText="Mto.Coberturado #{mbmantenimientooperaciongarantia.oEGarantiaData.abreviacionMoneda}" styleClass="dsTextoCentro" width="12%">
+						<p:column headerText="" styleClass="dsTextoCentro">
+							<h:outputText value="#{mbmantenimientooperaciongarantia.oEGarantiaData.abreviacionMoneda}"/>
+						</p:column>
+						<p:column headerText="Mto.Coberturado" styleClass="dsTextoCentro" width="9%">
 							<h:outputText value="#{item.montoConversionCoberturado}">
 			                     		<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
 			                 		</h:outputText>

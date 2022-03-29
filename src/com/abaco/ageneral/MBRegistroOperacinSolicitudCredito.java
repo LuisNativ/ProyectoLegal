@@ -3803,7 +3803,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
         */
         
 		if (USistemaOperativo.ES_WINDOWS) {
-			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows2;
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows;
 		}else if (USistemaOperativo.ES_LINUX) {
 			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
 		}
@@ -3874,12 +3874,12 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
         */
 		
 		if (USistemaOperativo.ES_WINDOWS) {
-			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows2;
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows;
 		}else if (USistemaOperativo.ES_LINUX) {
 			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
 		}
 		
-		rutaBaseFormatoPdf = URutaCarpetaCompartida.rutaBaseWindows2;
+		rutaBaseFormatoPdf = URutaCarpetaCompartida.rutaBaseWindows;
 		rutaBasePlantilla = rutaBaseFormato + "Legal";
 		
 		String plantilla = "";
@@ -4177,7 +4177,7 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 	
 	public void generarExcel() {
 		if (USistemaOperativo.ES_WINDOWS) {
-			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows2;
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows;
 		}else if (USistemaOperativo.ES_LINUX) {
 			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
 		}

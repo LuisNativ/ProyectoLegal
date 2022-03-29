@@ -1,0 +1,322 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://servicio.ws/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="GestionDocumentoService" targetNamespace="http://servicio.ws/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://servicio.ws/" elementFormDefault="unqualified" targetNamespace="http://servicio.ws/" version="1.0">
+
+  <xs:element name="buscarCarpeta" type="tns:buscarCarpeta"/>
+
+  <xs:element name="buscarCarpetaResponse" type="tns:buscarCarpetaResponse"/>
+
+  <xs:element name="conviertirArchivoAPDF" type="tns:conviertirArchivoAPDF"/>
+
+  <xs:element name="conviertirArchivoAPDFResponse" type="tns:conviertirArchivoAPDFResponse"/>
+
+  <xs:element name="copiarTodoProspectoASocio" type="tns:copiarTodoProspectoASocio"/>
+
+  <xs:element name="copiarTodoProspectoASocioResponse" type="tns:copiarTodoProspectoASocioResponse"/>
+
+  <xs:element name="guardarArchivo" type="tns:guardarArchivo"/>
+
+  <xs:element name="guardarArchivoResponse" type="tns:guardarArchivoResponse"/>
+
+  <xs:element name="guardarDocumento" type="tns:guardarDocumento"/>
+
+  <xs:element name="guardarDocumentoResponse" type="tns:guardarDocumentoResponse"/>
+
+  <xs:element name="obtenerArchivo" type="tns:obtenerArchivo"/>
+
+  <xs:element name="obtenerArchivoResponse" type="tns:obtenerArchivoResponse"/>
+
+  <xs:element name="obtenerDoumento" type="tns:obtenerDoumento"/>
+
+  <xs:element name="obtenerDoumentoResponse" type="tns:obtenerDoumentoResponse"/>
+
+  <xs:complexType name="obtenerDoumento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="documentoID" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="obtenerDoumentoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="documento" type="tns:documento"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="documento">
+    <xs:sequence>
+      <xs:element name="clasificacion" type="xs:int"/>
+      <xs:element name="tipoCliente" type="xs:int"/>
+      <xs:element name="codigoSocio" type="xs:string"/>
+      <xs:element name="numeroDocumento" type="xs:string"/>
+      <xs:element name="numeroOperacion" type="xs:string"/>
+      <xs:element name="nombreArchivo" type="xs:string"/>
+      <xs:element name="archivoBinario" type="xs:base64Binary"/>
+      <xs:element name="nombreUsuario" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="copiarTodoProspectoASocio">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="numeroDocumento" type="xs:string"/>
+      <xs:element name="codigoSocio" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="copiarTodoProspectoASocioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="mensaje" type="tns:mensaje"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="mensaje">
+    <xs:sequence>
+      <xs:element name="codigo" type="xs:int"/>
+      <xs:element name="descripcion" type="xs:string"/>
+      <xs:element name="documentoID" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="guardarArchivo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="archivo" type="tns:archivo"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="archivo">
+    <xs:sequence>
+      <xs:element name="nombreArchivo" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" name="rutaRepositorio" type="xs:string"/>
+      <xs:element name="crearFolderRepositorio" type="xs:boolean"/>
+      <xs:element name="archivoBinario" type="xs:base64Binary"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="guardarArchivoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="mensaje" type="tns:mensaje"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="conviertirArchivoAPDF">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="rutaArchivo" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="conviertirArchivoAPDFResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="rutaSalida" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="obtenerArchivo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="archivoBusqueda" type="tns:archivo"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="obtenerArchivoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="archivoRespuesta" type="tns:archivo"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="guardarDocumento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="documento" type="tns:documento"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="guardarDocumentoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="mensaje" type="tns:mensaje"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="buscarCarpeta">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipoBusqueda" type="xs:string"/>
+      <xs:element minOccurs="0" name="nombreArchivo" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="buscarCarpetaResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="rutas" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="guardarDocumentoResponse">
+    <wsdl:part element="tns:guardarDocumentoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="obtenerDoumento">
+    <wsdl:part element="tns:obtenerDoumento" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="conviertirArchivoAPDF">
+    <wsdl:part element="tns:conviertirArchivoAPDF" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="conviertirArchivoAPDFResponse">
+    <wsdl:part element="tns:conviertirArchivoAPDFResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="copiarTodoProspectoASocioResponse">
+    <wsdl:part element="tns:copiarTodoProspectoASocioResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="obtenerArchivoResponse">
+    <wsdl:part element="tns:obtenerArchivoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="guardarArchivoResponse">
+    <wsdl:part element="tns:guardarArchivoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="copiarTodoProspectoASocio">
+    <wsdl:part element="tns:copiarTodoProspectoASocio" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="guardarArchivo">
+    <wsdl:part element="tns:guardarArchivo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="obtenerArchivo">
+    <wsdl:part element="tns:obtenerArchivo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="guardarDocumento">
+    <wsdl:part element="tns:guardarDocumento" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="obtenerDoumentoResponse">
+    <wsdl:part element="tns:obtenerDoumentoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarCarpeta">
+    <wsdl:part element="tns:buscarCarpeta" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarCarpetaResponse">
+    <wsdl:part element="tns:buscarCarpetaResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="GestionDocumento">
+    <wsdl:operation name="obtenerDoumento">
+      <wsdl:input message="tns:obtenerDoumento" name="obtenerDoumento">
+    </wsdl:input>
+      <wsdl:output message="tns:obtenerDoumentoResponse" name="obtenerDoumentoResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="copiarTodoProspectoASocio">
+      <wsdl:input message="tns:copiarTodoProspectoASocio" name="copiarTodoProspectoASocio">
+    </wsdl:input>
+      <wsdl:output message="tns:copiarTodoProspectoASocioResponse" name="copiarTodoProspectoASocioResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="guardarArchivo">
+      <wsdl:input message="tns:guardarArchivo" name="guardarArchivo">
+    </wsdl:input>
+      <wsdl:output message="tns:guardarArchivoResponse" name="guardarArchivoResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="conviertirArchivoAPDF">
+      <wsdl:input message="tns:conviertirArchivoAPDF" name="conviertirArchivoAPDF">
+    </wsdl:input>
+      <wsdl:output message="tns:conviertirArchivoAPDFResponse" name="conviertirArchivoAPDFResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerArchivo">
+      <wsdl:input message="tns:obtenerArchivo" name="obtenerArchivo">
+    </wsdl:input>
+      <wsdl:output message="tns:obtenerArchivoResponse" name="obtenerArchivoResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="guardarDocumento">
+      <wsdl:input message="tns:guardarDocumento" name="guardarDocumento">
+    </wsdl:input>
+      <wsdl:output message="tns:guardarDocumentoResponse" name="guardarDocumentoResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="buscarCarpeta">
+      <wsdl:input message="tns:buscarCarpeta" name="buscarCarpeta">
+    </wsdl:input>
+      <wsdl:output message="tns:buscarCarpetaResponse" name="buscarCarpetaResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GestionDocumentoServiceSoapBinding" type="tns:GestionDocumento">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="obtenerDoumento">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="obtenerDoumento">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="obtenerDoumentoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="copiarTodoProspectoASocio">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="copiarTodoProspectoASocio">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="copiarTodoProspectoASocioResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="guardarArchivo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="guardarArchivo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="guardarArchivoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="conviertirArchivoAPDF">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="conviertirArchivoAPDF">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="conviertirArchivoAPDFResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerArchivo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="obtenerArchivo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="obtenerArchivoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="guardarDocumento">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="guardarDocumento">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="guardarDocumentoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="buscarCarpeta">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="buscarCarpeta">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="buscarCarpetaResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GestionDocumentoService">
+    <wsdl:port binding="tns:GestionDocumentoServiceSoapBinding" name="GestionDocumentoPort">
+      <soap:address location="http://192.168.1.50:8080/ServicioLaserficheEx/GestionDocumento"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

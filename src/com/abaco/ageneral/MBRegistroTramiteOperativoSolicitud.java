@@ -773,7 +773,7 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 	//Generar Documento de Garantia Mobiliaria 
 	public void generarDocumentoGarantiaMobiliaria() {
 		if (USistemaOperativo.ES_WINDOWS) {
-			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows2;
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows;
 		}else if (USistemaOperativo.ES_LINUX) {
 			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
 		}

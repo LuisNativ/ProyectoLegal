@@ -1,14 +1,20 @@
 
 package com.abaco.servicio.laserfiche;
 
+import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
+
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
 import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.WebServiceFeature;
+
+import com.abaco.negocio.util.ULectorDeParametros;
+import com.abaco.negocio.util.URutaServicioWeb;
 
 
 /**
@@ -17,62 +23,77 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "GestionDocumentoService", targetNamespace = "http://servicio.ws/", wsdlLocation = "http://190.216.114.148:8080/ServicioLaserficheEx/GestionDocumento?wsdl")
-public class GestionDocumentoService
-    extends Service
-{
+@WebServiceClient(name = "GestionDocumentoService", 
+wsdlLocation = "http://190.216.114.148:8080/ServicioLaserficheEx/GestionDocumento?wsdl",
+targetNamespace = "http://servicio.ws/")
 
-    private final static URL GESTIONDOCUMENTOSERVICE_WSDL_LOCATION;
-    private final static WebServiceException GESTIONDOCUMENTOSERVICE_EXCEPTION;
-    private final static QName GESTIONDOCUMENTOSERVICE_QNAME = new QName("http://servicio.ws/", "GestionDocumentoService");
-
+public class GestionDocumentoService extends Service{
+    public final static URL WSDL_LOCATION;
+    public final static QName SERVICE = new QName("http://servicio.ws/", "GestionDocumentoService");
+    public final static QName GestionDocumentoPort = new QName("http://servicio.ws/", "GestionDocumentoPort");
+    
     static {
         URL url = null;
-        WebServiceException e = null;
+        ULectorDeParametros uLectorDeParametros = ULectorDeParametros.getInstancia();
+        String indicadorProduccion = uLectorDeParametros.getValorParametro("indicador.produccion");
+        
         try {
-        	//Desarrollo
-        	url = new URL("http://190.216.114.148:8080/ServicioLaserficheEx/GestionDocumento?wsdl");
-        	//Produccion
-            //url = new URL("http://192.168.1.50:8080/ServicioLaserficheEx/GestionDocumento?wsdl");
-        } catch (MalformedURLException ex) {
-            e = new WebServiceException(ex);
+        	if(indicadorProduccion.equals("true")){
+            	URI urlLA = new File(URutaServicioWeb.obtenerRutaAbsoluta() + "WEB-INF" + File.separator + "wsdl" + File.separator + "GestionDocumentoProduccion.wsdl").toURI();
+            	url = urlLA.toURL();
+        	}else if(indicadorProduccion.equals("false")){
+            	URI urlLA = new File(URutaServicioWeb.obtenerRutaAbsoluta() + "WEB-INF" + File.separator + "wsdl" + File.separator + "GestionDocumentoDesarrollo.wsdl").toURI();
+            	url = urlLA.toURL();
+        	}
+        } catch (MalformedURLException e) {
+        	java.util.logging.Logger.getLogger(GestionDocumentoService.class.getName())
+        	.log(java.util.logging.Level.INFO,
+        	"Can not initialize the default wsdl from {0}", "WebContent/WEB-INF/wsdl/GestionDocumento.wsdl");
         }
-        GESTIONDOCUMENTOSERVICE_WSDL_LOCATION = url;
-        GESTIONDOCUMENTOSERVICE_EXCEPTION = e;
+        WSDL_LOCATION = url;
     }
-
-    public GestionDocumentoService() {
-        super(__getWsdlLocation(), GESTIONDOCUMENTOSERVICE_QNAME);
-    }
-
-    public GestionDocumentoService(WebServiceFeature... features) {
-        super(__getWsdlLocation(), GESTIONDOCUMENTOSERVICE_QNAME, features);
-    }
-
+    
     public GestionDocumentoService(URL wsdlLocation) {
-        super(wsdlLocation, GESTIONDOCUMENTOSERVICE_QNAME);
-    }
-
-    public GestionDocumentoService(URL wsdlLocation, WebServiceFeature... features) {
-        super(wsdlLocation, GESTIONDOCUMENTOSERVICE_QNAME, features);
+        super(wsdlLocation, SERVICE);
     }
 
     public GestionDocumentoService(URL wsdlLocation, QName serviceName) {
         super(wsdlLocation, serviceName);
     }
 
-    public GestionDocumentoService(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
+    public GestionDocumentoService() {
+        super(WSDL_LOCATION, SERVICE);
+    }
+    
+    //This constructor requires JAX-WS API 2.2. You will need to endorse the 2.2
+    //API jar or re-run wsdl2java with "-frontend jaxws21" to generate JAX-WS 2.1
+    //compliant code instead.
+    public GestionDocumentoService(WebServiceFeature ... features) {
+        super(WSDL_LOCATION, SERVICE, features);
+    }
+
+    //This constructor requires JAX-WS API 2.2. You will need to endorse the 2.2
+    //API jar or re-run wsdl2java with "-frontend jaxws21" to generate JAX-WS 2.1
+    //compliant code instead.
+    public GestionDocumentoService(URL wsdlLocation, WebServiceFeature ... features) {
+        super(wsdlLocation, SERVICE, features);
+    }
+
+    //This constructor requires JAX-WS API 2.2. You will need to endorse the 2.2
+    //API jar or re-run wsdl2java with "-frontend jaxws21" to generate JAX-WS 2.1
+    //compliant code instead.
+    public GestionDocumentoService(URL wsdlLocation, QName serviceName, WebServiceFeature ... features) {
         super(wsdlLocation, serviceName, features);
     }
 
     /**
-     * 
+     *
      * @return
      *     returns GestionDocumento
      */
     @WebEndpoint(name = "GestionDocumentoPort")
     public GestionDocumento getGestionDocumentoPort() {
-        return super.getPort(new QName("http://servicio.ws/", "GestionDocumentoPort"), GestionDocumento.class);
+        return super.getPort(GestionDocumentoPort, GestionDocumento.class);
     }
 
     /**
@@ -84,14 +105,6 @@ public class GestionDocumentoService
      */
     @WebEndpoint(name = "GestionDocumentoPort")
     public GestionDocumento getGestionDocumentoPort(WebServiceFeature... features) {
-        return super.getPort(new QName("http://servicio.ws/", "GestionDocumentoPort"), GestionDocumento.class, features);
+        return super.getPort(GestionDocumentoPort, GestionDocumento.class, features);
     }
-
-    private static URL __getWsdlLocation() {
-        if (GESTIONDOCUMENTOSERVICE_EXCEPTION!= null) {
-            throw GESTIONDOCUMENTOSERVICE_EXCEPTION;
-        }
-        return GESTIONDOCUMENTOSERVICE_WSDL_LOCATION;
-    }
-
 }

@@ -142,6 +142,27 @@
 		</div>
 	</h:form>
 	</p:dialog>
+	
+	<p:dialog widgetVar="dlgMensajeValidacionArea" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgMensajeValidacionArea">
+		<div class="dsDlgMensajeValidacionArea dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="Mensaje de Validación"/>
+				</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="contenido">
+				<div class="mensaje">
+					<p:outputLabel value="No se puede realizar esta accion por que el usuario no cuenta con una Área asignada" styleClass="dsLabel3"/>
+				</div>
+			</div>
+			<div class="pie">
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeValidacionArea').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();"></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
 
 	<script type="text/javascript">
     function validarDlg(xhr, status, args, dlg) {	

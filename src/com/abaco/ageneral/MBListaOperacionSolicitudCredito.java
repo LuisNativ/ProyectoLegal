@@ -253,7 +253,7 @@ public class MBListaOperacionSolicitudCredito implements Serializable {
 	
 	public void generarExcel() {
 		if (USistemaOperativo.ES_WINDOWS) {
-			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows2;
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows;
 		}else if (USistemaOperativo.ES_LINUX) {
 			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
 		}

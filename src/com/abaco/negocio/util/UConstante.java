@@ -81,49 +81,18 @@ public class UConstante {
 		}
 	}
 	
-	public static interface URutaCarpetaCompartida{
-		//Local
-		/*
-		String rutaBaseLinux =  File.separator + File.separator + "192.168.1.60" + 
-					              File.separator +  "Documentos" + 
-						          File.separator +  "Analistas" +
-						          File.separator +  "Analistas" +
-						          File.separator +  "ModelosAbacoTesting" +
-						          File.separator +  "Socio" +
-						          File.separator +  "FichaSocio" +
-						          File.separator ;
-        String rutaBaseWindows =  File.separator + File.separator + "192.168.1.60" + 
-					              File.separator +  "Documentos" + 
-						          File.separator +  "Analistas" +
-						          File.separator +  "Analistas" +
-						          File.separator +  "ModelosAbacoTesting" +
-						          File.separator +  "Socio" +
-						          File.separator +  "FichaSocio" +
-						          File.separator ;
-		 */     
-		//Desarrollo .130
-        
+	public static interface URutaCarpetaCompartida{        
 		String rutaBaseLinux =  File.separator + "media" + 
 				                File.separator + "unidad" +
-				              //  File.separator +  "Documentos" + 
+				                //File.separator + "Documentos" + 
 				                File.separator +  "Analistas" +
-				              //  File.separator +  "Analistas" +
+				                //File.separator + "Analistas" +
 				                File.separator +  "ModelosAbacoTesting" +
 				                File.separator +  "Socio" +
 				                File.separator +  "FichaSocio" +
 				                File.separator ;
-        String rutaBaseWindows =    File.separator + "media" + 
-					                File.separator + "unidad" +
-					              //  File.separator +  "Documentos" + 
-					                File.separator +  "Analistas" +
-					              //  File.separator +  "Analistas" +
-					                File.separator +  "ModelosAbacoTesting" +
-					                File.separator +  "Socio" +
-					                File.separator +  "FichaSocio" +
-					                File.separator ;
         
-        
-        String rutaBaseWindows2 = "\\\\192.168.1.60\\Documentos\\Analistas\\Analistas\\ModelosAbacoTesting\\Socio\\FichaSocio\\";
+        String rutaBaseWindows = "\\\\192.168.1.60\\Documentos\\Analistas\\Analistas\\ModelosAbacoTesting\\Socio\\FichaSocio\\";
 	}
 	
 	public static interface UF0901 {

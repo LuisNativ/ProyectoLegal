@@ -3146,6 +3146,7 @@ ui-message-error-detail
 /*Responsive*/
 /**********************************************************************************************/
 .dsDlgMensajeValidacionUrl { width: 250px; }
+.dsDlgMensajeValidacionArea { width: 250px; }
 .dsDlgMensajeValidacion { width: 250px; }
 .dsDlgMensajeConfirmacion { width: 250px; }
 .dsDlgMensajeOperacion { width: 250px; }

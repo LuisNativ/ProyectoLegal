@@ -1260,7 +1260,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	//Generar Documento de Constitución (Minuta de Hipoteca)
 	public void generarDocumentoMinutaConstitucion(EOperacionDocumento oEOperacionDocumentoItem) {
 		if (USistemaOperativo.ES_WINDOWS) {
-			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows2;
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows;
 		}else if (USistemaOperativo.ES_LINUX) {
 			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
 		}
@@ -1433,7 +1433,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	
 	public void generarDocumentoCreditoHipotecarioBF(EOperacionDocumento oEOperacionDocumentoItem) {
 		if (USistemaOperativo.ES_WINDOWS) {
-			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows2;
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows;
 		}else if (USistemaOperativo.ES_LINUX) {
 			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
 		}
@@ -1557,7 +1557,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	
 	public void generarDocumentoCreditoHipotecarioBP(EOperacionDocumento oEOperacionDocumentoItem) {
 		if (USistemaOperativo.ES_WINDOWS) {
-			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows2;
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows;
 		}else if (USistemaOperativo.ES_LINUX) {
 			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
 		}

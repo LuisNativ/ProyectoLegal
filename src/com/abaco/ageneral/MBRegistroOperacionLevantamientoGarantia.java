@@ -755,7 +755,7 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 	//*************************************//
 	public void imprimirDocumento1() {
 		if (USistemaOperativo.ES_WINDOWS) {
-			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows2;
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows;
 		}else if (USistemaOperativo.ES_LINUX) {
 			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
 		}
@@ -843,7 +843,7 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 	
 	public void imprimirDocumento2(int indicadorDocumento) {
 		if (USistemaOperativo.ES_WINDOWS) {
-			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows2;
+			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseWindows;
 		}else if (USistemaOperativo.ES_LINUX) {
 			rutaBaseFormato = URutaCarpetaCompartida.rutaBaseLinux;
 		}

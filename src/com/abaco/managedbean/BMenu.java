@@ -14,6 +14,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.MenuActionEvent;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
@@ -21,6 +22,7 @@ import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuItem;
 import org.primefaces.model.menu.MenuModel;
 //import org.richfaces.component.UIPanelMenu;
+
 
 import com.abaco.ageneral.ERevisionSolicitud;
 import com.abaco.entidad.EBloque;
@@ -114,16 +116,23 @@ public class BMenu implements Serializable{
 		String ruta = "";
 		
 		if (objEUsuario != null) {
-			//int codigo = Integer.parseInt(params.get("codigoitem").get(0));
-			ruta = params.get("rutaweb").get(0);
-			item.setStyleClass("iconoItem1 dsItemSelecion");
-			//ruta = ruta+"?faces-redirect=true";
-			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.NAVEGACION_URL, ruta);
-			//UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.CODIGO_ITEM, codigo);
-			//UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.NUEVO);
+			if(objEUsuario.getCodigoArea() > 0){
+				//int codigo = Integer.parseInt(params.get("codigoitem").get(0));
+				ruta = params.get("rutaweb").get(0);
+				item.setStyleClass("iconoItem1 dsItemSelecion");
+				//ruta = ruta+"?faces-redirect=true";
+				UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.NAVEGACION_URL, ruta);
+				//UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.CODIGO_ITEM, codigo);
+				//UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.NUEVO);
+				
+				UGeneradorQueryString objUGeneradorQueryString = new UGeneradorQueryString(ruta);
+				UManejadorSesionWeb.redirigePagina(objUGeneradorQueryString.obtieneUrlConParametros());
+			}else {
+				RequestContext.getCurrentInstance().execute("PF('dlgMensajeValidacionArea').show();");
+			}
 		}
-		UGeneradorQueryString objUGeneradorQueryString = new UGeneradorQueryString(ruta);
-		UManejadorSesionWeb.redirigePagina(objUGeneradorQueryString.obtieneUrlConParametros());
+		//UGeneradorQueryString objUGeneradorQueryString = new UGeneradorQueryString(ruta);
+		//UManejadorSesionWeb.redirigePagina(objUGeneradorQueryString.obtieneUrlConParametros());
 		//return ruta;
 	}
 	
