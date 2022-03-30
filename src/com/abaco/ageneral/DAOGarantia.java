@@ -35,7 +35,7 @@ public class DAOGarantia extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_INS_INMUEBLESGARANTIAPREDIOS="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_INMUEBLESGARANTIAPREDIOS("+parametrosSP(18)+") }";
 	private static final String SP_ABACOINLEGAL_INS_MAESTROCONTRATOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_MAESTROCONTRATOGARANTIA("+parametrosSP(18)+") }";
 	private static final String SP_ABACOINLEGAL_INS_REPRESENTANTECIAXCONTRATO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_REPRESENTANTECIAXCONTRATO("+parametrosSP(6)+") }";
-	private static final String SP_ABACOINLEGAL_INS_SOLICITUDDOCUMENTODESEMBOLSOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_SOLICITUDDOCUMENTODESEMBOLSOGARANTIA("+parametrosSP(8)+") }";
+	private static final String SP_ABACOINLEGAL_INS_SOLICITUDDOCUMENTODESEMBOLSOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_SOLICITUDDOCUMENTODESEMBOLSOGARANTIA("+parametrosSP(9)+") }";
 	private static final String SP_ABACOINLEGAL_INS_OBSERVACIONTRAMITEOPERATIVOSOLICITUD="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OBSERVACIONTRAMITEOPERATIVOSOLICITUD("+parametrosSP(9)+") }";
 	private static final String SP_ABACOINLEGAL_INS_DETALLEFLAGREQUISITOLEGAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_DETALLEFLAGREQUISITOLEGAL("+parametrosSP(8)+") }";
 	private static final String SP_ABACOINLEGAL_INS_OBSERVACIONSOLICITUDASOCIADAGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OBSERVACIONSOLICITUDASOCIADAGARANTIA("+parametrosSP(7)+") }";
@@ -671,6 +671,7 @@ public class DAOGarantia extends InstanciaAcceso{
 		try {
 			lstParametrosEntrada = new ArrayList<Object>();
 			lstParametrosEntrada.add(eGarantia.getNumeroSolicitud());
+			lstParametrosEntrada.add(eGarantia.getSecuenciaGarantia());
 			lstParametrosEntrada.add(eGarantia.getCodigoGarantia());
 			lstParametrosEntrada.add(eGarantia.getCodigoTipoGarantia());
 			lstParametrosEntrada.add(eGarantia.getCodigoCliente());

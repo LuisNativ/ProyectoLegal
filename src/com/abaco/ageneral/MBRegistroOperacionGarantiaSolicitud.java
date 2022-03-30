@@ -755,6 +755,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		//}
 		
 		oESolicitudDesembolsoGarantia.setNumeroSolicitud(oEGarantiaSolicitudLoad.getNumeroSolicitud());
+		oESolicitudDesembolsoGarantia.setSecuenciaGarantia(oEGarantiaSolicitudLoad.getSecuenciaGarantia());
 		oESolicitudDesembolsoGarantia.setCodigoGarantia(oEGarantiaData.getCodigoGarantia());
 		oESolicitudDesembolsoGarantia.setCodigoTipoGarantia(oEGarantiaData.getCodigoTipoGarantia());
 		oESolicitudDesembolsoGarantia.setCodigoCliente(oEGarantiaSolicitudLoad.getCodigoCliente());
