@@ -524,6 +524,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				
 				
 				//Acciones para Negocios y sus Areas
+				/*
 				if(oEUsuario.getCodigoArea() == UArea.NEGOCIOS || 
 				   oEUsuario.getCodigoArea()==103   ||
 				   oEUsuario.getCodigoArea()==104   ||
@@ -554,6 +555,121 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 					visualizarEditarInmueble = false;
 					visualizarEliminarInmueble = false;
 				}
+				*/
+				
+				
+			}else if(UAccionExterna.VER == accionExterna || UAccionExterna.EDITARPARCIAL == accionExterna){
+				oEGarantiaLoad = (EGarantia) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.FICHA_PARAMETRO);
+				
+				//Data de F9201
+				oEGarantiaData = oBOGarantia.buscarGarantia(oEGarantiaLoad.getCodigoGarantia());
+				oEPolizaGarantiaData = oBOGarantia.buscarPolizaAsociadoGarantiaMaxCorrelativo(oEGarantiaLoad.getCodigoGarantia());
+				
+				oEGarantiaData.setLstPropietario(new ArrayList<EPersona>());
+				if(oEPolizaGarantiaData == null){
+					oEPolizaGarantiaData = new EPoliza();
+				}
+				//Data de F92011
+				oEGarantiaAnexoData = oBOGarantia.buscarAnexoGarantia(oEGarantiaLoad.getCodigoGarantia());
+				if(oEGarantiaAnexoData != null){
+					oEGarantiaData.setUbicacion1(oEGarantiaAnexoData.getUbicacion1Largo() != null ? 
+							oEGarantiaAnexoData.getUbicacion1Largo():"");
+					oEGarantiaData.setPartidaRegistral(oEGarantiaAnexoData.getPartidaRegistral());
+					oEGarantiaData.setOficinaRegistral(oEGarantiaAnexoData.getOficinaRegistral());
+					oEGarantiaData.setTipoRegistral(oEGarantiaAnexoData.getTipoRegistral());
+					oEGarantiaData.setFechaComercial(oEGarantiaAnexoData.getFechaComercial());
+					oEGarantiaData.setMontoComercial(oEGarantiaAnexoData.getMontoComercial());
+					oEGarantiaData.setLstPropietario(oEGarantiaAnexoData.getLstPropietario());
+					oEGarantiaData.setCodigoAsignacionInmueble(oEGarantiaAnexoData.getCodigoAsignacionInmueble());
+					oEGarantiaData.setMontoValorizacion(oEGarantiaAnexoData.getMontoValorizacion());
+				}
+				
+				EPersona ePersona = new EPersona();
+				ePersona.setCodigo(oEGarantiaData.getCodigoPropietario());
+				ePersona.setNombreCorte(oEGarantiaData.getDescripcionPropietario());
+				if(oEGarantiaData.getCodigoPropietario() != 0){
+					oEGarantiaData.getLstPropietario().add(0, ePersona);
+				}
+				visualizarBtnAgregarPropietario = oEGarantiaData.getLstPropietario().size() >= 6 ? false: true;
+				//Habilitar Paneles de Acuerdo al Tipo de Garantía
+				switch(oEGarantiaLoad.getCodigoTipoGarantia()){
+				case  UTipoGarantia.PREDIO:
+					 indicadorPnlDetalleGarantiaPredio= true;
+					 renderizarPolizaGarantia=true;
+					 renderizarDetalleTasacion = true;
+					 listarUbigeoGarantia();
+					 visualizarGenerarContratoPrivado = false;
+					 visualizarInmuebleAdicional = oEGarantiaData.getCodigoAsignacionInmueble() == 1 ? true : false; 
+					break;
+				case  UTipoGarantia.VEHICULAR: indicadorPnlDetalleGarantiaVehicular= true; renderizarPolizaGarantia=true; break;
+				case  UTipoGarantia.ACCIONES: indicadorPnlDetalleGarantiaAcciones=true; break;
+				case  UTipoGarantia.FIANZAS: indicadorPnlDetalleGarantiaFianzas=true; break;
+				case  UTipoGarantia.MAQUINARIA: indicadorPnlDetalleGarantiaMaquinaria=true;renderizarPolizaGarantia=true;break;
+				case  UTipoGarantia.MERCADERIAS: indicadorPnlDetalleGarantiaMercaderia=true;renderizarPolizaGarantia=true; break;
+				case  UTipoGarantia.WARRANT: indicadorPnlDetalleGarantiaWarrant = true; break;
+				case  UTipoGarantia.DOCUMENTOS_POR_COBRAR: indicadorPnlDetalleGarantiaDocPorCobrar = true;renderizarPolizaGarantia=true; break;
+				case  UTipoGarantia.FIDEICOMISO_BIENES: indicadorPnlDetalleGarantiaFideicomiso = true;renderizarPolizaGarantia=true; break;
+				case  UTipoGarantia.FLUJOS: 
+				case  UTipoGarantia.SALDOCUENTA:
+				case  UTipoGarantia.INVENTARIO:
+					indicadorPnlDetalleGarantiaOtros = true; 
+					renderizarPolizaGarantia=true;
+					break;
+				default:	
+					 indicadorPnlDetalleGarantiaPredio= false;
+					 indicadorPnlDetalleGarantiaVehicular= false;
+					 indicadorPnlDetalleGarantiaAcciones=false;
+					 indicadorPnlDetalleGarantiaFianzas=false;
+					 indicadorPnlDetalleGarantiaMaquinaria=false;
+					 indicadorPnlDetalleGarantiaMercaderia=false;
+					 indicadorPnlDetalleGarantiaWarrant=false;
+					 indicadorPnlDetalleGarantiaFideicomiso = false;
+					 indicadorPnlDetalleGarantiaOtros = false;
+					 indicadorPnlDetalleGarantiaDocPorCobrar = false;
+				}
+				
+				//Para el caso de Otras Garantías
+				if(oEGarantiaData.getCodigoTipoGarantia()>21 && oEGarantiaData.getCodigoTipoGarantia()!=88){
+					indicadorPnlDetalleGarantiaOtros = true;
+				}
+
+				listarDesplegable();
+				listarDetalleTasacionGarantia();			
+				listarInmueblesAdicionales();
+				listarDocumentoGeneralGarantia();			
+				listarCreditosAsociadosGarantia();
+				//listarSolicitudDocumento();
+				//listarDocumentoNotario();
+				//listarSolicitudDesembolsoGarantia();
+				//validarConfirmacionDesembolso();
+				
+				deshabilitarCampo = true;
+				deshabilitarBusqueda = true;
+				deshabilitarBotonEnviar = true;
+				deshabilitarCampoTasacion = true;
+				deshabilitarCampoAsignacion = true;
+				deshabilitarPanel = true;
+				visualizarTextoRegistro = false; 
+				visualizarBtnAgregarPropietario = false;
+				visualizarBtnEliminarPropietario = false;
+				visualizarGenerarDocumento = false;
+				visualizarGenerarDocumentoHipotecario = false;
+				visualizarBotonIrTramite = false;
+				visualizarTabDocumento = false;
+				visualizarTabPrestamos = true;
+				visualizarTabCumplimiento = false;
+				visualizarGenerarContratoPrivado = false;			
+				visualizarEditarInmueble = false;
+				visualizarEliminarInmueble = false;
+				renderizarAdjuntarDocumentos = false;
+				renderizarBotonNuevoInmueble = false;
+				
+				if(UAccionExterna.EDITARPARCIAL == accionExterna){
+					deshabilitarCampoTasacion = false;
+					deshabilitarBotonEnviar = false;
+					renderizarAdjuntarDocumentos = true;
+				}
+				
 				
 			}
 			
@@ -724,7 +840,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacion').show();");
 			}
 			
-		}else if(UAccionExterna.EDITAR == accionExterna){
+		}else if(UAccionExterna.EDITAR == accionExterna || UAccionExterna.EDITARPARCIAL == accionExterna){
 			oEGarantia.setTipoDocumento(UTipoDocumentoGarantia.TASACION);
 			if(oEGarantia.getCodigoTipoGarantia() == UTipoGarantia.PREDIO){
 				lstInmueblePredios = lstInmueblesAdicionales;
@@ -2260,6 +2376,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
         
         eGarantia.setNumeroSolicitud(oEOperacionDocumento.getCodigoSolicitud());
         eGarantia.setNumeroSolicitudCredito(oEOperacionDocumento.getCodigoSolicitudCredito());
+        eGarantia.setSecuenciaGarantia(oEOperacionDocumento.getSecuenciaGarantia());
 		eGarantia.setCodigoGarantia(oEOperacionDocumento.getCodigoGarantia());
 		eGarantia.setTipoDocumento(oEOperacionDocumento.getTipoDocumento());
 		eGarantia.setEstadoDocumento(UEstado.DOCUMENTOFIRMADO);
@@ -2289,6 +2406,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
         
         eGarantia.setNumeroSolicitud(oEOperacionDocumento.getCodigoSolicitud());
         eGarantia.setNumeroSolicitudCredito(oEOperacionDocumento.getCodigoSolicitudCredito());
+        eGarantia.setSecuenciaGarantia(oEOperacionDocumento.getSecuenciaGarantia());
 		eGarantia.setCodigoGarantia(oEOperacionDocumento.getCodigoGarantia());
 		eGarantia.setTipoDocumento(oEOperacionDocumento.getTipoDocumento());
 		eGarantia.setEstadoDocumento(oEOperacionDocumento.getEstadoDocumento());
@@ -2331,8 +2449,9 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		eGarantia.setCondicionDesembolso4(oEOperacionDocumentoDesembolso.getCondicionDesembolso4());
         eGarantia.setUsuarioRegistro(oEUsuario);*/
 		
-		EFlagReqLegal eFlagRequisitoLegal = new EFlagReqLegal();
+		EFlagReqLegal eFlagRequisitoLegal = oEFlagRequisitoLegalData;
 		eFlagRequisitoLegal.setNumeroSolicitud(oEOperacionDocumentoDesembolso.getCodigoSolicitudCredito());
+		eFlagRequisitoLegal.setSecuenciaGarantia(oEFlagRequisitoLegalData.getSecuenciaGarantia());
 		eFlagRequisitoLegal.setNumeroFlag(2);
 		eFlagRequisitoLegal.setModoIngresoFlag(UModoIngreso.AUTOMATICO);
 		eFlagRequisitoLegal.setActualizacionFlag(UActualizacionFlag.CUMPLIDOTOTAL);
@@ -2376,6 +2495,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		
 		EFlagReqLegal eFlagRequisitoLegal = new EFlagReqLegal();
 		eFlagRequisitoLegal.setNumeroSolicitud(oEOperacionDocumentoDesembolso.getCodigoSolicitudCredito());
+		eFlagRequisitoLegal.setSecuenciaGarantia(oEFlagRequisitoLegalData.getSecuenciaGarantia());
 		eFlagRequisitoLegal.setNumeroFlag(4);
 		eFlagRequisitoLegal.setModoIngresoFlag(UModoIngreso.AUTOMATICO);
 		eFlagRequisitoLegal.setActualizacionFlag(UActualizacionFlag.CUMPLIDOTOTAL);
@@ -2492,7 +2612,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	}
 		
 	public void listarDetalleFlagRequisitoLegal(EOperacionDocumento oEOperacionDocumentoDesembolso){
-		lstDetalleFlagsReqLegal = oBOGarantia.listarDetalleFlagRequisitoLegal(oEOperacionDocumentoDesembolso.getCodigoSolicitudCredito());
+		lstDetalleFlagsReqLegal = oBOGarantia.listarDetalleFlagRequisitoLegal(oEOperacionDocumentoDesembolso.getCodigoSolicitudCredito(),oEOperacionDocumentoDesembolso.getSecuenciaGarantia());
 		visualizarBotonAnadirCondicionLegal = oEOperacionDocumentoDesembolso.getEstadoDesembolso() == UEstado.FIRMACONFIRMADA ? false : true;
 		if(oEOperacionDocumentoDesembolso.getEstadoDesembolso() != UEstado.FIRMACONFIRMADA){
 			for(int i = 0 ; i<lstDetalleFlagsReqLegal.size();i++ ){
@@ -2546,6 +2666,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		if(UAccionExterna.EDITAR == accionExterna){
 			if(eFlagReqLegal.getNumeroFlag() == 0){
 				eFlagReqLegal.setNumeroSolicitud(oEOperacionDocumentoDesembolso.getCodigoSolicitudCredito());
+				eFlagReqLegal.setSecuenciaGarantia(oEOperacionDocumentoDesembolso.getSecuenciaGarantia());
 				eFlagReqLegal.setModoIngresoFlag(UModoIngreso.MANUAL);
 				oEMensaje = oBOGarantia.agregarDetalleFlagRequisitoLegal(eFlagReqLegal);
 			}else{

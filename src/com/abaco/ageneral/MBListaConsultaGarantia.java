@@ -141,7 +141,7 @@ public class MBListaConsultaGarantia implements Serializable {
 	public void consultarGarantia(EGarantia oEGarantiaItem) {
 		String ruta = "";
 		if (oEGarantiaItem != null) {
-			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.EDITAR);
+			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.VER);
 			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.FICHA_PARAMETRO, oEGarantiaItem);
 			
 			ruta = "MantenimientoOperacionGarantia.xhtml";

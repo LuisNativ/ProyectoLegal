@@ -2174,14 +2174,14 @@ public class CGarantia {
 		return resultado;
 	}
 	
-	public List<EFlagReqLegal> listarDetalleFlagRequisitoLegal(long numeroSolicitud){
+	public List<EFlagReqLegal> listarDetalleFlagRequisitoLegal(long numeroSolicitud,int secuenciaGarantia){
 		IConexion oIConexion = null;
 		List<EFlagReqLegal> resultado = null;
 		DAOGarantia oDAOGarantia= null;
 		try {
 			oIConexion = FabricaConexion.creaConexion();			
 			oDAOGarantia = new DAOGarantia(oIConexion);
-			resultado = oDAOGarantia.listarDetalleFlagRequisitoLegal(numeroSolicitud);			
+			resultado = oDAOGarantia.listarDetalleFlagRequisitoLegal(numeroSolicitud,secuenciaGarantia);			
 		} catch (Exception e) {
 			UManejadorLog.error("Control: Error al listar: " + e.getMessage());
 		} finally {
@@ -3176,7 +3176,12 @@ public class CGarantia {
 				 resultado.setMontoVariable3(eGarantiaSolicitudF7363.getAreaConstruida());
 				 resultado.setCodigoTipoBien(eGarantiaSolicitudF7363.getCodigoTipoPrenda2());
 				 resultado.setNumeroVariable1(eGarantiaSolicitudF7363.getNumeroPisos());
-				 resultado.setUbicacion1(eGarantiaSolicitudF7363.getDireccion().isEmpty() ? eGarantiaSolicitudF7325.getDescripcionGarantiaReal() : eGarantiaSolicitudF7363.getDireccion() );	
+				 if(eGarantiaSolicitudF7363.getDireccion() != null){
+					 resultado.setUbicacion1(eGarantiaSolicitudF7363.getDireccion().isEmpty() ? eGarantiaSolicitudF7325.getDescripcionGarantiaReal() : eGarantiaSolicitudF7363.getDireccion() ); 
+				 }else{
+					 resultado.setUbicacion1(eGarantiaSolicitudF7325.getDescripcionGarantiaReal());
+				 }
+				 	
 				// resultado.setDescripcionB("");resultado.setDescripcionC("");
 				 break;
 			 case UTipoGarantia.VEHICULAR:

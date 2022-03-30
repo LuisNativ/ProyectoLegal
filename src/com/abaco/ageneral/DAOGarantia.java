@@ -37,7 +37,7 @@ public class DAOGarantia extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_INS_REPRESENTANTECIAXCONTRATO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_REPRESENTANTECIAXCONTRATO("+parametrosSP(6)+") }";
 	private static final String SP_ABACOINLEGAL_INS_SOLICITUDDOCUMENTODESEMBOLSOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_SOLICITUDDOCUMENTODESEMBOLSOGARANTIA("+parametrosSP(8)+") }";
 	private static final String SP_ABACOINLEGAL_INS_OBSERVACIONTRAMITEOPERATIVOSOLICITUD="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OBSERVACIONTRAMITEOPERATIVOSOLICITUD("+parametrosSP(9)+") }";
-	private static final String SP_ABACOINLEGAL_INS_DETALLEFLAGREQUISITOLEGAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_DETALLEFLAGREQUISITOLEGAL("+parametrosSP(7)+") }";
+	private static final String SP_ABACOINLEGAL_INS_DETALLEFLAGREQUISITOLEGAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_DETALLEFLAGREQUISITOLEGAL("+parametrosSP(8)+") }";
 	private static final String SP_ABACOINLEGAL_INS_OBSERVACIONSOLICITUDASOCIADAGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OBSERVACIONSOLICITUDASOCIADAGARANTIA("+parametrosSP(7)+") }";
 	private static final String SP_ABACOINLEGAL_INS_OPERACION_DOCUMENTOGARANTIA_TEMP="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OPERACION_DOCUMENTOGARANTIA_TEMP("+parametrosSP(10)+") }";
 	private static final String SP_ABACOINLEGAL_INS_OPERACION_DOCUMENTOGENERALGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OPERACION_DOCUMENTOGENERALGARANTIA("+parametrosSP(9)+") }";
@@ -49,7 +49,7 @@ public class DAOGarantia extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_UPD_GARANTIAPOLIZA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_GARANTIAPOLIZA("+parametrosSP(6)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_POLIZA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_POLIZA("+parametrosSP(16)+") }";	
 	private static final String SP_ABACOINLEGAL_UPD_TIPOINGRESOPORCENTAJE="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_TIPOINGRESOPORCENTAJE("+parametrosSP(6)+") }";	
-	private static final String SP_ABACOINLEGAL_UPD_SOLICITUDDOCUMENTOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_SOLICITUDDOCUMENTOGARANTIA("+parametrosSP(12)+") }";
+	private static final String SP_ABACOINLEGAL_UPD_SOLICITUDDOCUMENTOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_SOLICITUDDOCUMENTOGARANTIA("+parametrosSP(13)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_DETALLESOLICITUDDOCUMENTOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_DETALLESOLICITUDDOCUMENTOGARANTIA("+parametrosSP(12)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_OPERACIONDESEMBOLSOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_OPERACIONDESEMBOLSOGARANTIA("+parametrosSP(8)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_INMUEBLESGARANTIAPREDIOS="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_INMUEBLESGARANTIAPREDIOS("+parametrosSP(19)+") }";
@@ -60,7 +60,7 @@ public class DAOGarantia extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_UPD_MAESTROCONTRATOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_MAESTROCONTRATOGARANTIA("+parametrosSP(18)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_CONTRATOGARANTIAIMPRESION="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_CONTRATOGARANTIAIMPRESION("+parametrosSP(19)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_FLAGIMPRESIONCONTRATO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_FLAGIMPRESIONCONTRATO("+parametrosSP(8)+") }";
-	private static final String SP_ABACOINLEGAL_UPD_DETALLEFLAGREQUISITOLEGAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_DETALLEFLAGREQUISITOLEGAL("+parametrosSP(8)+") }";
+	private static final String SP_ABACOINLEGAL_UPD_DETALLEFLAGREQUISITOLEGAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_DETALLEFLAGREQUISITOLEGAL("+parametrosSP(9)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_GARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_GARANTIA("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_GARANTIATRAMITE="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_GARANTIATRAMITE("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_GARANTIASOLICITUD="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_GARANTIASOLICITUD("+parametrosSP(2)+") }";
@@ -115,7 +115,7 @@ public class DAOGarantia extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_SEL_REPRESENTANTECOMPANIACONTRATO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_REPRESENTANTECOMPANIACONTRATO("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_DETALLEFIRMANTESCONTRATO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_DETALLEFIRMANTESCONTRATO("+parametrosSP(4)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_OBSERVACIONTRAMITEOPERATIVOSOLICITUD="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_OBSERVACIONTRAMITEOPERATIVOSOLICITUD("+parametrosSP(1)+") }";
-	private static final String SP_ABACOINLEGAL_SEL_DETALLEFLAGREQUISITOLEGAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_DETALLEFLAGREQUISITOLEGAL("+parametrosSP(1)+") }";
+	private static final String SP_ABACOINLEGAL_SEL_DETALLEFLAGREQUISITOLEGAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_DETALLEFLAGREQUISITOLEGAL("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_OBSERVACIONSOLICITUDASOCIADAGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_OBSERVACIONSOLICITUDASOCIADAGARANTIA("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_DETALLETASACIONGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_DETALLETASACIONGARANTIA("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_SOLICITUDANEXOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_SOLICITUDANEXOGARANTIA("+parametrosSP(1)+") }";
@@ -713,6 +713,7 @@ public class DAOGarantia extends InstanciaAcceso{
 		try {
 			lstParametrosEntrada = new ArrayList<Object>();
 			lstParametrosEntrada.add(eFlagRequisitoLegal.getNumeroSolicitud());
+			lstParametrosEntrada.add(eFlagRequisitoLegal.getSecuenciaGarantia());
 			lstParametrosEntrada.add(eFlagRequisitoLegal.getDescripcionFlag());
 			lstParametrosEntrada.add(eFlagRequisitoLegal.getModoIngresoFlag());
 			lstParametrosEntrada.add(eFlagRequisitoLegal.getActualizacionFlag());
@@ -889,6 +890,7 @@ public class DAOGarantia extends InstanciaAcceso{
 			lstParametrosEntrada = new ArrayList<Object>();
 			lstParametrosEntrada.add(eGarantia.getNumeroSolicitud());
 			lstParametrosEntrada.add(eGarantia.getNumeroSolicitudCredito());
+			lstParametrosEntrada.add(eGarantia.getSecuenciaGarantia());
 			lstParametrosEntrada.add(eGarantia.getCodigoGarantia());
 			lstParametrosEntrada.add(eGarantia.getTipoDocumento());
 			lstParametrosEntrada.add(eGarantia.getEstadoDocumento());
@@ -1172,6 +1174,7 @@ public class DAOGarantia extends InstanciaAcceso{
 		try {
 			lstParametrosEntrada = new ArrayList<Object>();
 			lstParametrosEntrada.add(eFlagRequisitoLegal.getNumeroSolicitud());
+			lstParametrosEntrada.add(eFlagRequisitoLegal.getSecuenciaGarantia());
 			lstParametrosEntrada.add(eFlagRequisitoLegal.getNumeroFlag());
 			lstParametrosEntrada.add(eFlagRequisitoLegal.getDescripcionFlag());
 			lstParametrosEntrada.add(eFlagRequisitoLegal.getModoIngresoFlag());
@@ -1461,6 +1464,7 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEOperacionDocumento=new EOperacionDocumento();
 					oEOperacionDocumento.setCodigoSolicitud(oResultSet.getInt("NROSOL"));
 					oEOperacionDocumento.setCodigoSolicitudCredito(oResultSet.getInt("SOLCRE"));
+					oEOperacionDocumento.setSecuenciaGarantia(oResultSet.getInt("SECGAR"));
 					oEOperacionDocumento.setCodigoCliente(oResultSet.getInt("CODCLI"));
 					oEOperacionDocumento.setNombreCliente(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMBCL")));
 					oEOperacionDocumento.setCodigoGarantia(oResultSet.getInt("GARANT"));
@@ -1522,6 +1526,7 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEOperacionDocumento=new EOperacionDocumento();
 					oEOperacionDocumento.setCodigoSolicitud(oResultSet.getInt("NROSOL"));
 					oEOperacionDocumento.setCodigoSolicitudCredito(oResultSet.getInt("SOLCRE"));
+					oEOperacionDocumento.setSecuenciaGarantia(oResultSet.getInt("SECGAR"));
 					oEOperacionDocumento.setCodigoCliente(oResultSet.getInt("CODCLI"));
 					oEOperacionDocumento.setNombreCliente(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMBCL")));
 					oEOperacionDocumento.setCodigoGarantia(oResultSet.getInt("GARANT"));
@@ -1630,6 +1635,7 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEOperacionDocumento=new EOperacionDocumento();
 					oEOperacionDocumento.setCodigoSolicitud(oResultSet.getInt("NROSOL"));
 					oEOperacionDocumento.setCodigoSolicitudCredito(oResultSet.getInt("SOLCRE"));
+					oEOperacionDocumento.setSecuenciaGarantia(oResultSet.getInt("SECGAR"));
 					oEOperacionDocumento.setCodigoCliente(oResultSet.getInt("CODCLI"));
 					oEOperacionDocumento.setNombreCliente(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMBCL")));
 					oEOperacionDocumento.setCodigoGarantia(oResultSet.getInt("GARANT"));
@@ -1679,6 +1685,7 @@ public class DAOGarantia extends InstanciaAcceso{
 					oEOperacionDocumento=new EOperacionDocumento();
 					oEOperacionDocumento.setCodigoSolicitud(oResultSet.getInt("NROSOL"));
 					oEOperacionDocumento.setCodigoSolicitudCredito(oResultSet.getInt("SOLCRE"));
+					oEOperacionDocumento.setSecuenciaGarantia(oResultSet.getInt("SECGAR"));
 					oEOperacionDocumento.setCodigoCliente(oResultSet.getInt("CODCLI"));
 					oEOperacionDocumento.setNombreCliente(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMBCL")));
 					oEOperacionDocumento.setCodigoGarantia(oResultSet.getInt("GARANT"));
@@ -2172,7 +2179,7 @@ public class DAOGarantia extends InstanciaAcceso{
 		return lstOperacionSolicitud;
 	}
 	
-	public List<EFlagReqLegal> listarDetalleFlagRequisitoLegal(long numeroSolicitud) {
+	public List<EFlagReqLegal> listarDetalleFlagRequisitoLegal(long numeroSolicitud,int secuenciaGarantia) {
 		List<Object> lstParametrosEntrada;
 		ResultSet oResultSet = null;
 		EFlagReqLegal oEFlagRequisitoLegal= null;
@@ -2182,12 +2189,14 @@ public class DAOGarantia extends InstanciaAcceso{
 		try {	
 			lstParametrosEntrada = new ArrayList<Object>();
 			lstParametrosEntrada.add(numeroSolicitud);	 
+			lstParametrosEntrada.add(secuenciaGarantia);
 			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_SEL_DETALLEFLAGREQUISITOLEGAL, lstParametrosEntrada, null);
 			if (oResultSet != null) {
 				lstFlagRequisitoLegal = new ArrayList<EFlagReqLegal>();
 				while (oResultSet.next()) {
 					oEFlagRequisitoLegal = new EFlagReqLegal();
 					oEFlagRequisitoLegal.setNumeroSolicitud(oResultSet.getLong("NROSOL"));
+					oEFlagRequisitoLegal.setSecuenciaGarantia(oResultSet.getInt("SECGAR"));
 					oEFlagRequisitoLegal.setNumeroFlag(oResultSet.getInt("NUMFLG"));
 					oEFlagRequisitoLegal.setDescripcionFlag(UFuncionesGenerales.revisaCadena(oResultSet.getString("DESFLG")));
 					oEFlagRequisitoLegal.setModoIngresoFlag(oResultSet.getInt("MODFLG"));

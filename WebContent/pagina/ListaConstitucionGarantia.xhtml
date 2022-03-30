@@ -53,10 +53,13 @@
 							<p:column headerText="Sol." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
 								<h:outputText value="#{item.codigoSolicitudCredito}"/>
 							</p:column>
+							 <p:column headerText="Sec. Gar." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
+								<h:outputText value="#{item.secuenciaGarantia}"/>
+							</p:column>
 							 <p:column headerText="Garant." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
 								<h:outputText value="#{item.codigoGarantia}"/>
 							</p:column>
-							<p:column headerText="Socio" priority="1" width="25%">
+							<p:column headerText="Socio" priority="1" width="20%">
 							    <div class="dsTextoCorto">
 								    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
 							    </div>
@@ -92,10 +95,13 @@
 							<p:column headerText="Sol." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
 								<h:outputText value="#{item.codigoSolicitudCredito}"/>
 							</p:column>
+							 <p:column headerText="Sec. Gar." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
+								<h:outputText value="#{item.secuenciaGarantia}"/>
+							</p:column>
 							 <p:column headerText="Garant." styleClass="dsTextoCentro" visible="true" priority="3" width="5%">
 								<h:outputText value="#{item.codigoGarantia}"/>
 							</p:column>
-							<p:column headerText="Socio" priority="1" width="25%">
+							<p:column headerText="Socio" priority="1" width="20%">
 							    <div class="dsTextoCorto">
 								    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
 							    </div>
@@ -136,6 +142,7 @@
 					<p:outputLabel styleClass="dsLabel2" value="#{mblistaconstituciongarantia.indicadorTituloDocumento? 'Nueva Solicitud de Documento':'Lista de Documentos'}"/>
 				</div>
 			</div>
+			<div class="dsLineaHorizontal"></div>
 			<div class="ui-g ui-fluid contenido">
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
 					<p:dataTable id="tblOperacionDocumentoLegal" value="#{mblistaconstituciongarantia.lstOperacionDocumentoLegalFiltro}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"
@@ -271,6 +278,7 @@
 					<p:outputLabel styleClass="dsLabel2" value="¿Tiene Firma?"/>
 				</div>
 			</div>
+			<div class="dsLineaHorizontal"></div>
 			<div class="ui-g ui-fluid contenido">
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
 					<p:outputLabel value="Firma" styleClass="dsLabel1"/>
@@ -298,16 +306,20 @@
 					<p:outputLabel styleClass="dsLabel2" value="Observación Documento"/>
 				</div>
 			</div>
+			<div class="dsLineaHorizontal"></div>
 			<div class="ui-g ui-fluid contenido">
 				<div class="ui-g-12 ui-md-12 ui-lg-12">
-					<p:outputLabel  value="Observación" styleClass="dsLabel1"/>
-					<p:inputTextarea type="text" id="txtObservacionDocumento"  styleClass="dsInput1" value="#{mblistaconstituciongarantia.oEOperacionDocumentoDetalle.obervacionDocumento}" autocomplete="off" disabled="#{mblistaconstituciongarantia.deshabilitarObservacionDocumento}" counter="displayObsDoc" maxlength="400" counterTemplate="{0} caracteres restantes" ></p:inputTextarea>
+					<p:outputLabel  for="txtObservacionDocumento" value="Observación" styleClass="dsLabel1"/>
+					<p:inputTextarea type="text" id="txtObservacionDocumento"  styleClass="dsInput1" value="#{mblistaconstituciongarantia.oEOperacionDocumentoDetalle.obervacionDocumento}" autocomplete="off" disabled="#{mblistaconstituciongarantia.deshabilitarObservacionDocumento}" counter="displayObsDoc" maxlength="400" counterTemplate="{0} caracteres restantes" required="true" requiredMessage="Campo Obligatorio"></p:inputTextarea>
 					<p:outputLabel id="displayObsDoc" styleClass="dsLabel1" />
+					<p:message for="txtObservacionDocumento"/>	
 				</div>
 			</div>
 			<div class="ui-g ui-fluid pie">
-				<p:commandButton styleClass="dsBoton1 secundario" value="#{mblistaconstituciongarantia.deshabilitarObservacionDocumento ? 'Aceptar' : 'Cancelar'}" onclick="PF('dlgObservacionDocumento').hide();"></p:commandButton>
-				<p:commandButton styleClass="dsBoton1 principal" id="idSolicitarFirma" value="Aceptar"  onclick="PF('dlgPreload').show();" oncomplete="PF('dlgObservacionDocumento').hide();PF('dlgPreload').hide();" actionListener="#{mblistaconstituciongarantia.procesarObservacionDocumento()}" update=":frmDlgMensajeOperacionAjax"
+				<p:commandButton styleClass="dsBoton1 secundario" process="@this"  value="#{mblistaconstituciongarantia.deshabilitarObservacionDocumento ? 'Aceptar' : 'Cancelar'}" onclick="PF('dlgObservacionDocumento').hide();">
+					<p:ajax update="frmDlgObservacionDocumento" resetValues="true" />
+				</p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" id="idSolicitarFirma" value="Aceptar" process="@form"  onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mblistaconstituciongarantia.procesarObservacionDocumento()}" update=":frmDlgMensajeOperacionAjax,frmDlgObservacionDocumento"
 				style="#{mblistaconstituciongarantia.deshabilitarObservacionDocumento ? 'display: none;':'display: block;'}"></p:commandButton>
 			</div>
 		</div>

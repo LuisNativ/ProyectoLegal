@@ -9,6 +9,7 @@ public @Data class EFlagReqLegal {
 	
 	/*Data de GESTIONDOC.DETALLEFLAGREQUISITOLEGAL*/
 	private long numeroSolicitud;
+	private int secuenciaGarantia;
 	private int numeroFlag;
 	private String descripcionFlag;
 	private int modoIngresoFlag;

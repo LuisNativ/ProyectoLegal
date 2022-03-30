@@ -313,8 +313,8 @@ public class BOGarantia {
 		List<EOperacionSolicitud> lista=oCGarantia.listarObservacionSolicitudTramiteOperativoLegal(eOperacionSolicitud);
 		return lista;
 	}
-	public List<EFlagReqLegal> listarDetalleFlagRequisitoLegal(long numeroSolicitud){					
-		List<EFlagReqLegal> lista=oCGarantia.listarDetalleFlagRequisitoLegal(numeroSolicitud);
+	public List<EFlagReqLegal> listarDetalleFlagRequisitoLegal(long numeroSolicitud,int secuenciaGarantia){					
+		List<EFlagReqLegal> lista=oCGarantia.listarDetalleFlagRequisitoLegal(numeroSolicitud,secuenciaGarantia);
 		return lista;
 	}
 	public List<EGarantiaSolicitud> listarObservacionSolicitudAsociadaGarantia(EGarantiaSolicitud eGarantiaSolicitud){					

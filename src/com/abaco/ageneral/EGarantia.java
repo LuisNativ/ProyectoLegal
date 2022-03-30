@@ -198,6 +198,7 @@ public @Data class EGarantia {
 	private List<EOperacionDocumento> lstOperacionDocumento;
 	private int tipoDocumento;
 	private int secuenciaDocumento;
+	private int secuenciaGarantia;
 	private int condicionDesembolso1;
 	private int condicionDesembolso2;
 	private int condicionDesembolso3;

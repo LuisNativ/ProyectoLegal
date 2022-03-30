@@ -1,6 +1,7 @@
 package com.abaco.negocio.util;
 
 import java.io.File;
+import java.net.URI;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
@@ -13,7 +14,21 @@ public class UConstante {
 	public static int DOMICILIO_POSTAL_DEFAULT = 1;
 	public static String SELECCIONE = "0";
 	public static String MARCADO = "X";
-
+	public static final String SUBCARPETA = rutacarpeta();
+	
+	public static String rutacarpeta(){
+		String resultado = "";
+	    ULectorDeParametros uLectorDeParametros = ULectorDeParametros.getInstancia();
+	    String indicadorProduccion = uLectorDeParametros.getValorParametro("indicador.produccion");
+	    
+    	if(indicadorProduccion.equals("true")){
+    		resultado = "ModelosAbaco";
+    	}else if(indicadorProduccion.equals("false")){
+    		resultado = "ModelosAbacoTesting";
+    	}
+    	return resultado;
+	}
+	
 	public static interface UVariablesWebXML {
 		String MENU_PRINCIPAL = "MENU_PRINCIPAL";
 		String SERVICIOS_LASERFICHE = "SERVICIOS_LASERFICHE";
@@ -81,18 +96,16 @@ public class UConstante {
 		}
 	}
 	
-	public static interface URutaCarpetaCompartida{        
+	public static interface URutaCarpetaCompartida{
 		String rutaBaseLinux =  File.separator + "media" + 
 				                File.separator + "unidad" +
-				                //File.separator + "Documentos" + 
 				                File.separator +  "Analistas" +
-				                //File.separator + "Analistas" +
-				                File.separator +  "ModelosAbacoTesting" +
+				                File.separator + SUBCARPETA +
 				                File.separator +  "Socio" +
 				                File.separator +  "FichaSocio" +
 				                File.separator ;
         
-        String rutaBaseWindows = "\\\\192.168.1.60\\Documentos\\Analistas\\Analistas\\ModelosAbacoTesting\\Socio\\FichaSocio\\";
+        String rutaBaseWindows = "\\\\192.168.1.60\\Documentos\\Analistas\\Analistas\\" + SUBCARPETA + "\\Socio\\FichaSocio\\";
 	}
 	
 	public static interface UF0901 {
@@ -607,6 +620,7 @@ public class UConstante {
 		int NUEVO = 0;
 		int EDITAR = 1;
 		int VER = 2;
+		int EDITARPARCIAL = 3;
 	}
 	
 	public static interface UAccionInterna {

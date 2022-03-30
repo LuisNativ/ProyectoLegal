@@ -59,10 +59,13 @@
 					    <p:column headerText="Sol. Cred" styleClass="dsTextoCentro" visible="true" width="10%">
 							<h:outputText value="#{item.codigoSolicitudCredito}"/>
 					    </p:column>
+					    <p:column headerText="Sec. Gar." styleClass="dsTextoCentro" visible="true" width="5%">
+							<h:outputText value="#{item.secuenciaGarantia}"/>
+						</p:column>
 					    <p:column headerText="Nro. Garantía" styleClass="dsTextoCentro" visible="true" width="10%">
 							<h:outputText value="#{item.codigoGarantia}"/>
 						</p:column>
-						<p:column headerText="Socio" width="30%">
+						<p:column headerText="Socio" width="25%">
 						    <div class="dsTextoCorto">
 							    <h:outputText value="#{item.codigoCliente} #{item.nombreCliente}"/>
 						    </div>

@@ -194,7 +194,7 @@ public class MBListaDesembolsoGarantia implements Serializable {
 
 	public void visualizarDetalleCumplimientoReqLegal(EOperacionDocumento eOperacionDocumentoItem){
 		if(eOperacionDocumentoItem != null){
-			lstDetalleFlagsReqLegal = oBOGarantia.listarDetalleFlagRequisitoLegal(eOperacionDocumentoItem.getCodigoSolicitudCredito());
+			lstDetalleFlagsReqLegal = oBOGarantia.listarDetalleFlagRequisitoLegal(eOperacionDocumentoItem.getCodigoSolicitudCredito(),eOperacionDocumentoItem.getSecuenciaGarantia());
 			RequestContext.getCurrentInstance().execute("PF('dlgCondicionDesembolso').show();");
 		}
 	}

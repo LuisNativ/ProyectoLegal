@@ -405,6 +405,7 @@ public class MBListaConstitucionGarantia implements Serializable {
 		
 		
 		UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
+		RequestContext.getCurrentInstance().execute("PF('dlgObservacionDocumento').hide();");
 		RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
 	}
 	

@@ -246,7 +246,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 						this.oEGarantiaSolicitudData = new EGarantiaSolicitud();
 					}
 					
-					
+	
 					
 					
 					oEGarantiaSolicitudData.setCodigoCliente(oEGarantiaSolicitudLoad.getCodigoCliente());

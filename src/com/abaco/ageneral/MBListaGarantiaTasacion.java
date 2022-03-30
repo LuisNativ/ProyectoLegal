@@ -121,8 +121,7 @@ public class MBListaGarantiaTasacion implements Serializable {
 	public void modificarGarantia(EGarantia oEGarantiaItem) {
 		String ruta = "";
 		if (oEGarantiaItem != null) {
-			oEGarantiaItem.setIndicadorAccion(1);
-			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.EDITAR);
+			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.EDITARPARCIAL);
 			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.FICHA_PARAMETRO, oEGarantiaItem);
 
 			ruta = "MantenimientoOperacionGarantia.xhtml";
