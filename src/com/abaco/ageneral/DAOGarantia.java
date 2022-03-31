@@ -124,7 +124,7 @@ public class DAOGarantia extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_DEL_DETALLESOLICITUDDOCUMENTOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_DETALLESOLICITUDDOCUMENTOGARANTIA("+parametrosSP(5)+") }";
 	private static final String SP_ABACOINLEGAL_DEL_INMUEBLESGARANTIAPREDIOS="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_INMUEBLESGARANTIAPREDIOS("+parametrosSP(4)+") }";
 	private static final String SP_ABACOINLEGAL_DEL_REPRESENTANTECIAXCONTRATO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_REPRESENTANTECIAXCONTRATO("+parametrosSP(6)+") }";
-	private static final String SP_ABACOINLEGAL_DEL_DETALLEFLAGREQUISITOLEGAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_DETALLEFLAGREQUISITOLEGAL("+parametrosSP(4)+") }";
+	private static final String SP_ABACOINLEGAL_DEL_DETALLEFLAGREQUISITOLEGAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_DETALLEFLAGREQUISITOLEGAL("+parametrosSP(5)+") }";
 	private static final String SP_ABACOINLEGAL_DEL_OPERACION_DOCUMENTOGARANTIA_TEMP="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_OPERACION_DOCUMENTOGARANTIA_TEMP("+parametrosSP(5)+") }";
 	private static final String SP_ABACOINLEGAL_DEL_OPERACION_DOCUMENTOGENERALGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_OPERACION_DOCUMENTOGENERALGARANTIA("+parametrosSP(4)+") }";
 
@@ -2477,6 +2477,7 @@ public class DAOGarantia extends InstanciaAcceso{
 		try {
 			lstParametrosEntrada = new ArrayList<Object>();
 			lstParametrosEntrada.add(eFlagRequisitoLegal.getNumeroSolicitud());
+			lstParametrosEntrada.add(eFlagRequisitoLegal.getSecuenciaGarantia());
 			lstParametrosEntrada.add(eFlagRequisitoLegal.getNumeroFlag());
 			mensaje = objConexion.ejecutaTransaccion(SP_ABACOINLEGAL_DEL_DETALLEFLAGREQUISITOLEGAL, lstParametrosEntrada);
 		} catch(Exception objEx) {
