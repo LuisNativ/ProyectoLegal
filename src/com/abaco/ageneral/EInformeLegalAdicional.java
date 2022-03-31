@@ -17,6 +17,7 @@ public @Data class EInformeLegalAdicional {
 	private int codigoCliente;
 	private int codigoTipoCliente;
 	private String codigoEstadoCivil;
+	private int codigoTipoPersonaJuridica;
 	private String numeroPartida;
 	private String oficinaRegistral;
 	private int codigoTipoDuracionPartida;

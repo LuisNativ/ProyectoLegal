@@ -140,7 +140,7 @@ public class MBListaOperacionSolicitudCreditoPorAutorizar implements Serializabl
 			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.EDITAR);
 			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.FICHA_PARAMETRO, oEOperacionSolicitudCreditoItem);
 			
-			ruta = "RegistroOperacinSolicitudCredito.xhtml";
+			ruta = "RegistroOperacionSolicitudCredito.xhtml";
 			
 			UGeneradorQueryString objUGeneradorQueryString = new UGeneradorQueryString(ruta);
 			UManejadorSesionWeb.redirigePagina(objUGeneradorQueryString.obtieneUrlConParametros());
@@ -153,7 +153,7 @@ public class MBListaOperacionSolicitudCreditoPorAutorizar implements Serializabl
 			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.VER);
 			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.FICHA_PARAMETRO, oEOperacionSolicitudCreditoItem);
 			
-			ruta = "RegistroOperacinSolicitudCredito.xhtml";
+			ruta = "RegistroOperacionSolicitudCredito.xhtml";
 			
 			UGeneradorQueryString objUGeneradorQueryString = new UGeneradorQueryString(ruta);
 			UManejadorSesionWeb.redirigePagina(objUGeneradorQueryString.obtieneUrlConParametros());

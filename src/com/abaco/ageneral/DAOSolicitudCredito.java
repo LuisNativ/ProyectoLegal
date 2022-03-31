@@ -947,6 +947,7 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 					oEInformeLegalAdicional.setCodigoCliente(oResultSet.getInt("CODCLI"));
 					oEInformeLegalAdicional.setCodigoTipoCliente(oResultSet.getInt("TIPCLI"));
 					oEInformeLegalAdicional.setCodigoEstadoCivil(oResultSet.getString("CODCIV"));
+					oEInformeLegalAdicional.setCodigoTipoPersonaJuridica(oResultSet.getInt("TIPOPJ"));
 					oEInformeLegalAdicional.setNumeroPartida(oResultSet.getString("NUMPART"));
 					oEInformeLegalAdicional.setOficinaRegistral(oResultSet.getString("OFIREG"));
 					oEInformeLegalAdicional.setCodigoTipoDuracionPartida(oResultSet.getInt("CODTPART"));

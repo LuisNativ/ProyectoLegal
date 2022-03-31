@@ -127,9 +127,9 @@ import com.abaco.negocio.util.UNumeroLetra;
 import com.abaco.negocio.util.UtilPoi;
 import com.abaco.servicio.laserfiche.Documento;
 
-@ManagedBean(name = "mbregistrooperacinsolicitudcredito")
+@ManagedBean(name = "mbregistrooperacionsolicitudcredito")
 @ViewScoped
-public class MBRegistroOperacinSolicitudCredito implements Serializable {
+public class MBRegistroOperacionSolicitudCredito implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private EUsuario oEUsuario;
 	private EMensaje oEMensaje;
@@ -987,12 +987,18 @@ public class MBRegistroOperacinSolicitudCredito implements Serializable {
 					oEOperacionSolicitudCreditoLoad.setObservacionLegal(oBOSolicitudCredito.buscarObservacionDetalle(oEOperacionSolicitudCreditoLoad.getNumeroSolicitud(), UUbicacion.LEGAL, 1));
 					oEOperacionSolicitudCreditoData.setObservacionLegal(oBOSolicitudCredito.buscarObservacionDetalle(oEOperacionSolicitudCreditoLoad.getNumeroSolicitud(), UUbicacion.LEGAL, 1));
 					
-					if(oEInformeLegalAdicionalData == null){ this.oEInformeLegalAdicionalData = new EInformeLegalAdicional(); }
-					
 					if(oEOperacionSolicitudCreditoLoad.getCodigoTipoCliente() == UTipoClienteSolicitudCredito.COD_SOCIO){
 						codigoTipoCliente = UTipoCliente.COD_SOCIO;
 					}else if(oEOperacionSolicitudCreditoLoad.getCodigoTipoCliente() == UTipoClienteSolicitudCredito.COD_POSTULANTE){
 						codigoTipoCliente = UTipoCliente.COD_POSTULANTE;
+					}
+					
+					if(oEInformeLegalAdicionalData == null){ this.oEInformeLegalAdicionalData = new EInformeLegalAdicional(); }
+					
+					if(oEInformeLegalAdicionalData != null){
+						if(oEInformeLegalAdicionalData.getCodigoTipoPersonaJuridica() > 0){
+							oEOperacionSolicitudCreditoData.setCodigoTipoPersonaJuridica(oEInformeLegalAdicionalData.getCodigoTipoPersonaJuridica()+"");
+						}
 					}
 					
 					deshabilitarObservacionSolicitud = true;

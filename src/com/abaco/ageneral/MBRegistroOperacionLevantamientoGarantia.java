@@ -134,7 +134,6 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 	@Getter @Setter private List<EOperacionDocumento> lstOperacionDocumento;
 	@Getter @Setter private List<EOperacionDocumento> lstOperacionDocumentoFiltro;
 	@Getter @Setter private List<EDocumentoCarga> lstDocumentoCarga;
-	//@Getter @Setter private List<EGarantiaCreditoRelacionado> lstCreditoRelacionado;
 	@Getter @Setter private List<EGarantiaCreditoRelacionado> lstCreditoVigenteRelacionado;
 	@Getter @Setter private List<EGarantiaCreditoRelacionado> lstCreditoCanceladoRelacionado;
 	@Getter @Setter private List<EAsignacionContratoGarantia> lstClienteGarantia;
@@ -180,6 +179,7 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 	@Getter @Setter private boolean visualizarTblMensaje;
 	@Getter @Setter private boolean visualizarPnlInforme;
 	@Getter @Setter private boolean visualizarPnlDocumentoLevantamiento;
+	@Getter @Setter private boolean visualizarPnlClienteRelacionado;
 	@Getter @Setter private boolean visualizarPnlCreditoRelacionado;
 	
 	@Getter @Setter private boolean visualizarBtnSalir;
@@ -241,7 +241,6 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 		lstOperacionDocumento = new ArrayList<EOperacionDocumento>();
 		lstOperacionDocumentoFiltro = new ArrayList<EOperacionDocumento>();
 		lstDocumentoCarga = new ArrayList<EDocumentoCarga>();
-		//lstCreditoRelacionado = new ArrayList<EGarantiaCreditoRelacionado>();
 		lstCreditoVigenteRelacionado = new ArrayList<EGarantiaCreditoRelacionado>();
 		lstCreditoCanceladoRelacionado = new ArrayList<EGarantiaCreditoRelacionado>();
 		lstClienteGarantia = new ArrayList<EAsignacionContratoGarantia>();
@@ -285,6 +284,7 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 					
 					deshabilitarFrmGarantia = true;
 					visualizarComentario = true;
+					visualizarPnlClienteRelacionado = true;
 					visualizarPnlCreditoRelacionado = true;
 					visualizarBtnSalir = true;
 					visualizarBtnEnviar = true;
@@ -325,7 +325,7 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 						visualizarPnlDocumentoLevantamiento = true;
 						visualizarBtnEntregar = true;
 						visualizarBtnArchivar = true;
-						indicadorValidarBtnEnviar = 1;
+						indicadorValidarBtnEnviar = 0;
 					}else if(oEGarantiaSolicitudLoad.getCodigoEstadoLevantamiento() == UEstadoOperacionLevantamiento.ENEVALUACION){
 						visualizarPnlDocumentoLevantamiento = true;
 						visualizarBtnEnProcesoLevantamiento = true;
@@ -340,6 +340,7 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 					//deshabilitarBtnGrabar = true;
 					visualizarComentario = true;
 					visualizarTblMensaje = true;
+					visualizarPnlClienteRelacionado = true;
 					visualizarPnlCreditoRelacionado = true;
 					visualizarBtnSalir = true;
 					visualizarBtnAdjuntar = true;
@@ -354,6 +355,7 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 					visualizarComentario = false;
 					visualizarTblMensaje = true;
 					visualizarPnlDocumentoLevantamiento = true;
+					visualizarPnlClienteRelacionado = true;
 					visualizarPnlCreditoRelacionado = true;
 					visualizarBtnSalir = true;
 					
@@ -556,10 +558,6 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 			ruta = "ListaOperacionLevantamientoOtros.xhtml";
 		}
 		
-		if(UAccionExterna.EDITAR == accionExterna) {
-			//oBOOperacion.liberarSolicitudSesion(oEOperacionSolicitudLoad.getCodigoSolicitud());
-		}
-		
 		inicializar();
 		/*Cerrar Sesion*/
 		UManejadorSesionWeb.eliminaVariableSesion(UVariablesSesion.OPERACION_SESION);
@@ -718,6 +716,18 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 	//*************************************//
 	public void habilitarAccionEnviar(){
 		if(indicadorValidarBtnEnviar == 1){
+			if(lstOperacionDocumentoFiltro.size() >= URegla.LIBERAR_NUMERO_MIN_ADJUNTA){
+				deshabilitarBtnGrabar = false;
+			}else{
+				deshabilitarBtnGrabar = true;
+			}
+		}else {
+			deshabilitarBtnGrabar = false;
+		}
+	}
+	/*
+	public void habilitarAccionEnviar(){
+		if(indicadorValidarBtnEnviar == 1){
 			//if(lstFirmante.size() >= URegla.LIBERAR_NUMERO_MIN_FIRMANTE & lstDocumentoCarga.size() >= URegla.LIBERAR_NUMERO_MIN_ADJUNTA){
 			if(lstDocumentoCarga.size() >= URegla.LIBERAR_NUMERO_MIN_ADJUNTA){
 				deshabilitarBtnGrabar = false;
@@ -728,6 +738,7 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 			deshabilitarBtnGrabar = false;
 		}
 	}
+	*/
 	
 	//*************************************//
 	//Metodos para Garantia
@@ -942,6 +953,7 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 		visualizarTblMensaje = false;
 		visualizarPnlInforme = false;
 		visualizarPnlDocumentoLevantamiento = false;
+		visualizarPnlClienteRelacionado = false;
 		visualizarPnlCreditoRelacionado = false;
 
 		visualizarBtnSalir = false;
@@ -1201,51 +1213,6 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 		}
 	}
 	
-	/*
-    public void listarCreditosAsociadosGarantia(){
-		double montoAcumAsignadoCredito= 0;
-		double montoAcumSaldoCredito = 0;
-		double montoAcumCoberturado = 0;
-		lstCreditoGarantia = oBOGarantia.listarCreditosAsociadosGarantia2(oEGarantiaData.getCodigoGarantia());
-		for(int i=0;i<lstCreditoGarantia.size();i++){
-			montoAcumAsignadoCredito += lstCreditoGarantia.get(i).getMontoImporteCubierto();
-			montoAcumSaldoCredito += lstCreditoGarantia.get(i).getMontoSaldoCredito();
-		}
-		
-		montoAcumuladoAsignadoCredito=montoAcumAsignadoCredito;
-		montoAcumuladoSaldoCredito = montoAcumSaldoCredito;
-		
-		for(int j=0;j<lstCreditoGarantia.size();j++){
-			//Calculo de Monto Coberturado y % Coberturado
-			double montoCoberturado = 0;
-			double porcentajeCoberturado = 0;
-			
-			if(montoAcumuladoSaldoCredito != 0){
-				if(oEGarantiaData.getCodigoMoneda() == lstCreditoGarantia.get(j).getCodigoMoneda()){
-					montoCoberturado = (lstCreditoGarantia.get(j).getMontoSaldoCredito()/montoAcumuladoSaldoCredito) * oEGarantiaData.getMontoVariable1();
-				}else{
-					if(oEGarantiaData.getCodigoMoneda() == UMoneda.COD_SOLES && lstCreditoGarantia.get(j).getCodigoMoneda() == UMoneda.COD_DOLARES){
-						montoCoberturado = (lstCreditoGarantia.get(j).getMontoSaldoCredito()/montoAcumuladoSaldoCredito) * (oEGarantiaData.getMontoVariable1()*4.1);
-					}else if(oEGarantiaData.getCodigoMoneda() == UMoneda.COD_DOLARES && lstCreditoGarantia.get(j).getCodigoMoneda() == UMoneda.COD_SOLES){
-						montoCoberturado = (lstCreditoGarantia.get(j).getMontoSaldoCredito()/montoAcumuladoSaldoCredito) * (oEGarantiaData.getMontoVariable1()*4.1);
-					}
-				}
-			}
-			
-			lstCreditoGarantia.get(j).setMontoCoberturado(montoCoberturado);
-			
-			if(lstCreditoGarantia.get(j).getMontoSaldoCredito() != 0){
-				porcentajeCoberturado = (lstCreditoGarantia.get(j).getMontoCoberturado() / lstCreditoGarantia.get(j).getMontoSaldoCredito());
-			}
-			
-			lstCreditoGarantia.get(j).setPorcentajeCoberturado(porcentajeCoberturado);
-			montoAcumCoberturado += lstCreditoGarantia.get(j).getMontoCoberturado();
-		}
-		
-		montoAcumuladoCoberturado = montoAcumCoberturado;
-	}
-	*/
-
 	public EMensaje getoEMensaje() {
 		return oEMensaje;
 	}
