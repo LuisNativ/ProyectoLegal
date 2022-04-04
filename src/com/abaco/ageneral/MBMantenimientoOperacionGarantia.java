@@ -188,9 +188,9 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	
 	private int accionExterna;
 	private int indexPropietario;
-	@Getter @Setter private Double montoAcumuladoAsignadoCredito;    
-	@Getter @Setter private Double montoAcumuladoSaldoCredito;  
-	@Getter @Setter private Double montoAcumuladoCoberturado;
+	@Getter @Setter private double montoAcumuladoAsignadoCredito;    
+	@Getter @Setter private double montoAcumuladoSaldoCredito;  
+	@Getter @Setter private double montoAcumuladoCoberturado;
 	//Listas de Entidades
 	@Getter @Setter private List<EAsignacionContratoGarantia> lstCreditoGarantia;
 	@Getter @Setter private List<EPersona> lstPropietario;
@@ -1100,8 +1100,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
   	//*************************************//
 	
 	public void listarCreditosAsociadosGarantia(){
-		montoAcumuladoCoberturado = 0.0;
-		montoAcumuladoAsignadoCredito = 0.0;
+		montoAcumuladoCoberturado = 0;
+		montoAcumuladoAsignadoCredito = 0;
 		double montoConversionCoberturado = 0;
 		double montoConversionAsignado = 0;
 		double montoTotalConversionCoberturado = 0;
@@ -1171,11 +1171,11 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto();
 			}else{
 				if(oEGarantiaData.getCodigoMoneda() == UMoneda.COD_SOLES && lstCreditoGarantia.get(i).getCodigoMoneda() == UMoneda.COD_DOLARES){
-					montoConversionCoberturado += montoCoberturado * oETipoCambioData.getTipoCambioSBS();
-					montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto() * oETipoCambioData.getTipoCambioSBS();
+					montoConversionCoberturado += montoCoberturado * (oETipoCambioData.getTipoCambioSBS() != 0 ? oETipoCambioData.getTipoCambioSBS():1);
+					montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto() * (oETipoCambioData.getTipoCambioSBS() != 0 ? oETipoCambioData.getTipoCambioSBS():1);
 				}else if(oEGarantiaData.getCodigoMoneda() == UMoneda.COD_DOLARES && lstCreditoGarantia.get(i).getCodigoMoneda() == UMoneda.COD_SOLES){
-					montoConversionCoberturado += montoCoberturado / oETipoCambioData.getTipoCambioSBS();
-					montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto() / oETipoCambioData.getTipoCambioSBS();
+					montoConversionCoberturado += montoCoberturado / (oETipoCambioData.getTipoCambioSBS() != 0 ? oETipoCambioData.getTipoCambioSBS():1);
+					montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto() / (oETipoCambioData.getTipoCambioSBS() != 0 ? oETipoCambioData.getTipoCambioSBS():1);
 				}
 			}
 			lstCreditoGarantia.get(i).setMontoCoberturado(montoCoberturado);
