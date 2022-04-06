@@ -105,6 +105,8 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 	@Getter @Setter private boolean deshabilitarCampoDetGenGarantia;
 	@Getter @Setter private boolean deshabilitarCampoDetalleComprobante;
 	@Getter @Setter private boolean deshabilitarCampoContrato;
+	@Getter @Setter private boolean deshabilitarCampoFechaHoraFirmante;
+	@Getter @Setter private boolean deshabilitarCampoFechaHoraConyugue;
 	@Getter @Setter private boolean renderizarBotonGrabarContrato;
 	@Getter @Setter private boolean renderizarBotonGenerarContrato;
 	@Getter @Setter private boolean renderizarBotonConfirmaDatoGarantia;
@@ -525,6 +527,25 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 		}
 	}
 	 
+	public void validarFirmaFirmante(){
+		switch(oEFirmanteSolicitudData.getFlagFirmado()){
+		case 0 : deshabilitarCampoFechaHoraFirmante = true; break;
+		case 1 : deshabilitarCampoFechaHoraFirmante = false; break;
+		default:
+			deshabilitarCampoFechaHoraFirmante = true; 
+		}
+		
+	}
+	
+	public void validarFirmaConyugue(){
+		switch(oEFirmanteSolicitudData.getFlagFirmadoConyugue()){
+		case 0 : deshabilitarCampoFechaHoraConyugue = true; break;
+		case 1 : deshabilitarCampoFechaHoraConyugue = false; break;
+		default:
+			deshabilitarCampoFechaHoraConyugue = true; 
+		}
+		
+	}
 	
 	public void visualizarDetalleFirmanteFirma(EFirmanteSolicitud oEFirmanteSolicitudItem){
 		if(oEFirmanteSolicitudItem != null){
@@ -537,10 +558,14 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 			default:
 			}
 			deshabilitarCampoDetalleFirmaContrato = true;
+			validarFirmaFirmante();
+			validarFirmaConyugue();
 			RequestContext.getCurrentInstance().execute("PF('dlgRegistroFirmaFirmante').show();");
 		}
 		
 	}
+	
+	
 	
 	public void procesarFirmaContrato(){
 		EFirmanteSolicitud eFirmanteSolicitud = new EFirmanteSolicitud();

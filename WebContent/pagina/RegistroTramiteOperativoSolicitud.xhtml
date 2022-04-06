@@ -812,7 +812,7 @@
 			</div>
 			<div class="dsLineaHorizontal"></div>
 			<div class="ui-g ui-fluid contenido">
-				<h:panelGroup layout="block">
+				<h:panelGroup id="idPanelGroupFirmante" layout="block">
 					<div class="ui-g ui-fluid ui-g-nopad">				
 						<div class="ui-g-12 ui-md-6 ui-lg-6">
 							<p:outputLabel  value="Tipo Firmante" styleClass="dsLabel1"/>
@@ -827,18 +827,21 @@
 					   	<div class="ui-g-12 ui-md-4 ui-lg-4">
 							<p:outputLabel  value="Firma" styleClass="dsLabel1"/>
 							<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.flagFirmado}" >
+								<p:ajax event="change" listener="#{mbregistrotramiteoperativosolicitud.validarFirmaFirmante()}" update="frmDlgFirmaFirmantes:idPanelGroupFirmante" />
 								<f:selectItem itemLabel="NO" itemValue="0" />
 								<f:selectItem itemLabel="SI" itemValue="1" />
 			            	</p:selectOneMenu>
 					   	</div>
 				   	    <div class="ui-g-12 ui-md-4 ui-lg-4">
 			           	   <p:outputLabel value="Fecha Firma" styleClass="dsLabel1"/>
-							<p:calendar value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.fechaFirmaSocio}" navigator="true" pattern="dd-MM-yyyy"  autocomplete="off" placeholder="dd-mm-yyyy"></p:calendar>
+							<p:calendar value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.fechaFirmaSocio}" navigator="true" pattern="dd-MM-yyyy"  autocomplete="off" placeholder="dd-mm-yyyy" 
+							disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoFechaHoraFirmante}"></p:calendar>
 					    </div>
 					    <div class="ui-g-12 ui-md-4 ui-lg-4">
 			           	   <p:outputLabel value="Hora Firma" styleClass="dsLabel1"/>
 							<p:calendar value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.horaRegistroFirmaSocio}" navigator="true" 
-							pattern="HH:mm:ss" timeOnly="true" autocomplete="off" placeholder="HH:mm:ss"></p:calendar>
+							pattern="HH:mm:ss" timeOnly="true" autocomplete="off" placeholder="HH:mm:ss"
+							disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoFechaHoraFirmante}"></p:calendar>
 					    </div>
 					  
 						<div class="ui-g-12 ui-md-8 ui-lg-8">
@@ -849,6 +852,7 @@
 					   	<div class="ui-g-12 ui-md-4 ui-lg-4">
 							<p:outputLabel  value="Firma?" styleClass="dsLabel1"/>
 							<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.codigoFirmaConyugue}" disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoDetalleFirmaContrato}">
+
 								<f:selectItem itemLabel="NO" itemValue="0" />
 								<f:selectItem itemLabel="SI" itemValue="1" />
 			            	</p:selectOneMenu>
@@ -856,18 +860,21 @@
 						<div class="ui-g-12 ui-md-4 ui-lg-4">
 							<p:outputLabel  value="Firma Cony." styleClass="dsLabel1"/>
 							<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.flagFirmadoConyugue}" >
+							<p:ajax event="change" listener="#{mbregistrotramiteoperativosolicitud.validarFirmaConyugue()}" update="frmDlgFirmaFirmantes:idPanelGroupFirmante" />
 								<f:selectItem itemLabel="NO" itemValue="0" />
 								<f:selectItem itemLabel="SI" itemValue="1" />
 			            	</p:selectOneMenu>
 					   	</div>
 						<div class="ui-g-12 ui-md-4 ui-lg-4">
 			           	   <p:outputLabel value="Fecha Firma Cony." styleClass="dsLabel1"/>
-							<p:calendar value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.fechaFirmaConyugue}" navigator="true" pattern="dd-MM-yyyy"  autocomplete="off" placeholder="dd-mm-yyyy"></p:calendar>
+							<p:calendar value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.fechaFirmaConyugue}" navigator="true" pattern="dd-MM-yyyy"  autocomplete="off" placeholder="dd-mm-yyyy" 
+							disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoFechaHoraConyugue}"></p:calendar>
 					    </div>
 					    <div class="ui-g-12 ui-md-4 ui-lg-4">
 			           	   <p:outputLabel value="Hora Firma Cony." styleClass="dsLabel1"/>
 							<p:calendar value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.horaRegistroFirmaConyugue}" navigator="true" 
-							pattern="HH:mm:ss" timeOnly="true" autocomplete="off" placeholder="HH:mm:ss"></p:calendar>
+							pattern="HH:mm:ss" timeOnly="true" autocomplete="off" placeholder="HH:mm:ss" 
+							disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoFechaHoraConyugue}"></p:calendar>
 					    </div>
 					  
 					 

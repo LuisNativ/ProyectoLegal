@@ -43,6 +43,7 @@
 	    </div>
     </div>
 	<p:tabView id="tabView1" dynamic="true" widgetVar="tabs1" activeIndex="0">
+	 <p:ajax event="tabChange" listener="#{mbmantenimientooperaciongarantia.onTabChangeGarantia}" update="form:tabView1:panelListaDocumento,form:tabView1:tblDetalleFlgReqLegal,form:tabView1:idConfDesemb"/>
 	 	<p:tab id="tab1-1" title="Garantía">
 	 	    <div class="ui-g ui-fluid ui-g-nopad">
 		    	<!--Cabecera Garantía-->
@@ -1861,7 +1862,9 @@
 								title="Confirmación Notaría" 
 					      		onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
 					      		rendered="#{item.indicadorConfirmarFirmaNotaria eq 1 ? true : false}"
-					      		 action="#{mbmantenimientooperaciongarantia.visualizarConfirmarFirmaNotaria(item)}" immediate="true">
+					      		 action="#{mbmantenimientooperaciongarantia.visualizarConfirmarFirmaNotaria(item)}" 
+					      		 update=":frmDlgMensajeConfirmacionNotaria"
+					      		 immediate="true">
 						      	</p:commandButton>
 								<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-send" title="Solicitar Firma de Documento" 
 					      		onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();"
@@ -1869,7 +1872,7 @@
 					      		action="#{mbmantenimientooperaciongarantia.visualizarSolicitudFirma(item)}" 						
 					      		update=":frmDlgMensajeConfirmacionSolicitudFirma" immediate="true">
 					      		</p:commandButton>
-								<p:commandButton styleClass="dsBoton5 green" icon="#{item.estadoDocumento eq 60 ? 'fa fa-eye': 'fa fa-pencil'}" title="#{item.estadoDocumento eq 60 ? 'Visualizar': 'Evaluar'}" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbmantenimientooperaciongarantia.evaluarDocumentoSolicitud(item)}" update="form:tabView1:tblOperacionDocumentoLegal,form:tabView1:tblOperacionDocumentoNegocios,form:tabView1:idAdjuntaDocumento,form:tabView1:idNroSolicitud,form:tabView1:panelListaDocumento,form:tabView1:tblDocumentoNotaria" immediate="true">
+								<p:commandButton styleClass="dsBoton5 green" icon="#{item.estadoDocumento eq 60 and item.estadoDocumentoNotaria eq 57? 'fa fa-eye': 'fa fa-pencil'}" title="#{item.estadoDocumento eq 60 and item.estadoDocumentoNotaria eq 57? 'Visualizar': 'Evaluar'}" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbmantenimientooperaciongarantia.evaluarDocumentoSolicitud(item)}" update="form:tabView1:panelListaDocumento,form:tabView1:tblOperacionDocumentoLegal,form:tabView1:tblOperacionDocumentoNegocios,form:tabView1:idAdjuntaDocumento,form:tabView1:idNroSolicitud,form:tabView1:panelListaDocumento,form:tabView1:tblDocumentoNotaria" immediate="true">
 					      		</p:commandButton>
 					      		<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-file-word-o" title="Generar Contrato Privado" 
 								    process="@none"  immediate="true"
@@ -1883,7 +1886,7 @@
 			    </p:panel>			
 			</div>
 			<div class="ui-g-12 ui-md-12 ui-lg-12">
-				<p:panel styleClass="dsPanel2" id="panelListaDocumento" widgetVar="pnl17" toggleable="#{mbmantenimientooperaciongarantia.tooglePanelListaDocumento}" toggleSpeed="500" closeSpeed="500" collapsed="#{mbmantenimientooperaciongarantia.colapsarPanelListaDocumento}"  style="margin-bottom:20px">
+				<p:panel styleClass="dsPanel2" id="panelListaDocumento" widgetVar="pnl17" style="#{mbmantenimientooperaciongarantia.renderizarDetalleDocumentoSolicitud ? 'display: block;' : 'display:none;'}">
 				    <f:facet name="header">
 			             <i class="fas fa-files-o"></i> Lista de Documentos 
 			             <h:outputText id="idNroSolicitud" style="#{mbmantenimientooperaciongarantia.visualizarNroSolicitud ? 'display: inline-block;' : 'display:none;'}" value="=> Nro. Solicitud: #{mbmantenimientooperaciongarantia.oEOperacionDocumento.codigoSolicitudCredito}">
@@ -1926,7 +1929,7 @@
 					      			<p:commandButton styleClass="dsBoton5 green" icon="#{item.validarObservacion ? 'fa fa-eye' : 'fa fa-envelope' }" title="Observación" actionListener="#{mbmantenimientooperaciongarantia.visualizarObservacionDocumento(item)}" update=":frmDlgObservacionDocumento" immediate="true">
 					      			</p:commandButton>
 					      			<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-check" title="Actualizar Firma" actionListener="#{mbmantenimientooperaciongarantia.visualizarFirmaDocumento(item)}" 
-					      			update=":frmDlgFirma" immediate="true">
+					      			update=":frmDlgFirma" rendered="#{mbmantenimientooperaciongarantia.visualizarActualizarFirmaLegal}" immediate="true">
 					      			</p:commandButton>
 					      			<p:commandButton styleClass="dsBoton5 red" icon="fa fa-trash" title="Eliminar Documento" actionListener="#{mbmantenimientooperaciongarantia.visualizarEliminarDocumento(item)}" 
 									rendered="#{mbmantenimientooperaciongarantia.visualizarEliminarDocumentoGarantia}"
@@ -2301,27 +2304,20 @@
 								    </div>
 								</p:column>
 								<p:column headerText="" styleClass="dsTextoCentro" width="10%">
-									<p:commandButton styleClass="dsBoton5 green" icon="fa fa-edit" 					
+									<p:commandButton  styleClass="dsBoton5 green" icon="fa fa-edit" 					
 									 title="Editar Flag" 
 						      		 onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
 						      		 action="#{mbmantenimientooperaciongarantia.visualizarDlgEditarFlag(item)}" 
-						      		 update=":frmDlgNuevoFlagReqLegal" immediate="true"
-						      		 rendered="#{item.indicadorVisualizarAccion eq '1' ? true : false}">
+						      		 update=":frmDlgNuevoFlagReqLegal" 
+						      		 rendered="#{item.indicadorVisualizarAccion eq '1' ? true : false}" immediate="true">
 							      	</p:commandButton>
-							      	<p:commandButton styleClass="dsBoton5 red" icon="fa fa-trash" title="Eliminar" 
+							      	<p:commandButton  styleClass="dsBoton5 red" icon="fa fa-trash" title="Eliminar" 
 						      		onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
-                                    action="#{mbmantenimientooperaciongarantia.visualizarEliminarFlagRequisitoLegal(item)}" 
-								    update=":frmDlgMensajeConfirmacionEliminarReqLegal" immediate="true"
-								    rendered="#{item.indicadorVisualizarAccion eq '1' ? true : false}"  >	
+                                    action="#{mbmantenimientooperaciongarantia.visualizarEliminarFlagRequisitoLegal(item)}"  
+								    update=":frmDlgMensajeConfirmacionEliminarReqLegal" 
+								    rendered="#{item.indicadorVisualizarAccion eq '1' ? true : false}" immediate="true">	
 								    </p:commandButton>
-						      		
-								   <p:commandButton styleClass="dsBoton5 red" icon="fa fa-lock" 					
-									title="Confirmar Bloqueo Registral" 
-						      		onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
-						      		rendered="#{item.indicadorBloqueoRegistral eq 1 ? true : false}"
-						      		 action="#{mbmantenimientooperaciongarantia.visualizarConfirmarBloqueoRegistral(item)}" update=":frmDlgMensajeConfirmacionBloqueoReg" immediate="true">
-							      	</p:commandButton>
-							      	 <p:commandButton styleClass="dsBoton5 blue" icon="fa fa-money" 					
+							      	<p:commandButton styleClass="dsBoton5 blue" icon="fa fa-money" 					
 									title="Confirmar Carta Fianza" 
 						      		onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
 						      		 action="#{mbmantenimientooperaciongarantia.visualizarConfirmarCartaFianza(item)}" update=":frmDlgMensajeConfirmacionCartaFianza" immediate="true"
@@ -3089,11 +3085,10 @@
 					</div>	
 					<div class="ui-g-12">
 						<p:outputLabel for="txtActualizacionFlag" value="Estado" styleClass="dsLabel1"/>
-						<p:selectOneMenu id="txtActualizacionFlag" value="#{mbmantenimientooperaciongarantia.oEFlagRequisitoLegalData.actualizacionFlag}" required="true" requiredMessage="Campo Obligatorio"  disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoFlagReqLeg}">
+						<p:selectOneMenu id="txtActualizacionFlag" value="#{mbmantenimientooperaciongarantia.oEFlagRequisitoLegalData.actualizacionFlag}"   disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampoFlagReqLeg}">
 							<f:selectItem itemLabel="Pendiente" itemValue="1" />
 							<f:selectItem itemLabel="Cumplido Total" itemValue="3" />
 					 	</p:selectOneMenu>	
-					 	<p:message for="txtActualizacionFlag"/>
 					</div>		       
 				</div>
 
@@ -3102,8 +3097,8 @@
 				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgNuevoFlagReqLegal').hide();" process="@this" update="frmDlgNuevoFlagReqLegal">
 					<p:resetInput target="frmDlgNuevoFlagReqLegal"/>
 				</p:commandButton>
-				<p:commandButton styleClass="dsBoton1 principal" value="Grabar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbmantenimientooperaciongarantia.procesarFlagRequisitoLegal()}" 
-				process="@form" update=":frmDlgMensajeOperacionAjax,frmDlgNuevoFlagReqLegal,:form:tabView1:tblDetalleFlgReqLegal"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Grabar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbmantenimientooperaciongarantia.procesarFlagRequisitoLegal()}" process="@form" 
+				update=":frmDlgMensajeOperacionAjax,:form:tabView1:tblDetalleFlgReqLegal,:form:tabView1:idConfDesemb,frmDlgNuevoFlagReqLegal"></p:commandButton>
 			</div>
 		</div>
 	</h:form>
@@ -3149,7 +3144,7 @@
 			</div>
 			<div class="ui-g ui-fluid pie">
 				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgConfirmacionSolicitudFirma').hide();"></p:commandButton>
-				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" action="#{mbmantenimientooperaciongarantia.procesarSolicitudFirmaDocumento()}" oncomplete="PF('dlgConfirmacionSolicitudFirma').hide();PF('dlgPreload').hide();" update=":form:tabView1:tblSolicitudDocumento"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" action="#{mbmantenimientooperaciongarantia.procesarSolicitudFirmaDocumento()}" oncomplete="PF('dlgConfirmacionSolicitudFirma').hide();PF('dlgPreload').hide();" update=":form:tabView1:tblSolicitudDocumento,:form:tabView1:panelListaDocumento"></p:commandButton>
 			</div>
 		</div>
 	</h:form>
@@ -3195,7 +3190,7 @@
 			</div>
 			<div class="ui-g ui-fluid pie">
 				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgConfirmacionDocumentoFirma').hide();"></p:commandButton>
-				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" action="#{mbmantenimientooperaciongarantia.procesarConfirmarFirmaDocumento()}" oncomplete="PF('dlgConfirmacionDocumentoFirma').hide();PF('dlgPreload').hide();" update=":frmDlgMensajeOperacionAjax"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" action="#{mbmantenimientooperaciongarantia.procesarConfirmarFirmaDocumento()}" oncomplete="PF('dlgConfirmacionDocumentoFirma').hide();PF('dlgPreload').hide();" update=":frmDlgMensajeOperacionAjax,:form:tabView1:panelListaDocumento,:form:tabView1:tblDetalleFlgReqLegal"></p:commandButton>
 			</div>
 		</div>
 	</h:form>
@@ -3219,7 +3214,7 @@
 			</div>
 			<div class="ui-g ui-fluid pie">
 				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgConfirmacionNotaria').hide();"></p:commandButton>
-				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" action="#{mbmantenimientooperaciongarantia.procesarConfirmarFirmaNotaria()}" oncomplete="PF('dlgConfirmacionNotaria').hide();PF('dlgPreload').hide();" update=":frmDlgMensajeOperacionAjax"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgPreload').show();" action="#{mbmantenimientooperaciongarantia.procesarConfirmarFirmaNotaria()}" oncomplete="PF('dlgConfirmacionNotaria').hide();PF('dlgPreload').hide();" update=":frmDlgMensajeOperacionAjax,:form:tabView1:panelListaDocumento,:form:tabView1:tblDetalleFlgReqLegal"></p:commandButton>
 			</div>
 		</div>
 	</h:form>

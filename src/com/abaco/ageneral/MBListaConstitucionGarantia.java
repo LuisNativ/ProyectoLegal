@@ -475,6 +475,7 @@ public class MBListaConstitucionGarantia implements Serializable {
 		eGarantia.setTipoDocumento(oEOperacionDocumento.getTipoDocumento());
 		eGarantia.setEstadoDocumentoLegal(oEOperacionDocumento.getEstadoDocumentoLegal());
 		eGarantia.setEstadoDocumentoNegocio(UEstado.FIRMACONFIRMADA);
+		eGarantia.setEstadoDocumentoNotaria(oEOperacionDocumento.getEstadoDocumentoNotaria());
 		eGarantia.setEstadoDocumento(oEOperacionDocumento.getEstadoDocumento());
         eGarantia.setUsuarioRegistro(oEUsuario);
         

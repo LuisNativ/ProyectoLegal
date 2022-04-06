@@ -42,10 +42,12 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.hibernate.validator.Email;
+import org.primefaces.component.tabview.TabView;
 import org.primefaces.context.RequestContext;
 
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.TabChangeEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -253,6 +255,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	@Getter @Setter private boolean colapsarPanelListaDocumento,colapsarPanelNotaria;
 	@Getter @Setter private boolean tooglePanelListaDocumento,tooglePanelNotaria;
 	@Getter @Setter private boolean visualizarBotonNuevoDocNotaria;
+	@Getter @Setter private boolean visualizarActualizarFirmaLegal;
 	@Getter @Setter private boolean indicadorNuevoDocumentoNotaria;
 	@Getter @Setter private boolean visualizarCondicionDesembolsoMinuta;
 	@Getter @Setter private boolean visualizarCondicionDesembolsoCHBF;
@@ -281,6 +284,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	
 	@Getter @Setter private boolean renderizarPolizaGarantia;
 	@Getter @Setter private boolean renderizarDetalleTasacion;
+	
+	@Getter @Setter private boolean renderizarDetalleDocumentoSolicitud;
 	
 	@PostConstruct
 	public void inicio() {
@@ -512,15 +517,17 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				visualizarTabDocumento = true;
 				visualizarTabPrestamos = true;
 				visualizarTabCumplimiento = true;
+				
 				listarDesplegable();
 				listarDetalleTasacionGarantia();
 				listarSolicitudDocumento();
 				listarInmueblesAdicionales();
-				listarDocumentoNotario();
+				//listarDocumentoNotario();
 				listarDocumentoGeneralGarantia();
 				listarSolicitudDesembolsoGarantia();
 				listarCreditosAsociadosGarantia();
 				validarConfirmacionDesembolso();
+				inicializarTab4CumplimientoReqLegal();
 				
 				
 				//Acciones para Negocios y sus Areas
@@ -715,6 +722,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		 colapsarPanelNotaria = true;
 		 tooglePanelNotaria = false;
 		 visualizarBotonNuevoDocNotaria = false;
+		 visualizarActualizarFirmaLegal = false;
 		 visualizarConfirmacionNotaria = false;
 		 indicadorNuevoDocumentoNotaria = false;
 		 visualizarCondicionDesembolsoCHBF = false;
@@ -739,6 +747,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		 codigoDepartamentoGarantia = 0;
 		 codigoProvinciaGarantia = 0;
 		 codigoDistritoGarantia = 0;
+		 renderizarDetalleDocumentoSolicitud = false;
 		 
 		 mensajeTablaPolizaPrestamo = UMensajeTabla.MSJ_1;
 	}
@@ -888,17 +897,20 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				 oEUsuario.getCodigoArea()  == 103     ||
 				 oEUsuario.getCodigoArea()  == 104     ||
 				 oEUsuario.getCodigoArea()  == 105){
-			ruta = "ListaConsultaGarantia.xhtml";
+			if(UAccionExterna.VER == accionExterna){
+				ruta = "ListaConsultaGarantia.xhtml";
+			}
 		}else if (oEUsuario.getCodigoArea()  == UArea.CREDITOS){
-			if(oEGarantiaLoad.getIndicadorAccion() == 1){
+			if(UAccionExterna.EDITARPARCIAL == accionExterna){
 				ruta = "ListaGarantiaTasacion.xhtml";		
+			}else if(UAccionExterna.VER == accionExterna){
+				ruta = "ListaConsultaGarantia.xhtml";
 			}else{
 				ruta = "ListaConsultaGarantia.xhtml";
 			}
-			
 		}
 		else {
-			ruta = "BandejaOperacionOtros.xhtml";
+			ruta = "ListaConsultaGarantia.xhtml";
 		}
 		
 		
@@ -913,10 +925,70 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	public void actualizarDatosAjax(){
 		listarSolicitudDocumento();
 		listarSolicitudDesembolsoGarantia();
-		listarDocumentoNotario();
+		//listarDocumentoNotario();
 		listarDocumentoGeneralGarantia();
 		if(oEOperacionDocumento != null) listarSolicitudDetalleDocumento(oEOperacionDocumento);
 		
+	}
+	
+	public void onTabChangeGarantia(TabChangeEvent event){
+		TabView tv = (TabView) event.getTab().getParent();	
+		
+		switch(tv.getActiveIndex()){
+		case 0: //Garantia
+			if(renderizarDetalleDocumentoSolicitud){
+				inicializarTab2Documentos();
+			}
+			if(lstDetalleFlagsReqLegal.size()>0){
+				inicializarTab4CumplimientoReqLegal();
+			}
+			
+			break;
+		case 1: // Documentos
+			if(lstDetalleFlagsReqLegal.size()>0){
+				inicializarTab4CumplimientoReqLegal();
+			}
+			break;
+		case 2: // Prestamos Asociados
+			if(renderizarDetalleDocumentoSolicitud){
+				inicializarTab2Documentos();
+			}
+			if(lstDetalleFlagsReqLegal.size()>0){
+				inicializarTab4CumplimientoReqLegal();
+			}
+			break;
+		case 3: // Cumplimiento Req Legal
+			if(renderizarDetalleDocumentoSolicitud){
+				inicializarTab2Documentos();
+			}
+			break;
+		default:
+			if(renderizarDetalleDocumentoSolicitud){
+				inicializarTab2Documentos();
+			}
+			if(lstDetalleFlagsReqLegal.size()>0){
+				inicializarTab4CumplimientoReqLegal();
+			}
+		}
+		
+	}
+	
+	private void inicializarTab2Documentos(){
+		renderizarDetalleDocumentoSolicitud = false;
+		visualizarNroSolicitud = false;
+		visualizarGrabarDocumento = false;
+		lstOperacionDocumentoLegalFiltro = new ArrayList<EOperacionDocumento>();
+		lstOperacionDocumentoNegociosFiltro = new ArrayList<EOperacionDocumento>();
+		lstDocumentoNotaria = new ArrayList<EOperacionDocumento>();
+		deshabilitarAdjuntaDocumento = true;
+		lstDocumentoCarga = new ArrayList<EDocumentoCarga>();
+	}
+	
+	private void inicializarTab4CumplimientoReqLegal(){
+		lstDetalleFlagsReqLegal = new ArrayList<EFlagReqLegal>();
+		visualizarBotonAnadirCondicionLegal = false;
+		oEOperacionDocumentoDesembolso = new EOperacionDocumento();
+		oEOperacionDocumentoDesembolso.setIndicadorConfirmacionDesembolso(0);
 	}
 	
 	//*************************************//
@@ -2262,9 +2334,10 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		if(UAccionExterna.EDITAR == accionExterna){
 			oEMensaje = oBOGarantia.modificarSolicitudDocumentoGarantia(eGarantia);
 		}
-		
+		inicializarTab2Documentos();
 		UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 		RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
+		
 	}
 	
 	/**Metodos de Detalle
@@ -2388,7 +2461,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		if(UAccionExterna.EDITAR == accionExterna){
 			oEMensaje = oBOGarantia.modificarSolicitudDocumentoyDesembolsoGarantia(eGarantia);
 		}
-		
+		inicializarTab2Documentos();
+		inicializarTab4CumplimientoReqLegal();
 		UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 		RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
 	}
@@ -2418,7 +2492,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		if(UAccionExterna.EDITAR == accionExterna){
 			oEMensaje = oBOGarantia.modificarDocumentoNotariayDesembolsoGarantia(eGarantia);
 		}
-		
+		inicializarTab2Documentos();
+		inicializarTab4CumplimientoReqLegal();
 		UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 		RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
 	}
@@ -2505,8 +2580,9 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			//oEMensaje = oBOGarantia.modificarSolicitudDesembolsoGarantia(eGarantia);
 			oEMensaje = oBOGarantia.modificarDetalleFlagRequisitoLegal(eFlagRequisitoLegal);
 		}
-		listarDetalleFlagRequisitoLegal(oEOperacionDocumentoDesembolso);
-		oEOpDocDesemb = oEOperacionDocumentoDesembolso;
+		//listarDetalleFlagRequisitoLegal(oEOperacionDocumentoDesembolso);
+		inicializarTab4CumplimientoReqLegal();
+		//oEOpDocDesemb = oEOperacionDocumentoDesembolso;
 		UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 		RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
 	}
@@ -2519,6 +2595,32 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		lstOperacionDocumentoDesembolso = oBOGarantia.listarSolicitudDesembolsoXNroGarantia(0,"",eGarantia);
 		
 		for(int i = 0; i<lstOperacionDocumentoDesembolso.size();i++){
+			if( lstOperacionDocumentoDesembolso.get(i).getEstadoDesembolso() != UEstado.FIRMACONFIRMADA){
+				lstDetalleFlagsReqLegal = oBOGarantia.listarDetalleFlagRequisitoLegal(lstOperacionDocumentoDesembolso.get(i).getCodigoSolicitudCredito(),lstOperacionDocumentoDesembolso.get(i).getSecuenciaGarantia());
+				if(lstDetalleFlagsReqLegal != null){
+					for(int j = 0; j<lstDetalleFlagsReqLegal.size();j++){
+						if(lstDetalleFlagsReqLegal.get(j).getNumeroFlag() == 2){
+							if(oEGarantiaData.getCodigoEstado() == UEstadoGarantia.BLOQUEADA){
+								if(lstDetalleFlagsReqLegal.get(j).getActualizacionFlag() != UActualizacionFlag.CUMPLIDOTOTAL ){
+									lstDetalleFlagsReqLegal.get(j).setActualizacionFlag(UActualizacionFlag.CUMPLIDOTOTAL);
+									oEMensaje = oBOGarantia.modificarDetalleFlagRequisitoLegal(lstDetalleFlagsReqLegal.get(j));
+									UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
+								}
+							}else{
+								if(lstDetalleFlagsReqLegal.get(j).getActualizacionFlag() != UActualizacionFlag.PENDIENTE ){
+									lstDetalleFlagsReqLegal.get(j).setActualizacionFlag(UActualizacionFlag.PENDIENTE);
+									oEMensaje = oBOGarantia.modificarDetalleFlagRequisitoLegal(lstDetalleFlagsReqLegal.get(j));
+									UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
+								}
+						
+							}
+							
+						}
+					}
+				}
+				
+				
+			}
 			if(oEOpDocDesemb!=null){
 				if(lstOperacionDocumentoDesembolso.get(i).getCodigoSolicitudCredito()  ==oEOpDocDesemb.getCodigoSolicitudCredito() ){
 					oEOperacionDocumentoDesembolso.setIndicadorConfirmacionDesembolso(lstOperacionDocumentoDesembolso.get(i).getIndicadorConfirmacionDesembolso());
@@ -2574,6 +2676,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	
 	public void evaluarDocumentoSolicitud(EOperacionDocumento oEOperacionDocumentoItem){
 		if(oEOperacionDocumentoItem != null){
+			renderizarDetalleDocumentoSolicitud = true;
 			listarSolicitudDetalleDocumento(oEOperacionDocumentoItem);
 			visualizarGrabarDocumento = false;
 			indicadorTituloDocumento = false;
@@ -2583,8 +2686,9 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			tooglePanelListaDocumento = true;
 			colapsarPanelNotaria = false;
 			visualizarBotonNuevoDocNotaria = oEOperacionDocumentoItem.getEstadoDocumentoNotaria() != 57 ? true : false;
+			visualizarActualizarFirmaLegal = oEOperacionDocumentoItem.getEstadoDocumento() == 55 ? true : false;
 			tooglePanelNotaria = true;
-			deshabilitarAdjuntaDocumento = oEOperacionDocumentoItem.getEstadoDocumento() == 60 ? true : false;
+			deshabilitarAdjuntaDocumento = oEOperacionDocumentoItem.getEstadoDocumento() == 60 || oEOperacionDocumentoItem.getEstadoDocumento() == 56 ? true : false;
 			visualizarEliminarDocumentoGarantia = oEOperacionDocumentoItem.getEstadoDocumento() == 55? true : false;
 			oEOperacionDocumento = oEOperacionDocumentoItem;
 			lstDocumentoCarga = new ArrayList<EDocumentoCarga>();
@@ -2611,28 +2715,35 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		 }
 	}
 		
-	public void listarDetalleFlagRequisitoLegal(EOperacionDocumento oEOperacionDocumentoDesembolso){
-		lstDetalleFlagsReqLegal = oBOGarantia.listarDetalleFlagRequisitoLegal(oEOperacionDocumentoDesembolso.getCodigoSolicitudCredito(),oEOperacionDocumentoDesembolso.getSecuenciaGarantia());
-		visualizarBotonAnadirCondicionLegal = oEOperacionDocumentoDesembolso.getEstadoDesembolso() == UEstado.FIRMACONFIRMADA ? false : true;
-		if(oEOperacionDocumentoDesembolso.getEstadoDesembolso() != UEstado.FIRMACONFIRMADA){
-			for(int i = 0 ; i<lstDetalleFlagsReqLegal.size();i++ ){
-				if(oEGarantiaData.getCodigoEstado() == UEstadoGarantia.BLOQUEADA &&
-				   lstDetalleFlagsReqLegal.get(i).getNumeroFlag() == 2 &&
-				   lstDetalleFlagsReqLegal.get(i).getActualizacionFlag() != UActualizacionFlag.CUMPLIDOTOTAL &&
-				   lstDetalleFlagsReqLegal.get(i).getModoIngresoFlag() == UModoIngreso.AUTOMATICO){
-					lstDetalleFlagsReqLegal.get(i).setIndicadorBloqueoRegistral(1);
+	public void listarDetalleFlagRequisitoLegal(EOperacionDocumento oEOperacionDocumentoDesembolsoItem){
+		lstDetalleFlagsReqLegal = oBOGarantia.listarDetalleFlagRequisitoLegal(oEOperacionDocumentoDesembolsoItem.getCodigoSolicitudCredito(),oEOperacionDocumentoDesembolsoItem.getSecuenciaGarantia());
+		visualizarBotonAnadirCondicionLegal = oEOperacionDocumentoDesembolsoItem.getEstadoDesembolso() == UEstado.FIRMACONFIRMADA ? false : true;
+		int cantidadFlagAutomatico= 0 ;
+		if(oEOperacionDocumentoDesembolsoItem.getEstadoDesembolso() != UEstado.FIRMACONFIRMADA){
+			if(lstDetalleFlagsReqLegal != null){
+				for(int i = 0 ; i<lstDetalleFlagsReqLegal.size();i++ ){
+					if(lstDetalleFlagsReqLegal.get(i).getNumeroFlag() == 4 && 
+					   lstDetalleFlagsReqLegal.get(i).getActualizacionFlag() != UActualizacionFlag.CUMPLIDOTOTAL &&
+						lstDetalleFlagsReqLegal.get(i).getModoIngresoFlag() == UModoIngreso.AUTOMATICO){
+						lstDetalleFlagsReqLegal.get(i).setIndicadorCartaFianza(1);
+					}
+					
+					if(lstDetalleFlagsReqLegal.get(i).getModoIngresoFlag() == UModoIngreso.MANUAL){
+						lstDetalleFlagsReqLegal.get(i).setIndicadorVisualizarAccion(1);
+					}
+					
+					if(lstDetalleFlagsReqLegal.get(i).getModoIngresoFlag() == UModoIngreso.AUTOMATICO &&
+					   lstDetalleFlagsReqLegal.get(i).getActualizacionFlag() == UActualizacionFlag.CUMPLIDOTOTAL){
+						cantidadFlagAutomatico ++;
+						
+					}
 				}
-				
-				if(lstDetalleFlagsReqLegal.get(i).getNumeroFlag() == 4 && 
-				   lstDetalleFlagsReqLegal.get(i).getActualizacionFlag() != UActualizacionFlag.CUMPLIDOTOTAL &&
-					lstDetalleFlagsReqLegal.get(i).getModoIngresoFlag() == UModoIngreso.AUTOMATICO){
-					lstDetalleFlagsReqLegal.get(i).setIndicadorCartaFianza(1);
-				}
-				
-				if(lstDetalleFlagsReqLegal.get(i).getModoIngresoFlag() == UModoIngreso.MANUAL){
-					lstDetalleFlagsReqLegal.get(i).setIndicadorVisualizarAccion(1);
+				List<EFlagReqLegal> eFlagCumplidos = lstDetalleFlagsReqLegal.stream().filter(x -> x.getModoIngresoFlag() == UModoIngreso.AUTOMATICO ).collect(Collectors.toList());
+				if(cantidadFlagAutomatico == eFlagCumplidos.size()){
+					oEOperacionDocumentoDesembolso.setIndicadorConfirmacionDesembolso(1);
 				}
 			}
+			
 		}
 	}
 	
@@ -2654,6 +2765,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	public void visualizarDlgEditarFlag(EFlagReqLegal eFlagReqLegalItem){
 		if(eFlagReqLegalItem != null){
 			oEFlagRequisitoLegalData = eFlagReqLegalItem;
+			deshabilitarCampoFlagReqLeg = false;
 			RequestContext.getCurrentInstance().execute("PF('dlgNuevoFlagReqLegal').show();");
 		}
 		
@@ -2678,7 +2790,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 		listarDetalleFlagRequisitoLegal(oEOperacionDocumentoDesembolso);
 		UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 		RequestContext.getCurrentInstance().execute("PF('dlgNuevoFlagReqLegal').hide();");
-		RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
+		//RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
 		
 	}
 	
@@ -2695,7 +2807,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				oEMensaje = oBOGarantia.eliminarDetalleFlagRequisitoLegal(oEFlagRequisitoLegalData);
 				listarDetalleFlagRequisitoLegal(oEOperacionDocumentoDesembolso);
 				UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
-				RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
+				//RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
 			}
 		}
 	}

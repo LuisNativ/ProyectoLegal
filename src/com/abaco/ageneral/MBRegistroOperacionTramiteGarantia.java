@@ -312,19 +312,27 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 	
 	public void salir() {
 		String ruta = "";
-		
-		if(oEUsuario.getCodigoArea() == UArea.LEGAL){
-			ruta = "ListaGarantiaPorConstituir.xhtml";
-		}else{
-			ruta = "BandejaOperacionOtros.xhtml";
-		}
-		
 		UManejadorSesionWeb.eliminaVariableSesion(UVariablesSesion.ACCION_EXTERNA);
 		UManejadorSesionWeb.eliminaVariableSesion(UVariablesSesion.FICHA_PARAMETRO);
-		UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.TABVIEWINDEX, 1);
 		
-		UGeneradorQueryString objUGeneradorQueryString = new UGeneradorQueryString(ruta);
-		UManejadorSesionWeb.redirigePagina(objUGeneradorQueryString.obtieneUrlConParametros());
+		if(oEUsuario.getCodigoArea() == UArea.LEGAL){
+			//ruta = "ListaGarantiaPorConstituir.xhtml";
+			ruta = "MantenimientoOperacionGarantia.xhtml";
+			
+				UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.EDITAR);
+				UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.FICHA_PARAMETRO,oEGarantiaLoad);
+				UGeneradorQueryString objUGeneradorQueryString = new UGeneradorQueryString(ruta);
+				UManejadorSesionWeb.redirigePagina(objUGeneradorQueryString.obtieneUrlConParametros());
+			
+		}else{
+			ruta = "ListaGarantiaPorConstituir.xhtml";
+			UGeneradorQueryString objUGeneradorQueryString = new UGeneradorQueryString(ruta);
+			UManejadorSesionWeb.redirigePagina(objUGeneradorQueryString.obtieneUrlConParametros());
+
+		}
+		
+		//UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.TABVIEWINDEX, 1);			
+		
 	}
 	
 	
