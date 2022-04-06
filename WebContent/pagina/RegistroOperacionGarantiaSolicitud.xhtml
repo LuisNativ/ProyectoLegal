@@ -63,40 +63,55 @@
 						    <i class="fas fa-clipboard"></i> Datos Generales 
 						</f:facet>
 						<div class="ui-g ui-fluid ui-g-nopad">
-							<div class="ui-g-12 ui-md-2 ui-lg-2">
-								<p:outputLabel value="Nro. Solicitud" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.numeroSolicitud}" disabled="true"></p:inputText>
+							<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+								<div class="ui-g-3">
+									<p:outputLabel value="Nro. Solicitud" styleClass="dsLabel1"/>
+									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.numeroSolicitud}" disabled="true"></p:inputText>
+								</div>
+								<div class="ui-g-9">
+									<p:outputLabel value="Socio" styleClass="dsLabel1"/>
+									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.codigoCliente}, #{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.nombreLargo}" disabled="true"></p:inputText>
+								</div>
 							</div>
-							<div class="ui-g-12 ui-md-3 ui-lg-4">
-								<p:outputLabel value="Socio" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.codigoCliente}, #{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.nombreLargo}" disabled="true"></p:inputText>
+							<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+								<div class="ui-g-5">
+									<p:outputLabel value="Clase Garantía" styleClass="dsLabel1"/>
+									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.descripcionTipoGarantia}" disabled="true"></p:inputText>
+								</div>
+								<div class="ui-g-4">
+									<p:outputLabel value="Tipo Garantía Real" styleClass="dsLabel1"/>
+									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.descripcionTipoGarantiaReal}" disabled="true"></p:inputText>
+							    </div>
+							    <div class="ui-g-3">
+									<p:outputLabel value="Secuencia" styleClass="dsLabel1"/>
+									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.secuenciaGarantia}" disabled="true"></p:inputText>
+							    </div>
 							</div>
-							<div class="ui-g-12 ui-md-3 ui-lg-3">
-								<p:outputLabel value="Clase Garantía" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.descripcionTipoGarantia}" disabled="true"></p:inputText>
+							<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+								<div class="ui-g-12">
+									<p:outputLabel value="Descripción de la Garantía" styleClass="dsLabel1"/>
+									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.descripcionGarantiaReal}" disabled="true"></p:inputText>
+								</div>
 							</div>
-							<div class="ui-g-10 ui-md-2 ui-lg-2">
-								<p:outputLabel value="Tipo Garantía Real" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.descripcionTipoGarantiaReal}" disabled="true"></p:inputText>
-						    </div>
-						    <div class="ui-g-2 ui-md-1 ui-lg-1">
-								<p:outputLabel value="Secuencia" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.secuenciaGarantia}" disabled="true"></p:inputText>
-						    </div>
-						    <div class="ui-g-6">
-								<p:outputLabel value="Descripción de la Garantía" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.descripcionGarantiaReal}" disabled="true"></p:inputText>
-							</div>
-							<div class="ui-g-6 ui-g-nopad">
-								<div class="ui-g-6">
+
+							<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
+								<div class="ui-g-4">
 									<p:outputLabel value="Moneda" styleClass="dsLabel1"/>
 									<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.descripcionMonedaGarantia}" disabled="true"></p:inputText>
 								</div>
-								<div class="ui-g-6">
+								<div class="ui-g-4">
 									<p:outputLabel value="Importe Garantía" styleClass="dsLabel1"/>
 									<div class="ui-inputgroup">
 										<div class="ui-inputgroup-addon">#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaGarantia}</div>
 										<p:inputNumber styleClass="dsInput1" inputStyleClass="dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.montoGarantia}" disabled="true" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
+										</p:inputNumber>
+									</div>
+								</div>
+								<div class="ui-g-4">
+									<p:outputLabel value="Monto Solicitud" styleClass="dsLabel1"/>
+									<div class="ui-inputgroup">
+										<div class="ui-inputgroup-addon">#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaSolicitud}</div>
+										<p:inputNumber styleClass="dsInput1" inputStyleClass="dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.montoSolicitud}" disabled="true" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">
 										</p:inputNumber>
 									</div>
 								</div>
@@ -376,7 +391,7 @@
 						   		</div>
 						   		<p:fieldset id="idMontosSolicitud" legend="Solicitud" toggleable="false" toggleSpeed="500" styleClass="dsFieldSet1" style="width: 90% !important;"> 		
 									<div class="ui-g-4">
-										<p:outputLabel value="Monto Solicitado Crédito" styleClass="dsLabel1"/>
+										<p:outputLabel value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.secuenciaGarantia eq 1 ? 'Monto Solicitado Crédito' : 'Monto Solicitud Saldo'}" styleClass="dsLabel1"/>
 										<div class="ui-inputgroup">
 											<div class="ui-inputgroup-addon">#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaSolicitud}</div>
 											<p:inputNumber  styleClass="dsInput1" inputStyleClass="dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.montoSaldoSolicitud}" disabled="true" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">

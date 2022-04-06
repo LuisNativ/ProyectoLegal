@@ -1678,6 +1678,11 @@ public class CGarantia {
 				throw new Exception(mensaje.getDescMensaje());
 			}
 			
+			mensaje = oDAOGarantia.modificarTipoIngresoPorcentaje(eGarantiaSolicitud);
+			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+				throw new Exception(mensaje.getDescMensaje());
+			}
+			
 			if(lstDocumentoCarga != null){
 				if(lstDocumentoCarga.size() > 0){
 					for(EDocumentoCarga oEDocumentoCarga: lstDocumentoCarga){
@@ -1831,6 +1836,11 @@ public class CGarantia {
 			}
 			
 			mensaje = oDAOGarantia.modificarGarantiaSolicitud(oEGarantiaAsociadaSolicitud);
+			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+				throw new Exception(mensaje.getDescMensaje());
+			}
+			
+			mensaje = oDAOGarantia.modificarTipoIngresoPorcentaje(oEGarantiaAsociadaSolicitud);
 			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
 				throw new Exception(mensaje.getDescMensaje());
 			}

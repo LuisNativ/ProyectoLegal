@@ -168,6 +168,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 	private int accionExterna;
 	private int indexPropietario;
 	private int indicadorSalida;
+	private int indicadorTipoIngreso;
 	@Getter @Setter private String observacionConformidad,observacionSolicitud;
 	
 	//Para Documento
@@ -245,49 +246,21 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 					if(oEGarantiaSolicitudData == null){
 						this.oEGarantiaSolicitudData = new EGarantiaSolicitud();
 					}
+					if(oEGarantiaAsociadaSolicitudData == null){
+						this.oEGarantiaAsociadaSolicitudData = new EGarantiaSolicitud();
+					}
 					
+					if(oEGarantiaDetalleSolicitudData == null){
+						this.oEGarantiaDetalleSolicitudData = new EGarantiaDetalleSolicitud();
+					}
 	
-					
-					
+					indicadorTipoIngreso = oEGarantiaAsociadaSolicitudData.getTipoIngreso() == 0 ? 0 : oEGarantiaAsociadaSolicitudData.getTipoIngreso();
 					oEGarantiaSolicitudData.setCodigoCliente(oEGarantiaSolicitudLoad.getCodigoCliente());
 					oEGarantiaSolicitudData.setNombreLargo(oEGarantiaSolicitudLoad.getNombreLargo());
 					oEGarantiaSolicitudData.setCodigoMonedaSolicitud(oEGarantiaSolicitudLoad.getCodigoMonedaSolicitud());
 					oEGarantiaSolicitudData.setAbreviacionMonedaSolicitud(oEGarantiaSolicitudLoad.getAbreviacionMonedaSolicitud());
 					oEGarantiaSolicitudData.setDescripcionMonedaSolicitud(oEGarantiaSolicitudLoad.getDescripcionMonedaSolicitud());
 					oEGarantiaSolicitudData.setMontoSolicitud(oEGarantiaSolicitudLoad.getMontoSolicitud());
-					/*
-					lstSolicitudGarantiaSaldos = oBOGarantia.listarSolicitudAnexoGarantia(oEGarantiaSolicitudLoad.getNumeroSolicitud());
-					
-					if(lstSolicitudGarantiaSaldos != null){
-						if(lstSolicitudGarantiaSaldos.size()>1){
-							for (int i=0;i<lstSolicitudGarantiaSaldos.size();i++){
-								if(lstSolicitudGarantiaSaldos.get(i).getSaldoDisponibleMontoSolicitud()>0 && lstSolicitudGarantiaSaldos.get(i).getPorcentajeCubiertoSolicitud()==0){
-									for (int j=0;j<lstSolicitudGarantiaSaldos.size();j++){
-										if(lstSolicitudGarantiaSaldos.get(j).getSaldoDisponibleMontoSolicitud()>0){
-											if(lstSolicitudGarantiaSaldos.get(i).getSaldoDisponibleMontoSolicitud()<=lstSolicitudGarantiaSaldos.get(j).getSaldoDisponibleMontoSolicitud()){
-												oEGarantiaSolicitudData.setMontoSolicitud(lstSolicitudGarantiaSaldos.get(i).getSaldoDisponibleMontoSolicitud());
-											}
-											
-										}
-									}
-									
-								}else{
-									if(lstSolicitudGarantiaSaldos.get(i).getPorcentajeCubiertoSolicitud()==100 && lstSolicitudGarantiaSaldos.get(i).getSecuenciaGarantia()==oEGarantiaSolicitudData.getSecuenciaGarantia()){
-										oEGarantiaSolicitudData.setMontoSolicitud(lstSolicitudGarantiaSaldos.get(i).getSaldoDisponibleMontoSolicitud());
-										break;
-									}
-									
-								}
-							}
-						}
-						
-					}
-					*/
-					
-
-					if(oEGarantiaDetalleSolicitudData == null){
-						this.oEGarantiaDetalleSolicitudData = new EGarantiaDetalleSolicitud();
-					}
 					
 
 					indicadorSalir = 1;
@@ -553,6 +526,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		visualizarBotonPolizaGarantia = false;
 		indicadorSalida = 0;
 		deshabilitarObservacionSolicitud = true;
+		indicadorTipoIngreso = 0;
 	}
 	
 	public void listarDesplegable(){
@@ -605,6 +579,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		oEGarantiaAsociadaSolicitud.setUsuarioRegistro(oEUsuario);
 		oEGarantiaAsociadaSolicitud.setCodigoCliente(oEGarantiaSolicitudData.getCodigoCliente());
 		oEGarantiaAsociadaSolicitud.setNombreLargo(oEGarantiaSolicitudData.getNombreLargo());
+		oEGarantiaAsociadaSolicitud.setTipoIngreso(indicadorTipoIngreso);
 		oEGarantiaSolicitud.setFechaRegistro(new Date());
 		oEGarantiaSolicitud.setUsuarioRegistro(oEUsuario);
 		oEGarantia.setUsuarioRegistro(oEUsuario);
@@ -695,6 +670,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		
 		oEGarantiaAsociadaSolicitud.setFechaRegistro(new Date());
 		oEGarantiaAsociadaSolicitud.setUsuarioRegistro(oEUsuario);
+		oEGarantiaAsociadaSolicitud.setTipoIngreso(indicadorTipoIngreso);
 		oEGarantiaSolicitud.setUsuarioRegistro(oEUsuario);
 		
 		oEGarantiaDetalleSolicitud.setCodigoUbigeo(UFuncionesGenerales.convierteCadenaAEntero(
@@ -986,7 +962,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		double montoVRI = oEGarantiaAsociadaSolicitudData.getMontoValorRealizacion() != 0 ? oEGarantiaAsociadaSolicitudData.getMontoValorRealizacion() : 0;
 		//double montoGarantia = oEGarantiaSolicitudData.getMontoGarantia() != 0 ? oEGarantiaSolicitudData.getMontoGarantia(): 1;
 		double montoDisponible = 0;
-		
+		indicadorTipoIngreso = UModoIngreso.AUTOMATICO;
 		//Evaluamos la Moneda de la Solicitud y Garantía
 		if(oEGarantiaSolicitudData.getCodigoMonedaGarantia() == oEGarantiaSolicitudData.getCodigoMonedaSolicitud() ){
 			
@@ -1086,8 +1062,11 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 				}
 			}
 			
+			
+			
 		}else{
 			mensajePorcentaje = "No se puede Calcular";
+			indicadorTipoIngreso = 0;
 		}
 		
 	}
@@ -1363,16 +1342,19 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
   		EGarantiaSolicitud eGarantiaSolicitud = oEGarantiaAsociadaSolicitudData;
   		if(deshabilitarPorcentaje == true) {
   			deshabilitarPorcentaje = false;
-  			eGarantiaSolicitud.setTipoIngreso(UModoIngreso.MANUAL);
+  			indicadorTipoIngreso = UModoIngreso.MANUAL;
+  			/*eGarantiaSolicitud.setTipoIngreso(UModoIngreso.MANUAL);
   			eGarantiaSolicitud.setUsuarioRegistro(oEUsuario);
-  			oEMensaje = oBOGarantia.modificarTipoIngresoPorcentaje(eGarantiaSolicitud);
+  			oEMensaje = oBOGarantia.modificarTipoIngresoPorcentaje(eGarantiaSolicitud);*/
   			mensajePorcentaje = "";	
-  		}
-  		else {		
+  		}else {		
   			deshabilitarPorcentaje = true;
+  			indicadorTipoIngreso = UModoIngreso.AUTOMATICO;
+  			/*
   			eGarantiaSolicitud.setTipoIngreso(UModoIngreso.AUTOMATICO);
   			eGarantiaSolicitud.setUsuarioRegistro(oEUsuario);
   			oEMensaje = oBOGarantia.modificarTipoIngresoPorcentaje(eGarantiaSolicitud);
+  			*/
   			calcularPorcentaje();
   		}
   		

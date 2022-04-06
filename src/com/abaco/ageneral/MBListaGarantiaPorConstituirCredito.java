@@ -263,7 +263,14 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 	public void evaluarSolicitud(EGarantiaSolicitud oEGarantiaSolicitudItem) {
 		String ruta = "";
 		if (oEGarantiaSolicitudItem != null) {
+			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.ACCION_EXTERNA, UAccionExterna.NUEVO);
+			UManejadorSesionWeb.registraVariableSesion(UVariablesSesion.FICHA_PARAMETRO, oEGarantiaSolicitudItem);
 			
+			ruta = "RegistroOperacionGarantiaSolicitud.xhtml";
+			UGeneradorQueryString objUGeneradorQueryString = new UGeneradorQueryString(ruta);
+			UManejadorSesionWeb.redirigePagina(objUGeneradorQueryString.obtieneUrlConParametros());
+			
+			/*
 			if(oEGarantiaSolicitudItem.getSecuenciaGarantia()>1){
 				lstSolicitudGarantiaSaldos = oBOGarantia.listarSolicitudAnexoGarantia(oEGarantiaSolicitudItem.getNumeroSolicitud());
 				for(int i=0;i<lstSolicitudGarantiaSaldos.size();i++){
@@ -291,7 +298,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 				UGeneradorQueryString objUGeneradorQueryString = new UGeneradorQueryString(ruta);
 				UManejadorSesionWeb.redirigePagina(objUGeneradorQueryString.obtieneUrlConParametros());
 			}
-			
+			*/
 		
 		}
 	}
