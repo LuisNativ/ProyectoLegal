@@ -169,7 +169,8 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 	
 	//Indicadores
 	private int indicadorTemporal;
-	@Getter @Setter private int indicadorValidarBtnEnviar;
+	//@Getter @Setter private int indicadorValidarBtnEnviar;
+	@Getter @Setter private boolean indicadorValidarBtnLiberar;
 	
 	//Control de Acciones
 	@Getter @Setter private boolean deshabilitar;
@@ -319,18 +320,20 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 								visualizarBtnGenerarDocumento3 = true;
 							}
 						}
-						indicadorValidarBtnEnviar = 1;
+						//indicadorValidarBtnEnviar = 1;
+						indicadorValidarBtnLiberar = true;
 					}else if(oEGarantiaSolicitudLoad.getCodigoEstadoLevantamiento() == UEstadoOperacionLevantamiento.OBSERVADO){
 						visualizarPnlInforme = true;
 						visualizarPnlDocumentoLevantamiento = true;
 						visualizarBtnEntregar = true;
 						visualizarBtnArchivar = true;
-						indicadorValidarBtnEnviar = 0;
+						//indicadorValidarBtnEnviar = 0;
 					}else if(oEGarantiaSolicitudLoad.getCodigoEstadoLevantamiento() == UEstadoOperacionLevantamiento.ENEVALUACION){
 						visualizarPnlDocumentoLevantamiento = true;
 						visualizarBtnEnProcesoLevantamiento = true;
 						visualizarBtnLiberar = true;
-						indicadorValidarBtnEnviar = 0;
+						//indicadorValidarBtnEnviar = 0;
+						indicadorValidarBtnLiberar = true;
 					}else if(oEGarantiaSolicitudLoad.getCodigoEstadoLevantamiento() == UEstadoOperacionLevantamiento.LIBERADO){
 						visualizarPnlDocumentoLevantamiento = true;
 						visualizarBtnGrabar = true;
@@ -377,7 +380,8 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 			listarMensaje();
 			listarDocumento();
 			listarUbigeoGarantia();
-			habilitarAccionEnviar();
+			//habilitarAccionEnviar();
+			habilitarAccionLiberar();
 			//Adicional
 			listarCreditosAsociadosGarantia();
 			listarClienteAsociadosGarantia();
@@ -687,7 +691,6 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 			}
 		}
 		files = new ArrayList<UploadedFile>();
-		habilitarAccionEnviar();
 	}
 	
 	public void descargarDocumento(EOperacionDocumento oEOperacionDocumentoItem) {
@@ -714,15 +717,17 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 	//*************************************//
 	//Metodos para validar envio
 	//*************************************//
-	public void habilitarAccionEnviar(){
-		if(indicadorValidarBtnEnviar == 1){
+	public void habilitarAccionLiberar(){
+		deshabilitarBtnGrabar = true;
+		if(indicadorValidarBtnLiberar){
 			if(lstOperacionDocumentoFiltro.size() >= URegla.LIBERAR_NUMERO_MIN_ADJUNTA){
-				deshabilitarBtnGrabar = false;
-			}else{
-				deshabilitarBtnGrabar = true;
+				for(int i=0;i<lstOperacionDocumentoFiltro.size();i++){
+					if(lstOperacionDocumentoFiltro.get(i).getEstadoDocumento() == UEstado.ENTRAMITE){
+						deshabilitarBtnGrabar = false;
+						break;
+					}
+				}
 			}
-		}else {
-			deshabilitarBtnGrabar = false;
 		}
 	}
 	/*
@@ -946,6 +951,8 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 		codigoEstadoDocumento = 0;
 		indicadorTemporal = UIndicadorTemporal.NO;
 		
+		indicadorValidarBtnLiberar = false;
+		
 		deshabilitar = true;
 		deshabilitarBtnGrabar = true;
 		
@@ -1010,6 +1017,7 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 		oEMensaje = oBOGarantia.agregarDocumentoGarantia(oEGarantia, elstDocumentoCarga);	
 		deshabilitarGrabarDocumento = true;
 		lstDocumentoCarga = new ArrayList<EDocumentoCarga>();
+		
 		UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 		RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
 	}
@@ -1124,6 +1132,8 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
     
     public void actualizarDatoasAjax(){
 		listarDocumento();
+		//habilitarAccionEnviar();
+		habilitarAccionLiberar();
 	}
     
     public void listarClienteAsociadosGarantia(){

@@ -603,7 +603,7 @@
 					style="#{mbregistrooperacionlevantamientogarantia.deshabilitarGrabarDocumento ? 'display: none;' : 'display:inline-block;'}"
 					action="#{mbregistrooperacionlevantamientogarantia.grabarDocumento()}" immediate="true"
 					onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
-					update=":form:tblDocumentoCarga,:form:btnGuardarDocumento,:frmDlgMensajeOperacionAjax,:form:btnEnviar">
+					update=":form:tblDocumentoCarga,:form:btnGuardarDocumento,:frmDlgMensajeOperacionAjax">
 				</p:commandButton>
 	       </f:facet>
 	       <div class="ui-g ui-fluid ui-g-nopad">
@@ -726,7 +726,7 @@
 						<p:column headerText="Cod.Socio" styleClass="dsTextoCentro" width="5%">
 							 <h:outputText value="#{item.codigoCliente}"/>	
 						</p:column>
-						<p:column headerText="Socio" styleClass="dsTextoCentro" width="15%">
+						<p:column headerText="Socio" styleClass="dsTextoCentro" width="12%">
 							 <div class="dsTextoCorto">
 							 	<h:outputText value="#{item.nombreCliente}"/>
 							 </div>	
@@ -739,7 +739,7 @@
 						<p:column headerText="" styleClass="dsTextoCentro">
 							<h:outputText value="#{item.abreviacionMoneda}"/>
 						</p:column>
-						<p:column headerText="Importe Asig." styleClass="dsTextoCentro" width="9%">
+						<p:column headerText="Importe Asig." styleClass="dsTextoCentro" width="8%">
 							<h:outputText value="#{item.montoImporteCubierto}">
 			                    <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
 			                </h:outputText>
@@ -747,7 +747,7 @@
 						<p:column headerText="" styleClass="dsTextoCentro">
 							<h:outputText value="#{item.abreviacionMoneda}"/>
 						</p:column>
-						<p:column headerText="Saldo Crédito" styleClass="dsTextoCentro" width="9%">
+						<p:column headerText="Saldo Crédito" styleClass="dsTextoCentro" width="8%">
 							<h:outputText value="#{item.montoSaldoCredito}">
 			                    <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
 			                </h:outputText>
@@ -762,12 +762,12 @@
 						<p:column headerText="" styleClass="dsTextoCentro">
 							<h:outputText value="#{mbregistrooperacionlevantamientogarantia.oEGarantiaData.abreviacionMoneda}"/>
 						</p:column>
-						<p:column headerText="Mto.Coberturado" styleClass="dsTextoCentro" width="9%">
+						<p:column headerText="Mto.Coberturado" styleClass="dsTextoCentro" width="8%">
 							<h:outputText value="#{item.montoConversionCoberturado}">
 			                	<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
 			                </h:outputText>
 						</p:column>
-						<p:column headerText="% Coberturado" styleClass="dsTextoCentro" width="9%">
+						<p:column headerText="% Coberturado" styleClass="dsTextoCentro" width="8%">
 							<h:outputText value="#{item.porcentajeCoberturado}">
 			                    <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" maxFractionDigits="2" />
 			                </h:outputText>
@@ -1051,7 +1051,7 @@
 				</div>
 			</div>
 			<div class="pie">
-				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperacionlevantamientogarantia.actualizarDatoasAjax()}" update=":form:tblOperacionDocumento"></p:commandButton> 
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperacionlevantamientogarantia.actualizarDatoasAjax()}" update=":form:tblOperacionDocumento, :form:btnEnviar"></p:commandButton> 
 			</div>
 		</div>
 	</h:form>

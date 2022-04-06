@@ -102,6 +102,7 @@ public class UManejadorArchivo {
 		return mensaje;
 	}
 	
+	/*
 	public Mensaje guardarDocumento(EOperacionSolicitud eOperacionSolicitud, EDocumentoCarga eDocumentoCarga){
 		BOLaserFiche oBOLaserFiche = new BOLaserFiche();
 		Documento documento = new Documento();
@@ -112,14 +113,6 @@ public class UManejadorArchivo {
 			int tipocliente = 1;
 			
 			clasificacion = 1;
-			
-			/*
-			if(eOperacionSolicitud.getCodigoTipoDocumentoPersona().equals(UTipoDocumento.RUC)){
-				clasificacion = 9;
-			}else{
-				clasificacion = 6;
-			}
-			*/
 			
 			if(eOperacionSolicitud.getCodigoTipoClientePersona() == UTipoClienteSolicitudCredito.COD_POSTULANTE){
 				tipocliente = 2;
@@ -147,7 +140,9 @@ public class UManejadorArchivo {
 		}
 		return mensaje;
 	}
+	*/
 	
+	/*
 	public Mensaje guardarDocumentoOperacionSolicitud(EEvaluacionSolicitudCreditoLegal eEvaluacionSolicitudCreditoLegal, EDocumentoCarga eDocumentoCarga){
 		BOLaserFiche oBOLaserFiche = new BOLaserFiche();
 		Documento documento = new Documento();
@@ -183,6 +178,7 @@ public class UManejadorArchivo {
 		}
 		return mensaje;
 	}
+	*/
 	
 	public Mensaje guardarDocumentoOperacionCliente(EOperacionCliente eOperacionSolicitudCredito, EDocumentoCarga eDocumentoCarga){
 		BOLaserFiche oBOLaserFiche = new BOLaserFiche();
@@ -193,9 +189,10 @@ public class UManejadorArchivo {
 			int clasificacion = 1;
 			int tipocliente = 1;
 			
-			if(eOperacionSolicitudCredito.getCodigoTipoCliente() == UTipoCliente.COD_POSTULANTE){
+			if(eOperacionSolicitudCredito.getCodigoTipoCliente() == UTipoClienteSolicitudCredito.COD_POSTULANTE ||
+				eOperacionSolicitudCredito.getCodigoTipoCliente() == UTipoClienteSolicitudCredito.COD_INVERSIONISTA){
 				tipocliente = 2;
-			}else if(eOperacionSolicitudCredito.getCodigoTipoCliente() == UTipoCliente.COD_SOCIO){
+			}else if(eOperacionSolicitudCredito.getCodigoTipoCliente() == UTipoClienteSolicitudCredito.COD_SOCIO){
 				tipocliente = 1;
 			}
 			

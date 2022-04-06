@@ -57,6 +57,7 @@ import com.abaco.negocio.util.UConstante.UAccionExterna;
 import com.abaco.negocio.util.UConstante.UAccionInterna;
 import com.abaco.negocio.util.UConstante.UAccionTabla;
 import com.abaco.negocio.util.UConstante.UArea;
+import com.abaco.negocio.util.UConstante.UCorrelativoCliente;
 import com.abaco.negocio.util.UConstante.UEstadoLegal;
 import com.abaco.negocio.util.UConstante.UEstadoOperacionCliente;
 import com.abaco.negocio.util.UConstante.UMaximoTamanio;
@@ -348,6 +349,7 @@ public class MBRegistroOperacionCliente implements Serializable {
 	/* Variables Internas */
 	/**********************/
 	@Getter @Setter private int codigoEstado;
+	@Getter @Setter private int codigoTipoCliente;
 	
 	private int accionExterna;
 	@Getter @Setter private int accionInternaRepresenanteLegal;
@@ -497,6 +499,27 @@ public class MBRegistroOperacionCliente implements Serializable {
 					oEOperacionClienteData = oBOOperacion.buscarEvaluacionCliente(oEOperacionClienteLoad.getNumeroSolicitud(), oEOperacionClienteLoad.getCodigoTipoCliente(), oEOperacionClienteLoad.getCodigoCliente());
 					oEInformeLegalAdicionalData = oBOSolicitudCredito.buscarInformeLegalAdicional(oEOperacionClienteLoad.getNumeroSolicitud(), oEOperacionClienteLoad.getCodigoCliente(), oEOperacionClienteLoad.getCodigoTipoCliente());
 					
+					if(oEOperacionClienteLoad.getCodigoTipoCliente() == UTipoClienteSolicitudCredito.COD_SOCIO){
+						codigoTipoCliente = UTipoCliente.COD_SOCIO;
+						oEClienteData = oBOCliente.buscarSocio(oEOperacionClienteLoad.getCodigoCliente());
+						oEClienteConstitucionEmpresaData = oBOCliente.buscarConstitucionEmpresa(oEOperacionClienteLoad.getCodigoCliente());
+					}else if (oEOperacionClienteLoad.getCodigoTipoCliente() == UTipoClienteSolicitudCredito.COD_POSTULANTE){
+						if(oEOperacionClienteLoad.getCodigoCliente() > UCorrelativoCliente.TERCERO){
+							codigoTipoCliente = UTipoCliente.COD_TERCERO;
+							oETerceroData = oBOCliente.buscarTercero(oEOperacionClienteLoad.getCodigoCliente());
+							//oEClienteConstitucionEmpresaData = oBOCliente.buscarConstitucionEmpresa(oEOperacionClienteLoad.getCodigoCliente());
+						}else {
+							codigoTipoCliente = UTipoCliente.COD_POSTULANTE;
+							oEClienteData = oBOCliente.buscarPostulante(oEOperacionClienteLoad.getCodigoCliente());
+							oEClienteConstitucionEmpresaData = oBOCliente.buscarConstitucionEmpresa(oEOperacionClienteLoad.getCodigoCliente());
+						}
+					}else if (oEOperacionClienteLoad.getCodigoTipoCliente() == UTipoClienteSolicitudCredito.COD_INVERSIONISTA){
+						codigoTipoCliente = UTipoCliente.COD_NO_SOCIO;
+						oEClienteData = oBOCliente.buscarNoSocio(oEOperacionClienteLoad.getCodigoCliente());
+						//oEClienteConstitucionEmpresaData = oBOCliente.buscarConstitucionEmpresa(oEOperacionClienteLoad.getCodigoCliente());
+					}
+					
+					/*
 					if(oEOperacionClienteLoad.getCodigoTipoCliente() == UTipoCliente.COD_SOCIO){
 						oEClienteData = oBOCliente.buscarSocio(oEOperacionClienteLoad.getCodigoCliente());
 						oEClienteConstitucionEmpresaData = oBOCliente.buscarConstitucionEmpresa(oEOperacionClienteLoad.getCodigoCliente());
@@ -510,6 +533,7 @@ public class MBRegistroOperacionCliente implements Serializable {
 						oEClienteData = oBOCliente.buscarNoSocio(oEOperacionClienteLoad.getCodigoCliente());
 						//oEClienteConstitucionEmpresaData = oBOCliente.buscarConstitucionEmpresa(oEOperacionClienteLoad.getCodigoCliente());
 					}
+					*/
 					
 					oEClienteAdicionalData = oBOCliente.buscarClienteAdicional(oEOperacionClienteLoad.getCodigoCliente(), oEOperacionClienteLoad.getCodigoTipoCliente());
 					
@@ -519,9 +543,9 @@ public class MBRegistroOperacionCliente implements Serializable {
 					if(oEClienteConstitucionEmpresaData == null){ this.oEClienteConstitucionEmpresaData = new EClienteConstitucionEmpresa(); }
 					if(oEClienteAdicionalData == null){ this.oEClienteAdicionalData = new EClienteAdicional(); }
 					
-					if(oEOperacionClienteLoad.getCodigoTipoCliente() == UTipoCliente.COD_SOCIO ||
-							oEOperacionClienteLoad.getCodigoTipoCliente() == UTipoCliente.COD_POSTULANTE ||
-							oEOperacionClienteLoad.getCodigoTipoCliente() == UTipoCliente.COD_NO_SOCIO
+					if(codigoTipoCliente == UTipoCliente.COD_SOCIO ||
+						codigoTipoCliente == UTipoCliente.COD_POSTULANTE ||
+						codigoTipoCliente == UTipoCliente.COD_NO_SOCIO
 							){
 						if(oEClienteData != null){
 							oEOperacionClienteData.setCodigoTipoDocumento(oEClienteData.getCodigoTipoDocumento());
@@ -544,7 +568,7 @@ public class MBRegistroOperacionCliente implements Serializable {
 							oEOperacionClienteData.setNombreLargoConyuge(oEClienteData.getNombreSuperLargoConyugue());
 							oEInformeLegalAdicionalData.setCodigoEstadoCivil(oEClienteData.getCodigoEstadoCivil());
 						}
-					}else if (oEOperacionClienteLoad.getCodigoTipoCliente() == UTipoCliente.COD_TERCERO){
+					}else if (codigoTipoCliente == UTipoCliente.COD_TERCERO){
 						if(oETerceroData != null){
 							oEOperacionClienteData.setCodigoTipoDocumento(oETerceroData.getCodigoTipoDocumento());
 							oEOperacionClienteData.setNumeroDocumento(oETerceroData.getDocumento());

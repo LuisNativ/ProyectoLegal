@@ -35,6 +35,7 @@ import com.abaco.negocio.util.UConstante.UIndicadorSesion;
 import com.abaco.negocio.util.UConstante.UProcesoMantePostulante;
 import com.abaco.negocio.util.UConstante.UTipoBusquedaTercero;
 import com.abaco.negocio.util.UConstante.UTipoCliente;
+import com.abaco.negocio.util.UConstante.UTipoClienteSolicitudCredito;
 import com.abaco.negocio.util.UConstante.UTipoCorrelativo;
 import com.abaco.negocio.util.UConstante.UTipoEvaluacion;
 import com.abaco.negocio.util.UConstante.UVariablesQueryString;
@@ -128,8 +129,19 @@ public class MBListaOperacionCliente implements Serializable {
 	public void guardarOperacionCliente(){
 		EOperacionCliente oEOperacionCliente = new EOperacionCliente();
 		
+		int codigoClienteSolicitudCredito = 0;
+		if(oEClienteData.getCodigoTipoCliente() == UTipoCliente.COD_SOCIO){
+			codigoClienteSolicitudCredito = UTipoClienteSolicitudCredito.COD_SOCIO;
+		}else if(oEClienteData.getCodigoTipoCliente() == UTipoCliente.COD_POSTULANTE){
+			codigoClienteSolicitudCredito = UTipoClienteSolicitudCredito.COD_POSTULANTE;
+		}else if(oEClienteData.getCodigoTipoCliente() == UTipoCliente.COD_TERCERO){
+			codigoClienteSolicitudCredito = UTipoClienteSolicitudCredito.COD_POSTULANTE;
+		}else if(oEClienteData.getCodigoTipoCliente() == UTipoCliente.COD_NO_SOCIO){
+			codigoClienteSolicitudCredito = UTipoClienteSolicitudCredito.COD_INVERSIONISTA;
+		}
+		
 		oEOperacionCliente.setCodigoCliente(oEClienteData.getCodigoCliente());
-		oEOperacionCliente.setCodigoTipoCliente(oEClienteData.getCodigoTipoCliente());
+		oEOperacionCliente.setCodigoTipoCliente(codigoClienteSolicitudCredito);
 		oEOperacionCliente.setCodigoTipoPersona(oEClienteData.getCodigoTipoPersona());
 		oEOperacionCliente.setNombreCorto(oEClienteData.getNombreCorto());
 		oEOperacionCliente.setNombreLargo(oEClienteData.getNombreLargo());
