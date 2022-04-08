@@ -44,7 +44,7 @@ public @Data class EOperacionCliente {
 	//Datos Conyugue
 	private String codigoTipoDocumentoConyugue;
 	private String documentoConyugue;
-	private String nombreLargoConyuge;
+	private String nombreLargoConyugue;
 	
 	//Datos Direcciones
 	private int codigoUbigeoReal;

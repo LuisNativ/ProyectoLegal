@@ -620,6 +620,7 @@ public class UConstante {
 		int NUEVO = 0;
 		int EDITAR = 1;
 		int VER = 2;
+		int EDITARPARCIAL = 3;
 	}
 	
 	public static interface UAccionInterna {
@@ -700,42 +701,9 @@ public class UConstante {
 		int CANCELADO = 8;
 		int ELIMINADO = 9;
 		
-		int ENEVALUACION = 10;
-		int APROBADO = 11;
-		int RECHAZADO = 13;
-		/*
-		int PENDIENTEDEDIGITALIZACION = 10;
-		int PENDIENTEDECONFIRMACION = 11;
-		int CONFIRMADO = 12;
-		int RECHAZADO = 13;
-		int LIBERADO = 15;
-		int CERRADOSOLICITUD = 16;
-		*/
-		
-		int ENPROCESOCONSTITUCION = 20;
-		int REGISTROFIRMASPARTICIPANTES = 21;
-		int PRESENTARDOCUMENTOSANOTARIA = 22;
-		int RECEPCIONDEDOCUMENTOSANOTARIA = 23;
-		int CONFIRMARINSCRICION = 24;
-		int ACTUALIZARINSCRIPCION = 25;
-		int CONSTITUIRGARANTIA= 26;
-		
-		int ENPROCESOCONFIRMACION = 30;
-		int CONFIRMADOLEVANTAMIENTO = 31;
-		int RECHAZADOLEVANTAMIENTO = 32;
-		int LIBERADO = 33;
-		int ENTREGADO = 34;
-		int ENPROCESOLEVANTAMIENTO = 35;
-		
-		int ENPROCESOCARTAFIANZA = 40;
-		int CONFIRMADOCARTAFIANZA = 41;
-		int ENVIADOCARTAFIANZA = 42;
-		
-		int EVALUADO = 51;
 		int PENDIENTEGARANTIAREGISTRO = 52;
 		int SOLICITAGARANTIAREGISTRO = 53;
 		int EVALUADOGARANTIA = 54;
-		
 		int PENDIENTEFIRMA = 55;
 		int ENTRAMITE = 56;
 		int FIRMACONFIRMADA = 57;
@@ -751,15 +719,6 @@ public class UConstante {
 		String EVALUADO_DESCEST = "Evaluado";
 		String DESAPROBADO_DESCEST = "Desaprobado";
 		String CANCELADO_DESCEST = "Cancelado";
-		String ENPROCESOCONSTITUCION_DESCEST = "En proceso de Constitución";
-		String ENPROCESOSOLICITUDLIBERACION_DESCEST = "En proceso de solicitud Liberación";
-		
-		
-		String ENPROCESOCONSTITUCION_DESCACC = "Gestionar firma de Socio";
-		String ENPROCESOSOLICITUDLIBERACION_DESCACC = "Enviar Solicitud";
-		
-		
-		String ENPROCESOSOLICITUDCARTAFIANZA_DESCACC = "Enviar Solicitud";
 	}
 	
 	public static interface UEstadoGarantia {
@@ -885,7 +844,8 @@ public class UConstante {
 		String MSJ_8 = "El Préstamo cubre el Total de Garantía";
 		String MSJ_9 = "Saldo insuficiente para cubrir préstamo";
 		String MSJ_10 = "Ingrese Préstamo y Valor Realización";
-		String MSJ_11 = "No se permite liberación" +  "\n" + "Créditos relacionados activos:";
+		//String MSJ_11 = "No se permite confirmación" +  "\n" + "Créditos relacionados activos:";
+		String MSJ_11 = "No se permite confirmación" +  "\n" + "Créditos cancelados por desenlazar:";
 		String MSJ_12 = "No se permite liberación" +  "\n" + "Créditos por cancelar:";
 		
 	}

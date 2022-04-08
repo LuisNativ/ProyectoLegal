@@ -15,7 +15,6 @@ public class UConstante {
 	public static String SELECCIONE = "0";
 	public static String MARCADO = "X";
 	public static final String SUBCARPETA = rutacarpeta();
-
 	
 	public static String rutacarpeta(){
 		String resultado = "";
@@ -845,7 +844,8 @@ public class UConstante {
 		String MSJ_8 = "El Préstamo cubre el Total de Garantía";
 		String MSJ_9 = "Saldo insuficiente para cubrir préstamo";
 		String MSJ_10 = "Ingrese Préstamo y Valor Realización";
-		String MSJ_11 = "No se permite liberación" +  "\n" + "Créditos relacionados activos:";
+		//String MSJ_11 = "No se permite confirmación" +  "\n" + "Créditos relacionados activos:";
+		String MSJ_11 = "No se permite confirmación" +  "\n" + "Créditos cancelados por desenlazar:";
 		String MSJ_12 = "No se permite liberación" +  "\n" + "Créditos por cancelar:";
 		
 	}

@@ -154,12 +154,12 @@ public class MBListaOperacionLevantamientoOtros implements Serializable {
 	
 	public void buscarGarantia() {
 		if(oEUsuario.getCodigoArea() == UArea.CREDITOS){
-			lstGarantiaPendiente = oBOOperacion.listarEvaluacionLevantamientoGarantia(codigoBuscarGarantia, descripcionBuscarGarantia, oEUsuario, 1);
+			lstGarantiaPendiente = oBOOperacion.listarEvaluacionLevantamientoGarantia(codigoBuscarGarantia, descripcionBuscarGarantia.trim(), oEUsuario, 1);
 		}else {
-			lstGarantiaPendiente = oBOOperacion.listarEvaluacionLevantamientoGarantia(codigoBuscarGarantia, descripcionBuscarGarantia, oEUsuario, 2);
+			lstGarantiaPendiente = oBOOperacion.listarEvaluacionLevantamientoGarantia(codigoBuscarGarantia, descripcionBuscarGarantia.trim(), oEUsuario, 2);
 		}
-		lstGarantiaCredito = oBOGarantia.listarGarantiaPorLiberar(codigoBuscarGarantia, descripcionBuscarGarantia);
-		lstGarantiaLiberada = oBOGarantia.listarGarantiaLiberada(codigoBuscarGarantia, descripcionBuscarGarantia);
+		lstGarantiaCredito = oBOGarantia.listarGarantiaPorLiberar(codigoBuscarGarantia, descripcionBuscarGarantia.trim());
+		lstGarantiaLiberada = oBOGarantia.listarGarantiaLiberada(codigoBuscarGarantia, descripcionBuscarGarantia.trim());
 	}
 	
 	public void listarDesplegable(){

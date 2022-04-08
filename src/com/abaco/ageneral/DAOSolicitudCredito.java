@@ -772,7 +772,7 @@ public class DAOSolicitudCredito extends InstanciaAcceso{
 					
 					oEEvaluacionSolicitudCreditoLegal.setCodigoTipoDocumentoConyugue(UFuncionesGenerales.revisaCadena(oResultSet.getString("TDOCON")));
 					oEEvaluacionSolicitudCreditoLegal.setDocumentoConyugue(UFuncionesGenerales.revisaCadena(oResultSet.getString("DOCCON")));
-					oEEvaluacionSolicitudCreditoLegal.setNombreLargoConyuge(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMCON")));
+					oEEvaluacionSolicitudCreditoLegal.setNombreLargoConyugue(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMCON")));
 					
 					oEEvaluacionSolicitudCreditoLegal.setCodigoUbigeoReal(oResultSet.getInt("CCIUDA"));
 					oEEvaluacionSolicitudCreditoLegal.setDireccionReal(UFuncionesGenerales.revisaCadena(oResultSet.getString("DIRECC")));

@@ -171,7 +171,7 @@ public class MBMantenimientoUsuario implements Serializable {
 	public void filtrarUsuario(){
 		lstUsuarioFiltro = lstUsuario.stream()
 				   .filter(x -> x.getDescripcion().matches("(?i).*"+ nombreUsuarioBuscar +".*"))
-				   .filter(x -> x.getNombreCorto().matches("(?i).*"+ nombreUsuarioBuscar +".*"))
+				   //.filter(x -> x.getNombreCorto().matches("(?i).*"+ nombreUsuarioBuscar +".*"))
 				   .collect(Collectors.toList());
 	}
 	

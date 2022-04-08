@@ -519,23 +519,7 @@ public class MBRegistroOperacionCliente implements Serializable {
 						//oEClienteConstitucionEmpresaData = oBOCliente.buscarConstitucionEmpresa(oEOperacionClienteLoad.getCodigoCliente());
 					}
 					
-					/*
-					if(oEOperacionClienteLoad.getCodigoTipoCliente() == UTipoCliente.COD_SOCIO){
-						oEClienteData = oBOCliente.buscarSocio(oEOperacionClienteLoad.getCodigoCliente());
-						oEClienteConstitucionEmpresaData = oBOCliente.buscarConstitucionEmpresa(oEOperacionClienteLoad.getCodigoCliente());
-					}else if (oEOperacionClienteLoad.getCodigoTipoCliente() == UTipoCliente.COD_POSTULANTE){
-						oEClienteData = oBOCliente.buscarPostulante(oEOperacionClienteLoad.getCodigoCliente());
-						oEClienteConstitucionEmpresaData = oBOCliente.buscarConstitucionEmpresa(oEOperacionClienteLoad.getCodigoCliente());
-					}else if (oEOperacionClienteLoad.getCodigoTipoCliente() == UTipoCliente.COD_TERCERO){
-						oETerceroData = oBOCliente.buscarTercero(oEOperacionClienteLoad.getCodigoCliente());
-						//oEClienteConstitucionEmpresaData = oBOCliente.buscarConstitucionEmpresa(oEOperacionClienteLoad.getCodigoCliente());
-					}else if (oEOperacionClienteLoad.getCodigoTipoCliente() == UTipoCliente.COD_NO_SOCIO){
-						oEClienteData = oBOCliente.buscarNoSocio(oEOperacionClienteLoad.getCodigoCliente());
-						//oEClienteConstitucionEmpresaData = oBOCliente.buscarConstitucionEmpresa(oEOperacionClienteLoad.getCodigoCliente());
-					}
-					*/
-					
-					oEClienteAdicionalData = oBOCliente.buscarClienteAdicional(oEOperacionClienteLoad.getCodigoCliente(), oEOperacionClienteLoad.getCodigoTipoCliente());
+					oEClienteAdicionalData = oBOCliente.buscarClienteAdicional(oEOperacionClienteLoad.getCodigoCliente(), codigoTipoCliente);
 					
 					if(oEInformeLegalAdicionalData == null){ this.oEInformeLegalAdicionalData = new EInformeLegalAdicional(); }
 					if(oETerceroData == null){ this.oETerceroData = new ETercero(); }
@@ -565,7 +549,7 @@ public class MBRegistroOperacionCliente implements Serializable {
 							oEOperacionClienteData.setApellidoPaternoConyugue(oEClienteData.getApellidoPaternoConyugue());
 							oEOperacionClienteData.setApellidoMaternoConyugue(oEClienteData.getApellidoMaternoConyugue());
 							oEOperacionClienteData.setNombreConyugue(oEClienteData.getNombreConyugue());
-							oEOperacionClienteData.setNombreLargoConyuge(oEClienteData.getNombreSuperLargoConyugue());
+							oEOperacionClienteData.setNombreLargoConyugue(oEClienteData.getNombreSuperLargoConyugue());
 							oEInformeLegalAdicionalData.setCodigoEstadoCivil(oEClienteData.getCodigoEstadoCivil());
 						}
 					}else if (codigoTipoCliente == UTipoCliente.COD_TERCERO){
@@ -641,6 +625,22 @@ public class MBRegistroOperacionCliente implements Serializable {
 						deshabilitarFrmContratante = false;
 						visualizarEstado1 = false;
 						visualizarEstado2 = true;
+						
+						visualizarBtnAgregarSuscripcion = true;
+						visualizarBtnModificarSuscripcion = true;
+						visualizarBtnEliminarSuscripcion = true;
+						visualizarBtnGrabarSuscripcion = true;
+						visualizarBtnAgregarRepresentanteLegal = true;
+						visualizarBtnModificarRepresentanteLegal = true;
+						visualizarBtnEliminarRepresentanteLegal = true;
+						visualizarBtnGrabarRepresentanteLegal = true;
+						visualizarBtnAgregarFacultad = true;
+						visualizarBtnEliminarFacultad = true;
+						visualizarBtnGrabarFacultad = true;
+						visualizarBtnAgregarDeudor = true;
+						visualizarBtnModificarDeudor = true;
+						visualizarBtnEliminarDeudor = true;
+						visualizarBtnGrabarDeudor = true;
 					}else{
 						codigoEstado = UEstadoOperacionCliente.ENEVALUACION;
 						deshabilitarObservacionLegal = true;
@@ -658,21 +658,6 @@ public class MBRegistroOperacionCliente implements Serializable {
 					visualizarBtnSalir = true;
 					visualizarBtnGrabar = true;
 					visualizarBtnAdjuntar = true;
-					visualizarBtnAgregarSuscripcion = true;
-					visualizarBtnModificarSuscripcion = true;
-					visualizarBtnEliminarSuscripcion = true;
-					visualizarBtnGrabarSuscripcion = true;
-					visualizarBtnAgregarRepresentanteLegal = true;
-					visualizarBtnModificarRepresentanteLegal = true;
-					visualizarBtnEliminarRepresentanteLegal = true;
-					visualizarBtnGrabarRepresentanteLegal = true;
-					visualizarBtnAgregarFacultad = true;
-					visualizarBtnEliminarFacultad = true;
-					visualizarBtnGrabarFacultad = true;
-					visualizarBtnAgregarDeudor = true;
-					visualizarBtnModificarDeudor = true;
-					visualizarBtnEliminarDeudor = true;
-					visualizarBtnGrabarDeudor = true;
 					
 					listarUbigeoContratante();
 				}
@@ -751,7 +736,7 @@ public class MBRegistroOperacionCliente implements Serializable {
 												oEOperacionClienteData.getApellidoMaterno() +" "+ 
 												oEOperacionClienteData.getNombre());
 			
-			oEOperacionCliente.setNombreLargoConyuge(oEOperacionClienteData.getApellidoPaternoConyugue() +" "+ 
+			oEOperacionCliente.setNombreLargoConyugue(oEOperacionClienteData.getApellidoPaternoConyugue() +" "+ 
 														oEOperacionClienteData.getApellidoMaternoConyugue() +" "+ 
 														oEOperacionClienteData.getNombreConyugue());
 		}

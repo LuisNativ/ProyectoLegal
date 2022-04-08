@@ -163,7 +163,7 @@ public class MBListaOperacionSolicitudCreditoOtros implements Serializable {
 	public void listarSolicitud() {
 		EOperacionSolicitudCredito oEOperacionSolicitudCredito = new EOperacionSolicitudCredito();
 		oEOperacionSolicitudCredito.setUsuarioRegistro(oEUsuario);
-		oEOperacionSolicitudCredito.setNombreLargo(nombrePersona);
+		oEOperacionSolicitudCredito.setNombreLargo(nombrePersona.trim());
 		oEOperacionSolicitudCredito.setNumeroSolicitud(numeroSolicitud);
 		oEOperacionSolicitudCredito.setCodigoEstadoActual(codigoEstado);
 		oEOperacionSolicitudCredito.setCodigoAutorizacion(codigoAutorizacion);

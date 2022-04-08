@@ -73,8 +73,8 @@ public class BOOperacion {
 		EMensaje mensaje = oCOperacion.agregarEvaluacionSolicitudCredito();
 		return mensaje;
 	}
-	public EMensaje modificarEvaluacionSolicitudCredito(EOperacionSolicitudCredito eOperacionSolicitudCredito, ECliente eCliente, EClienteConstitucionEmpresa eClienteConstitucionEmpresa, EClienteAdicional eClienteAdicional, int codigoTipoCliente){
-		EMensaje mensaje = oCOperacion.modificarEvaluacionSolicitudCredito(eOperacionSolicitudCredito, eCliente, eClienteConstitucionEmpresa, eClienteAdicional, codigoTipoCliente);
+	public EMensaje modificarEvaluacionSolicitudCredito(EOperacionSolicitudCredito eOperacionSolicitudCredito, ECliente eCliente, EClienteConstitucionEmpresa eClienteConstitucionEmpresa, EClienteAdicional eClienteAdicional){
+		EMensaje mensaje = oCOperacion.modificarEvaluacionSolicitudCredito(eOperacionSolicitudCredito, eCliente, eClienteConstitucionEmpresa, eClienteAdicional);
 		return mensaje;
 	}
 	public List<EOperacionSolicitudCredito> listarEvaluacionSolicitudCredito(EOperacionSolicitudCredito eOperacionSolicitudCredito, int indicadorConsulta){

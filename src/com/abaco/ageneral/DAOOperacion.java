@@ -589,7 +589,7 @@ public class DAOOperacion extends InstanciaAcceso{
 			lstParametrosEntrada.add(eOperacionCliente.getApellidoPaternoConyugue());
 			lstParametrosEntrada.add(eOperacionCliente.getApellidoMaternoConyugue());
 			lstParametrosEntrada.add(eOperacionCliente.getNombreConyugue());
-			lstParametrosEntrada.add(eOperacionCliente.getNombreLargoConyuge());
+			lstParametrosEntrada.add(eOperacionCliente.getNombreLargoConyugue());
 			
 			lstParametrosEntrada.add(eOperacionCliente.getCodigoTipoPersonaJuridica());
 			lstParametrosEntrada.add(eOperacionCliente.getMontoCapitalSocialRegistroPublicos());
@@ -763,7 +763,7 @@ public class DAOOperacion extends InstanciaAcceso{
 					
 					oEOperacionCliente.setCodigoTipoDocumentoConyugue(UFuncionesGenerales.revisaCadena(oResultSet.getString("TDOCON")));
 					oEOperacionCliente.setDocumentoConyugue(UFuncionesGenerales.revisaCadena(oResultSet.getString("DOCCON")));
-					oEOperacionCliente.setNombreLargoConyuge(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMCON")));
+					oEOperacionCliente.setNombreLargoConyugue(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMCON")));
 					
 					oEOperacionCliente.setCodigoUbigeoReal(oResultSet.getInt("CCIUDA"));
 					oEOperacionCliente.setDireccionReal(UFuncionesGenerales.revisaCadena(oResultSet.getString("DIRECC")));
@@ -920,7 +920,7 @@ public class DAOOperacion extends InstanciaAcceso{
 			lstParametrosEntrada.add(eOperacionSolicitudCredito.getApellidoPaternoConyugue());
 			lstParametrosEntrada.add(eOperacionSolicitudCredito.getApellidoMaternoConyugue());
 			lstParametrosEntrada.add(eOperacionSolicitudCredito.getNombreConyugue());
-			lstParametrosEntrada.add(eOperacionSolicitudCredito.getNombreLargoConyuge());
+			lstParametrosEntrada.add(eOperacionSolicitudCredito.getNombreLargoConyugue());
 			
 			lstParametrosEntrada.add(eOperacionSolicitudCredito.getCodigoTipoPersonaJuridica());
 			lstParametrosEntrada.add(eOperacionSolicitudCredito.getMontoCapitalSocialRegistroPublicos());
@@ -1187,7 +1187,7 @@ public class DAOOperacion extends InstanciaAcceso{
 					
 					oEOperacionSolicitudCredito.setCodigoTipoDocumentoConyugue(UFuncionesGenerales.revisaCadena(oResultSet.getString("TDOCON")));
 					oEOperacionSolicitudCredito.setDocumentoConyugue(UFuncionesGenerales.revisaCadena(oResultSet.getString("DOCCON")));
-					oEOperacionSolicitudCredito.setNombreLargoConyuge(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMCON")));
+					oEOperacionSolicitudCredito.setNombreLargoConyugue(UFuncionesGenerales.revisaCadena(oResultSet.getString("NOMCON")));
 					
 					oEOperacionSolicitudCredito.setCodigoUbigeoReal(oResultSet.getInt("CCIUDA"));
 					oEOperacionSolicitudCredito.setDireccionReal(UFuncionesGenerales.revisaCadena(oResultSet.getString("DIRECC")));

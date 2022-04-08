@@ -146,9 +146,9 @@ public class MBListaOperacionLevantamiento implements Serializable {
 	}
 	
 	public void buscarGarantia() {
-		lstGarantiaPendiente = oBOOperacion.listarEvaluacionLevantamientoGarantia(codigoBuscarGarantia, descripcionBuscarGarantia, oEUsuario, 1);
-		lstGarantiaCredito = oBOGarantia.listarGarantiaPorLiberar(codigoBuscarGarantia, descripcionBuscarGarantia);
-		lstGarantiaLiberada = oBOGarantia.listarGarantiaLiberada(codigoBuscarGarantia, descripcionBuscarGarantia);
+		lstGarantiaPendiente = oBOOperacion.listarEvaluacionLevantamientoGarantia(codigoBuscarGarantia, descripcionBuscarGarantia.trim(), oEUsuario, 1);
+		lstGarantiaCredito = oBOGarantia.listarGarantiaPorLiberar(codigoBuscarGarantia, descripcionBuscarGarantia.trim());
+		lstGarantiaLiberada = oBOGarantia.listarGarantiaLiberada(codigoBuscarGarantia, descripcionBuscarGarantia.trim());
 	}
 	
 	public void listarDesplegable(){

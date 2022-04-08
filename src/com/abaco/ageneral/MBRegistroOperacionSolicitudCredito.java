@@ -804,7 +804,7 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 						oEOperacionSolicitudCreditoData.setApellidoPaternoConyugue(oEClienteData.getApellidoPaternoConyugue());
 						oEOperacionSolicitudCreditoData.setApellidoMaternoConyugue(oEClienteData.getApellidoMaternoConyugue());
 						oEOperacionSolicitudCreditoData.setNombreConyugue(oEClienteData.getNombreConyugue());
-						oEOperacionSolicitudCreditoData.setNombreLargoConyuge(oEClienteData.getNombreSuperLargoConyugue());
+						oEOperacionSolicitudCreditoData.setNombreLargoConyugue(oEClienteData.getNombreSuperLargoConyugue());
 						oEInformeLegalAdicionalData.setCodigoEstadoCivil(oEClienteData.getCodigoEstadoCivil());
 					}
 					
@@ -819,7 +819,6 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 					}
 					
 					if(oEClienteAdicionalData != null){
-						//oEOperacionSolicitudCreditoData.setCodigoTipoPersonaJuridica(oEClienteAdicionalData.getCodigoTipoPersonaJuridica());
 						oEOperacionSolicitudCreditoData.setMontoCapitalSocialRegistroPublicos(oEClienteAdicionalData.getMontoCapitalSocialRegistroPublicos());
 						oEOperacionSolicitudCreditoData.setMontoCapitalSocialActual(oEClienteAdicionalData.getMontoCapitalSocialActual());
 						oEOperacionSolicitudCreditoData.setCodigoFacultadOperar(oEClienteAdicionalData.getCodigoFacultadOperar());
@@ -848,7 +847,6 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 					}
 					
 					if(oEUsuario.getCodigoArea() == UArea.LEGAL){
-						//codigoEstado = oEOperacionSolicitudCreditoLoad.getCodigoEstadoActual();
 						deshabilitarObservacionSolicitud = false;
 						deshabilitarObservacionLegal = false;
 						deshabilitarEstado = false;
@@ -862,48 +860,36 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 						visualizarPnlContratante = true;
 						visualizarPnlRepresentanteLegal = true;
 						visualizarPnlDeudor = true;
+						visualizarPnlAval = true;
+						
+						visualizarBtnAdjuntar = true;
+						visualizarBtnGenerarDocumento = true;
+						visualizarBtnGrabar = true;
+						
+						visualizarBtnAgregarSuscripcion = true;
+						visualizarBtnModificarSuscripcion = true;
+						visualizarBtnEliminarSuscripcion = true;
+						visualizarBtnGrabarSuscripcion = true;
+						visualizarBtnAgregarRepresentanteLegal = true;
+						visualizarBtnModificarRepresentanteLegal = true;
+						visualizarBtnEliminarRepresentanteLegal = true;
+						visualizarBtnGrabarRepresentanteLegal = true;
+						visualizarBtnAgregarFacultad = true;
+						visualizarBtnEliminarFacultad = true;
+						visualizarBtnGrabarFacultad = true;
+						visualizarBtnAgregarDeudor = true;
+						visualizarBtnModificarDeudor = true;
+						visualizarBtnEliminarDeudor = true;
+						visualizarBtnGrabarDeudor = true;
+						visualizarBtnAgregarDocumentoRevision = true;
+						visualizarBtnEliminarDocumentoRevision = true;
 						/*
 						if(oESolicitudCreditoLoad.getCodigoServicio() == UTipoServicioPrestamo.SERV_991){
 							visualizarPnlDeudor = true;
 						}
 						*/
-						visualizarPnlAval = true;
-						visualizarBtnAdjuntar = true;
-						visualizarBtnGenerarDocumento = true;
-						visualizarBtnGrabar = true;
 					}else{
-						/*
-						if(oEOperacionSolicitudCreditoLoad.getCodigoAutorizacion() == UEstadoAutorizacionJefe.AUTORIZADO && !oEOperacionSolicitudCreditoLoad.getCodigoEstadoActual().equals(UEstadoLegal.OBSERVADO)){
-							codigoEstado = oEOperacionSolicitudCreditoLoad.getCodigoEstadoActual();
-						}else if(oEOperacionSolicitudCreditoLoad.getCodigoAutorizacion() == UEstadoAutorizacionJefe.AUTORIZADO && oEOperacionSolicitudCreditoLoad.getCodigoEstadoActual().equals(UEstadoLegal.OBSERVADO)){
-							codigoEstado = UEstadoLegal.ENEVALUACION;
-							visualizarBtnGrabar = true;
-						}else if(oEOperacionSolicitudCreditoLoad.getCodigoAutorizacion() == UEstadoAutorizacionJefe.SOLICITADO){
-							codigoEstado = UEstadoLegal.ENEVALUACION;
-						}else {
-							codigoEstado = UEstadoLegal.ENEVALUACION;
-							visualizarBtnGrabar = true;
-						}
-						*/
 						visualizarBtnGrabar = true;
-						//codigoEstado = UEstadoLegal.ENEVALUACION;
-						
-						/*
-						if(oEUsuario.getIndicadorJefeInmediato() == 0){
-							if(oEOperacionSolicitudCreditoLoad.getCodigoAutorizacion() == UEstadoAutorizacionJefe.NINGUNO && oEOperacionSolicitudCreditoLoad.getCodigoEstadoActual().equals(UEstadoLegal.OBSERVADO)){
-								visualizarBtnSolicitarAutorizacion = true;
-							}
-						}else if(oEUsuario.getIndicadorJefeInmediato() > 0){
-							if(oEOperacionSolicitudCreditoLoad.getCodigoAutorizacion() == UEstadoAutorizacionJefe.SOLICITADO){
-								visualizarBtnRechazarAutorizacion = true;
-								visualizarBtnConfirmarAutorizacionPendiente = true;
-								visualizarBtnGrabar = false;
-							}else if(oEOperacionSolicitudCreditoLoad.getCodigoAutorizacion() == UEstadoAutorizacionJefe.AUTORIZADO){
-								visualizarBtnConfirmarAutorizacionCompletado = true;
-								visualizarBtnGrabar = false;
-							}
-						}
-						*/
 						
 						if(oEUsuario.getCodigoAutonomia() == UTipoAutonomia.GERENCIAL || oEUsuario.getCodigoAutonomia() == UTipoAutonomia.JEFE){
 							if(oEOperacionSolicitudCreditoLoad.getCodigoAutorizacion() == UEstadoAutorizacionJefe.SOLICITADO){
@@ -936,24 +922,6 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 					}
 					
 					visualizarBtnSalir = true;
-					//visualizarBtnGrabar = true;
-					visualizarBtnAgregarSuscripcion = true;
-					visualizarBtnModificarSuscripcion = true;
-					visualizarBtnEliminarSuscripcion = true;
-					visualizarBtnGrabarSuscripcion = true;
-					visualizarBtnAgregarRepresentanteLegal = true;
-					visualizarBtnModificarRepresentanteLegal = true;
-					visualizarBtnEliminarRepresentanteLegal = true;
-					visualizarBtnGrabarRepresentanteLegal = true;
-					visualizarBtnAgregarFacultad = true;
-					visualizarBtnEliminarFacultad = true;
-					visualizarBtnGrabarFacultad = true;
-					visualizarBtnAgregarDeudor = true;
-					visualizarBtnModificarDeudor = true;
-					visualizarBtnEliminarDeudor = true;
-					visualizarBtnGrabarDeudor = true;
-					visualizarBtnAgregarDocumentoRevision = true;
-					visualizarBtnEliminarDocumentoRevision = true;
 					
 					if(indicadorMdlAutorizacion == 1){
 						visualizarBtnAdjuntar = true;
@@ -970,11 +938,8 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 						visualizarFrmAutorizacion=true;
 					}
 					
-					//correlativoSesion = oBOGeneral.generarCorrelativo(UTipoCorrelativo.OPERACIONSESION, oEOperacionSolicitudLoad.getCodigoSolicitud()+"", "", "");
-					
 					listarUbigeoContratante();
 					listarClienteSuscripcion();
-					//enviarSesion();
 				}
 			}else if(UAccionExterna.VER == accionExterna){
 				if (UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.FICHA_PARAMETRO) != null) {
@@ -1174,7 +1139,7 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 														oEOperacionSolicitudCreditoData.getApellidoMaterno() +" "+ 
 														oEOperacionSolicitudCreditoData.getNombre());
 			
-			oEOperacionSolicitudCredito.setNombreLargoConyuge(oEOperacionSolicitudCreditoData.getApellidoPaternoConyugue() +" "+ 
+			oEOperacionSolicitudCredito.setNombreLargoConyugue(oEOperacionSolicitudCreditoData.getApellidoPaternoConyugue() +" "+ 
 																oEOperacionSolicitudCreditoData.getApellidoMaternoConyugue() +" "+ 
 																oEOperacionSolicitudCreditoData.getNombreConyugue());
 		}
@@ -1197,7 +1162,7 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 		oEOperacionSolicitudCredito.setFechaRegistro(oEInformeLegalAdicional.getFechaRegistro());
 		oEOperacionSolicitudCredito.setUsuarioRegistro(oEUsuario);
 		
-		oEMensaje = oBOOperacion.modificarEvaluacionSolicitudCredito(oEOperacionSolicitudCredito, oEClienteData, oEClienteConstitucionEmpresaData, oEClienteAdicionalData, codigoTipoCliente);
+		oEMensaje = oBOOperacion.modificarEvaluacionSolicitudCredito(oEOperacionSolicitudCredito, oEClienteData, oEClienteConstitucionEmpresaData, oEClienteAdicionalData);
 		
 		if(UFuncionesGenerales.validaMensaje(oEMensaje)){
 			if(codigoEstado.equals(UEstadoLegal.OBSERVADO)){
@@ -1235,7 +1200,7 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 		String apellidoPaternoConyugue = oEOperacionSolicitudCredito.getApellidoPaternoConyugue() != null ? oEOperacionSolicitudCredito.getApellidoPaternoConyugue():"";
 		String apellidoMaternoConyugue = oEOperacionSolicitudCredito.getApellidoMaternoConyugue() != null ? oEOperacionSolicitudCredito.getApellidoMaternoConyugue():"";
 		String nombreConyugue = oEOperacionSolicitudCredito.getNombreConyugue() != null ? oEOperacionSolicitudCredito.getNombreConyugue():"";
-		String nombreLargoConyuge = oEOperacionSolicitudCredito.getNombreLargoConyuge() != null ? oEOperacionSolicitudCredito.getNombreLargoConyuge():"";
+		String nombreLargoConyuge = oEOperacionSolicitudCredito.getNombreLargoConyugue() != null ? oEOperacionSolicitudCredito.getNombreLargoConyugue():"";
 		String codigoEstadoCivil = oEInformeLegalAdicionalData.getCodigoEstadoCivil() != null ? oEInformeLegalAdicionalData.getCodigoEstadoCivil():"";
 		/*
 		String numeroPartida = oEInformeLegalAdicionalData.getNumeroPartida() != null ? oEInformeLegalAdicionalData.getNumeroPartida():"";

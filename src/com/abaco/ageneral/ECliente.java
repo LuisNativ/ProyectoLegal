@@ -61,9 +61,6 @@ public @Data class ECliente {
 	private String nombreSuperLargo;
 	//PN
 	private Date fechaNacimiento;
-	//private String nombreConyuge;	
-	//private String codigoTipoDocumentoConyugue;
-	//private String documentoConyugue;
 	
 	private Date fechaRegistro;
 	private Date horaRegistro;

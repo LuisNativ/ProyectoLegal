@@ -437,7 +437,7 @@ public class COperacion {
 							throw new Exception(mensaje.getDescMensaje());
 						}
 						
-						mensaje = oDAORepresentanteLegal.agregarRepresentanteLegalSolicitudCredito(oERepresentanteLegal,eOperacionCliente.getNumeroSolicitud());
+						mensaje = oDAORepresentanteLegal.agregarRepresentanteLegalSolicitudCredito(oERepresentanteLegal, eOperacionCliente.getNumeroSolicitud());
 						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
 							throw new Exception(mensaje.getDescMensaje());
 							
@@ -639,7 +639,7 @@ public class COperacion {
 	}
 	
 
-	public EMensaje modificarEvaluacionSolicitudCredito(EOperacionSolicitudCredito eOperacionSolicitudCredito, ECliente eCliente, EClienteConstitucionEmpresa eClienteConstitucionEmpresa, EClienteAdicional eClienteAdicional, int codigoTipoCliente){
+	public EMensaje modificarEvaluacionSolicitudCredito(EOperacionSolicitudCredito eOperacionSolicitudCredito, ECliente eCliente, EClienteConstitucionEmpresa eClienteConstitucionEmpresa, EClienteAdicional eClienteAdicional){
 		IConexion oIConexion = null;
 		EMensaje mensaje = new EMensaje();
 		Mensaje mensajeLaserFiche = new Mensaje();
@@ -786,7 +786,7 @@ public class COperacion {
 						//Generar codigo representante
 						oERepresentanteLegal.setCodigoRepresentante(oBOGeneral.generarCorrelativo(UTipoCorrelativo.REPRESENTATELEGAL, "", "", ""));
 						//Setear codigo cliente
-						oERepresentanteLegal.setCodigoTipoCliente(codigoTipoCliente);
+						oERepresentanteLegal.setCodigoTipoCliente(eOperacionSolicitudCredito.getCodigoTipoCliente());
 						oERepresentanteLegal.setCodigoCliente(eOperacionSolicitudCredito.getCodigoCliente());
 						
 						mensaje = oDAORepresentanteLegal.agregarRepresentanteLegal(oERepresentanteLegal);

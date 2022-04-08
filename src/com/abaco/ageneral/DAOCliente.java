@@ -98,7 +98,7 @@ public class DAOCliente extends InstanciaAcceso{
 			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getApellidoPaternoConyugue());
 			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getApellidoMaternoConyugue());
 			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getNombreConyugue());
-			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getNombreLargoConyuge());
+			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getNombreLargoConyugue());
 			
 			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getCodigoTipoPersonaJuridica());
 			lstParametrosEntrada.add(eEvaluacionSolicitudCreditoLegal.getMontoCapitalSocialRegistroPublicos());

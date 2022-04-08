@@ -210,7 +210,7 @@ public class MBListaOperacionCliente implements Serializable {
 	}
 	
 	public void buscarOperacionCliente(){
-		lstOperacionCliente = oBOOperacion.listarEvaluacionCliente(codigoBuscar, descripcionBuscar, oEUsuario);
+		lstOperacionCliente = oBOOperacion.listarEvaluacionCliente(codigoBuscar, descripcionBuscar.trim(), oEUsuario);
 		
 		if (lstOperacionCliente != null){
 			lstOperacionClientePendiente = new ArrayList<EOperacionCliente>();
