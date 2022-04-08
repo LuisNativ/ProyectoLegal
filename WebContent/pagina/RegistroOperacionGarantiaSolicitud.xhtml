@@ -38,7 +38,9 @@
 		rendered="#{mbregistrooperaciongarantiasolicitud.indicadorBotonNoConforme eq 1 ? true  : false}" /> 
 
 		<p:commandButton styleClass="dsBoton1 tamanio4 principal" value="Registrar Asiento" 
-		onclick="PF('dlgConfirmacionAsiento').show();" 
+		onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();"
+		action="#{mbregistrooperaciongarantiasolicitud.validarDatosAsiento()}"
+		update=":frmDlgMensaje,frmDlgMensajeConfirmacionAsiento"
 		rendered="#{mbregistrooperaciongarantiasolicitud.indicadorBoton eq '4' ? true  : false}" /> 
 
 		
@@ -120,7 +122,8 @@
 			    	</p:panel>
 				</div>
 				<div class="ui-g-12">
-					<p:panel styleClass="dsPanel2" widgetVar="pnl3" toggleable="true"  toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+					<p:panel styleClass="dsPanel2" widgetVar="pnl3" toggleable="true"  toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px" rendered="#{mbregistrooperaciongarantiasolicitud.visualizarFrmGarantiaVehicular or     mbregistrooperaciongarantiasolicitud.visualizarFrmGarantiaPredio or 
+					mbregistrooperaciongarantiasolicitud.visualizarFrmGarantiaMaquinaria ? true : false}">
 				        <f:facet name="header" >
 				            <i class="fa fa-file-text"></i> Detalle General de la Garantía  
 				        </f:facet>
@@ -533,7 +536,8 @@
 					</p:panel>
 				</div>
 				<div class="ui-g-12">
-					<p:panel styleClass="dsPanel2" widgetVar="pnl5" toggleable="false" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+					<p:panel styleClass="dsPanel2" widgetVar="pnl5" toggleable="false" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px"
+					rendered="#{mbregistrooperaciongarantiasolicitud.visualizarFrmGarantiaVehicular ? false : true}">
 						<f:facet name="header" >
 						    <i class="fas fa-comments"></i> Observaciones
 						</f:facet>
@@ -1732,6 +1736,27 @@
 				    action="#{mbregistrooperaciongarantiasolicitud.grabarNoConformidadSolicitud()}" 
 				    update=":frmDlgMensajeOperacion,frmDlgObservacionSolicitud"
 				></p:commandButton>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
+	<p:dialog widgetVar="dlgMensaje" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgMensaje">
+		<div class="dsDlgMensajeOperacion dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="Mensaje de Sistema"/>
+				</div>
+			</div>
+			<div class="dsLineaHorizontal"></div>
+			<div class="contenido">
+				<div class="mensaje">
+					<p:outputLabel value="#{mbregistrooperaciongarantiasolicitud.oEMensaje.descMensaje}" styleClass="dsLabel3"/>
+				</div>
+			</div>
+			<div class="pie">
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar"  onclick="PF('dlgMensaje').hide();" ></p:commandButton>
 			</div>
 		</div>
 	</h:form>

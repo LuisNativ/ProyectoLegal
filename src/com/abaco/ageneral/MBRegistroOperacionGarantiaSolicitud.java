@@ -693,6 +693,18 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		
 	}
 	
+	public void validarDatosAsiento(){
+		if(oEGarantiaTramiteData != null){
+			if(oEGarantiaTramiteData.validarCampos(oEGarantiaData.getCodigoTipoGarantia())){
+				RequestContext.getCurrentInstance().execute("PF('dlgConfirmacionAsiento').show();");
+			}else{
+				oEMensaje.setDescMensaje(UMensajeValidacion.MSJ_13);
+				UManejadorLog.log("Advertencia: " + oEMensaje.getDescMensaje());			
+				RequestContext.getCurrentInstance().execute("PF('dlgMensaje').show();");
+			}
+		}
+	}
+	
 	//Método para Registrar Asiento 
 	public void registrarAsientoGarantia(){
 		//double montoAcumAsignadoCredito= 0;
@@ -769,6 +781,7 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 				UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 				RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacion').show();");
 			}
+			
 		}	
 		
 

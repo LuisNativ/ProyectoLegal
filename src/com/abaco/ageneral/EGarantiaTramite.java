@@ -5,6 +5,8 @@ import java.util.Date;
 import lombok.Data;
 
 import com.abaco.entidad.EUsuario;
+import com.abaco.negocio.util.UFuncionesGenerales;
+import com.abaco.negocio.util.UConstante.UTipoGarantia;
 
 public @Data class EGarantiaTramite {
 	/* Correspondiente a la tabla F9212 */
@@ -91,5 +93,38 @@ public @Data class EGarantiaTramite {
 	private boolean validarTituloA;
 	private boolean validarTituloB;
 	
+	public boolean validarCampos(int tipoGarantia){
+		if(tipoGarantia == UTipoGarantia.PREDIO){
+			if(fechaIngreso == null && fechaElaboracionContrato == null && evaluacionDocumento == 0 && fechaFirmaContrato == null &&
+			   fechaIngresoNotaria == null && codigoNotario== 0 && numeroKardex == 0 && fechaIngresoRegistro == null && fechaObservacion==null &&
+			   fechaTacha== null && fechaInscripcion== null && fechaIngresoRegistroB == null && fechaObservacionB==null && fechaTachaB==null && fechaInscripcionB==null &&
+			   !UFuncionesGenerales.convierteCadenaABoolean(usuarioElaboracionContrato) && !UFuncionesGenerales.convierteCadenaABoolean(descripcionNotario) && 
+			   !UFuncionesGenerales.convierteCadenaABoolean(observacion1) && !UFuncionesGenerales.convierteCadenaABoolean(observacion2) && 
+			   !UFuncionesGenerales.convierteCadenaABoolean(fichaInscripcion) && !UFuncionesGenerales.convierteCadenaABoolean(tomoInscripcion) && 
+			   !UFuncionesGenerales.convierteCadenaABoolean(tituloA) && !UFuncionesGenerales.convierteCadenaABoolean(ciudadInscripcion) &&
+			   !UFuncionesGenerales.convierteCadenaABoolean(descripcionObservacionBloqueo1) && !UFuncionesGenerales.convierteCadenaABoolean(descripcionObservacionBloqueo2) && 
+			   !UFuncionesGenerales.convierteCadenaABoolean(fichaInscripcionB) && !UFuncionesGenerales.convierteCadenaABoolean(tomoInscripcionB) && 
+			   !UFuncionesGenerales.convierteCadenaABoolean(tituloB) && !UFuncionesGenerales.convierteCadenaABoolean(ciudadInscripcionB) ){
+				return false;
+			}else{
+				return true;
+			}
+			
+		}else{
+			if(fechaIngreso == null && fechaElaboracionContrato == null && evaluacionDocumento == 0 && fechaFirmaContrato == null &&
+			   fechaIngresoNotaria == null && codigoNotario== 0 && numeroKardex == 0 && fechaIngresoRegistro == null && fechaObservacion==null &&
+			   fechaTacha== null && fechaInscripcion== null &&
+			   !UFuncionesGenerales.convierteCadenaABoolean(usuarioElaboracionContrato) && !UFuncionesGenerales.convierteCadenaABoolean(descripcionNotario) && 
+			   !UFuncionesGenerales.convierteCadenaABoolean(observacion1) && !UFuncionesGenerales.convierteCadenaABoolean(observacion2) && 
+			   !UFuncionesGenerales.convierteCadenaABoolean(fichaInscripcion) && !UFuncionesGenerales.convierteCadenaABoolean(tomoInscripcion) && 
+			   !UFuncionesGenerales.convierteCadenaABoolean(tituloA) && !UFuncionesGenerales.convierteCadenaABoolean(ciudadInscripcion)){
+				return false;
+			}else{
+				return true;
+			}
+		}
+		
+	}
 	
+
 }

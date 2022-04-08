@@ -847,6 +847,7 @@ public class UConstante {
 		//String MSJ_11 = "No se permite confirmación" +  "\n" + "Créditos relacionados activos:";
 		String MSJ_11 = "No se permite confirmación" +  "\n" + "Créditos cancelados por desenlazar:";
 		String MSJ_12 = "No se permite liberación" +  "\n" + "Créditos por cancelar:";
+		String MSJ_13 = "Complete los campos correspondientes al trámite para generar un nuevo asiento para la Garantía";
 		
 	}
 	
