@@ -827,19 +827,19 @@
 					   	<div class="ui-g-12 ui-md-4 ui-lg-4">
 							<p:outputLabel  value="Firma" styleClass="dsLabel1"/>
 							<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.flagFirmado}" >
-								<p:ajax event="change" listener="#{mbregistrotramiteoperativosolicitud.validarFirmaFirmante()}" update="frmDlgFirmaFirmantes:idPanelGroupFirmante" />
+								<p:ajax event="change" listener="#{mbregistrotramiteoperativosolicitud.validarFirmaFirmante()}" update="frmDlgFirmaFirmantes:idFechaFirmaSocio,frmDlgFirmaFirmantes:idFechaHoraSocio" />
 								<f:selectItem itemLabel="NO" itemValue="0" />
 								<f:selectItem itemLabel="SI" itemValue="1" />
 			            	</p:selectOneMenu>
 					   	</div>
 				   	    <div class="ui-g-12 ui-md-4 ui-lg-4">
 			           	   <p:outputLabel value="Fecha Firma" styleClass="dsLabel1"/>
-							<p:calendar value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.fechaFirmaSocio}" navigator="true" pattern="dd-MM-yyyy"  autocomplete="off" placeholder="dd-mm-yyyy" 
+							<p:calendar id="idFechaFirmaSocio" value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.fechaFirmaSocio}" navigator="true" pattern="dd-MM-yyyy"  autocomplete="off" placeholder="dd-mm-yyyy" 
 							disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoFechaHoraFirmante}"></p:calendar>
 					    </div>
 					    <div class="ui-g-12 ui-md-4 ui-lg-4">
 			           	   <p:outputLabel value="Hora Firma" styleClass="dsLabel1"/>
-							<p:calendar value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.horaRegistroFirmaSocio}" navigator="true" 
+							<p:calendar id="idFechaHoraSocio" value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.horaRegistroFirmaSocio}" navigator="true" 
 							pattern="HH:mm:ss" timeOnly="true" autocomplete="off" placeholder="HH:mm:ss"
 							disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoFechaHoraFirmante}"></p:calendar>
 					    </div>
@@ -860,19 +860,19 @@
 						<div class="ui-g-12 ui-md-4 ui-lg-4">
 							<p:outputLabel  value="Firma Cony." styleClass="dsLabel1"/>
 							<p:selectOneMenu value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.flagFirmadoConyugue}" >
-							<p:ajax event="change" listener="#{mbregistrotramiteoperativosolicitud.validarFirmaConyugue()}" update="frmDlgFirmaFirmantes:idPanelGroupFirmante" />
+							<p:ajax event="change" listener="#{mbregistrotramiteoperativosolicitud.validarFirmaConyugue()}" update="frmDlgFirmaFirmantes:idFechaFirmaConyuge,frmDlgFirmaFirmantes:idFechaHoraConyuge" />
 								<f:selectItem itemLabel="NO" itemValue="0" />
 								<f:selectItem itemLabel="SI" itemValue="1" />
 			            	</p:selectOneMenu>
 					   	</div>
 						<div class="ui-g-12 ui-md-4 ui-lg-4">
 			           	   <p:outputLabel value="Fecha Firma Cony." styleClass="dsLabel1"/>
-							<p:calendar value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.fechaFirmaConyugue}" navigator="true" pattern="dd-MM-yyyy"  autocomplete="off" placeholder="dd-mm-yyyy" 
+							<p:calendar id="idFechaFirmaConyuge" value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.fechaFirmaConyugue}" navigator="true" pattern="dd-MM-yyyy"  autocomplete="off" placeholder="dd-mm-yyyy" 
 							disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoFechaHoraConyugue}"></p:calendar>
 					    </div>
 					    <div class="ui-g-12 ui-md-4 ui-lg-4">
 			           	   <p:outputLabel value="Hora Firma Cony." styleClass="dsLabel1"/>
-							<p:calendar value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.horaRegistroFirmaConyugue}" navigator="true" 
+							<p:calendar id="idFechaHoraConyuge" value="#{mbregistrotramiteoperativosolicitud.oEFirmanteSolicitudData.horaRegistroFirmaConyugue}" navigator="true" 
 							pattern="HH:mm:ss" timeOnly="true" autocomplete="off" placeholder="HH:mm:ss" 
 							disabled="#{mbregistrotramiteoperativosolicitud.deshabilitarCampoFechaHoraConyugue}"></p:calendar>
 					    </div>

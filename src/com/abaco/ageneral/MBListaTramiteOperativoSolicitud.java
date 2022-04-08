@@ -33,6 +33,7 @@ import com.abaco.entidad.EUsuario;
 import com.abaco.entidad.EMensaje;
 import com.abaco.negocio.util.UConstante.UAccionExterna;
 import com.abaco.negocio.util.UConstante.UArea;
+import com.abaco.negocio.util.UConstante.UCantidadCaracteres;
 import com.abaco.negocio.util.UConstante.UEstado;
 import com.abaco.negocio.util.UConstante.UEstadoAutorizacionJefe;
 import com.abaco.negocio.util.UConstante.UIndicadorSesion;
@@ -108,6 +109,8 @@ public class MBListaTramiteOperativoSolicitud implements Serializable {
 	@Getter @Setter private List<EOperacionSolicitud> lstObservacionTramiteOperativoSolicitud;
 	@Getter @Setter private String observacionSolicitud;
 
+	@Getter @Setter private int cantidadCaracteres;
+	
 	@PostConstruct
 	public void inicio() {
 		this.oEMensaje = new EMensaje();
@@ -136,7 +139,7 @@ public class MBListaTramiteOperativoSolicitud implements Serializable {
 		oEUsuario = (EUsuario) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.USUARIO);
 		inicializar();
 		
-		
+		validarLongitudCaracteres();
 		listarDesplegable();
 		listarSolicitudTramiteOperativoLegal();
 		
@@ -154,6 +157,8 @@ public class MBListaTramiteOperativoSolicitud implements Serializable {
 	}
 	
 	public void inicializar(){
+		codigoBuscar = 0;
+		descripcionBuscar = "";
 		indicadorNuevoDocumentoSolicitud = true;
 		visualizarCodigoGarantiaDocumento = true;
 		deshabilitarBotonFirma = true;
@@ -201,10 +206,25 @@ public class MBListaTramiteOperativoSolicitud implements Serializable {
 	public void listarSolicitudTramiteOperativoLegal(){
 		lstTramiteOperativoSolicitudLegalFiltro = oBOGarantia.listarSolicitudTramiteOperativoLegal(0, "",oEUsuario);
 	}
+	
+	/*Metodo para Obtener la cantidad maxima de caracteres por cada opcion
+	 * de busqueda*/
+	public void validarLongitudCaracteres(){
+		descripcionBuscar = "";
+		switch(codigoBuscar){
+		  case 1: cantidadCaracteres = UCantidadCaracteres.CODIGO_SOLICITUD; 
+		          break;
+		  case 2: cantidadCaracteres = UCantidadCaracteres.NOMBRE_SOCIO; 
+		          break;	
+		  default: cantidadCaracteres= UCantidadCaracteres.POR_DEFECTO;
+		}
+	}
 
 	public void buscarSolicitudTramiteOperativo(){
-		lstTramiteOperativoSolicitudLegalFiltro =oBOGarantia.listarSolicitudTramiteOperativoLegal(codigoBuscar,descripcionBuscar,oEUsuario);
+		lstTramiteOperativoSolicitudLegalFiltro =oBOGarantia.listarSolicitudTramiteOperativoLegal(codigoBuscar,descripcionBuscar.trim(),oEUsuario);
 	}
+	
+	
 	
 	public void listarObservacionSolicitudTramiteOperativo(EOperacionSolicitud oEOperacionSolicitud){
 		lstObservacionTramiteOperativoSolicitud = oBOGarantia.listarObservacionSolicitudTramiteOperativoLegal(oEOperacionSolicitud);

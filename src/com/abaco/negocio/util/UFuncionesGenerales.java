@@ -42,6 +42,7 @@ public class UFuncionesGenerales {
 	private static final String PATTERN_DNI = "[0-9]{8,8}";
 	private static final String PATTERN_RUC = "[0-9]{11,11}";
 	
+	
 	//private static final String PATTERN_DOCUMENTO_SIMBOLO = "/[^a-z0-9\x20]/i";
 	//private static final String PATTERN_DOCUMENTO_SIMBOLO = "[!\"·$%&/()=¿¡?'_:;,|@#€*+.]";
 	

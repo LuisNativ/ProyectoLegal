@@ -529,26 +529,39 @@ public class MBRegistroTramiteOperativoSolicitud implements Serializable {
 	 
 	public void validarFirmaFirmante(){
 		switch(oEFirmanteSolicitudData.getFlagFirmado()){
-		case 0 : deshabilitarCampoFechaHoraFirmante = true; break;
+		case 0 : 
+			deshabilitarCampoFechaHoraFirmante = true; 
+			oEFirmanteSolicitudData.setFechaFirmaSocio(null);
+			oEFirmanteSolicitudData.setHoraRegistroFirmaSocio(UFuncionesGenerales.convertirCadenaAFecha("00:00:00", "HH:mm:ss"));
+			break;
 		case 1 : deshabilitarCampoFechaHoraFirmante = false; break;
 		default:
 			deshabilitarCampoFechaHoraFirmante = true; 
+			oEFirmanteSolicitudData.setFechaFirmaSocio(null);
+			oEFirmanteSolicitudData.setHoraRegistroFirmaSocio(UFuncionesGenerales.convertirCadenaAFecha("00:00:00", "HH:mm:ss"));
 		}
-		
+
 	}
 	
 	public void validarFirmaConyugue(){
 		switch(oEFirmanteSolicitudData.getFlagFirmadoConyugue()){
-		case 0 : deshabilitarCampoFechaHoraConyugue = true; break;
+		case 0 : 
+			deshabilitarCampoFechaHoraConyugue = true; 
+			oEFirmanteSolicitudData.setFechaFirmaConyugue(null);
+			oEFirmanteSolicitudData.setHoraRegistroFirmaConyugue(UFuncionesGenerales.convertirCadenaAFecha("00:00:00", "HH:mm:ss"));
+			break;
 		case 1 : deshabilitarCampoFechaHoraConyugue = false; break;
 		default:
 			deshabilitarCampoFechaHoraConyugue = true; 
+			oEFirmanteSolicitudData.setFechaFirmaConyugue(null);
+			oEFirmanteSolicitudData.setHoraRegistroFirmaConyugue(UFuncionesGenerales.convertirCadenaAFecha("00:00:00", "HH:mm:ss"));
 		}
 		
 	}
 	
 	public void visualizarDetalleFirmanteFirma(EFirmanteSolicitud oEFirmanteSolicitudItem){
 		if(oEFirmanteSolicitudItem != null){
+			oEFirmanteSolicitudData = new EFirmanteSolicitud();
 			oEFirmanteSolicitudData = oEFirmanteSolicitudItem;
 			switch(oEFirmanteSolicitudData.getFirmaConyugue()){
 			case "S": 

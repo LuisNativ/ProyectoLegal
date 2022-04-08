@@ -38,6 +38,8 @@
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 					<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
 					<p:inputText id="idDescripcionGarantia"  type="text" styleClass="dsInput1" value="#{mblistaconsultagarantia.descripcionBuscar}" autocomplete="off" maxlength="#{mblistaconsultagarantia.cantidadCaracteres}">
+						<p:keyFilter regEx="#{mblistaconsultagarantia.codigoBuscar eq 1 or mblistaconsultagarantia.codigoBuscar eq 3 ? '/[0-9]/i' : 
+						                      mblistaconsultagarantia.codigoBuscar eq 4 ? '/[-/.a-zA-Z0-9ñÑáÁéÉÍíÓóúÚ\\s]/i' : 'null'}" preventPaste="true"/>
 					</p:inputText>
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">

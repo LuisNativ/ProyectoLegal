@@ -28,6 +28,7 @@ import com.abaco.entidad.EPersona;
 import com.abaco.entidad.EUsuario;
 import com.abaco.negocio.util.UConstante.UAccionExterna;
 import com.abaco.negocio.util.UConstante.UArea;
+import com.abaco.negocio.util.UConstante.UCantidadCaracteres;
 import com.abaco.negocio.util.UConstante.UClaseGarantia;
 import com.abaco.negocio.util.UConstante.UCriterioBusqueda;
 import com.abaco.negocio.util.UConstante.UEstado;
@@ -79,7 +80,9 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 	@Getter @Setter private String tipoGarantiaBuscar;
 	@Getter @Setter private String nombreTipoGarantia;
 	@Getter @Setter private String mensajeValidacion;
-	@Getter @Setter private int cantidadCaracteres;
+	@Getter @Setter private int cantidadCaracteresBusquedaGarantia;
+	@Getter @Setter private int cantidadCaracteresBusquedaSolicitud;
+	@Getter @Setter private int cantidadCaracteresBusquedaSolicitudDocumento;
 	
 	//Para mostrar los Créditos Directos, Indirectos y Garantia
 	@Getter @Setter private double creditoDirMonedaNacional;
@@ -197,6 +200,20 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 		else codigoTabview2Index = 1;
 	}
 
+	/*Metodo para Obtener la cantidad maxima de caracteres por cada opcion
+	 * de busqueda*/
+	public void validarLongitudCaracteresSolicitud(){
+		descripcionBuscarSolicitud = "";
+		switch(codigoBuscarSolicitud){
+		  case 1: cantidadCaracteresBusquedaSolicitud = UCantidadCaracteres.CODIGO_SOLICITUD; 
+		          break;
+		  case 2: cantidadCaracteresBusquedaSolicitud = UCantidadCaracteres.CODIGO_SOCIO; 
+		          break;
+		  case 3: cantidadCaracteresBusquedaSolicitud = UCantidadCaracteres.NOMBRE_SOCIO; 
+		          break;
+		  default: cantidadCaracteresBusquedaGarantia= UCantidadCaracteres.POR_DEFECTO;
+		}
+	}
 	
 	//Buscar Solicitudes según Codigo y Descripcion
 	public void buscarGarantiaSolicitud(){
@@ -348,13 +365,18 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 	
 	/*Metodo para Obtener la cantidad maxima de caracteres por cada opcion
 	 * de busqueda*/
-	public void validarLongitudCaracteres(){
+	public void validarLongitudCaracteresGarantia(){
+		descripcionBuscarGarantia = "";
 		switch(codigoBuscarGarantia){
-		  case 1: cantidadCaracteres = 9; break;
-		  case 2: cantidadCaracteres = 30; break;
-		  case 3: cantidadCaracteres = 9; break;
-		  case 4: cantidadCaracteres = 10; break;
-		  default: cantidadCaracteres= 250;
+		  case 1: cantidadCaracteresBusquedaGarantia = UCantidadCaracteres.CODIGO_SOCIO; 
+		          break;
+		  case 2: cantidadCaracteresBusquedaGarantia = UCantidadCaracteres.NOMBRE_SOCIO; 
+		          break;
+		  case 3: cantidadCaracteresBusquedaGarantia = UCantidadCaracteres.CODIGO_GARANTIA; 
+		          break;
+		  case 4: cantidadCaracteresBusquedaGarantia = UCantidadCaracteres.PARTIDA_REGISTRAL; 
+				  break;
+		  default: cantidadCaracteresBusquedaGarantia= UCantidadCaracteres.POR_DEFECTO;
 		}
 	}
 	
@@ -521,6 +543,19 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 									                .collect(Collectors.toList());
 		}
 	
+	}
+	
+	/*Metodo para Obtener la cantidad maxima de caracteres por cada opcion
+	 * de busqueda*/
+	public void validarLongitudCaracteresSolicitudDocumento(){
+		descripcionBuscarDocumento = "";
+		switch(codigoBuscarDocumento){
+		  case 1: cantidadCaracteresBusquedaSolicitudDocumento = UCantidadCaracteres.CODIGO_SOLICITUD; 
+		          break;
+		  case 2: cantidadCaracteresBusquedaSolicitudDocumento = UCantidadCaracteres.CODIGO_GARANTIA; 
+		          break;
+		  default: cantidadCaracteresBusquedaSolicitudDocumento= UCantidadCaracteres.POR_DEFECTO;
+		}
 	}
 
 	public void buscarSolicitudDocumento(){

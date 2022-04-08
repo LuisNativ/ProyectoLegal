@@ -33,6 +33,7 @@ import com.abaco.entidad.EUsuario;
 import com.abaco.entidad.EMensaje;
 import com.abaco.negocio.util.UConstante.UAccionExterna;
 import com.abaco.negocio.util.UConstante.UArea;
+import com.abaco.negocio.util.UConstante.UCantidadCaracteres;
 import com.abaco.negocio.util.UConstante.UEstado;
 import com.abaco.negocio.util.UConstante.UEstadoAutorizacionJefe;
 import com.abaco.negocio.util.UConstante.UIndicadorSesion;
@@ -100,6 +101,7 @@ public class MBListaDesembolsoGarantia implements Serializable {
 	@Getter @Setter private boolean visualizarEliminarDocumentoGarantia;
 	@Getter @Setter private boolean visualizarCampo1,visualizarCampo2;
 	@Getter @Setter private int codigoEstadoDesembolsoGarantia;
+	@Getter @Setter private int cantidadCaracteres;
 
 	@Getter @Setter private List<EGeneral> lstValorSiNo;
 	@Getter @Setter private List<EGeneral> lstEstadoDesembolsoGarantia;
@@ -203,15 +205,22 @@ public class MBListaDesembolsoGarantia implements Serializable {
 		descripcionBuscar = "";
 		switch(codigoBuscar){
 		 case 1: 
+			 cantidadCaracteres = UCantidadCaracteres.CODIGO_SOLICITUD;
+			 visualizarCampo1 = true; 
+			 visualizarCampo2 = false;
+			 break;
 		 case 2:
+			 cantidadCaracteres = UCantidadCaracteres.CODIGO_GARANTIA;
 			 visualizarCampo1 = true; 
 			 visualizarCampo2 = false; 
 			 break;
 		 case 3:
+			 cantidadCaracteres= UCantidadCaracteres.POR_DEFECTO;
 			 visualizarCampo1 = false; 
 			 visualizarCampo2 = true; 
 			 break;
 		 default:
+			 cantidadCaracteres= UCantidadCaracteres.POR_DEFECTO;
 			 visualizarCampo1 = true; 
 			 visualizarCampo2 = false; 
 		}

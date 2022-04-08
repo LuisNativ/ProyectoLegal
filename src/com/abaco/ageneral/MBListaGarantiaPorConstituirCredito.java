@@ -21,6 +21,7 @@ import com.abaco.entidad.EPersona;
 import com.abaco.entidad.EUsuario;
 import com.abaco.negocio.util.UConstante.UAccionExterna;
 import com.abaco.negocio.util.UConstante.UAccionInterna;
+import com.abaco.negocio.util.UConstante.UCantidadCaracteres;
 import com.abaco.negocio.util.UConstante.UClaseGarantia;
 import com.abaco.negocio.util.UConstante.UEstado;
 import com.abaco.negocio.util.UConstante.UEstadoGarantia;
@@ -85,7 +86,7 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 	@Getter @Setter private boolean visualizar1eraDescripcion,visualizar2daDescripcion;
 	@Getter @Setter private boolean visualizarCampo1,visualizarCampo2;
 	@Getter @Setter private int indicadorTituloDescripcionPoliza;
-
+	@Getter @Setter private int cantidadCaracteresSolicitud;
 	private int indicadorPoliza;
 
 	@PostConstruct
@@ -382,20 +383,31 @@ public class MBListaGarantiaPorConstituirCredito implements Serializable {
 		descripcionBuscar = "";
 		switch(codigoBuscar){
 		 case 1: 
-		 case 2:
-		 case 3:
-		 case 4:
+			 cantidadCaracteresSolicitud = UCantidadCaracteres.CODIGO_SOLICITUD; 
 			 visualizarCampo1 = true; 
 			 visualizarCampo2 = false; 
-			 break;
+	          break;
+		 case 2:
+			 cantidadCaracteresSolicitud = UCantidadCaracteres.CODIGO_SOCIO; 
+			 visualizarCampo1 = true; 
+			 visualizarCampo2 = false; 
+	          break; 
+		 case 3:
+			 cantidadCaracteresSolicitud = UCantidadCaracteres.NOMBRE_SOCIO; 
+			 visualizarCampo1 = true; 
+			 visualizarCampo2 = false; 
+	          break;
 		 case 5:
+			 cantidadCaracteresSolicitud= UCantidadCaracteres.POR_DEFECTO;
 			 visualizarCampo1 = false; 
 			 visualizarCampo2 = true; 
 			 break;
 		 default:
+			 cantidadCaracteresSolicitud= UCantidadCaracteres.POR_DEFECTO;
 			 visualizarCampo1 = true; 
 			 visualizarCampo2 = false; 
 		}
+		
 	}
 		
 	public void asignarPoliza(){

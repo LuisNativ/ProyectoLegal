@@ -36,7 +36,10 @@
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3" style="#{mblistadesembolsogarantia.visualizarCampo1 ? 'display:inline-block;' : 'display:none;'}">
 					<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
-					<p:inputText type="text" styleClass="dsInput1" value="#{mblistadesembolsogarantia.descripcionBuscar}" autocomplete="off" maxlength="50">
+					<p:inputText type="text" styleClass="dsInput1" value="#{mblistadesembolsogarantia.descripcionBuscar}" autocomplete="off" 
+					maxlength="#{mblistadesembolsogarantia.cantidadCaracteres}">
+						<p:keyFilter regEx="#{mblistadesembolsogarantia.codigoBuscar eq 1 or 
+						                      mblistadesembolsogarantia.codigoBuscar eq 2 ? '/[0-9]/i': 'null'}" preventPaste="true"/>
 					</p:inputText>
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3" style="#{mblistadesembolsogarantia.visualizarCampo2 ? 'display:inline-block;' : 'display:none;'}">

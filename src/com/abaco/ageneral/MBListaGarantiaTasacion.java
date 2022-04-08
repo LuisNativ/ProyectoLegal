@@ -33,6 +33,7 @@ import com.abaco.entidad.EUsuario;
 import com.abaco.entidad.EMensaje;
 import com.abaco.negocio.util.UConstante.UAccionExterna;
 import com.abaco.negocio.util.UConstante.UArea;
+import com.abaco.negocio.util.UConstante.UCantidadCaracteres;
 import com.abaco.negocio.util.UConstante.UEstado;
 import com.abaco.negocio.util.UConstante.UEstadoAutorizacionJefe;
 import com.abaco.negocio.util.UConstante.UFiltroGarantia;
@@ -109,12 +110,17 @@ public class MBListaGarantiaTasacion implements Serializable {
 	/*Metodo para Obtener la cantidad maxima de caracteres por cada opcion
 	 * de busqueda*/
 	public void validarLongitudCaracteres(){
+		descripcionBuscar = "";
 		switch(codigoBuscar){
-		  case 1: cantidadCaracteres = 9; break;
-		  case 2: cantidadCaracteres = 30; break;
-		  case 3: cantidadCaracteres = 9; break;
-		  case 4: cantidadCaracteres = 10; break;
-		  default: cantidadCaracteres= 250;
+		  case 1: cantidadCaracteres = UCantidadCaracteres.CODIGO_SOCIO; 
+		          break;
+		  case 2: cantidadCaracteres = UCantidadCaracteres.NOMBRE_SOCIO; 
+		          break;
+		  case 3: cantidadCaracteres = UCantidadCaracteres.CODIGO_GARANTIA; 
+		          break;
+		  case 4: cantidadCaracteres = UCantidadCaracteres.PARTIDA_REGISTRAL; 
+				  break;
+		  default: cantidadCaracteres= UCantidadCaracteres.POR_DEFECTO;
 		}
 	}
 	

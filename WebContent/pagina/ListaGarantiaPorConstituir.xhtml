@@ -28,16 +28,18 @@
 						<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 							<p:outputLabel value="Tipo de Búsqueda" styleClass="dsLabel1"/>				
 							<p:selectOneMenu value="#{mblistagarantiaporconstituir.codigoBuscarSolicitud}">
-							    <f:selectItem itemLabel="[Seleccione]" itemValue="0" />
+							<p:ajax event="change" listener="#{mblistagarantiaporconstituir.validarLongitudCaracteresSolicitud()}" update="tabView1:form:idDescripcionSolicitud" />
+							    <f:selectItem itemLabel="[Todos]" itemValue="0" />
 				            	<f:selectItem itemLabel="Nro Solicitud" itemValue="1" />
 				            	<f:selectItem itemLabel="Codigo Socio" itemValue="2" />
 				            	<f:selectItem itemLabel="Nombre Socio" itemValue="3" />
-				            	<f:selectItem itemLabel="Tipo Garantía" itemValue="4" />
 				            </p:selectOneMenu>
 						</div>
 						<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 							<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
-							<p:inputText type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.descripcionBuscarSolicitud}" autocomplete="off" maxlength="50">
+							<p:inputText id="idDescripcionSolicitud" type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.descripcionBuscarSolicitud}" autocomplete="off" 
+							maxlength="#{mblistagarantiaporconstituir.cantidadCaracteresBusquedaSolicitud}">
+								<p:keyFilter regEx="#{mblistagarantiaporconstituir.codigoBuscarSolicitud eq 1 or mblistagarantiaporconstituir.codigoBuscarSolicitud eq 2? '/[0-9]/i' : 'null'}" preventPaste="true"/>
 							</p:inputText>
 						</div>
 						<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
@@ -167,7 +169,7 @@
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 					<p:outputLabel value="Tipo de Búsqueda" styleClass="dsLabel1"/>				
 					<p:selectOneMenu value="#{mblistagarantiaporconstituir.codigoBuscarGarantia}">
-						<p:ajax event="change" listener="#{mblistagarantiaporconstituir.validarLongitudCaracteres()}" update=":tabView1:formMantenimiento:idDescripcionGarantia" />
+						<p:ajax event="change" listener="#{mblistagarantiaporconstituir.validarLongitudCaracteresGarantia()}" update=":tabView1:formMantenimiento:idDescripcionGarantia" />
 		            	<f:selectItem itemLabel="[Seleccione]" itemValue="0" />
 		            	<f:selectItem itemLabel="Código Socio" itemValue="1" />
 		            	<f:selectItem itemLabel="Nombre Socio" itemValue="2" />
@@ -177,7 +179,10 @@
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 					<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
-					<p:inputText id="idDescripcionGarantia" type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.descripcionBuscarGarantia}" autocomplete="off" maxlength="#{mblistagarantiaporconstituir.cantidadCaracteres}" onkeypress="if (event.keyCode == 13) { return false;}">
+					<p:inputText id="idDescripcionGarantia" type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.descripcionBuscarGarantia}" autocomplete="off" maxlength="#{mblistagarantiaporconstituir.cantidadCaracteresBusquedaGarantia}" onkeypress="if (event.keyCode == 13) { return false;}">
+						<p:keyFilter regEx="#{mblistagarantiaporconstituir.codigoBuscarGarantia eq 1 or 
+						                      mblistagarantiaporconstituir.codigoBuscarGarantia eq 3 ? '/[0-9]/i' : 
+						                      mblistagarantiaporconstituir.codigoBuscarGarantia eq 4 ? '/[-/.a-zA-Z0-9ñÑáÁéÉÍíÓóúÚ\\s]/i' : 'null'}" preventPaste="true"/>
 					</p:inputText>
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
@@ -291,14 +296,17 @@
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 					<p:outputLabel value="Tipo de Búsqueda" styleClass="dsLabel1"/>				
 					<p:selectOneMenu value="#{mblistagarantiaporconstituir.codigoBuscarDocumento}">
-					    <f:selectItem itemLabel="[Seleccione]" itemValue="0" />
+						<p:ajax event="change" listener="#{mblistagarantiaporconstituir.validarLongitudCaracteresSolicitudDocumento()}" update="tabView1:formDocumentacion:idDescripcionSolicitudDocumento" />
+					    <f:selectItem itemLabel="[Todos]" itemValue="0" />
 		            	<f:selectItem itemLabel="Nro. Solicitud" itemValue="1" />
 		            	<f:selectItem itemLabel="Nro. Garantía" itemValue="2" />
 		            </p:selectOneMenu>
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
-					<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
-					<p:inputText type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.descripcionBuscarDocumento}" autocomplete="off" maxlength="50">
+					<p:outputLabel  value="Descripción" styleClass="dsLabel1"/>
+					<p:inputText id="idDescripcionSolicitudDocumento" type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.descripcionBuscarDocumento}" autocomplete="off" maxlength="#{mblistagarantiaporconstituir.cantidadCaracteresBusquedaSolicitudDocumento}">
+						<p:keyFilter regEx="#{mblistagarantiaporconstituir.codigoBuscarDocumento eq 1 or 
+						                      mblistagarantiaporconstituir.codigoBuscarDocumento eq 2 ? '/[0-9]/i' : 'null'}" preventPaste="true"/>
 					</p:inputText>
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">

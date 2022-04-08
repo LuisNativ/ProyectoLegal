@@ -15,6 +15,7 @@ public class UConstante {
 	public static String SELECCIONE = "0";
 	public static String MARCADO = "X";
 	public static final String SUBCARPETA = rutacarpeta();
+
 	
 	public static String rutacarpeta(){
 		String resultado = "";
@@ -1060,4 +1061,14 @@ public class UConstante {
 		int CODIGO_GARANTIA = 3;
 		int PARTIDA_REGISTRAL = 4;
 	}
+	
+	public static interface UCantidadCaracteres{
+		int POR_DEFECTO = 250;
+		int CODIGO_SOCIO = 9;
+		int NOMBRE_SOCIO = 30;
+		int CODIGO_GARANTIA = 9;
+		int PARTIDA_REGISTRAL = 10;
+		int CODIGO_SOLICITUD = 9;
+	}
+	
 }

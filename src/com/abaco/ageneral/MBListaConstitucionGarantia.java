@@ -35,6 +35,7 @@ import com.abaco.entidad.EUsuario;
 import com.abaco.entidad.EMensaje;
 import com.abaco.negocio.util.UConstante.UAccionExterna;
 import com.abaco.negocio.util.UConstante.UArea;
+import com.abaco.negocio.util.UConstante.UCantidadCaracteres;
 import com.abaco.negocio.util.UConstante.UEstado;
 import com.abaco.negocio.util.UConstante.UEstadoAutorizacionJefe;
 import com.abaco.negocio.util.UConstante.UIndicadorSesion;
@@ -77,6 +78,7 @@ public class MBListaConstitucionGarantia implements Serializable {
 	@Getter @Setter private String descripcionBuscar,descripcionBuscarDocumento;
 	@Getter @Setter private boolean indicadorNuevoDocumentoSolicitud;
 	@Getter @Setter private boolean visualizarCodigoGarantiaDocumento;
+	@Getter @Setter private int cantidadCaracteres;
 	
 	/* Variables Internas */
 	
@@ -306,6 +308,20 @@ public class MBListaConstitucionGarantia implements Serializable {
 			}
 		}
 	}
+	
+	/*Metodo para Obtener la cantidad maxima de caracteres por cada opcion
+	 * de busqueda*/
+	public void validarLongitudCaracteres(){
+		descripcionBuscar = "";
+		switch(codigoBuscar){
+		  case 1: cantidadCaracteres = UCantidadCaracteres.CODIGO_SOLICITUD; 
+		          break;
+		  case 2: cantidadCaracteres = UCantidadCaracteres.CODIGO_GARANTIA; 
+		          break;
+		  default: cantidadCaracteres= UCantidadCaracteres.POR_DEFECTO;
+		}
+	}
+	
 	public void buscarSolicitudDocumento(){
 		EGarantia eGarantia = new EGarantia();
 		eGarantia.setUsuarioRegistro(oEUsuario);

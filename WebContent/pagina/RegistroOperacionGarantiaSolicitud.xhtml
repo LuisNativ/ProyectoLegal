@@ -391,7 +391,7 @@
 						   		</div>
 						   		<p:fieldset id="idMontosSolicitud" legend="Solicitud" toggleable="false" toggleSpeed="500" styleClass="dsFieldSet1" style="width: 90% !important;"> 		
 									<div class="ui-g-4">
-										<p:outputLabel value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.secuenciaGarantia eq 1 ? 'Monto Solicitado Crédito' : 'Monto Solicitud Saldo'}" styleClass="dsLabel1"/>
+										<p:outputLabel value="Monto Solicitado Crédito" styleClass="dsLabel1"/>
 										<div class="ui-inputgroup">
 											<div class="ui-inputgroup-addon">#{mbregistrooperaciongarantiasolicitud.oEGarantiaSolicitudData.abreviacionMonedaSolicitud}</div>
 											<p:inputNumber  styleClass="dsInput1" inputStyleClass="dsTextoCentro" value="#{mbregistrooperaciongarantiasolicitud.oEGarantiaAsociadaSolicitudData.montoSaldoSolicitud}" disabled="true" placeholder="0.00" autocomplete="off" decimalSeparator="." thousandSeparator="," minValue="0" maxValue="999999999999.99" onfocus="this.value == 0 ? this.value='':this.value">

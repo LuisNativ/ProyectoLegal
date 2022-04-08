@@ -27,15 +27,16 @@
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 					<p:outputLabel value="Tipo de Búsqueda" styleClass="dsLabel1"/>				
 					<p:selectOneMenu value="#{mblistatramiteoperativosolicitud.codigoBuscar}">
-		            	<f:selectItem itemLabel="[Seleccione]" itemValue="0" />
+					<p:ajax event="change" listener="#{mblistatramiteoperativosolicitud.validarLongitudCaracteres()}" update="form:idDescripcion" />
+		            	<f:selectItem itemLabel="[Todos]" itemValue="0" />
 		            	<f:selectItem itemLabel="Nro. Solicitud" itemValue="1" />
 		            	<f:selectItem itemLabel="Nombre Socio" itemValue="2" />
-		            	<f:selectItem itemLabel="Tipo Producto" itemValue="3" />
 		            </p:selectOneMenu>
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 					<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
-					<p:inputText type="text" styleClass="dsInput1" value="#{mblistatramiteoperativosolicitud.descripcionBuscar}" autocomplete="off" maxlength="50">
+					<p:inputText id="idDescripcion" type="text" styleClass="dsInput1" value="#{mblistatramiteoperativosolicitud.descripcionBuscar}" autocomplete="off" maxlength="#{mblistatramiteoperativosolicitud.cantidadCaracteres}">
+						<p:keyFilter regEx="#{mblistatramiteoperativosolicitud.codigoBuscar eq 1 ? '/[0-9]/i' : 'null'}" preventPaste="false"/>
 					</p:inputText>
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">

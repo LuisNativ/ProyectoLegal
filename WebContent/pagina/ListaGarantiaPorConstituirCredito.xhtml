@@ -37,7 +37,9 @@
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3" style="#{mblistagarantiaporconstituircredito.visualizarCampo1 ? 'display:inline-block;' : 'display:none;'}">
 					<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
-					<p:inputText type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituircredito.descripcionBuscar}" autocomplete="off" maxlength="50">
+					<p:inputText type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituircredito.descripcionBuscar}" autocomplete="off" maxlength="#{mblistagarantiaporconstituircredito.cantidadCaracteresSolicitud}">
+						<p:keyFilter regEx="#{mblistagarantiaporconstituircredito.codigoBuscar eq 1 or 
+						                      mblistagarantiaporconstituircredito.codigoBuscar eq 2 ? '/[0-9]/i': 'null'}" preventPaste="true"/>
 					</p:inputText>
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3" style="#{mblistagarantiaporconstituircredito.visualizarCampo2 ? 'display:inline-block;' : 'display:none;'}">

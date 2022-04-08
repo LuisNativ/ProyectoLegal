@@ -27,14 +27,17 @@
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 					<p:outputLabel value="Tipo de Búsqueda" styleClass="dsLabel1"/>				
 					<p:selectOneMenu value="#{mblistaconstituciongarantia.codigoBuscar}">
-		            	<f:selectItem itemLabel="[Seleccione]" itemValue="0" />
+						<p:ajax event="change" listener="#{mblistaconstituciongarantia.validarLongitudCaracteres()}" update="form:idDescripcion" />
+		            	<f:selectItem itemLabel="[Todos]" itemValue="0" />
 		            	<f:selectItem itemLabel="Nro. Solicitud" itemValue="1" />
 		            	<f:selectItem itemLabel="Nro. Garantía" itemValue="2" />
 		            </p:selectOneMenu>
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 					<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
-					<p:inputText type="text" styleClass="dsInput1" value="#{mblistaconstituciongarantia.descripcionBuscar}" autocomplete="off" maxlength="50">
+					<p:inputText id="idDescripcion" type="text" styleClass="dsInput1" value="#{mblistaconstituciongarantia.descripcionBuscar}" autocomplete="off" maxlength="#{mblistaconstituciongarantia.cantidadCaracteres}">
+						<p:keyFilter regEx="#{mblistaconstituciongarantia.codigoBuscar eq 1 or 
+						                      mblistaconstituciongarantia.codigoBuscar eq 2 ? '/[0-9]/i' : 'null'}" preventPaste="true"/>
 					</p:inputText>
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
