@@ -15,12 +15,6 @@ public class BOOperacion {
 		EMensaje resultado=oCOperacion.agregarDocumentoGarantia(eGarantia,lstDocumentoCarga);
 		return resultado;
 	}
-	/*
-	public EMensaje agregarDocumentoGarantia(EGarantia eOGarantia, EDocumentoCarga eDocumentoCarga){
-		EMensaje mensaje = oCOperacion.agregarDocumentoGarantia(eOGarantia, eDocumentoCarga);
-		return mensaje;
-	}
-	*/
 	public EMensaje modificarDocumentoGarantia(EGarantia eOGarantia){
 		EMensaje mensaje = oCOperacion.modificarDocumentoGarantia(eOGarantia);
 		return mensaje;

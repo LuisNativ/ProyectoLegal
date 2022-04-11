@@ -12,7 +12,6 @@ import com.abaco.ageneral.EOperacionSolicitud;
 import com.abaco.negocio.util.UConstante.UArea;
 import com.abaco.negocio.util.UConstante.UIndicadorDigitalizacion;
 import com.abaco.negocio.util.UConstante.UIndicadorTipoReasignar;
-import com.abaco.negocio.util.UConstante.UTipoEvaluacion;
 import com.abaco.negocio.util.UFuncionesGenerales;
 import com.abaco.negocio.util.UManejadorLog;
 import com.abaco.persistencia.acceso.InstanciaAcceso;
@@ -44,7 +43,7 @@ public class DAOOperacion extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO_DOCUMENTO = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO_DOCUMENTO("+parametrosSP(13)+") }";
 	private static final String SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO_DOCUMENTOREVISION = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO_DOCUMENTOREVISION("+parametrosSP(13)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_OPERACION_SOLICITUDCREDITO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_OPERACION_SOLICITUDCREDITO("+parametrosSP(60)+") }";
-	private static final String SP_ABACOINLEGAL_INS_UPD_INFORMELEGALADICIONAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_UPD_INFORMELEGALADICIONAL("+parametrosSP(48)+") }";
+	private static final String SP_ABACOINLEGAL_INS_UPD_INFORMELEGALADICIONAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_UPD_INFORMELEGALADICIONAL("+parametrosSP(50)+") }";
 	private static final String SP_ABACOINLEGAL_DEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOREVISION = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOREVISION("+parametrosSP(5)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO("+parametrosSP(6)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_OTROS="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_OTROS("+parametrosSP(6)+") }";
@@ -148,108 +147,6 @@ public class DAOOperacion extends InstanciaAcceso{
 		}
 		return mensaje;
 	}
-	
-	/*
-	public List<EOperacionSolicitud> listarSolicitud(EOperacionSolicitud eOperacionSolicitud, int indicadorConsulta) {
-		List<Object> lstParametrosEntrada;
-		ResultSet oResultSet = null;
-		EOperacionSolicitud oEOperacionSolicitud= null;
-		List<EOperacionSolicitud> lstOperacionSolicitud = null;
-		
-		try {
-			lstParametrosEntrada = new ArrayList<Object>();
-			
-			if(indicadorConsulta == 2){
-				lstParametrosEntrada = new ArrayList<Object>();
-				lstParametrosEntrada.add(eOperacionSolicitud.getCodigoSolicitudCredito());
-				lstParametrosEntrada.add(eOperacionSolicitud.getNombrePersona());
-				lstParametrosEntrada.add(eOperacionSolicitud.getCodigoEstado());
-				lstParametrosEntrada.add(eOperacionSolicitud.getCodigoAutorizaJefe());
-				lstParametrosEntrada.add(eOperacionSolicitud.getUsuarioRegistro().getCodigoArea());
-				lstParametrosEntrada.add(eOperacionSolicitud.getUsuarioRegistro().getIdUsuario());
-				lstParametrosEntrada.add(eOperacionSolicitud.getCodigoTipoEvaluacion());
-				oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUD_LEGAL, lstParametrosEntrada, null);
-			}else if(indicadorConsulta == 3){
-				lstParametrosEntrada = new ArrayList<Object>();
-				lstParametrosEntrada.add(eOperacionSolicitud.getCodigoSolicitudCredito());
-				lstParametrosEntrada.add(eOperacionSolicitud.getNombrePersona());
-				lstParametrosEntrada.add(eOperacionSolicitud.getCodigoEstado());
-				lstParametrosEntrada.add(eOperacionSolicitud.getCodigoAutorizaJefe());
-				lstParametrosEntrada.add(eOperacionSolicitud.getUsuarioRegistro().getCodigoArea());
-				lstParametrosEntrada.add(eOperacionSolicitud.getUsuarioRegistro().getIdUsuario());
-				lstParametrosEntrada.add(eOperacionSolicitud.getCodigoTipoEvaluacion());
-				oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUD_OTROS, lstParametrosEntrada, null);
-			}
-			
-			if (oResultSet != null) {
-				lstOperacionSolicitud = new ArrayList<EOperacionSolicitud>();
-				while (oResultSet.next()) {
-					oEOperacionSolicitud = new EOperacionSolicitud();
-					oEOperacionSolicitud.setCodigoSolicitud(oResultSet.getInt("CODSOL"));
-					oEOperacionSolicitud.setCodigoNivel(oResultSet.getInt("CODNVL"));
-					oEOperacionSolicitud.setCodigoEstado(oResultSet.getInt("CODEST"));
-					oEOperacionSolicitud.setNumeroMensaje(oResultSet.getInt("NUMMSJ"));
-					oEOperacionSolicitud.setNumeroRevision(oResultSet.getInt("NUMREV"));
-					oEOperacionSolicitud.setCodigoTipoEvaluacion(oResultSet.getInt("CODTEVAL"));
-					oEOperacionSolicitud.setCodigoSolicitudCredito(oResultSet.getInt("CODSOLCRE"));
-					oEOperacionSolicitud.setCodigoGarantia(oResultSet.getInt("CODGAR"));
-					
-					oEOperacionSolicitud.setCodigoClientePersona(oResultSet.getInt("CODPER"));
-					oEOperacionSolicitud.setCodigoTipoPersona(oResultSet.getString("CODTPER"));
-					oEOperacionSolicitud.setCodigoTipoClientePersona(oResultSet.getInt("CODTIPCLIPER"));
-					oEOperacionSolicitud.setCodigoTipoDocumentoPersona(oResultSet.getString("CODTIPDOCPER"));
-					oEOperacionSolicitud.setNumeroDocumentoPersona(oResultSet.getString("NUMDOCPER"));
-					oEOperacionSolicitud.setNombrePersona(oResultSet.getString("NOMPER"));
-					
-					oEOperacionSolicitud.setCodigoAreaEmisor(oResultSet.getInt("CODAREAEMISOR"));
-					oEOperacionSolicitud.setDescripcionAreaEmisor(oResultSet.getString("DESCAREAEMISOR"));
-					oEOperacionSolicitud.setCodigoEmisor(oResultSet.getInt("CODEMISOR"));
-					oEOperacionSolicitud.setDescripcionEmisor(oResultSet.getString("DESCEMISOR"));
-					oEOperacionSolicitud.setDescripcionAbreviacionEmisor(oResultSet.getString("DESCABREVEMISOR"));
-					
-					oEOperacionSolicitud.setCodigoTipoEnvio(oResultSet.getInt("CODTENVIO"));
-					oEOperacionSolicitud.setCodigoReceptor(oResultSet.getInt("CODRECEPTOR"));
-					oEOperacionSolicitud.setDescripcionReceptor(oResultSet.getString("DESCRECEPTOR"));
-					
-					oEOperacionSolicitud.setAbreviacionTipoCliente(oResultSet.getString("ABRVTIPCLI"));
-					oEOperacionSolicitud.setDescripcionTipoCliente(oResultSet.getString("DESCTIPCLI"));
-					oEOperacionSolicitud.setDescripcionNivel(oResultSet.getString("DESCNVL"));
-					oEOperacionSolicitud.setDescripcionEstado(oResultSet.getString("DESCEST"));
-					oEOperacionSolicitud.setDescripcionTipoEvaluacion(oResultSet.getString("DESCTEVAL"));
-					oEOperacionSolicitud.setDescripcionTipoEnvio(oResultSet.getString("DESCTENVIO"));
-					oEOperacionSolicitud.setDescripcionEstadoAutorizacion(oResultSet.getString("DESCAJF"));
-					oEOperacionSolicitud.setAbreviacionEstadoAutorizacion(oResultSet.getString("ABRVAJF"));
-					oEOperacionSolicitud.setDescripcionAsunto(oResultSet.getString("DESCASUNTO"));
-					oEOperacionSolicitud.setDescripcionMensajeDigitalizacion(oResultSet.getString("DESCENVIODIG"));
-					oEOperacionSolicitud.setIndicadorSesion(oResultSet.getInt("INDSES"));
-					oEOperacionSolicitud.setIndicadorDigitalizacion(oResultSet.getInt("INDDIG"));
-					oEOperacionSolicitud.setDescripcionUsuarioEvaluacion(oResultSet.getString("DESCUSUEVAL"));
-					oEOperacionSolicitud.setDescripcionUsuarioSesion(oResultSet.getString("DESCUSUSES"));
-					oEOperacionSolicitud.setFechaInicio(oResultSet.getDate("FECINI"));
-					oEOperacionSolicitud.setFechaFin(oResultSet.getDate("FECFIN"));
-					oEOperacionSolicitud.setDiaTranscurrido(oResultSet.getInt("DIATRANSCURRIDO"));
-					oEOperacionSolicitud.setTiempoTranscurrido(UFuncionesGenerales.convertirValoresASexagesimal(oResultSet.getInt("DIATRANSCURRIDO"), oResultSet.getInt("SEGUNDOSTRANSCURRIDO")));
-					oEOperacionSolicitud.setIndicadorEditar(oResultSet.getInt("INDEDITAR"));
-					oEOperacionSolicitud.setIndicadorVisualizar(oResultSet.getInt("INDVISUALIZAR"));
-					oEOperacionSolicitud.setIndicadorPublicar(oResultSet.getInt("INDPUBLICAR"));
-					oEOperacionSolicitud.setIndicadorReasignarEmisor(oResultSet.getInt("INDREASIGNAREMISOR"));
-					oEOperacionSolicitud.setIndicadorReasignarReceptor(oResultSet.getInt("INDREASIGNARRECEPTOR"));
-					oEOperacionSolicitud.setAbreviacionTipoProducto(UFuncionesGenerales.revisaCadena(oResultSet.getString("ABREVTPRODU")));
-					oEOperacionSolicitud.setCodigoAutorizaJefe(oResultSet.getInt("CODAJF"));
-					oEOperacionSolicitud.setDiaTranscurridoAJF(oResultSet.getInt("DIATRANSCURRIDOAJF"));
-					oEOperacionSolicitud.setTiempoTranscurridoAJF(UFuncionesGenerales.convertirValoresASexagesimal(oResultSet.getInt("DIATRANSCURRIDOAJF"), oResultSet.getInt("SEGUNDOSTRANSCURRIDOAJF")));
-					oEOperacionSolicitud.setFechaAutorizacion(oResultSet.getDate("FECAJF"));
-					
-					lstOperacionSolicitud.add(oEOperacionSolicitud);
-				}								
-			}						
-			
-		} catch(Exception objEx) {
-			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
-		}
-		return lstOperacionSolicitud;
-	}
-	*/
 	
 	public List<EOperacionDocumento> listarDocumentoGarantia(EGarantia eOGarantia,int indicador) {
 		List<Object> lstParametrosEntrada;
@@ -475,6 +372,8 @@ public class DAOOperacion extends InstanciaAcceso{
 			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoCliente());
 			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoTipoCliente());
 			
+			lstParametrosEntrada.add(eOperacionCliente.getCodigoTipoDocumento());
+			lstParametrosEntrada.add(eOperacionCliente.getNumeroDocumento());
 			lstParametrosEntrada.add(eOperacionCliente.getCodigoTipoPersonaJuridica());
 			lstParametrosEntrada.add(eOperacionCliente.getMontoCapitalSocialRegistroPublicos());
 			lstParametrosEntrada.add(eOperacionCliente.getMontoCapitalSocialActual());
@@ -982,6 +881,8 @@ public class DAOOperacion extends InstanciaAcceso{
 			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoCliente());
 			lstParametrosEntrada.add(eEInformeLegalAdicional.getCodigoTipoCliente());
 			
+			lstParametrosEntrada.add(eOperacionSolicitudCredito.getCodigoTipoDocumento());
+			lstParametrosEntrada.add(eOperacionSolicitudCredito.getNumeroDocumento());
 			lstParametrosEntrada.add(eOperacionSolicitudCredito.getCodigoTipoPersonaJuridica());
 			lstParametrosEntrada.add(eOperacionSolicitudCredito.getMontoCapitalSocialRegistroPublicos());
 			lstParametrosEntrada.add(eOperacionSolicitudCredito.getMontoCapitalSocialActual());

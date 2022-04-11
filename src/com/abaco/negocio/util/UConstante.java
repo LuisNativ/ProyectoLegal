@@ -579,16 +579,6 @@ public class UConstante {
 		int ENEVALUACIONDELEGAL = 515;
 	}
 	
-	public static interface UTipoEvaluacion {
-		int NOLEVANTAMIENTO = 0;
-		int SOLICITUDCREDITO = 1;
-		int PODERES = 2;
-		int LEVANTAMIENTO = 3;
-		int CONSTITUCION = 4;
-		int CARTAFIANZA = 5;
-		//int PERSONANATURAL = 2;
-	}
-	
 	public static interface UTipoBusquedaTercero {
 		int GENERAL = 1;
 		int DEUDOR = 2;
@@ -844,11 +834,9 @@ public class UConstante {
 		String MSJ_8 = "El Préstamo cubre el Total de Garantía";
 		String MSJ_9 = "Saldo insuficiente para cubrir préstamo";
 		String MSJ_10 = "Ingrese Préstamo y Valor Realización";
-		//String MSJ_11 = "No se permite confirmación" +  "\n" + "Créditos relacionados activos:";
 		String MSJ_11 = "No se permite confirmación" +  "\n" + "Créditos cancelados por desenlazar:";
-		String MSJ_12 = "No se permite liberación" +  "\n" + "Créditos por cancelar:";
+		String MSJ_12 = "No se permite liberación" +  "\n" + "Créditos relacionados activos:";
 		String MSJ_13 = "Complete los campos correspondientes al trámite para generar un nuevo asiento para la Garantía";
-		
 	}
 	
 	public static interface UMensajeConfirmacion {
@@ -857,18 +845,8 @@ public class UConstante {
 		String MSJ_3 = "¿Estas seguro de confirmar la solicitud de levantamiento de Garantía?";
 		String MSJ_4 = "¿Estas seguro de Liberar la Garantìa?";
 		String MSJ_5 = "El cierre de solicitud contempla la entrega de documentos de levantamiento de garantìa al socio, ¿Estas seguro de continuar?";
-		
-		String MSJ_6 = "¿Está seguro de enviar el documento para la firma del socio?";
-		String MSJ_7 = "¿Está seguro de enviar el documento con la firma del socio?";
-		String MSJ_8 = "¿Está seguro de enviar el documento al notario";
-		String MSJ_9 = "¿Está seguro de enviar la ficha de inscripcion";
-		String MSJ_10 = "¿Estas seguro de realizar esta acción?";
-		String MSJ_11 = "¿Está seguro de constituir la garantía?";
-		
-		String MSJ_12 = "¿Estas seguro de registrar la solicitud de carta Fianza?";
-		String MSJ_13 = "¿Estas seguro de rechazar la solicitud de carta Fianza?";
-		String MSJ_14 = "¿Estas seguro de confirmar la solicitud de carta Fianza?";
-		String MSJ_15 = "¿Está seguro de enviar el documento de carta Fianza";
+		String MSJ_6 = "¿Estas seguro de observar la solicitud de levantamiento de Garantía?";
+		String MSJ_7 = "¿Estas seguro de archivar la solicitud de levantamiento de Garantía?";
 		String MSJ_16 = "¿Está seguro de enviar el documento con la firma del socio?";
 	}
 	

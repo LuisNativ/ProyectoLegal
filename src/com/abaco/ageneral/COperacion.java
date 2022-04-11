@@ -76,39 +76,6 @@ public class COperacion {
 		return mensaje;
 	}
 	
-	/*
-	public EMensaje agregarDocumentoGarantia(EGarantia eOGarantia, EDocumentoCarga eDocumentoCarga){
-		IConexion oIConexion = null;
-		EMensaje mensaje = new EMensaje();
-		DAOOperacion oDAOOperacion= null;
-
-		try {
-			oIConexion = FabricaConexion.creaConexion();
-			oIConexion.iniciaTransaccion();
-			oDAOOperacion = new DAOOperacion(oIConexion);
-
-			mensaje = oDAOOperacion.agregarDocumentoGarantia(eOGarantia, eDocumentoCarga);
-			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-				throw new Exception(mensaje.getDescMensaje());
-			}
-	
-			oIConexion.ejecutaCommit();
-			
-		} catch (Exception e) {
-			if (oIConexion != null) {
-				oIConexion.ejecutaRollback();
-			}
-			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
-			UManejadorLog.error("Control: Error al modificar solicitud: " + e.getMessage());
-		} finally {
-			if (oIConexion != null) {
-				oIConexion.cierraConexion();
-			}
-		}
-		return mensaje;
-	}
-	*/
-	
 	public EMensaje modificarDocumentoGarantia(EGarantia eOGarantia){
 		IConexion oIConexion = null;
 		EMensaje mensaje = new EMensaje();

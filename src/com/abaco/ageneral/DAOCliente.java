@@ -50,6 +50,7 @@ public class DAOCliente extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_BUS_CLIENTE_INFO_PERSONA_NATURAL ="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_CLIENTE_INFO_PERSONA_NATURAL("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_USUARIO_DETALLE ="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_USUARIO_DETALLE("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_SOCIO_CONSTITUCIONEMPRESA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_SOCIO_CONSTITUCIONEMPRESA("+parametrosSP(1)+") }";
+	private static final String SP_ABACOINLEGAL_BUS_POSTULANTE_CONSTITUCIONEMPRESA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_POSTULANTE_CONSTITUCIONEMPRESA("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_BUS_CLIENTE_ADICIONAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_CLIENTE_ADICIONAL("+parametrosSP(2)+") }";
 
 	
@@ -1124,7 +1125,7 @@ public class DAOCliente extends InstanciaAcceso{
 		return oETercero;
 	}
 	
-	public EClienteConstitucionEmpresa buscarConstitucionEmpresa(long codigoCliente) {
+	public EClienteConstitucionEmpresa buscarSocioConstitucionEmpresa(long codigoCliente) {
 		List<Object> lstParametrosEntrada = null;
 		ResultSet objResultSet = null;
 		EClienteConstitucionEmpresa oEClienteConstitucionEmpresa = null;
@@ -1133,6 +1134,35 @@ public class DAOCliente extends InstanciaAcceso{
 			lstParametrosEntrada = new ArrayList<Object>();
 			lstParametrosEntrada.add(codigoCliente);
 			objResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_BUS_SOCIO_CONSTITUCIONEMPRESA, lstParametrosEntrada, null);
+			if (objResultSet != null) {
+				if (objResultSet.next()) {
+					oEClienteConstitucionEmpresa = new EClienteConstitucionEmpresa();
+					oEClienteConstitucionEmpresa.setCodigoCliente(objResultSet.getInt("CODCLI"));
+					oEClienteConstitucionEmpresa.setCodigoTipoPersonaJuridica(objResultSet.getInt("NATJUR"));
+					oEClienteConstitucionEmpresa.setInscripcionRegistroPublico(UFuncionesGenerales.revisaCadena(objResultSet.getString("INREPU")));
+					oEClienteConstitucionEmpresa.setFechaConstitucion(objResultSet.getDate("FECCIA"));
+					oEClienteConstitucionEmpresa.setCodigoNotario(objResultSet.getInt("CODNOT"));
+					oEClienteConstitucionEmpresa.setDescripcionNotario(UFuncionesGenerales.revisaCadena(objResultSet.getString("NOMNOT")));
+					oEClienteConstitucionEmpresa.setOficinaRegistral(UFuncionesGenerales.revisaCadena(objResultSet.getString("OFIREG")));
+					oEClienteConstitucionEmpresa.setNumeroAcciones(objResultSet.getInt("ACCION"));
+				}
+				objConexion.cierraConsulta(objResultSet);
+			}
+		} catch (Exception objEx) {
+			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
+		}
+		return oEClienteConstitucionEmpresa;
+	}
+	
+	public EClienteConstitucionEmpresa buscarPostulanteConstitucionEmpresa(long codigoCliente) {
+		List<Object> lstParametrosEntrada = null;
+		ResultSet objResultSet = null;
+		EClienteConstitucionEmpresa oEClienteConstitucionEmpresa = null;
+
+		try {
+			lstParametrosEntrada = new ArrayList<Object>();
+			lstParametrosEntrada.add(codigoCliente);
+			objResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_BUS_POSTULANTE_CONSTITUCIONEMPRESA, lstParametrosEntrada, null);
 			if (objResultSet != null) {
 				if (objResultSet.next()) {
 					oEClienteConstitucionEmpresa = new EClienteConstitucionEmpresa();

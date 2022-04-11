@@ -40,7 +40,6 @@ import com.abaco.negocio.util.UConstante.UIndicadorSesion;
 import com.abaco.negocio.util.UConstante.UProcesoMantePostulante;
 import com.abaco.negocio.util.UConstante.UTipoCorrelativo;
 import com.abaco.negocio.util.UConstante.UTipoDocumentoGarantia;
-import com.abaco.negocio.util.UConstante.UTipoEvaluacion;
 import com.abaco.negocio.util.UConstante.UVariablesQueryString;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
 import com.abaco.negocio.util.UFuncionesGenerales;

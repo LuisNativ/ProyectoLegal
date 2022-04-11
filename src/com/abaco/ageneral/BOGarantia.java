@@ -474,14 +474,6 @@ public class BOGarantia {
 		List<EGarantiaDocumentoSolicitado> lista=oCGarantia.listarDocumentoSolicitado(numeroSolicitud);
 		return lista;
 	}
-	public List<EGarantiaCreditoRelacionado> listarCreditoVigenteRelacionado(long codigo){
-		List<EGarantiaCreditoRelacionado> lista=oCGarantia.listarCreditoVigenteRelacionado(codigo);
-		return lista;
-	}
-	public List<EGarantiaCreditoRelacionado> listarCreditoCanceladoRelacionado(long codigo){
-		List<EGarantiaCreditoRelacionado> lista=oCGarantia.listarCreditoCanceladoRelacionado(codigo);
-		return lista;
-	}
 	public EGarantia buscarGarantia(long codigoGarantia){
 		EGarantia resultado=oCGarantia.buscarGarantia(codigoGarantia);
 		return resultado;

@@ -7,7 +7,7 @@ import com.abaco.entidad.EUsuario;
 import lombok.Data;
 
 public @Data class EAsignacionContratoGarantia {
-
+	/* Correspondiente a la tabla F7409 */
 	private int numeroContrato;
 	private int numeroContratoOtro;
 	private int secuenciaAsignacion;

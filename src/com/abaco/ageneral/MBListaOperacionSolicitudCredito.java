@@ -63,7 +63,6 @@ import com.abaco.negocio.util.UConstante.UTipoCliente;
 import com.abaco.negocio.util.UConstante.UTipoCorrelativo;
 import com.abaco.negocio.util.UConstante.UTipoEnvio;
 import com.abaco.negocio.util.UConstante.UTipoEstadoUsuario;
-import com.abaco.negocio.util.UConstante.UTipoEvaluacion;
 import com.abaco.negocio.util.UConstante.UUbicacion;
 import com.abaco.negocio.util.UConstante.UVariablesQueryString;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
@@ -131,14 +130,6 @@ public class MBListaOperacionSolicitudCredito implements Serializable {
 		lstAutorizacion = new ArrayList<EGeneral>();
 
 		oEUsuario = (EUsuario) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.USUARIO);
-		
-		/*
-		if (UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.OPERACION_SESION) != null) {
-			EOperacionSolicitud oEOperacionSolicitud = (EOperacionSolicitud) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.OPERACION_SESION);
-			oBOOperacion.liberarSolicitudSesion(oEOperacionSolicitud.getCodigoSolicitud());
-			UManejadorSesionWeb.eliminaVariableSesion(UVariablesSesion.OPERACION_SESION);
-		}
-		*/
 		
 		inicializar();
 		agregar();

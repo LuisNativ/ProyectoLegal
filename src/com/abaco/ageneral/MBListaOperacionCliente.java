@@ -37,7 +37,6 @@ import com.abaco.negocio.util.UConstante.UTipoBusquedaTercero;
 import com.abaco.negocio.util.UConstante.UTipoCliente;
 import com.abaco.negocio.util.UConstante.UTipoClienteSolicitudCredito;
 import com.abaco.negocio.util.UConstante.UTipoCorrelativo;
-import com.abaco.negocio.util.UConstante.UTipoEvaluacion;
 import com.abaco.negocio.util.UConstante.UVariablesQueryString;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
 import com.abaco.negocio.util.UFuncionesGenerales;

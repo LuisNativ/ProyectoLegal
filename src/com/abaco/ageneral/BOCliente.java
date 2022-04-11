@@ -74,8 +74,12 @@ public class BOCliente {
 		ETercero resultado = oCCliente.buscarCliente_Info_PersonaNatural(codigoCliente);
 		return resultado;
 	}
-	public EClienteConstitucionEmpresa buscarConstitucionEmpresa(long codigoCliente){
-		EClienteConstitucionEmpresa resultado = oCCliente.buscarConstitucionEmpresa(codigoCliente);
+	public EClienteConstitucionEmpresa buscarSocioConstitucionEmpresa(long codigoCliente){
+		EClienteConstitucionEmpresa resultado = oCCliente.buscarSocioConstitucionEmpresa(codigoCliente);
+		return resultado;
+	}
+	public EClienteConstitucionEmpresa buscarPostulanteConstitucionEmpresa(long codigoCliente){
+		EClienteConstitucionEmpresa resultado = oCCliente.buscarPostulanteConstitucionEmpresa(codigoCliente);
 		return resultado;
 	}
 	public EClienteAdicional buscarClienteAdicional(long codigoCliente, int codigoTipoCliente){

@@ -42,7 +42,6 @@ import com.abaco.negocio.util.UConstante.UIndicadorSesion;
 import com.abaco.negocio.util.UConstante.UIndicadorTipoReasignar;
 import com.abaco.negocio.util.UConstante.UData;
 import com.abaco.negocio.util.UConstante.UMensajeValidacion;
-import com.abaco.negocio.util.UConstante.UTipoEvaluacion;
 import com.abaco.negocio.util.UConstante.UVariablesQueryString;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
 import com.abaco.negocio.util.UFuncionesGenerales;

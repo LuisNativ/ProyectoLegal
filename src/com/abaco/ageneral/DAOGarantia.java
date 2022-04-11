@@ -93,8 +93,6 @@ public class DAOGarantia extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_SEL_CIASEGUROPOLIZA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CIASEGUROPOLIZA("+parametrosSP(3)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_HISTORICOGARANTIATRAMITE="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_HISTORICOGARANTIATRAMITE("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_ASIENTOTRAMITEGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_ASIENTOTRAMITEGARANTIA("+parametrosSP(1)+") }";
-	private static final String SP_ABACOINLEGAL_SEL_CREDITOVIGENTERELACIONADOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CREDITOVIGENTERELACIONADOGARANTIA("+parametrosSP(1)+") }";
-	private static final String SP_ABACOINLEGAL_SEL_CREDITOCANCELADORELACIONADOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CREDITOCANCELADORELACIONADOGARANTIA("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_CREDITOSASOCIADOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CREDITOSASOCIADOGARANTIA("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_CREDITOSASOCIADOGARANTIA2="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CREDITOSASOCIADOGARANTIA2("+parametrosSP(1)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_CLIENTEASOCIADOGARANTIA="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_CLIENTEASOCIADOGARANTIA("+parametrosSP(1)+") }";
@@ -3803,62 +3801,6 @@ public class DAOGarantia extends InstanciaAcceso{
 			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
 		}
 		return lstGarantiaDocumentoSolicitado;
-	}
-	
-	public List<EGarantiaCreditoRelacionado> listarCreditoVigenteRelacionado(long codigo) {
-		List<Object> lstParametrosEntrada;
-		ResultSet oResultSet = null;
-		EGarantiaCreditoRelacionado oEGarantiaCreditoRelacionado= null;
-		List<EGarantiaCreditoRelacionado> lstGarantiaCreditoRelacionado = null;
-		
-		try {
-			lstParametrosEntrada = new ArrayList<Object>();
-			lstParametrosEntrada.add(codigo);
-			 
-			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_SEL_CREDITOVIGENTERELACIONADOGARANTIA, lstParametrosEntrada, null);
-			if (oResultSet != null) {
-				lstGarantiaCreditoRelacionado = new ArrayList<EGarantiaCreditoRelacionado>();
-				while (oResultSet.next()) {
-					oEGarantiaCreditoRelacionado = new EGarantiaCreditoRelacionado();
-					oEGarantiaCreditoRelacionado.setCodigoCliente(oResultSet.getInt("CODCLI"));
-					oEGarantiaCreditoRelacionado.setCodigoServicio(oResultSet.getInt("SERVIC"));
-					oEGarantiaCreditoRelacionado.setNumeroOperacion(oResultSet.getInt("NUMOPE"));
-					lstGarantiaCreditoRelacionado.add(oEGarantiaCreditoRelacionado);
-				}								
-			}						
-			
-		} catch(Exception objEx) {
-			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
-		}
-		return lstGarantiaCreditoRelacionado;
-	}
-	
-	public List<EGarantiaCreditoRelacionado> listarCreditoCanceladoRelacionado(long codigo) {
-		List<Object> lstParametrosEntrada;
-		ResultSet oResultSet = null;
-		EGarantiaCreditoRelacionado oEGarantiaCreditoRelacionado= null;
-		List<EGarantiaCreditoRelacionado> lstGarantiaCreditoRelacionado = null;
-		
-		try {
-			lstParametrosEntrada = new ArrayList<Object>();
-			lstParametrosEntrada.add(codigo);
-			 
-			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_SEL_CREDITOCANCELADORELACIONADOGARANTIA, lstParametrosEntrada, null);
-			if (oResultSet != null) {
-				lstGarantiaCreditoRelacionado = new ArrayList<EGarantiaCreditoRelacionado>();
-				while (oResultSet.next()) {
-					oEGarantiaCreditoRelacionado = new EGarantiaCreditoRelacionado();
-					oEGarantiaCreditoRelacionado.setCodigoCliente(oResultSet.getInt("CODCLI"));
-					oEGarantiaCreditoRelacionado.setCodigoServicio(oResultSet.getInt("SERVIC"));
-					oEGarantiaCreditoRelacionado.setNumeroOperacion(oResultSet.getInt("NUMOPE"));
-					lstGarantiaCreditoRelacionado.add(oEGarantiaCreditoRelacionado);
-				}								
-			}						
-			
-		} catch(Exception objEx) {
-			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
-		}
-		return lstGarantiaCreditoRelacionado;
 	}
 	
 	public EGarantia buscarGarantia(long codigoGarantia){

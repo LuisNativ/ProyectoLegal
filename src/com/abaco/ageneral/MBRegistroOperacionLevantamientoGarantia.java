@@ -69,6 +69,7 @@ import com.abaco.negocio.util.UConstante.UCorreoEnvio;
 import com.abaco.negocio.util.UConstante.UData;
 import com.abaco.negocio.util.UConstante.UEstado;
 import com.abaco.negocio.util.UConstante.UEstadoLegal;
+import com.abaco.negocio.util.UConstante.UEstadoOperacionCliente;
 import com.abaco.negocio.util.UConstante.UEstadoOperacionLevantamiento;
 import com.abaco.negocio.util.UConstante.UFormatoAbaco;
 import com.abaco.negocio.util.UConstante.UIndicadorDigitalizacion;
@@ -89,11 +90,11 @@ import com.abaco.negocio.util.UConstante.UPlantillaEmail;
 import com.abaco.negocio.util.UConstante.UTipoCorrelativo;
 import com.abaco.negocio.util.UConstante.UTipoDocumento;
 import com.abaco.negocio.util.UConstante.UTipoEstadoUsuario;
-import com.abaco.negocio.util.UConstante.UTipoEvaluacion;
 import com.abaco.negocio.util.UConstante.UTipoFirma;
 import com.abaco.negocio.util.UConstante.UTipoGarantia;
 import com.abaco.negocio.util.UConstante.UTipoCliente;
 import com.abaco.negocio.util.UConstante.URegla;
+import com.abaco.negocio.util.UConstante.UTipoPersona;
 import com.abaco.negocio.util.UConstante.UVariablesQueryString;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
 import com.abaco.negocio.util.UFuncionesGenerales;
@@ -134,9 +135,9 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 	@Getter @Setter private List<EOperacionDocumento> lstOperacionDocumento;
 	@Getter @Setter private List<EOperacionDocumento> lstOperacionDocumentoFiltro;
 	@Getter @Setter private List<EDocumentoCarga> lstDocumentoCarga;
-	@Getter @Setter private List<EGarantiaCreditoRelacionado> lstCreditoVigenteRelacionado;
-	@Getter @Setter private List<EGarantiaCreditoRelacionado> lstCreditoCanceladoRelacionado;
 	@Getter @Setter private List<EAsignacionContratoGarantia> lstClienteGarantia;
+	@Getter @Setter private List<EAsignacionContratoGarantia> lstCreditoGarantia;
+	@Getter @Setter private List<EAsignacionContratoGarantia> lstCreditoVigenteRelacionadoFiltro;
 	@Getter @Setter private List<EGeneral> lstTipoGarantia;
 	@Getter @Setter private List<EGeneral> lstTipoPrendaGarantia;
 	@Getter @Setter private List<EGeneral> lstTipoMoneda;
@@ -168,8 +169,6 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 	@Getter @Setter private boolean deshabilitarFrmGarantia;
 	
 	//Indicadores
-	private int indicadorTemporal;
-	//@Getter @Setter private int indicadorValidarBtnEnviar;
 	@Getter @Setter private boolean indicadorValidarBtnLiberar;
 	
 	//Control de Acciones
@@ -217,7 +216,6 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 	private EOperacionDocumento oEOperacionDocumento;
 	@Getter @Setter private int codigoFirmaSiNo;
 	@Getter @Setter private List<EGeneral> lstValorSiNo;
-	@Getter @Setter private List<EAsignacionContratoGarantia> lstCreditoGarantia;
 	@Getter @Setter private Double montoAcumuladoAsignadoCredito;    
 	@Getter @Setter private Double montoAcumuladoSaldoCredito;  
 	@Getter @Setter private Double montoAcumuladoCoberturado;
@@ -242,9 +240,9 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 		lstOperacionDocumento = new ArrayList<EOperacionDocumento>();
 		lstOperacionDocumentoFiltro = new ArrayList<EOperacionDocumento>();
 		lstDocumentoCarga = new ArrayList<EDocumentoCarga>();
-		lstCreditoVigenteRelacionado = new ArrayList<EGarantiaCreditoRelacionado>();
-		lstCreditoCanceladoRelacionado = new ArrayList<EGarantiaCreditoRelacionado>();
 		lstClienteGarantia = new ArrayList<EAsignacionContratoGarantia>();
+		lstCreditoGarantia = new ArrayList<EAsignacionContratoGarantia>();
+		lstCreditoVigenteRelacionadoFiltro = new ArrayList<EAsignacionContratoGarantia>();
 		lstTipoGarantia = new ArrayList<EGeneral>();
 		lstTipoPrendaGarantia = new ArrayList<EGeneral>();
 		lstTipoMoneda = new ArrayList<EGeneral>();
@@ -254,7 +252,6 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 		
 		//Adicional
 		oEOperacionDocumento = new EOperacionDocumento();
-		lstCreditoGarantia = new ArrayList<EAsignacionContratoGarantia>();
 		
 		oEUsuario = (EUsuario) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.USUARIO);
 		inicializar();
@@ -297,7 +294,8 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 					oEClienteData = oBOCliente.buscarSocio(oEGarantiaSolicitudLoad.getCodigoCliente());
 					oEGarantiaData = oBOGarantia.buscarGarantia(oEGarantiaSolicitudLoad.getCodigoGarantia());
 					oEGarantiaTramiteData = oBOGarantia.buscarGarantiaTramite(oEGarantiaSolicitudLoad.getCodigoGarantia());
-					lstCreditoVigenteRelacionado = oBOGarantia.listarCreditoVigenteRelacionado(oEGarantiaSolicitudLoad.getCodigoGarantia());
+					listarCreditosAsociadosGarantia();
+					listarCreditoVigenteRelacionadoFiltro();
 					
 					if(oEGarantiaSolicitudLoad.getCodigoEstadoLevantamiento() == UEstadoOperacionLevantamiento.SOLICITADO){
 						visualizarBtnRechazar = true;
@@ -313,26 +311,23 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 						}else if(oEGarantiaData.getCodigoTipoGarantia() == UTipoGarantia.MAQUINARIA){
 							visualizarBtnGenerarDocumento2 = true;
 						}else if(oEGarantiaData.getCodigoTipoGarantia() == UTipoGarantia.PREDIO){							
-							if(lstCreditoVigenteRelacionado.size() > 0){
+							if(lstCreditoVigenteRelacionadoFiltro.size() > 0){
 								visualizarBtnGenerarDocumento4 = true;
 							}else{
 								visualizarBtnGenerarDocumento2 = true;
 								visualizarBtnGenerarDocumento3 = true;
 							}
 						}
-						//indicadorValidarBtnEnviar = 1;
 						indicadorValidarBtnLiberar = true;
 					}else if(oEGarantiaSolicitudLoad.getCodigoEstadoLevantamiento() == UEstadoOperacionLevantamiento.OBSERVADO){
 						visualizarPnlInforme = true;
 						visualizarPnlDocumentoLevantamiento = true;
 						visualizarBtnEntregar = true;
 						visualizarBtnArchivar = true;
-						//indicadorValidarBtnEnviar = 0;
 					}else if(oEGarantiaSolicitudLoad.getCodigoEstadoLevantamiento() == UEstadoOperacionLevantamiento.ENEVALUACION){
 						visualizarPnlDocumentoLevantamiento = true;
 						visualizarBtnEnProcesoLevantamiento = true;
 						visualizarBtnLiberar = true;
-						//indicadorValidarBtnEnviar = 0;
 						indicadorValidarBtnLiberar = true;
 					}else if(oEGarantiaSolicitudLoad.getCodigoEstadoLevantamiento() == UEstadoOperacionLevantamiento.LIBERADO){
 						visualizarPnlDocumentoLevantamiento = true;
@@ -340,7 +335,6 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 					}
 					
 					deshabilitarFrmGarantia = true;
-					//deshabilitarBtnGrabar = true;
 					visualizarComentario = true;
 					visualizarTblMensaje = true;
 					visualizarPnlClienteRelacionado = true;
@@ -353,7 +347,8 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 					oEGarantiaSolicitudLoad = (EGarantiaSolicitud) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.FICHA_PARAMETRO);
 					oEClienteData = oBOCliente.buscarSocio(oEGarantiaSolicitudLoad.getCodigoCliente());
 					oEGarantiaData = oBOGarantia.buscarGarantia(oEGarantiaSolicitudLoad.getCodigoGarantia());
-															
+					listarCreditosAsociadosGarantia();
+					
 					deshabilitarFrmGarantia = true;
 					visualizarComentario = false;
 					visualizarTblMensaje = true;
@@ -380,11 +375,8 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 			listarMensaje();
 			listarDocumento();
 			listarUbigeoGarantia();
-			//habilitarAccionEnviar();
-			habilitarAccionLiberar();
-			//Adicional
-			listarCreditosAsociadosGarantia();
 			listarClienteAsociadosGarantia();
+			habilitarAccionLiberar();
 		}
 	}
 	
@@ -411,15 +403,7 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 					RequestContext.getCurrentInstance().execute("PF('dlgMensajeValidacion').show();");
 				}
 			}else if(ind == 4){
-				/*
-				if(codigoEstadoDocumento == UEstado.SOLICITADOFIRMA){
-					codigoEstado = UEstadoOperacionLevantamiento.LIBERADO;
-				}else {
-					codigoEstado = oEGarantiaSolicitudLoad.getCodigoEstadoLevantamiento();
-				}
-				*/
 				codigoEstado = oEGarantiaSolicitudLoad.getCodigoEstadoLevantamiento();
-				//codigoEstado = UEstadoOperacionLevantamiento.LIBERADO;
 				indicadorLiberarGarantia = true;
 				if(validarLiberarGarantiaCreditoVigente()){
 					mensajeConfirmacion = UMensajeConfirmacion.MSJ_4;
@@ -434,19 +418,14 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 			}else if(ind == 6){
 				codigoEstado = UEstadoOperacionLevantamiento.OBSERVADO;
 				indicadorLiberarGarantia = false;
-				guardar();
+				mensajeConfirmacion = UMensajeConfirmacion.MSJ_6;
+				RequestContext.getCurrentInstance().execute("PF('dlgMensajeConfirmacion').show();");
 			}else if(ind == 7){
 				codigoEstado = UEstadoOperacionLevantamiento.ARCHIVADO;
 				indicadorLiberarGarantia = false;
-				guardar();
+				mensajeConfirmacion = UMensajeConfirmacion.MSJ_7;
+				RequestContext.getCurrentInstance().execute("PF('dlgMensajeConfirmacion').show();");
 			}else if(ind == 8){
-				/*
-				if(codigoEstadoDocumento == UEstado.DOCUMENTOFIRMADO){
-					codigoEstado = UEstadoOperacionLevantamiento.COMPLETADONEGOCIOS;
-				}else {
-					codigoEstado = oEGarantiaSolicitudLoad.getCodigoEstadoLevantamiento();
-				}
-				*/
 				codigoEstado = oEGarantiaSolicitudLoad.getCodigoEstadoLevantamiento();
 				indicadorLiberarGarantia = false;
 				guardar();
@@ -518,39 +497,62 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 	public boolean validarLiberarGarantiaCreditoCancelado() {
 		boolean ind=true;
 		mensajeValidacion = "";
+		List<EAsignacionContratoGarantia> lstCreditoRelacionadoFiltro = new ArrayList<EAsignacionContratoGarantia>();
 		
-		lstCreditoCanceladoRelacionado = oBOGarantia.listarCreditoCanceladoRelacionado(oEGarantiaSolicitudLoad.getCodigoGarantia());
+		if(lstCreditoGarantia !=null){
+	        for (EAsignacionContratoGarantia obj: lstCreditoGarantia) {
+	            if (obj.getDescripcionRelacion().equals("Enlazado") &&
+	            	(obj.getDescripcionSituacionCredito().equals("CANCELADO") ||
+	            	obj.getDescripcionSituacionCredito().equals("CANCELADA"))){
+	            	lstCreditoRelacionadoFiltro.add(obj);
+	            }
+	        }
+		}
 		
-		if(lstCreditoCanceladoRelacionado !=null){
-			if(lstCreditoCanceladoRelacionado.size() > 0){
+		if(lstCreditoRelacionadoFiltro !=null){
+			if(lstCreditoRelacionadoFiltro.size() > 0){
 				mensajeValidacion = UMensajeValidacion.MSJ_11;
 				
-				for(int i=0;i<lstCreditoCanceladoRelacionado.size();i++){
-					mensajeValidacion = mensajeValidacion + "\n" +lstCreditoCanceladoRelacionado.get(i).getCodigoCliente()+"-"+lstCreditoCanceladoRelacionado.get(i).getCodigoServicio()+"-"+lstCreditoCanceladoRelacionado.get(i).getNumeroOperacion();
+				for(int i=0;i<lstCreditoRelacionadoFiltro.size();i++){
+					mensajeValidacion = mensajeValidacion + "\n" +lstCreditoRelacionadoFiltro.get(i).getCodigoCliente()+"-"+lstCreditoRelacionadoFiltro.get(i).getDescripcionOperacion();
 				}
 				ind = false;
 			}
 		}
-        return ind;
+		return ind;
 	}
 	
 	public boolean validarLiberarGarantiaCreditoVigente() {
 		boolean ind=true;
 		mensajeValidacion = "";
+		listarCreditoVigenteRelacionadoFiltro();
 		
-		lstCreditoVigenteRelacionado = oBOGarantia.listarCreditoVigenteRelacionado(oEGarantiaSolicitudLoad.getCodigoGarantia());
-		
-		if(lstCreditoVigenteRelacionado !=null){
-			if(lstCreditoVigenteRelacionado.size() > 0){
+		if(lstCreditoVigenteRelacionadoFiltro !=null){
+			if(lstCreditoVigenteRelacionadoFiltro.size() > 0){
 				mensajeValidacion = UMensajeValidacion.MSJ_12;
 				
-				for(int i=0;i<lstCreditoVigenteRelacionado.size();i++){
-					mensajeValidacion = mensajeValidacion + "\n" +lstCreditoVigenteRelacionado.get(i).getCodigoCliente()+"-"+lstCreditoVigenteRelacionado.get(i).getCodigoServicio()+"-"+lstCreditoVigenteRelacionado.get(i).getNumeroOperacion();
+				for(int i=0;i<lstCreditoVigenteRelacionadoFiltro.size();i++){
+					mensajeValidacion = mensajeValidacion + "\n" +lstCreditoVigenteRelacionadoFiltro.get(i).getCodigoCliente()+"-"+lstCreditoVigenteRelacionadoFiltro.get(i).getDescripcionOperacion();
 				}
 				ind = false;
 			}
 		}
-        return ind;
+		return ind;
+	}
+	
+	public void listarCreditoVigenteRelacionadoFiltro() {
+		lstCreditoVigenteRelacionadoFiltro = new ArrayList<EAsignacionContratoGarantia>();
+		
+		if(lstCreditoGarantia !=null){
+	        for (EAsignacionContratoGarantia obj: lstCreditoGarantia) {
+	            if (obj.getDescripcionRelacion().equals("Enlazado") &&
+	            	(obj.getDescripcionSituacionCredito().equals("ACTIVO") ||
+	            	obj.getDescripcionSituacionCredito().equals("ACTIVA") ||
+	            	obj.getDescripcionSituacionCredito().equals("VIGENTE"))){
+	            	lstCreditoVigenteRelacionadoFiltro.add(obj);
+	            }
+	        }
+		}
 	}
 	
 	public void salir() {
@@ -715,7 +717,7 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 	}
 	
 	//*************************************//
-	//Metodos para validar envio
+	//Metodos para validar accion
 	//*************************************//
 	public void habilitarAccionLiberar(){
 		deshabilitarBtnGrabar = true;
@@ -730,20 +732,6 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 			}
 		}
 	}
-	/*
-	public void habilitarAccionEnviar(){
-		if(indicadorValidarBtnEnviar == 1){
-			//if(lstFirmante.size() >= URegla.LIBERAR_NUMERO_MIN_FIRMANTE & lstDocumentoCarga.size() >= URegla.LIBERAR_NUMERO_MIN_ADJUNTA){
-			if(lstDocumentoCarga.size() >= URegla.LIBERAR_NUMERO_MIN_ADJUNTA){
-				deshabilitarBtnGrabar = false;
-			}else{
-				deshabilitarBtnGrabar = true;
-			}
-		}else {
-			deshabilitarBtnGrabar = false;
-		}
-	}
-	*/
 	
 	//*************************************//
 	//Metodos para Garantia
@@ -764,6 +752,93 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 		lstDepartamentoGarantia = oUManejadorListaDesplegable.obtieneDepartamento();
 		lstProvinciaGarantia = oUManejadorListaDesplegable.obtieneProvincia(codigoDepartamentoGarantia);
 		lstDistritoGarantia = oUManejadorListaDesplegable.obtieneDistrito(codigoDepartamentoGarantia, codigoProvinciaGarantia);
+	}
+	
+    public void listarClienteAsociadosGarantia(){
+    	lstClienteGarantia = oBOGarantia.listarClienteAsociadosGarantia(oEGarantiaData.getCodigoGarantia());
+    }
+    
+	public void listarCreditosAsociadosGarantia(){
+		montoAcumuladoCoberturado = 0.0;
+		montoAcumuladoAsignadoCredito = 0.0;
+		double montoConversionCoberturado = 0;
+		double montoConversionAsignado = 0;
+		double montoTotalConversionCoberturado = 0;
+		double montoTotalConversionAsignado = 0;
+		
+		//Data de Tipo de Cambio
+		ETipoCambio oETipoCambioData = new ETipoCambio();
+		oETipoCambioData = oBOGarantia.buscarTipoCambioDiario();
+		if(oETipoCambioData == null ){
+			oETipoCambioData = new ETipoCambio();
+		}
+		
+		lstCreditoGarantia = oBOGarantia.listarCreditosAsociadosGarantia2(oEGarantiaData.getCodigoGarantia());
+		for(int i=0;i<lstCreditoGarantia.size();i++){
+			montoConversionCoberturado = 0;
+			montoConversionAsignado = 0;
+			double montoCoberturado = 0;
+			
+			ECredito oECredito = new ECredito();
+			
+			if(lstCreditoGarantia.get(i).getServicioBase() == 800 || lstCreditoGarantia.get(i).getServicioBase() == 801){
+				oECredito = oBOSolicitudCredito.buscarCreditoLineaCredito(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroPlanilla());
+			}else {
+				if(lstCreditoGarantia.get(i).getCodigoProducto() == 200){
+					if(lstCreditoGarantia.get(i).getCodigoSubProducto() == 8){
+						oECredito = oBOSolicitudCredito.buscarCreditoPrestamo(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacion());
+					}else{
+						oECredito = oBOSolicitudCredito.buscarCreditoPrestamo(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacion());
+					}	
+				}else if(lstCreditoGarantia.get(i).getCodigoProducto() == 301){
+					oECredito = oBOSolicitudCredito.buscarCreditoAbamoshi(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacionTanomoshi(), lstCreditoGarantia.get(i).getNumeroLista());
+				}else if(lstCreditoGarantia.get(i).getCodigoProducto() == 302){
+					oECredito = oBOSolicitudCredito.buscarCreditoAbamoshi(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacionTanomoshi(), lstCreditoGarantia.get(i).getNumeroLista());
+				}else if(lstCreditoGarantia.get(i).getCodigoProducto() == 81){
+					oECredito = oBOSolicitudCredito.buscarCreditoCartaFianza(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getCodigoMoneda(), lstCreditoGarantia.get(i).getNumeroOperacion());
+				}
+			}
+			
+			if(oECredito != null){
+				lstCreditoGarantia.get(i).setMontoSaldoCredito(oECredito.getSaldoCredito());
+				lstCreditoGarantia.get(i).setDescripcionEstadoCredito(oECredito.getDescripcionEstado());
+				lstCreditoGarantia.get(i).setDescripcionSituacionCredito(oECredito.getDescripcionSituacion());
+			}
+			
+			if(lstCreditoGarantia.get(i).getServicioBase() == 800 || lstCreditoGarantia.get(i).getServicioBase() == 801){
+				montoCoberturado = lstCreditoGarantia.get(i).getMontoImporteCubierto();
+			}else{
+				montoCoberturado = lstCreditoGarantia.get(i).getMontoSaldoCredito();
+			}
+			
+			if(oEGarantiaData.getCodigoMoneda() == lstCreditoGarantia.get(i).getCodigoMoneda()){
+				montoConversionCoberturado += montoCoberturado;
+				montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto();
+			}else{
+				if(oEGarantiaData.getCodigoMoneda() == UMoneda.COD_SOLES && lstCreditoGarantia.get(i).getCodigoMoneda() == UMoneda.COD_DOLARES){
+					montoConversionCoberturado += montoCoberturado * oETipoCambioData.getTipoCambioSBS();
+					montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto() * oETipoCambioData.getTipoCambioSBS();
+				}else if(oEGarantiaData.getCodigoMoneda() == UMoneda.COD_DOLARES && lstCreditoGarantia.get(i).getCodigoMoneda() == UMoneda.COD_SOLES){
+					montoConversionCoberturado += montoCoberturado / oETipoCambioData.getTipoCambioSBS();
+					montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto() / oETipoCambioData.getTipoCambioSBS();
+				}
+			}
+			lstCreditoGarantia.get(i).setMontoCoberturado(montoCoberturado);
+			lstCreditoGarantia.get(i).setMontoConversionCoberturado(montoConversionCoberturado);
+			montoTotalConversionCoberturado = montoTotalConversionCoberturado + montoConversionCoberturado;
+			montoTotalConversionAsignado = montoTotalConversionAsignado + montoConversionAsignado;
+		}
+		
+		montoAcumuladoCoberturado = montoTotalConversionCoberturado;
+		montoAcumuladoAsignadoCredito = montoTotalConversionAsignado;
+		
+		for(int j=0;j<lstCreditoGarantia.size();j++){
+			double porcentajeCoberturado = 0;
+			if(lstCreditoGarantia.get(j).getMontoConversionCoberturado() != 0){
+				porcentajeCoberturado = ((lstCreditoGarantia.get(j).getMontoConversionCoberturado() * 100) / montoTotalConversionCoberturado);
+			}
+			lstCreditoGarantia.get(j).setPorcentajeCoberturado(porcentajeCoberturado);
+		}
 	}
 	
 	//*************************************//
@@ -949,7 +1024,6 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 	
 	public void inicializar() {
 		codigoEstadoDocumento = 0;
-		indicadorTemporal = UIndicadorTemporal.NO;
 		
 		indicadorValidarBtnLiberar = false;
 		
@@ -984,8 +1058,6 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 	//*************************************//
 	//Metodos para documento de carga
     //*************************************//
-	
-	/***********************Adicional************************/
 	public void generarCorrelativoDocumentoCarga() {
 		int correlativoDocumento = 0;
 		for(int i=0;i<lstDocumentoCarga.size();i++){
@@ -1126,101 +1198,11 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 		
 		UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 		RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
-		
-		
 	}
     
     public void actualizarDatoasAjax(){
 		listarDocumento();
-		//habilitarAccionEnviar();
 		habilitarAccionLiberar();
-	}
-    
-    public void listarClienteAsociadosGarantia(){
-    	lstClienteGarantia = oBOGarantia.listarClienteAsociadosGarantia(oEGarantiaData.getCodigoGarantia());
-    }
-    
-	public void listarCreditosAsociadosGarantia(){
-		montoAcumuladoCoberturado = 0.0;
-		montoAcumuladoAsignadoCredito = 0.0;
-		double montoConversionCoberturado = 0;
-		double montoConversionAsignado = 0;
-		double montoTotalConversionCoberturado = 0;
-		double montoTotalConversionAsignado = 0;
-		
-		//Data de Tipo de Cambio
-		ETipoCambio oETipoCambioData = new ETipoCambio();
-		oETipoCambioData = oBOGarantia.buscarTipoCambioDiario();
-		if(oETipoCambioData == null ){
-			oETipoCambioData = new ETipoCambio();
-		}
-		
-		lstCreditoGarantia = oBOGarantia.listarCreditosAsociadosGarantia2(oEGarantiaData.getCodigoGarantia());
-		for(int i=0;i<lstCreditoGarantia.size();i++){
-			montoConversionCoberturado = 0;
-			montoConversionAsignado = 0;
-			double montoCoberturado = 0;
-			
-			ECredito oECredito = new ECredito();
-			
-			if(lstCreditoGarantia.get(i).getServicioBase() == 800 || lstCreditoGarantia.get(i).getServicioBase() == 801){
-				oECredito = oBOSolicitudCredito.buscarCreditoLineaCredito(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroPlanilla());
-			}else {
-				if(lstCreditoGarantia.get(i).getCodigoProducto() == 200){
-					if(lstCreditoGarantia.get(i).getCodigoSubProducto() == 8){
-						oECredito = oBOSolicitudCredito.buscarCreditoPrestamo(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacion());
-					}else{
-						oECredito = oBOSolicitudCredito.buscarCreditoPrestamo(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacion());
-					}	
-				}else if(lstCreditoGarantia.get(i).getCodigoProducto() == 301){
-					oECredito = oBOSolicitudCredito.buscarCreditoAbamoshi(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacionTanomoshi(), lstCreditoGarantia.get(i).getNumeroLista());
-				}else if(lstCreditoGarantia.get(i).getCodigoProducto() == 302){
-					oECredito = oBOSolicitudCredito.buscarCreditoAbamoshi(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getNumeroOperacionTanomoshi(), lstCreditoGarantia.get(i).getNumeroLista());
-				}else if(lstCreditoGarantia.get(i).getCodigoProducto() == 81){
-					oECredito = oBOSolicitudCredito.buscarCreditoCartaFianza(lstCreditoGarantia.get(i).getServicio(), lstCreditoGarantia.get(i).getCodigoMoneda(), lstCreditoGarantia.get(i).getNumeroOperacion());
-				}
-			}
-			
-			if(oECredito != null){
-				lstCreditoGarantia.get(i).setMontoSaldoCredito(oECredito.getSaldoCredito());
-				lstCreditoGarantia.get(i).setDescripcionEstadoCredito(oECredito.getDescripcionEstado());
-				lstCreditoGarantia.get(i).setDescripcionSituacionCredito(oECredito.getDescripcionSituacion());
-			}
-			
-			if(lstCreditoGarantia.get(i).getServicioBase() == 800 || lstCreditoGarantia.get(i).getServicioBase() == 801){
-				montoCoberturado = lstCreditoGarantia.get(i).getMontoImporteCubierto();
-			}else{
-				montoCoberturado = lstCreditoGarantia.get(i).getMontoSaldoCredito();
-			}
-			
-			if(oEGarantiaData.getCodigoMoneda() == lstCreditoGarantia.get(i).getCodigoMoneda()){
-				montoConversionCoberturado += montoCoberturado;
-				montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto();
-			}else{
-				if(oEGarantiaData.getCodigoMoneda() == UMoneda.COD_SOLES && lstCreditoGarantia.get(i).getCodigoMoneda() == UMoneda.COD_DOLARES){
-					montoConversionCoberturado += montoCoberturado * oETipoCambioData.getTipoCambioSBS();
-					montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto() * oETipoCambioData.getTipoCambioSBS();
-				}else if(oEGarantiaData.getCodigoMoneda() == UMoneda.COD_DOLARES && lstCreditoGarantia.get(i).getCodigoMoneda() == UMoneda.COD_SOLES){
-					montoConversionCoberturado += montoCoberturado / oETipoCambioData.getTipoCambioSBS();
-					montoConversionAsignado += lstCreditoGarantia.get(i).getMontoImporteCubierto() / oETipoCambioData.getTipoCambioSBS();
-				}
-			}
-			lstCreditoGarantia.get(i).setMontoCoberturado(montoCoberturado);
-			lstCreditoGarantia.get(i).setMontoConversionCoberturado(montoConversionCoberturado);
-			montoTotalConversionCoberturado = montoTotalConversionCoberturado + montoConversionCoberturado;
-			montoTotalConversionAsignado = montoTotalConversionAsignado + montoConversionAsignado;
-		}
-		
-		montoAcumuladoCoberturado = montoTotalConversionCoberturado;
-		montoAcumuladoAsignadoCredito = montoTotalConversionAsignado;
-		
-		for(int j=0;j<lstCreditoGarantia.size();j++){
-			double porcentajeCoberturado = 0;
-			if(lstCreditoGarantia.get(j).getMontoConversionCoberturado() != 0){
-				porcentajeCoberturado = ((lstCreditoGarantia.get(j).getMontoConversionCoberturado() * 100) / montoTotalConversionCoberturado);
-			}
-			lstCreditoGarantia.get(j).setPorcentajeCoberturado(porcentajeCoberturado);
-		}
 	}
 	
 	public EMensaje getoEMensaje() {

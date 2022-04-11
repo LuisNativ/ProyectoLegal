@@ -603,8 +603,7 @@
 					style="#{mbregistrooperacionlevantamientogarantia.deshabilitarGrabarDocumento ? 'display: none;' : 'display:inline-block;'}"
 					action="#{mbregistrooperacionlevantamientogarantia.grabarDocumento()}" immediate="true"
 					onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
-					update=":form:tblDocumentoCarga,:form:btnGuardarDocumento,:frmDlgMensajeOperacionAjax">
-				</p:commandButton>
+					update=":form:tblDocumentoCarga,:form:btnGuardarDocumento,:frmDlgMensajeOperacionAjax"/>
 	       </f:facet>
 	       <div class="ui-g ui-fluid ui-g-nopad">
 			<div class="ui-g-12">
@@ -632,15 +631,11 @@
 		      				<p:fileDownload value="#{mbregistrooperacionlevantamientogarantia.fileDownload}"/>
 		      			</p:commandButton>
 		      			<p:commandButton styleClass="dsBoton5 green" icon="fa fa-file" title="Solicitar Firma" actionListener="#{mbregistrooperacionlevantamientogarantia.visualizarObservacionFirma(item)}" update=":frmDlgSolicitudFirma"
-		      			rendered="#{item.estadoDocumento eq 55 ? true : false}" immediate="true">
-		      			</p:commandButton>
+		      			rendered="#{item.estadoDocumento eq 55 ? true : false}" immediate="true"/>
 		      			<p:commandButton styleClass="dsBoton5 red" icon="fa fa-eye" title="Visualizar Observación" actionListener="#{mbregistrooperacionlevantamientogarantia.visualizarObservacionFirma(item)}" update=":frmDlgSolicitudFirma,:frmDlgSolicitudFirma:idSolicitarFirma"
-		      			rendered="#{item.estadoDocumento eq 56 ? true : false}" immediate="true">
-		      			</p:commandButton>
-		      			<p:commandButton styleClass="dsBoton5 green" icon="fa fa-check" title="Verificar Firma" actionListener="#{mbregistrooperacionlevantamientogarantia.verificarFirma(item)}" update=":frmDlgFirma" immediate="true">
-		      			</p:commandButton>
-		      			<p:commandButton styleClass="dsBoton5 green" icon="fa fa-clipboard" title="Verificar Entrega" actionListener="#{mbregistrooperacionlevantamientogarantia.verificarEntrega(item)}" update=":frmDlgEntrega" immediate="true">
-		      			</p:commandButton>
+		      			rendered="#{item.estadoDocumento eq 56 ? true : false}" immediate="true"/>
+		      			<p:commandButton styleClass="dsBoton5 green" icon="fa fa-check" title="Verificar Firma" actionListener="#{mbregistrooperacionlevantamientogarantia.verificarFirma(item)}" update=":frmDlgFirma" immediate="true"/>
+		      			<p:commandButton styleClass="dsBoton5 green" icon="fa fa-clipboard" title="Verificar Entrega" actionListener="#{mbregistrooperacionlevantamientogarantia.verificarEntrega(item)}" update=":frmDlgEntrega" immediate="true"/>
 					</p:column>
 				</p:dataTable>
 			</div>
@@ -678,8 +673,7 @@
 							<h:outputText value="#{item.descripcionSize}"/>
 							</div>
 							<div>
-							<p:commandButton styleClass="dsBoton3" icon="fa fa-remove" process="@this" action="#{mbregistrooperacionlevantamientogarantia.eliminarDocumentoCarga(item)}" update="tblDocumentoCarga,:form:btnGuardarDocumento">
-			      			</p:commandButton>
+							<p:commandButton styleClass="dsBoton3" icon="fa fa-remove" process="@this" action="#{mbregistrooperacionlevantamientogarantia.eliminarDocumentoCarga(item)}" update="tblDocumentoCarga,:form:btnGuardarDocumento"/>
 			      			</div>
 			      			</div>
 						</p:column>
@@ -849,8 +843,7 @@
 				<h:outputText value="#{item.horaEnvio}"/>
 			</p:column>
 			<p:column headerText="" styleClass="dsTextoCentro">
-				<p:commandButton styleClass="dsBoton5 green" icon="fa fa-envelope" title="Ver" action="#{mbregistrooperacionlevantamientogarantia.visualizarMensaje(item.descripcionMensaje)}" update=":frmDlgDetalleMensaje">
-	     		</p:commandButton>
+				<p:commandButton styleClass="dsBoton5 green" icon="fa fa-envelope" title="Ver" action="#{mbregistrooperacionlevantamientogarantia.visualizarMensaje(item.descripcionMensaje)}" update=":frmDlgDetalleMensaje"/>
 	     	</p:column>
 		</p:dataTable>
 	</p:panel>
@@ -873,9 +866,9 @@
 				</div>
 			</div>
 			<div class="ui-g ui-fluid pie">
-				<p:commandButton styleClass="dsBoton1 secundario" value="#{mbregistrooperacionlevantamientogarantia.deshabilitarSolFirma ? 'Aceptar' : 'Cancelar'}" onclick="PF('dlgSolicitudFirma').hide();"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 secundario" value="#{mbregistrooperacionlevantamientogarantia.deshabilitarSolFirma ? 'Aceptar' : 'Cancelar'}" onclick="PF('dlgSolicitudFirma').hide();"/>
 				<p:commandButton styleClass="dsBoton1 principal" id="idSolicitarFirma" value="Aceptar"  onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacionlevantamientogarantia.guardarSolicitudFirma()}" update=":frmDlgMensajeOperacionAjax"
-				style="#{mbregistrooperacionlevantamientogarantia.deshabilitarSolFirma ? 'display: none;':'display: block;'}"></p:commandButton>
+				style="#{mbregistrooperacionlevantamientogarantia.deshabilitarSolFirma ? 'display: none;':'display: block;'}"/>
 			</div>
 		</div>
 	</h:form>
@@ -896,9 +889,9 @@
 				</div>
 			</div>
 			<div class="ui-g ui-fluid pie">
-				<p:commandButton styleClass="dsBoton1 secundario" value="No" onclick="PF('dlgEntrega').hide();"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 secundario" value="No" onclick="PF('dlgEntrega').hide();"/>
 				<p:commandButton styleClass="dsBoton1 principal" value="Si" process="@form" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
-				action="#{mbregistrooperacionlevantamientogarantia.guardarEntrega()}" update=":frmDlgMensajeOperacionAjax"></p:commandButton>
+				action="#{mbregistrooperacionlevantamientogarantia.guardarEntrega()}" update=":frmDlgMensajeOperacionAjax"/>
 			</div>
 		</div>
 	</h:form>
@@ -923,8 +916,8 @@
 				</div>
 			</div>
 			<div class="ui-g ui-fluid pie">
-				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgFirma').hide();"></p:commandButton>
-				<p:commandButton styleClass="dsBoton1 principal" value="Grabar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacionlevantamientogarantia.procesarFirma()}" update=":frmDlgMensajeOperacionAjax"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgFirma').hide();"/>
+				<p:commandButton styleClass="dsBoton1 principal" value="Grabar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacionlevantamientogarantia.procesarFirma()}" update=":frmDlgMensajeOperacionAjax"/>
 			</div>
 		</div>
 	</h:form>
@@ -967,8 +960,8 @@
 				</div>
 			</div>
 			<div class="ui-g ui-fluid pie">
-				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgSalir').hide();"></p:commandButton>
-				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgSalir').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperacionlevantamientogarantia.salir()}"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgSalir').hide();"/>
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@form" onclick="PF('dlgSalir').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperacionlevantamientogarantia.salir()}"/>
 			</div>
 		</div>
 	</h:form>
@@ -989,8 +982,8 @@
 				</div>
 			</div>
 			<div class="ui-g ui-fluid pie">
-				<p:commandButton styleClass="dsBoton1 secundario" value="No" onclick="PF('dlgMensajeConfirmacion').hide();"></p:commandButton>
-				<p:commandButton styleClass="dsBoton1 principal" value="Si" process="@form" onclick="PF('dlgPreload').show();" action="#{mbregistrooperacionlevantamientogarantia.guardar()}" update=":frmDlgMensajeOperacion"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 secundario" value="No" onclick="PF('dlgMensajeConfirmacion').hide();"/>
+				<p:commandButton styleClass="dsBoton1 principal" value="Si" process="@form" onclick="PF('dlgPreload').show();" action="#{mbregistrooperacionlevantamientogarantia.guardar()}" update=":frmDlgMensajeOperacion"/>
 			</div>
 		</div>
 	</h:form>
@@ -1009,7 +1002,7 @@
 				<p:inputTextarea type="text" styleClass="dsInput1 dsModelo4" value="#{mbregistrooperacionlevantamientogarantia.mensajeValidacion}" disabled="true"></p:inputTextarea>
 			</div>
 			<div class="pie">
-				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" onclick="PF('dlgMensajeValidacion').hide();"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" onclick="PF('dlgMensajeValidacion').hide();"/>
 			</div>
 		</div>
 	</h:form>
@@ -1030,7 +1023,7 @@
 				</div>
 			</div>
 			<div class="pie">
-				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacion').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperacionlevantamientogarantia.salir()}"></p:commandButton>
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacion').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperacionlevantamientogarantia.salir()}"/>
 			</div>
 		</div>
 	</h:form>
@@ -1051,7 +1044,7 @@
 				</div>
 			</div>
 			<div class="pie">
-				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperacionlevantamientogarantia.actualizarDatoasAjax()}" update=":form:tblOperacionDocumento, :form:btnEnviar"></p:commandButton> 
+				<p:commandButton styleClass="dsBoton1 principal" value="Aceptar" process="@this" onclick="PF('dlgMensajeOperacionAjax').hide(); PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperacionlevantamientogarantia.actualizarDatoasAjax()}" update=":form:tblOperacionDocumento, :form:btnEnviar"/>
 			</div>
 		</div>
 	</h:form>

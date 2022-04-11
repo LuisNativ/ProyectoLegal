@@ -331,14 +331,32 @@ public class CCliente {
 		return resultado;
 	}
 	
-	public EClienteConstitucionEmpresa buscarConstitucionEmpresa(long codigoCliente){
+	public EClienteConstitucionEmpresa buscarSocioConstitucionEmpresa(long codigoCliente){
 		IConexion oIConexion = null;
 		EClienteConstitucionEmpresa resultado = null;
 		DAOCliente oDAOCliente = null;
 		try {
 			oIConexion = FabricaConexion.creaConexion();
 			oDAOCliente = new DAOCliente(oIConexion);
-			resultado = oDAOCliente.buscarConstitucionEmpresa(codigoCliente);
+			resultado = oDAOCliente.buscarSocioConstitucionEmpresa(codigoCliente);
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al recuperar: " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
+	public EClienteConstitucionEmpresa buscarPostulanteConstitucionEmpresa(long codigoCliente){
+		IConexion oIConexion = null;
+		EClienteConstitucionEmpresa resultado = null;
+		DAOCliente oDAOCliente = null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();
+			oDAOCliente = new DAOCliente(oIConexion);
+			resultado = oDAOCliente.buscarPostulanteConstitucionEmpresa(codigoCliente);
 		} catch (Exception e) {
 			UManejadorLog.error("Control: Error al recuperar: " + e.getMessage());
 		} finally {
