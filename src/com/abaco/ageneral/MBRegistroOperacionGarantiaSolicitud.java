@@ -817,6 +817,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		}else if(oEUsuario.getCodigoArea() == UArea.CREDITOS){
 			if(indicadorSalida == 1){
 				ruta = "ListaGarantiaPorConstituirCredito.xhtml";
+			}else{
+				ruta = "ListaGarantiaPorConstituirCredito.xhtml";
 			}
 			
 		}else{
