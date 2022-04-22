@@ -279,6 +279,7 @@ public class MBRegistroOperacionLevantamientoGarantia implements Serializable {
 					oEGarantiaSolicitudLoad = (EGarantiaSolicitud) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.FICHA_PARAMETRO);
 					oEClienteData = oBOCliente.buscarSocio(oEGarantiaSolicitudLoad.getCodigoCliente());
 					oEGarantiaData = oBOGarantia.buscarGarantia(oEGarantiaSolicitudLoad.getCodigoGarantia());
+					listarCreditosAsociadosGarantia();
 					
 					deshabilitarFrmGarantia = true;
 					visualizarComentario = true;
