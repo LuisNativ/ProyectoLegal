@@ -160,7 +160,7 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 		indicadorTabView= UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.TABVIEWINDEX) != null ? (int) UManejadorSesionWeb.obtieneVariableSesion(UVariablesSesion.TABVIEWINDEX): 0 ;
 		UManejadorSesionWeb.eliminaVariableSesion(UVariablesSesion.TABVIEWINDEX);
 		inicializar();
-		
+		verificarGarantiaSolicitud();
 		listarGarantiaSolicitudNueva();
 		listarGarantiaSolicitudExistente();
 		listarDesplegable();
@@ -184,6 +184,12 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 		lstValorSiNo = oUManejadorListaDesplegable.obtieneValorSiNo();
 	}
 	
+	/*Metodo para añadir solicitudes en GarantiaAnexoF7325
+	  cuando existan nuevos registros en la F7325
+	*/
+	public void verificarGarantiaSolicitud() {
+		oBOGarantia.registrarGarantiaSolicitudAnexoF7325();
+	}
 	
 	/*
 	 * MÉTODOS PARA SOLICITUDES ASOCIADAS A UNA GARANTIA 
