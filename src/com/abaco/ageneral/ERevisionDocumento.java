@@ -21,5 +21,13 @@ public @Data class ERevisionDocumento {
 	private String nombreDocumentoLaserFiche;
 	private String nombreDocumentoOriginal;
 	private byte[] dataDocumento;
+	
+	private Date fechaRegistro;
+	private Date horaRegistro;
 	private EUsuario usuarioRegistro;
+	
+	//Adicional
+	private String nombreUsuarioTraslado;
+	private Date fechaTraslado;
+	private String horaTraslado;
 }

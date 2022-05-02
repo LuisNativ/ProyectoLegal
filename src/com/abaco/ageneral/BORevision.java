@@ -75,6 +75,10 @@ public class BORevision {
 		List<ERevisionSolicitud> resultado=oCRevision.listarSolicitud(eRevisionSolicitud, indicadorConsulta, indicadorTipoBusqueda);
 		return resultado;
 	}
+	public List<ERevisionSolicitud> listarSolicitudPorCliente(String documentoCliente){					
+		List<ERevisionSolicitud> lista=oCRevision.listarSolicitudPorCliente(documentoCliente);
+		return lista;
+	}
 	public List<ERevisionTiempo> listarTiempoResumen(long codigo){					
 		List<ERevisionTiempo> resultado=oCRevision.listarTiempoResumen(codigo);
 		return resultado;

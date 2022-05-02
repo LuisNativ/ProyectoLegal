@@ -742,6 +742,24 @@ public class CRevision {
 		return resultado;
 	}
 	
+	public List<ERevisionSolicitud> listarSolicitudPorCliente(String documentoCliente){
+		IConexion oIConexion = null;
+		List<ERevisionSolicitud> resultado = null;
+		DAORevision oDAORevision= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();
+			oDAORevision = new DAORevision(oIConexion);
+			resultado = oDAORevision.listarSolicitudPorCliente(documentoCliente);	
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al listar solicitud historico: " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
 	public List<ERevisionTiempo> listarTiempoResumen(long codigo){
 		IConexion oIConexion = null;
 		List<ERevisionTiempo> resultado = null;

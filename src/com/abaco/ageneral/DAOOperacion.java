@@ -42,15 +42,20 @@ public class DAOOperacion extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO("+parametrosSP(2)+") }";
 	private static final String SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO_DOCUMENTO = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO_DOCUMENTO("+parametrosSP(13)+") }";
 	private static final String SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO_DOCUMENTOREVISION = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO_DOCUMENTOREVISION("+parametrosSP(13)+") }";
+	private static final String SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO_DOCUMENTOPORASIGNAR = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO_DOCUMENTOPORASIGNAR("+parametrosSP(12)+") }";
+	private static final String SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO_DOCUMENTOASIGNADO = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO_DOCUMENTOASIGNADO("+parametrosSP(12)+") }";
 	private static final String SP_ABACOINLEGAL_UPD_OPERACION_SOLICITUDCREDITO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_UPD_OPERACION_SOLICITUDCREDITO("+parametrosSP(60)+") }";
 	private static final String SP_ABACOINLEGAL_INS_UPD_INFORMELEGALADICIONAL="{ CALL GESTIONDOC.SP_ABACOINLEGAL_INS_UPD_INFORMELEGALADICIONAL("+parametrosSP(50)+") }";
 	private static final String SP_ABACOINLEGAL_DEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOREVISION = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOREVISION("+parametrosSP(5)+") }";
+	private static final String SP_ABACOINLEGAL_DEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOPORASIGNAR = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_DEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOPORASIGNAR("+parametrosSP(5)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO("+parametrosSP(6)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_OTROS="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_OTROS("+parametrosSP(6)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_PORAUTORIZAR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_PORAUTORIZAR("+parametrosSP(6)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_MENSAJE = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_MENSAJE("+parametrosSP(3)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_DOCUMENTO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_DOCUMENTO("+parametrosSP(3)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOREVISION="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOREVISION("+parametrosSP(3)+") }";
+	private static final String SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOPORASIGNAR="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOPORASIGNAR("+parametrosSP(3)+") }";
+	private static final String SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOASIGNADO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOASIGNADO("+parametrosSP(3)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOREQUERIDO ="{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOREQUERIDO() }";
 	private static final String SP_ABACOINLEGAL_BUS_OPERACION_SOLICITUDCREDITO="{ CALL GESTIONDOC.SP_ABACOINLEGAL_BUS_OPERACION_SOLICITUDCREDITO("+parametrosSP(3)+") }";
 	
@@ -786,6 +791,60 @@ public class DAOOperacion extends InstanciaAcceso{
 		return mensaje;
 	}
 	
+	public EMensaje agregarEvaluacionSolicitudCreditoDocumentoPorAsignar(EOperacionSolicitudCredito eOperacionSolicitudCredito, ERevisionDocumento eRevisionDocumento) {
+		EMensaje mensaje = new EMensaje();
+		List<Object> lstParametrosEntrada;
+		SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
+		
+		try {
+			lstParametrosEntrada = new ArrayList<Object>();
+			lstParametrosEntrada.add(eOperacionSolicitudCredito.getNumeroSolicitud());
+			lstParametrosEntrada.add(eOperacionSolicitudCredito.getCodigoTipoCliente());
+			lstParametrosEntrada.add(eOperacionSolicitudCredito.getCodigoCliente());
+			lstParametrosEntrada.add(eRevisionDocumento.getCodigoSolicitud());
+			lstParametrosEntrada.add(eRevisionDocumento.getCodigoMensaje());
+			lstParametrosEntrada.add(eRevisionDocumento.getCodigoDocumento());
+			lstParametrosEntrada.add(eRevisionDocumento.getCodigoDocumentoLaserFiche());
+			lstParametrosEntrada.add(eOperacionSolicitudCredito.getUsuarioRegistro().getNombreUsuario());
+			lstParametrosEntrada.add(eOperacionSolicitudCredito.getFechaRegistro());
+			lstParametrosEntrada.add(formato.format(eOperacionSolicitudCredito.getFechaRegistro()));
+			
+			mensaje = objConexion.ejecutaTransaccion(SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO_DOCUMENTOPORASIGNAR, lstParametrosEntrada);
+		} catch(Exception objEx) {
+			mensaje.setIdMensaje(-1);
+			mensaje.setDescMensaje(objEx.getMessage());
+			UManejadorLog.error("Acceso: Problemas al agregar.", objEx);
+		}
+		return mensaje;
+	}
+	
+	public EMensaje agregarEvaluacionSolicitudCreditoDocumentoAsignado(EOperacionSolicitudCredito eOperacionSolicitudCredito, ERevisionDocumento eRevisionDocumento) {
+		EMensaje mensaje = new EMensaje();
+		List<Object> lstParametrosEntrada;
+		SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
+		
+		try {
+			lstParametrosEntrada = new ArrayList<Object>();
+			lstParametrosEntrada.add(eOperacionSolicitudCredito.getNumeroSolicitud());
+			lstParametrosEntrada.add(eOperacionSolicitudCredito.getCodigoTipoCliente());
+			lstParametrosEntrada.add(eOperacionSolicitudCredito.getCodigoCliente());
+			lstParametrosEntrada.add(eRevisionDocumento.getCodigoSolicitud());
+			lstParametrosEntrada.add(eRevisionDocumento.getCodigoMensaje());
+			lstParametrosEntrada.add(eRevisionDocumento.getCodigoDocumento());
+			lstParametrosEntrada.add(eRevisionDocumento.getCodigoDocumentoLaserFiche());
+			lstParametrosEntrada.add(eOperacionSolicitudCredito.getUsuarioRegistro().getNombreUsuario());
+			lstParametrosEntrada.add(eOperacionSolicitudCredito.getFechaRegistro());
+			lstParametrosEntrada.add(formato.format(eOperacionSolicitudCredito.getFechaRegistro()));
+			
+			mensaje = objConexion.ejecutaTransaccion(SP_ABACOINLEGAL_INS_OPERACION_SOLICITUDCREDITO_DOCUMENTOASIGNADO, lstParametrosEntrada);
+		} catch(Exception objEx) {
+			mensaje.setIdMensaje(-1);
+			mensaje.setDescMensaje(objEx.getMessage());
+			UManejadorLog.error("Acceso: Problemas al agregar.", objEx);
+		}
+		return mensaje;
+	}
+	
 	public EMensaje modificarEvaluacionSolicitudCredito(EOperacionSolicitudCredito eOperacionSolicitudCredito) {
 		EMensaje mensaje = new EMensaje();
 		List<Object> lstParametrosEntrada;
@@ -948,6 +1007,25 @@ public class DAOOperacion extends InstanciaAcceso{
 			lstParametrosEntrada.add(eOperacionSolicitudCredito.getCodigoCliente());
 				
 			mensaje = objConexion.ejecutaTransaccion(SP_ABACOINLEGAL_DEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOREVISION, lstParametrosEntrada);
+		} catch(Exception objEx) {
+			mensaje.setIdMensaje(-1);
+			mensaje.setDescMensaje(objEx.getMessage());
+			UManejadorLog.error("Acceso: Problemas al eliminar.", objEx);
+		}
+		return mensaje;
+	}
+	
+	public EMensaje eliminarEvaluacionSolicitudCreditoDocumentoPorAsignar(long numeroSolicitud, int codigoTipoCliente, int codigoCliente) {
+		EMensaje mensaje = new EMensaje();
+		List<Object> lstParametrosEntrada;
+		
+		try {
+			lstParametrosEntrada = new ArrayList<Object>();
+			lstParametrosEntrada.add(numeroSolicitud);
+			lstParametrosEntrada.add(codigoTipoCliente);
+			lstParametrosEntrada.add(codigoCliente);
+				
+			mensaje = objConexion.ejecutaTransaccion(SP_ABACOINLEGAL_DEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOPORASIGNAR, lstParametrosEntrada);
 		} catch(Exception objEx) {
 			mensaje.setIdMensaje(-1);
 			mensaje.setDescMensaje(objEx.getMessage());
@@ -1258,6 +1336,76 @@ public class DAOOperacion extends InstanciaAcceso{
 			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
 		}
 		return lstOperacionSolicitudCreditoDocumentoRevision;
+	}
+	
+	public List<ERevisionDocumento> listarEvaluacionSolicitudCreditoDocumentoPorAsignar(long numeroSolicitud, int codigoTipoCliente, int codigoCliente) {
+		List<Object> lstParametrosEntrada;
+		ResultSet oResultSet = null;
+		ERevisionDocumento oERevisionDocumento= null;
+		List<ERevisionDocumento> lstRevisionDocumento = null;
+		
+		try {	
+			lstParametrosEntrada = new ArrayList<Object>();
+			lstParametrosEntrada.add(numeroSolicitud);
+			lstParametrosEntrada.add(codigoTipoCliente);
+			lstParametrosEntrada.add(codigoCliente);
+			 
+			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOPORASIGNAR, lstParametrosEntrada, null);
+			if (oResultSet != null) {
+				lstRevisionDocumento = new ArrayList<ERevisionDocumento>();
+				while (oResultSet.next()) {			
+					oERevisionDocumento=new ERevisionDocumento();
+					oERevisionDocumento.setCodigoSolicitud(oResultSet.getInt("CODSOL"));
+					oERevisionDocumento.setCodigoMensaje(oResultSet.getInt("CODMSJ"));
+					oERevisionDocumento.setCodigoDocumento(oResultSet.getInt("CODDOC"));
+					oERevisionDocumento.setCodigoDocumentoLaserFiche(oResultSet.getString("CODDOCLSF"));
+					oERevisionDocumento.setNombreDocumento(oResultSet.getString("NOMDOC"));
+					oERevisionDocumento.setNombreDocumentoOriginal(oResultSet.getString("NOMDOCORI"));
+					
+					lstRevisionDocumento.add(oERevisionDocumento);
+				}								
+			}						
+			
+		} catch(Exception objEx) {
+			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
+		}
+		return lstRevisionDocumento;
+	}
+	
+	public List<ERevisionDocumento> listarEvaluacionSolicitudCreditoDocumentoAsignado(long numeroSolicitud, int codigoTipoCliente, int codigoCliente) {
+		List<Object> lstParametrosEntrada;
+		ResultSet oResultSet = null;
+		ERevisionDocumento oERevisionDocumento= null;
+		List<ERevisionDocumento> lstRevisionDocumento = null;
+		
+		try {	
+			lstParametrosEntrada = new ArrayList<Object>();
+			lstParametrosEntrada.add(numeroSolicitud);
+			lstParametrosEntrada.add(codigoTipoCliente);
+			lstParametrosEntrada.add(codigoCliente);
+			 
+			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_SEL_OPERACION_SOLICITUDCREDITO_DOCUMENTOASIGNADO, lstParametrosEntrada, null);
+			if (oResultSet != null) {
+				lstRevisionDocumento = new ArrayList<ERevisionDocumento>();
+				while (oResultSet.next()) {			
+					oERevisionDocumento=new ERevisionDocumento();
+					oERevisionDocumento.setCodigoSolicitud(oResultSet.getInt("CODSOL"));
+					oERevisionDocumento.setCodigoMensaje(oResultSet.getInt("CODMSJ"));
+					oERevisionDocumento.setCodigoDocumento(oResultSet.getInt("CODDOC"));
+					oERevisionDocumento.setCodigoDocumentoLaserFiche(oResultSet.getString("CODDOCLSF"));
+					oERevisionDocumento.setNombreDocumento(oResultSet.getString("NOMDOC"));
+					oERevisionDocumento.setNombreUsuarioTraslado(oResultSet.getString("USUREG"));
+					oERevisionDocumento.setFechaTraslado(oResultSet.getDate("FECREG"));
+					oERevisionDocumento.setHoraTraslado(oResultSet.getString("HORREG"));
+					
+					lstRevisionDocumento.add(oERevisionDocumento);
+				}								
+			}						
+			
+		} catch(Exception objEx) {
+			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
+		}
+		return lstRevisionDocumento;
 	}
 	
 	public List<EOperacionSolicitudCreditoDocumentoRequerido> listarEvaluacionSolicitudCreditoDocumentoRequerido() {

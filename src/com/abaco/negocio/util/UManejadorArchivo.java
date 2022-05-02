@@ -21,6 +21,7 @@ import com.abaco.ageneral.EOperacionCliente;
 import com.abaco.ageneral.EOperacionSolicitud;
 import com.abaco.ageneral.EOperacionSolicitudCredito;
 import com.abaco.ageneral.EOperacionSolicitudCreditoDocumentoRevision;
+import com.abaco.ageneral.ERevisionDocumento;
 import com.abaco.ageneral.ERevisionSolicitud;
 import com.abaco.bo.BOLaserFiche;
 

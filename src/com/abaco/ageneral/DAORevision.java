@@ -48,6 +48,7 @@ public class DAORevision extends InstanciaAcceso{
 	private static final String SP_ABACOINLEGAL_SEL_REVISION_SOLICITUD_OTROS = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_REVISION_SOLICITUD_OTROS("+parametrosSP(10)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_REVISION_SOLICITUD_LEGAL = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_REVISION_SOLICITUD_LEGAL("+parametrosSP(9)+") }";
 	private static final String SP_ABACOINLEGAL_SEL_REVISION_SOLICITUD_DIGITALIZACION = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_REVISION_SOLICITUD_DIGITALIZACION("+parametrosSP(2)+") }";
+	private static final String SP_ABACOINLEGAL_SEL_REVISION_SOLICITUD_HISTORICO = "{ CALL GESTIONDOC.SP_ABACOINLEGAL_SEL_REVISION_SOLICITUD_HISTORICO("+parametrosSP(1)+") }";
 	
 	private static String parametrosSP(int numeroDeParametros) {
         StringBuilder cadena = new StringBuilder();
@@ -677,6 +678,70 @@ public class DAORevision extends InstanciaAcceso{
 					oERevision.setIndicadorPublicar(oResultSet.getInt("INDPUBLICAR"));
 					oERevision.setIndicadorReasignarEmisor(oResultSet.getInt("INDREASIGNAREMISOR"));
 					oERevision.setIndicadorReasignarReceptor(oResultSet.getInt("INDREASIGNARRECEPTOR"));
+					
+					lstRevision.add(oERevision);
+				}								
+			}						
+			
+		} catch(Exception objEx) {
+			UManejadorLog.error("Acceso: Problemas al obtener.", objEx);
+		}
+		return lstRevision;
+	}
+	
+	public List<ERevisionSolicitud> listarSolicitudPorCliente(String documentoCliente) {
+		List<Object> lstParametrosEntrada;
+		ResultSet oResultSet = null;
+		ERevisionSolicitud oERevision= null;
+		List<ERevisionSolicitud> lstRevision = null;
+		
+		try {
+			lstParametrosEntrada = new ArrayList<Object>();
+			lstParametrosEntrada.add(documentoCliente);
+			oResultSet = objConexion.ejecutaConsulta(SP_ABACOINLEGAL_SEL_REVISION_SOLICITUD_HISTORICO, lstParametrosEntrada, null);
+			
+			if (oResultSet != null) {
+				lstRevision = new ArrayList<ERevisionSolicitud>();
+				while (oResultSet.next()) {
+					oERevision=new ERevisionSolicitud();
+					oERevision.setCodigoSolicitud(oResultSet.getInt("CODSOL"));
+					oERevision.setCodigoNivel(oResultSet.getInt("CODNVL"));
+					oERevision.setCodigoEstado(oResultSet.getInt("CODEST"));
+					oERevision.setCodigoServicio(oResultSet.getInt("CODSERVICIO"));
+					oERevision.setCodigoAutorizaJefe(oResultSet.getInt("CODAJF"));
+					oERevision.setNumeroMensaje(oResultSet.getInt("NUMMSJ"));
+					oERevision.setNumeroRevision(oResultSet.getInt("NUMREV"));
+					oERevision.setCodigoPersonaRelacion(oResultSet.getInt("CODPERREL"));
+					oERevision.setCodigoClientePersona(oResultSet.getInt("CODPER"));
+					oERevision.setCodigoTipoClientePersona(oResultSet.getInt("CODTIPCLIPER"));
+					oERevision.setCodigoTipoDocumentoPersona(oResultSet.getString("CODTIPDOCPER"));
+					oERevision.setNumeroDocumentoPersona(oResultSet.getString("NUMDOCPER"));
+					oERevision.setNombrePersona(oResultSet.getString("NOMPER"));
+					oERevision.setCodigoEmisorOrigen(oResultSet.getInt("CODEMISORORI"));
+					oERevision.setDescripcionEmisorOrigen(oResultSet.getString("DESCEMISORORI"));
+					oERevision.setDescripcionAbreviacionEmisorOrigen(oResultSet.getString("DESCABREVEMISORORI"));
+					oERevision.setCodigoAreaEmisor(oResultSet.getInt("CODAREAEMISOR"));
+					oERevision.setDescripcionAreaEmisor(oResultSet.getString("DESCAREAEMISOR"));
+					oERevision.setCodigoEmisor(oResultSet.getInt("CODEMISOR"));
+					oERevision.setDescripcionEmisor(oResultSet.getString("DESCEMISOR"));
+					oERevision.setDescripcionAbreviacionEmisor(oResultSet.getString("DESCABREVEMISOR"));
+					oERevision.setCodigoTipoEnvio(oResultSet.getInt("CODTENVIO"));
+					oERevision.setCodigoReceptor(oResultSet.getInt("CODRECEPTOR"));
+					oERevision.setDescripcionReceptor(oResultSet.getString("DESCRECEPTOR"));
+					oERevision.setDescripcionNivel(oResultSet.getString("DESCNVL"));
+					oERevision.setDescripcionEstado(oResultSet.getString("DESCEST"));
+					oERevision.setDescripcionTipoEnvio(oResultSet.getString("DESCTENVIO"));
+					oERevision.setDescripcionAsunto(oResultSet.getString("DESCASUNTO"));
+					oERevision.setDescripcionMensajeDigitalizacion(oResultSet.getString("DESCENVIODIG"));
+					oERevision.setIndicadorSesion(oResultSet.getInt("INDSES"));
+					oERevision.setIndicadorDigitalizacion(oResultSet.getInt("INDDIG"));
+					oERevision.setIndicadorSolicitud(oResultSet.getInt("INDSOL"));
+					oERevision.setDescripcionUsuarioEvaluacion(oResultSet.getString("DESCUSUEVAL"));
+					//oERevision.setDescripcionUsuarioSesion(oResultSet.getString("DESCUSUSES"));
+					oERevision.setFechaInicio(oResultSet.getDate("FECINI"));
+					oERevision.setFechaFin(oResultSet.getDate("FECFIN"));
+					oERevision.setHoraInicio(oResultSet.getTime("HORINI"));
+					oERevision.setHoraFin(oResultSet.getTime("HORFIN"));
 					
 					lstRevision.add(oERevision);
 				}								

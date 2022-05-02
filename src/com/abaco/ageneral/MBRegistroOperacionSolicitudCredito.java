@@ -175,6 +175,7 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 	private ETercero oENotarioSelected;
 	
 	private BOOperacion oBOOperacion;
+	private BORevision oBORevision;
 	private BOGeneral oBOGeneral;
 	private BOCliente oBOCliente;
 	private BOSolicitudCredito oBOSolicitudCredito;
@@ -190,6 +191,13 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 	@Getter @Setter private List<EDocumentoCarga> lstDocumentoCarga;
 	@Getter @Setter private List<EOperacionSolicitudCreditoDocumentoRequerido> lstOperacionSolicitudCreditoDocumentoRequerido;
 	@Getter @Setter private List<EOperacionSolicitudCreditoDocumentoRequerido> lstOperacionSolicitudCreditoDocumentoRequeridoFiltro;
+	@Getter @Setter private List<ERevisionSolicitud> lstRevisionSolicitud;
+	@Getter @Setter private List<ERevisionMensaje> lstRevisionMensaje;
+	@Getter @Setter private List<ERevisionDocumento> lstRevisionDocumento;
+	@Getter @Setter private List<ERevisionDocumento> lstRevisionDocumentoFiltro;
+	@Getter @Setter private List<ERevisionDocumento> lstRevisionDocumentoFiltroSelected;
+	@Getter @Setter private List<ERevisionDocumento> lstRevisionDocumentoAsignado;
+	@Getter @Setter private List<ERevisionDocumento> lstRevisionDocumentoPorAsignar;
 	@Getter @Setter private List<ERepresentanteLegal> lstRepresentanteLegal;
 	@Getter @Setter private List<ERepresentanteLegal> lstRepresentanteLegalRelacion;
 	@Getter @Setter private List<ERepresentanteLegal> lstRepresentanteLegalAval;
@@ -477,6 +485,7 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 	@Getter @Setter private boolean visualizar;
 	@Getter @Setter private boolean visualizarTabGarantia;
 	@Getter @Setter private boolean visualizarTabCreditos;
+	@Getter @Setter private boolean visualizarTabConsultas;
 	@Getter @Setter private boolean visualizarPnlContratante;
 	@Getter @Setter private boolean visualizarPnlRepresentanteLegal;
 	@Getter @Setter private boolean visualizarPnlDeudor;
@@ -590,6 +599,7 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 		oECargoLaboralSelected = new EGeneral();
 		
 		oBOOperacion = new BOOperacion();
+		oBORevision = new BORevision();
 		oBOGeneral = new BOGeneral();
 		oBOCliente = new BOCliente();
 		oBOSolicitudCredito = new BOSolicitudCredito();
@@ -605,6 +615,13 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 		lstDocumentoCarga = new ArrayList<EDocumentoCarga>();
 		lstOperacionSolicitudCreditoDocumentoRequerido = new ArrayList<EOperacionSolicitudCreditoDocumentoRequerido>();
 		lstOperacionSolicitudCreditoDocumentoRequeridoFiltro = new ArrayList<EOperacionSolicitudCreditoDocumentoRequerido>();
+		lstRevisionSolicitud = new ArrayList<ERevisionSolicitud>();
+		lstRevisionMensaje = new ArrayList<ERevisionMensaje>();
+		lstRevisionDocumento = new ArrayList<ERevisionDocumento>();
+		lstRevisionDocumentoFiltro = new ArrayList<ERevisionDocumento>();
+		lstRevisionDocumentoFiltroSelected = new ArrayList<ERevisionDocumento>();
+		lstRevisionDocumentoAsignado = new ArrayList<ERevisionDocumento>();
+		lstRevisionDocumentoPorAsignar = new ArrayList<ERevisionDocumento>();
 		lstRepresentanteLegal = new ArrayList<ERepresentanteLegal>();
 		lstRepresentanteLegalRelacion = new ArrayList<ERepresentanteLegal>();
 		lstRepresentanteLegalAval = new ArrayList<ERepresentanteLegal>();
@@ -824,6 +841,8 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 						
 						visualizarTabGarantia = true;
 						visualizarTabCreditos = true;
+						visualizarTabConsultas = true;
+						
 						visualizarPnlContratante = true;
 						visualizarPnlRepresentanteLegal = true;
 						visualizarPnlDeudor = true;
@@ -882,6 +901,8 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 						
 						visualizarTabGarantia = false;
 						visualizarTabCreditos = false;
+						visualizarTabConsultas = false;
+						
 						visualizarPnlContratante = false;
 						visualizarPnlRepresentanteLegal = false;
 						visualizarPnlDeudor = false;
@@ -942,6 +963,7 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 					
 					visualizarTabGarantia = false;
 					visualizarTabCreditos = false;
+					visualizarTabConsultas = false;
 					
 					visualizarPnlContratante = true;
 					visualizarPnlRepresentanteLegal = true;
@@ -968,6 +990,9 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 			listarMensaje();
 			listarDocumento();
 			listarDocumentoRevision();
+			listarDocumentoPorAsignar();
+			listarDocumentoAsignado();
+			listarRevisionSolicitud();
 			listarRepresentanteLegal();
 			listarDeudor();
 			listarAval();
@@ -1098,6 +1123,7 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 		oEOperacionSolicitudCredito.setLstDeudor(lstDeudor);
 		oEOperacionSolicitudCredito.setLstDeudorRecycle(lstDeudorRecycle);
 		oEOperacionSolicitudCredito.setLstSolicitudLogMovimiento(lstSolicitudLogMovimiento);
+		oEOperacionSolicitudCredito.setLstOperacionSolicitudCreditoDocumentoPorAsignar(lstRevisionDocumentoPorAsignar);
 		oEOperacionSolicitudCredito.setFechaRegistro(oEInformeLegalAdicional.getFechaRegistro());
 		oEOperacionSolicitudCredito.setUsuarioRegistro(oEUsuario);
 		
@@ -1334,6 +1360,145 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 	
 	public void listarObservacionNegocios(){
 		lstObservacionNegocios = oBOSolicitudCredito.listarObservacionNegociosDetalle(oEOperacionSolicitudCreditoLoad.getNumeroSolicitud());
+	}
+	
+	//*************************************//
+	//Metodos para consulta revision historica
+	//*************************************//
+	
+	public void listarRevisionSolicitud() {
+		String numeroDocumentoCliente = (oEOperacionSolicitudCreditoLoad.getNumeroDocumento() != null ? oEOperacionSolicitudCreditoLoad.getNumeroDocumento():"");
+		lstRevisionSolicitud = oBORevision.listarSolicitudPorCliente(numeroDocumentoCliente);
+	}
+	
+	public void listarDocumentoPorAsignar() {
+		lstRevisionDocumentoPorAsignar = oBOOperacion.listarEvaluacionSolicitudCreditoDocumentoPorAsignar(oEOperacionSolicitudCreditoLoad.getNumeroSolicitud(), oEOperacionSolicitudCreditoLoad.getCodigoTipoCliente(), oEOperacionSolicitudCreditoLoad.getCodigoCliente());
+		if(lstRevisionDocumentoPorAsignar == null){
+			lstRevisionDocumentoPorAsignar = new ArrayList<ERevisionDocumento>();
+		}
+	}
+	
+	public void listarDocumentoAsignado() {
+		lstRevisionDocumentoAsignado = oBOOperacion.listarEvaluacionSolicitudCreditoDocumentoAsignado(oEOperacionSolicitudCreditoLoad.getNumeroSolicitud(), oEOperacionSolicitudCreditoLoad.getCodigoTipoCliente(), oEOperacionSolicitudCreditoLoad.getCodigoCliente());
+		if(lstRevisionDocumentoAsignado == null){
+			lstRevisionDocumentoAsignado = new ArrayList<ERevisionDocumento>();
+		}
+	}
+	
+	public void buscarRevisionDetalle(ERevisionSolicitud oERevisionSolicitudItem) {
+		lstRevisionMensaje = oBORevision.listarMensaje(oERevisionSolicitudItem.getCodigoSolicitud());
+		lstRevisionDocumento = oBORevision.listarDocumento(oERevisionSolicitudItem.getCodigoSolicitud());
+	}
+	
+	public void visualizarRevisionDocumento(int codigoMensaje) {
+		lstRevisionDocumentoFiltro = new ArrayList<ERevisionDocumento>();
+		lstRevisionDocumentoFiltroSelected = new ArrayList<ERevisionDocumento>();
+        for (ERevisionDocumento oERevisionDocumento: lstRevisionDocumento) {
+            if (oERevisionDocumento.getCodigoMensaje() == codigoMensaje) {
+            	lstRevisionDocumentoFiltro.add(oERevisionDocumento);
+            }
+        }
+		RequestContext.getCurrentInstance().execute("PF('dlgRevisionDocumento').show();");
+	}
+	
+	public void asignarRevisionDocumento() {
+		if(lstRevisionDocumentoFiltroSelected != null){
+	        for (ERevisionDocumento oERevisionDocumento: lstRevisionDocumentoFiltroSelected) {
+	        	lstRevisionDocumentoPorAsignar.add(oERevisionDocumento);
+	        }
+		}
+		RequestContext.getCurrentInstance().execute("PF('dlgRevisionDocumento').hide();");
+	}
+	
+	public boolean validarRevisionDocumento(ERevisionDocumento oERevisionDocumentoItem) {
+		boolean ind = true;
+		
+		if(oERevisionDocumentoItem !=null){
+	        for (ERevisionDocumento oERevisionDocumento: lstRevisionDocumentoPorAsignar) {
+	        	if(oERevisionDocumento.getCodigoSolicitud() == oERevisionDocumentoItem.getCodigoSolicitud() &&
+	        			oERevisionDocumento.getCodigoMensaje() == oERevisionDocumentoItem.getCodigoMensaje() &&
+	        					oERevisionDocumento.getCodigoDocumento() == oERevisionDocumentoItem.getCodigoDocumento()
+	        			) {
+	        		ind = false;
+	        	}
+	        }
+	        for (ERevisionDocumento oERevisionDocumento: lstRevisionDocumentoAsignado) {
+	        	if(oERevisionDocumento.getCodigoSolicitud() == oERevisionDocumentoItem.getCodigoSolicitud() &&
+	        			oERevisionDocumento.getCodigoMensaje() == oERevisionDocumentoItem.getCodigoMensaje() &&
+	        					oERevisionDocumento.getCodigoDocumento() == oERevisionDocumentoItem.getCodigoDocumento()
+	        			) {
+	        		ind = false;
+	        	}
+	        }
+		}
+		
+		return ind;
+	}
+	
+	public void eliminarRevisionDocumentoPorAsignar(ERevisionDocumento oERevisionDocumentoItem){
+		if (oERevisionDocumentoItem != null) {
+			lstRevisionDocumentoPorAsignar.remove(oERevisionDocumentoItem);
+		}
+	}
+	
+	public void guardarRevisionDocumentoAsignado(){
+		if (validarRevisionDocumentoAsignado()){
+			EOperacionSolicitudCredito oEOperacionSolicitudCredito = new EOperacionSolicitudCredito();
+			oEOperacionSolicitudCredito = oEOperacionSolicitudCreditoLoad;
+			oEOperacionSolicitudCredito.setFechaRegistro(new Date());
+			oEOperacionSolicitudCredito.setUsuarioRegistro(oEUsuario);
+			
+			for(int i=0;i<lstRevisionDocumentoPorAsignar.size();i++){
+	        	UManejadorArchivo manejoArchivo = new UManejadorArchivo();
+				Documento archivo = manejoArchivo.obtenerDocumento(lstRevisionDocumentoPorAsignar.get(i).getCodigoDocumentoLaserFiche());
+				lstRevisionDocumentoPorAsignar.get(i).setDataDocumento(archivo.getArchivoBinario());
+			}
+	        generarCorrelativoDocumentoAsignado();
+	        
+			oEMensaje = oBOOperacion.agregarEvaluacionSolicitudCreditoDocumentoAsignado(oEOperacionSolicitudCredito, lstRevisionDocumentoPorAsignar);
+			listarDocumento();
+			listarDocumentoPorAsignar();
+			listarDocumentoAsignado();
+			UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
+			RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacionAjax').show();");
+		}else{
+			RequestContext.getCurrentInstance().execute("PF('dlgMensajeValidacion').show();");
+		}
+	}
+	
+	public boolean validarRevisionDocumentoAsignado(){
+		boolean ind = true;
+		mensajeValidacion = "";
+		if(lstRevisionDocumentoPorAsignar != null){
+			if(lstRevisionDocumentoPorAsignar.size() == 0){
+				mensajeValidacion = "Ingrese documentos";
+				ind = false;
+			}
+		}
+        return ind;
+	}
+	
+	public void descargarRevisionDocumentoAsignado(ERevisionDocumento oERevisionDocumentoItem) {
+		if (oERevisionDocumentoItem != null) {
+			UManejadorArchivo manejoArchivo = new UManejadorArchivo();
+			Documento archivo = manejoArchivo.obtenerDocumento(oERevisionDocumentoItem.getCodigoDocumentoLaserFiche());
+			if (archivo != null && archivo.getArchivoBinario() != null && archivo.getArchivoBinario().length > 0) {
+				InputStream stream = new ByteArrayInputStream(archivo.getArchivoBinario());
+				fileDownload = new DefaultStreamedContent(stream, "image/png", oERevisionDocumentoItem.getNombreDocumento());
+			}
+		}
+	}
+	
+	public void generarCorrelativoDocumentoAsignado() {
+		int correlativoDocumento = 0;
+		for(int i=0;i<lstOperacionSolicitudCreditoDocumento.size();i++){
+			correlativoDocumento = lstOperacionSolicitudCreditoDocumento.get(i).getCodigoDocumento();
+		}
+		for(int i=0;i<lstRevisionDocumentoPorAsignar.size();i++){
+			correlativoDocumento = correlativoDocumento +1;
+			String nombreDocumento = lstRevisionDocumentoPorAsignar.get(i).getNombreDocumento();
+			lstRevisionDocumentoPorAsignar.get(i).setNombreDocumentoLaserFiche(correlativoDocumento+"-"+nombreDocumento);
+		}
 	}
 	
 	//*************************************//
@@ -4057,6 +4222,7 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 		
 		visualizarTabGarantia = false;
 		visualizarTabCreditos = false;
+		visualizarTabConsultas = false;
 		
 		visualizarPnlContratante = false;
 		visualizarPnlRepresentanteLegal = false;

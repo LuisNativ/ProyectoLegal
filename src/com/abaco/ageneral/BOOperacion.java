@@ -67,6 +67,10 @@ public class BOOperacion {
 		EMensaje mensaje = oCOperacion.agregarEvaluacionSolicitudCredito();
 		return mensaje;
 	}
+	public EMensaje agregarEvaluacionSolicitudCreditoDocumentoAsignado(EOperacionSolicitudCredito eOperacionSolicitudCredito, List<ERevisionDocumento> lstRevisionDocumento){
+		EMensaje mensaje = oCOperacion.agregarEvaluacionSolicitudCreditoDocumentoAsignado(eOperacionSolicitudCredito, lstRevisionDocumento);
+		return mensaje;
+	}
 	public EMensaje modificarEvaluacionSolicitudCredito(EOperacionSolicitudCredito eOperacionSolicitudCredito, ECliente eCliente, EClienteConstitucionEmpresa eClienteConstitucionEmpresa, EClienteAdicional eClienteAdicional){
 		EMensaje mensaje = oCOperacion.modificarEvaluacionSolicitudCredito(eOperacionSolicitudCredito, eCliente, eClienteConstitucionEmpresa, eClienteAdicional);
 		return mensaje;
@@ -89,6 +93,14 @@ public class BOOperacion {
 	}
 	public List<EOperacionSolicitudCreditoDocumentoRevision> listarEvaluacionSolicitudCreditoDocumentoRevision(long numeroSolicitud, int codigoTipoCliente, int codigoCliente){
 		List<EOperacionSolicitudCreditoDocumentoRevision> lista=oCOperacion.listarEvaluacionSolicitudCreditoDocumentoRevision(numeroSolicitud, codigoTipoCliente, codigoCliente);
+		return lista;
+	}
+	public List<ERevisionDocumento> listarEvaluacionSolicitudCreditoDocumentoPorAsignar(long numeroSolicitud, int codigoTipoCliente, int codigoCliente){
+		List<ERevisionDocumento> lista=oCOperacion.listarEvaluacionSolicitudCreditoDocumentoPorAsignar(numeroSolicitud, codigoTipoCliente, codigoCliente);
+		return lista;
+	}
+	public List<ERevisionDocumento> listarEvaluacionSolicitudCreditoDocumentoAsignado(long numeroSolicitud, int codigoTipoCliente, int codigoCliente){
+		List<ERevisionDocumento> lista=oCOperacion.listarEvaluacionSolicitudCreditoDocumentoAsignado(numeroSolicitud, codigoTipoCliente, codigoCliente);
 		return lista;
 	}
 	public List<EOperacionSolicitudCreditoDocumentoRequerido> listarEvaluacionSolicitudCreditoDocumentoRequerido(){

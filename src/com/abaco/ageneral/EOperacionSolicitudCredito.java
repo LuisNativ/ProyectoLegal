@@ -114,6 +114,7 @@ public @Data class EOperacionSolicitudCredito {
 	
 	private List<EOperacionSolicitudCreditoDocumento> lstOperacionSolicitudCreditoDocumento;
 	private List<EOperacionSolicitudCreditoDocumentoRevision> lstOperacionSolicitudCreditoDocumentoRevision;
+	private List<ERevisionDocumento> lstOperacionSolicitudCreditoDocumentoPorAsignar;
 	
 	//Adicional
 	private int indicadorMdlAutorizacion;

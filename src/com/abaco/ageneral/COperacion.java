@@ -26,6 +26,7 @@ import com.abaco.negocio.util.UConstante.UEstado;
 import com.abaco.negocio.util.UConstante.UIndicadorDigitalizacion;
 import com.abaco.persistencia.acceso.FabricaConexion;
 import com.abaco.persistencia.interfaces.IConexion;
+import com.abaco.servicio.laserfiche.Documento;
 import com.abaco.servicio.laserfiche.Mensaje;
 
 public class COperacion {
@@ -605,6 +606,63 @@ public class COperacion {
 		return mensaje;
 	}
 	
+	public EMensaje agregarEvaluacionSolicitudCreditoDocumentoAsignado(EOperacionSolicitudCredito eOperacionSolicitudCredito, List<ERevisionDocumento> lstRevisionDocumento){
+		IConexion oIConexion = null;
+		EMensaje mensaje = new EMensaje();
+		Mensaje mensajeLaserFiche = new Mensaje();
+		UManejadorArchivo oUManejadorArchivo = new UManejadorArchivo();
+		DAOOperacion oDAOOperacion= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();
+			oIConexion.iniciaTransaccion();
+			oDAOOperacion = new DAOOperacion(oIConexion);
+			
+			if(lstRevisionDocumento != null){
+				if(lstRevisionDocumento.size() > 0){
+					for(ERevisionDocumento oERevisionDocumento: lstRevisionDocumento){
+						EDocumentoCarga oEDocumentoCarga = new EDocumentoCarga();
+						oEDocumentoCarga.setCodigoLaserFiche("");
+						oEDocumentoCarga.setNombre(oERevisionDocumento.getNombreDocumento());
+						oEDocumentoCarga.setNombreLaserFiche(oERevisionDocumento.getNombreDocumentoLaserFiche());
+						oEDocumentoCarga.setNombreOriginal(oERevisionDocumento.getNombreDocumentoOriginal());
+						oEDocumentoCarga.setData(oERevisionDocumento.getDataDocumento());
+						
+						oERevisionDocumento.setCodigoDocumentoLaserFiche("");
+						
+						mensajeLaserFiche = oUManejadorArchivo.guardarDocumentoOperacionSolicitud(eOperacionSolicitudCredito, oEDocumentoCarga);
+						if (!UFuncionesGenerales.validaMensajeLaserFiche(mensajeLaserFiche)) {
+							throw new Exception(mensajeLaserFiche.getDescripcion());
+						}
+						
+						oERevisionDocumento.setCodigoDocumentoLaserFiche(mensajeLaserFiche.getDocumentoID());
+						mensaje = oDAOOperacion.agregarEvaluacionSolicitudCreditoDocumentoAsignado(eOperacionSolicitudCredito, oERevisionDocumento);
+						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+							throw new Exception(mensaje.getDescMensaje());
+						}
+						
+						oEDocumentoCarga.setCodigoLaserFiche(mensajeLaserFiche.getDocumentoID());
+						mensaje = oDAOOperacion.agregarEvaluacionSolicitudCreditoDocumento(eOperacionSolicitudCredito, oEDocumentoCarga);
+						if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+							throw new Exception(mensaje.getDescMensaje());
+						}
+					}
+				}
+			}
+			
+			oIConexion.ejecutaCommit();
+		} catch (Exception e) {
+			if (oIConexion != null) {
+				oIConexion.ejecutaRollback();
+			}
+			mensaje.setDescMensaje(UMensajeOperacion.MSJ_4 + mensaje.getDescMensaje());
+			UManejadorLog.error("Control: Error al agregar Documento asignado : " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return mensaje;
+	}
 
 	public EMensaje modificarEvaluacionSolicitudCredito(EOperacionSolicitudCredito eOperacionSolicitudCredito, ECliente eCliente, EClienteConstitucionEmpresa eClienteConstitucionEmpresa, EClienteAdicional eClienteAdicional){
 		IConexion oIConexion = null;
@@ -923,6 +981,20 @@ public class COperacion {
 				}
 			}
 			
+			if(eOperacionSolicitudCredito.getLstOperacionSolicitudCreditoDocumentoPorAsignar().size() > 0){
+				mensaje = oDAOOperacion.eliminarEvaluacionSolicitudCreditoDocumentoPorAsignar(eOperacionSolicitudCredito.getNumeroSolicitud(), eOperacionSolicitudCredito.getCodigoTipoCliente(), eOperacionSolicitudCredito.getCodigoCliente());
+				if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+					throw new Exception(mensaje.getDescMensaje());
+				}
+				
+				for(ERevisionDocumento oERevisionDocumento: eOperacionSolicitudCredito.getLstOperacionSolicitudCreditoDocumentoPorAsignar()){
+					mensaje = oDAOOperacion.agregarEvaluacionSolicitudCreditoDocumentoPorAsignar(eOperacionSolicitudCredito, oERevisionDocumento);
+					if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+						throw new Exception(mensaje.getDescMensaje());
+					}
+				}
+			}
+			
 			oIConexion.ejecutaCommit();
 		} catch (Exception e) {
 			if (oIConexion != null) {
@@ -1018,6 +1090,42 @@ public class COperacion {
 			oIConexion = FabricaConexion.creaConexion();		
 			oDAOOperacion = new DAOOperacion(oIConexion);
 			resultado = oDAOOperacion.listarEvaluacionSolicitudCreditoDocumentoRevision(numeroSolicitud, codigoTipoCliente, codigoCliente);			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al listar documento " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
+	public List<ERevisionDocumento> listarEvaluacionSolicitudCreditoDocumentoPorAsignar(long numeroSolicitud, int codigoTipoCliente, int codigoCliente){
+		IConexion oIConexion = null;
+		List<ERevisionDocumento> resultado = null;
+		DAOOperacion oDAOOperacion= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();		
+			oDAOOperacion = new DAOOperacion(oIConexion);
+			resultado = oDAOOperacion.listarEvaluacionSolicitudCreditoDocumentoPorAsignar(numeroSolicitud, codigoTipoCliente, codigoCliente);			
+		} catch (Exception e) {
+			UManejadorLog.error("Control: Error al listar documento " + e.getMessage());
+		} finally {
+			if (oIConexion != null) {
+				oIConexion.cierraConexion();
+			}
+		}
+		return resultado;
+	}
+	
+	public List<ERevisionDocumento> listarEvaluacionSolicitudCreditoDocumentoAsignado(long numeroSolicitud, int codigoTipoCliente, int codigoCliente){
+		IConexion oIConexion = null;
+		List<ERevisionDocumento> resultado = null;
+		DAOOperacion oDAOOperacion= null;
+		try {
+			oIConexion = FabricaConexion.creaConexion();		
+			oDAOOperacion = new DAOOperacion(oIConexion);
+			resultado = oDAOOperacion.listarEvaluacionSolicitudCreditoDocumentoAsignado(numeroSolicitud, codigoTipoCliente, codigoCliente);			
 		} catch (Exception e) {
 			UManejadorLog.error("Control: Error al listar documento " + e.getMessage());
 		} finally {

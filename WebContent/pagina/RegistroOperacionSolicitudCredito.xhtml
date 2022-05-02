@@ -1404,6 +1404,142 @@
 		
 		</div>
 	</p:tab>
+	<p:tab id="tab1-4" title="Consultas" rendered="#{mbregistrooperacionsolicitudcredito.visualizarTabConsultas}">
+	<div class="ui-g ui-fluid ui-g-nopad">
+		<div class="ui-g-12">
+			<p:panel styleClass="dsPanel2" widgetVar="pnl15" toggleable="true" collapsed="#{mbregistrooperacionsolicitudcredito.minimizarPnlRevision}" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+		        <f:facet name="header" >
+		            <i class="fa fa-table"></i> Lista de Consultas Históricas
+		        </f:facet>
+				<p:dataTable value="#{mbregistrooperacionsolicitudcredito.lstRevisionSolicitud}" var="item" styleClass="dsTabla1" paginator="true" rows="5" paginatorPosition="bottom" rowKey="#{item.codigoSolicitud}" reflow="false">
+					<p:column headerText="Nº" styleClass="dsTextoCentro" width="5%">
+						<h:outputText value="#{item.codigoSolicitud}"/>
+					</p:column>
+					<p:column headerText="Asunto">
+						<div class="dsTextoCorto">
+							<h:outputText value="#{item.descripcionAsunto}"/>
+						</div>
+					</p:column>
+					<p:column headerText="Prioridad" styleClass="dsTextoCentro" width="10%">
+						<div class="dsTextoCorto">
+							<h:outputText value="#{item.descripcionNivel}"/>
+						</div>
+					</p:column>
+					<p:column headerText="Estado" styleClass="dsTextoCentro" width="10%">
+						<div class="dsTextoCorto">
+							<h:outputText value="#{item.descripcionEstado}"/>
+						</div>
+					</p:column>
+					<p:column headerText="Fecha Inicio" styleClass="dsTextoCentro" width="10%">
+						<div class="dsTextoCorto">
+							<h:outputText value="#{item.fechaInicio}"/>
+						</div>
+					</p:column>
+					<p:column headerText="Evaluado por:" styleClass="dsTextoCentro" width="10%">
+						<div class="dsTextoCorto">
+							<h:outputText value="#{item.descripcionUsuarioEvaluacion}"/>
+						</div>
+					</p:column>
+					<p:column headerText="" width="5%">
+						<p:commandButton styleClass="dsBoton5 green" icon="fa fa-search" title="Ver" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperacionsolicitudcredito.buscarRevisionDetalle(item)}" update=":form:tabView1:tblRevisionMensaje"/>
+			     	</p:column>
+				</p:dataTable>
+			</p:panel>
+		</div>
+		<div class="ui-g-6">
+			<p:panel styleClass="dsPanel2" widgetVar="pnl16" toggleable="true" collapsed="#{mbregistrooperacionsolicitudcredito.minimizarPnlRevision}" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+		        <f:facet name="header" >
+		            <i class="fa fa-table"></i> Lista de Revisiones
+		        </f:facet>
+				<p:dataTable id="tblRevisionMensaje" value="#{mbregistrooperacionsolicitudcredito.lstRevisionMensaje}" var="item" styleClass="dsTabla1" paginator="true" rows="5" paginatorPosition="bottom" rowKey="#{item.codigoMensaje}" reflow="false">
+					<p:column headerText="N° Revisión" styleClass="dsTextoCentro" width="15%">
+						<h:outputText value="#{item.codigoRevision}"/>
+					</p:column>
+					<p:column headerText="Descripción">
+						<div class="dsTextoCorto">
+							<h:outputText value="#{item.descripcionMensaje}"/>
+						</div>
+					</p:column>
+					<p:column headerText="N° Doc." styleClass="dsTextoCentro" width="10%">
+						<h:outputText value="#{item.numeroDocumento}"/>
+					</p:column>
+					<p:column headerText="Usuario Reg." styleClass="dsTextoCentro">
+						<div class="dsTextoCorto">
+							<h:outputText value="#{item.descripcionUsuarioEnvio}"/>
+						</div>
+					</p:column>
+					<p:column headerText="Fecha Reg." styleClass="dsTextoCentro">
+						<div class="dsTextoCorto">
+							<h:outputText value="#{item.fechaEnvio} #{item.horaEnvio}"/>
+						</div>
+					</p:column>
+					<p:column headerText="" styleClass="dsTextoCentro" width="10%">
+			     		<p:commandButton styleClass="dsBoton5 green" icon="fa fa-search" title="Documentos" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" process="@this" action="#{mbregistrooperacionsolicitudcredito.visualizarRevisionDocumento(item.codigoMensaje)}" update=":frmDlgRevisionDocumento"/>
+						<p:commandButton styleClass="dsBoton5 green" icon="fa fa-envelope" title="Ver" action="#{mbregistrooperacionsolicitudcredito.visualizarMensaje(item.descripcionMensaje)}" update=":frmDlgDetalleMensaje"/>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</div>
+		<div class="ui-g-6">
+			<p:panel styleClass="dsPanel2" widgetVar="pnl17" toggleable="true" collapsed="#{mbregistrooperacionsolicitudcredito.minimizarPnlRevision}" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+		        <f:facet name="header" >
+		            <i class="fa fa-table"></i> Lista de Documentos Pendientes de Trasladar
+		        </f:facet>
+				<p:dataTable id="tblRevisionDocumentoPorAsignar" value="#{mbregistrooperacionsolicitudcredito.lstRevisionDocumentoPorAsignar}" var="item" styleClass="dsTabla1" paginator="true" rows="5" paginatorPosition="bottom" rowKey="#{item.codigoMensaje}" reflow="false">
+		            <f:facet name="header">
+			            <div class="dsCuadrarCentroEspacioentre">
+				            <span></span>
+				     		<p:commandButton styleClass="dsBoton1 tamanio1 principal" value="Trasladar"
+				     		onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
+				     		action="#{mbregistrooperacionsolicitudcredito.guardarRevisionDocumentoAsignado()}" 
+				     		update=":form:tabView1:tblRevisionDocumentoAsignado, :form:tabView1:tblRevisionDocumentoPorAsignar, :form:tabView1:tblOperacionDocumento"/>
+			            </div>
+		            </f:facet>
+					<p:column headerText="Archivo">
+						<div class="dsTextoCorto">
+						<h:outputText value="#{item.nombreDocumento}"/>
+						</div>
+					</p:column>
+					<p:column headerText="" styleClass="dsTextoCentro" width="15%">
+			     		<p:commandButton styleClass="dsBoton5 red" icon="fa fa-trash" title="Eliminar" 
+			     		onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" 
+			     		action="#{mbregistrooperacionsolicitudcredito.eliminarRevisionDocumentoPorAsignar(item)}" 
+			     		update=":form:tabView1:tblRevisionDocumentoPorAsignar"/>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</div>
+		<div class="ui-g-6">
+			<p:panel styleClass="dsPanel2" widgetVar="pnl18" toggleable="true" collapsed="#{mbregistrooperacionsolicitudcredito.minimizarPnlRevision}" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
+		        <f:facet name="header" >
+		            <i class="fa fa-table"></i> Lista de Documentos Trasladados
+		        </f:facet>
+				<p:dataTable id="tblRevisionDocumentoAsignado" value="#{mbregistrooperacionsolicitudcredito.lstRevisionDocumentoAsignado}" var="item" styleClass="dsTabla1" paginator="true" rows="5" paginatorPosition="bottom" rowKey="#{item.codigoMensaje}" reflow="false">
+					<p:column headerText="Archivo">
+						<div class="dsTextoCorto">
+							<h:outputText value="#{item.nombreDocumento}"/>
+						</div>
+					</p:column>
+					<p:column headerText="Usuario Tras." styleClass="dsTextoCentro">
+						<div class="dsTextoCorto">
+							<h:outputText value="#{item.nombreUsuarioTraslado}"/>
+						</div>
+					</p:column>
+					<p:column headerText="Fecha Tras." styleClass="dsTextoCentro">
+						<div class="dsTextoCorto">
+							<h:outputText value="#{item.fechaTraslado} #{item.horaTraslado}"/>
+						</div>
+					</p:column>
+					<p:column headerText="" styleClass="dsTextoCentro" width="15%">
+			     		<p:commandButton styleClass="dsBoton5 green" icon="fa fa-download" title="Descargar" actionListener="#{mbregistrooperacionsolicitudcredito.descargarRevisionDocumentoAsignado(item)}" ajax="false" rendered="#{item.codigoDocumentoLaserFiche eq null ? false : true}">
+		      				<p:fileDownload value="#{mbregistrooperacionsolicitudcredito.fileDownload}"/>
+		      			</p:commandButton>
+	      			</p:column>
+				</p:dataTable>
+			</p:panel>
+		</div>
+	</div>
+	</p:tab>
     </p:tabView>
 	
 	<p:remoteCommand name="listarDocumentoRevisionSimple" process="@this" action="#{mbregistrooperacionsolicitudcredito.listarDocumentoRevisionSimple()}" update=":frmDlgDocumentoRevision:txtNombreDocumentoRevisionOriginal, :frmDlgDocumentoRevision:hidNombreDocumentoRevisionOriginal"/>
@@ -1450,6 +1586,35 @@
 	</h:form>
 	</p:dialog>
 	
+	<p:dialog widgetVar="dlgRevisionDocumento" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
+	<h:form id="frmDlgRevisionDocumento">
+		<div class="dsDlgRevisionDocumento dsDialogo4">
+	 		<div class="cabecera">
+				<div class="dlgIzquierda">
+					<p:outputLabel styleClass="dsLabel2" value="Asignar Documentos"/>
+				</div>
+				<div class="dlgDerecha">
+					<p:commandLink styleClass="dsCmdlink5" onclick="PF('dlgRevisionDocumento').hide();"><i class="fas fa-times"></i></p:commandLink>
+				</div>
+			</div>
+			<div class="ui-g ui-fluid contenido">
+				<p:dataTable id="tblRevisionDocumento" value="#{mbregistrooperacionsolicitudcredito.lstRevisionDocumentoFiltro}" var="item" styleClass="dsTabla1" paginator="true" rows="5" paginatorPosition="bottom" selection="#{mbregistrooperacionsolicitudcredito.lstRevisionDocumentoFiltroSelected}" rowKey="#{item.codigoDocumento}" reflow="false">
+					<p:column headerText="Nombre">
+						<div class="dsTextoCorto">
+						<h:outputText value="#{item.nombreDocumento}"/>
+						</div>
+					</p:column>
+					<p:column selectionMode="multiple" exportable="false" styleClass="dsTextoCentro" width="15%" visible="#{mbregistrooperacionsolicitudcredito.validarRevisionDocumento(item)}"></p:column>
+				</p:dataTable>
+			</div>
+			<div class="ui-g ui-fluid pie">
+				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgRevisionDocumento').hide();"/>
+				<p:commandButton styleClass="dsBoton1 principal" value="Asignar" process="@form" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" actionListener="#{mbregistrooperacionsolicitudcredito.asignarRevisionDocumento()}" update=":form:tabView1:tblRevisionDocumentoPorAsignar"/>
+			</div>
+		</div>
+	</h:form>
+	</p:dialog>
+
 	<p:dialog widgetVar="dlgRepresentanteLegal" showEffect="fade" hideEffect="fade" modal="true" responsive="true" resizable="false" draggable="false" closeOnEscape="false" dynamic="true">	
 	<h:form id="frmDlgRepresentanteLegal">
 		<div class="dsDlgRepresentanteLegal dsDialogo4">
