@@ -837,6 +837,8 @@ public class UConstante {
 		String MSJ_11 = "No se permite confirmación" +  "\n" + "Créditos cancelados por desenlazar:";
 		String MSJ_12 = "No se permite liberación" +  "\n" + "Créditos relacionados activos:";
 		String MSJ_13 = "Complete los campos correspondientes al trámite para generar un nuevo asiento para la Garantía";
+		String MSJ_14 = "Seleccione un Tipo de Búsqueda";
+		String MSJ_15 = "Complete el Campo Descripción";
 	}
 	
 	public static interface UMensajeConfirmacion {
