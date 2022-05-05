@@ -33,7 +33,6 @@ import com.abaco.negocio.util.UConstante.UClaseGarantia;
 import com.abaco.negocio.util.UConstante.UCriterioBusqueda;
 import com.abaco.negocio.util.UConstante.UEstado;
 import com.abaco.negocio.util.UConstante.UFiltroGarantia;
-import com.abaco.negocio.util.UConstante.UMensajeValidacion;
 import com.abaco.negocio.util.UConstante.UTipoCredito;
 import com.abaco.negocio.util.UConstante.UTipoDocumentoGarantia;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
@@ -218,7 +217,7 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 		          break;
 		  case 3: cantidadCaracteresBusquedaSolicitud = UCantidadCaracteres.NOMBRE_SOCIO; 
 		          break;
-		  default: cantidadCaracteresBusquedaSolicitud= UCantidadCaracteres.POR_DEFECTO;
+		  default: cantidadCaracteresBusquedaGarantia= UCantidadCaracteres.POR_DEFECTO;
 		}
 	}
 	
@@ -361,11 +360,11 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 					}
 				}
 			}else{
-				oEMensaje.setDescMensaje(UMensajeValidacion.MSJ_15);
+				oEMensaje.setDescMensaje("Complete el Campo Descripción");
 				RequestContext.getCurrentInstance().execute("PF('dlgMensaje').show();");
 			}
 		}else{
-			oEMensaje.setDescMensaje(UMensajeValidacion.MSJ_14);
+			oEMensaje.setDescMensaje("Seleccione un Tipo de Búsqueda");
 			RequestContext.getCurrentInstance().execute("PF('dlgMensaje').show();");
 		}
 	}

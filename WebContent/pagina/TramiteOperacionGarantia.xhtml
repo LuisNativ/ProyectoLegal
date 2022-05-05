@@ -791,7 +791,7 @@
 					   		<div class="ui-g-4">
 								<p:outputLabel  for="idTipoDocNotaria" value="Tipo Doc." styleClass="dsLabel1"/>
 								<p:selectOneMenu  id="idTipoDocNotaria" value="#{mbregistrooperaciontramitegarantia.oETerceroData.codigoTipoDocumento}" required="true" requiredMessage="Campo Obligatorio">
-									<p:ajax event="change" listener="#{mbregistrooperaciontramitegarantia.validarDocumentoIdentidad()}" update="frmDlgMantenimientoNotario" />
+									<p:ajax event="change" listener="#{mbregistrooperaciontramitegarantia.obtenerTipoDocumentoNotario()}" update=":frmDlgMantenimientoNotario"/>
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbregistrooperaciontramitegarantia.lstTipoDocumento}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
 				            	</p:selectOneMenu>
@@ -841,7 +841,9 @@
 					   		</div>
 					   		<div class="ui-g-3">
 								<p:outputLabel  value="RUC" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciontramitegarantia.oETerceroData.ruc}" autocomplete="off" maxlength="11"></p:inputText>
+								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperaciontramitegarantia.oETerceroData.ruc}" autocomplete="off" maxlength="11">
+									<p:keyFilter regEx="/[0123456789]/i"/>
+								</p:inputText>
 					   		</div>
 					   		<div class="ui-g-3">
 								<p:outputLabel  value="Zona" styleClass="dsLabel1"/>
@@ -992,32 +994,30 @@
 							<div class="ui-g-4">
 								<p:outputLabel for="idClasePersonaNotaria" value="Clase Persona" styleClass="dsLabel1"/>
 								<p:selectOneMenu id="idClasePersonaNotaria" value="#{mbregistrooperaciontramitegarantia.oETerceroData.codigoTipoPersona}" required="true" requiredMessage="Campo Obligatorio">
-								<p:ajax event="change" listener="#{mbregistrooperaciontramitegarantia.validarClasePersona()}" update="frmDlgMantenimientoNotario:pnlPersonaNatural,frmDlgMantenimientoNotario:idEstCivNotaria,frmDlgMantenimientoNotario:idSexoNotaria" />
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
-									<f:selectItems value="#{mbregistrooperaciontramitegarantia.lstClasePersona}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
+									<f:selectItems value="#{mbregistrooperaciontramitegarantia.lstClasePersonaNotarioFiltro}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
 					            </p:selectOneMenu>
 					             <p:message for="idClasePersonaNotaria"/>	
-							</div>	
-							<h:panelGroup id="pnlPersonaNatural"  layout="block" style="#{mbregistrooperaciontramitegarantia.visualizarDatosPersonaNatural ? 'display:block;' : 'display:none'}">
-								 <div class="ui-g-8 ui-md-8 ui-lg-8 ui-g-nopad">
-								 	<div class="ui-g-6">
-										<p:outputLabel for="idEstCivNotaria" value="Estado Civ." styleClass="dsLabel1"/>
-										<p:selectOneMenu id="idEstCivNotaria" value="#{mbregistrooperaciontramitegarantia.oETerceroData.codigoEstadoCivil}"  required="true" requiredMessage="Campo Obligatorio" rendered="#{mbregistrooperaciontramitegarantia.visualizarDatosPersonaNatural}" >
-											<f:selectItem itemLabel="-Seleccione-" itemValue="" />
-											<f:selectItems value="#{mbregistrooperaciontramitegarantia.lstEstadoCivil}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
-							            </p:selectOneMenu>
-							             <p:message for="idEstCivNotaria"/>
-									</div>	
-									<div class="ui-g-6">
-										<p:outputLabel for="idSexoNotaria" value="Sexo" styleClass="dsLabel1"/>
-										<p:selectOneMenu id="idSexoNotaria" value="#{mbregistrooperaciontramitegarantia.oETerceroData.codigoSexo}"  required="true" requiredMessage="Campo Obligatorio" rendered="#{mbregistrooperaciontramitegarantia.visualizarDatosPersonaNatural}">
-											<f:selectItem itemLabel="-Seleccione-" itemValue="" />
-											<f:selectItems value="#{mbregistrooperaciontramitegarantia.lstSexo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
-							            </p:selectOneMenu>
-							             <p:message for="idSexoNotaria"/>
-									</div>	
-								 </div>				
-							</h:panelGroup>													
+							</div>
+
+							<div class="ui-g-8 ui-md-8 ui-lg-8 ui-g-nopad" style="#{mbregistrooperaciontramitegarantia.visualizarDatosPN ? 'display: block;' : 'display:none;'}">
+							 	<div class="ui-g-6">
+									<p:outputLabel for="idEstCivNotaria" value="Estado Civ." styleClass="dsLabel1"/>
+									<p:selectOneMenu id="idEstCivNotaria" value="#{mbregistrooperaciontramitegarantia.oETerceroData.codigoEstadoCivil}"  required="true" requiredMessage="Campo Obligatorio" rendered="#{mbregistrooperaciontramitegarantia.visualizarDatosPN}" >
+										<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+										<f:selectItems value="#{mbregistrooperaciontramitegarantia.lstEstadoCivil}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
+						            </p:selectOneMenu>
+						             <p:message for="idEstCivNotaria"/>
+								</div>	
+								<div class="ui-g-6">
+									<p:outputLabel for="idSexoNotaria" value="Sexo" styleClass="dsLabel1"/>
+									<p:selectOneMenu id="idSexoNotaria" value="#{mbregistrooperaciontramitegarantia.oETerceroData.codigoSexo}"  required="true" requiredMessage="Campo Obligatorio" rendered="#{mbregistrooperaciontramitegarantia.visualizarDatosPN}">
+										<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+										<f:selectItems value="#{mbregistrooperaciontramitegarantia.lstSexo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
+						            </p:selectOneMenu>
+						             <p:message for="idSexoNotaria"/>
+								</div>	
+							</div>												
 					    </div>
 		           </div>				
 				</h:panelGroup>

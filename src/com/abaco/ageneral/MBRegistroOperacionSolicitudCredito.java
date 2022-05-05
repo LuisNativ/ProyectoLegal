@@ -109,6 +109,7 @@ import com.abaco.negocio.util.UConstante.UTipoPersonaJuridica;
 import com.abaco.negocio.util.UConstante.UTipoServicio;
 import com.abaco.negocio.util.UConstante.UTipoServicioPrestamo;
 import com.abaco.negocio.util.UConstante.UTipoSuscripcionPago;
+import com.abaco.negocio.util.UConstante.UTipoTerceroPersona;
 import com.abaco.negocio.util.UConstante.UTipoValorSuscripcion;
 import com.abaco.negocio.util.UConstante.UTipologMovimiento;
 import com.abaco.negocio.util.UConstante.UUbicacion;
@@ -233,6 +234,7 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 	@Getter @Setter private List<EGeneral> lstSexo;
 	@Getter @Setter private List<EGeneral> lstTipoPersona;
 	@Getter @Setter private List<EGeneral> lstTipoPersonaRepresentanteFiltro;
+	@Getter @Setter private List<EGeneral> lstTipoPersonaNotarioFiltro;
 	@Getter @Setter private List<EGeneral> lstEstadoCivil;
 	@Getter @Setter private List<EGeneral> lstPais;
 	@Getter @Setter private List<EGeneral> lstNivelInstruccion;
@@ -322,6 +324,7 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 	@Getter @Setter private int maxLgnNumeroDocumentoContratante;
 	@Getter @Setter private int maxLgnNumeroDocumentoContratanteConyugue;
 	@Getter @Setter private int maxLgnNumeroDocumentoRepresentante;
+	@Getter @Setter private int maxLgnNumeroDocumentoNotario;
 	@Getter @Setter private Date maxDateFechaDocumentoRepresentante;
 	
 	//Datos de formulario Contratante
@@ -655,6 +658,7 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 		lstSexo = new ArrayList<EGeneral>();
 		lstTipoPersona = new ArrayList<EGeneral>();
 		lstTipoPersonaRepresentanteFiltro = new ArrayList<EGeneral>();
+		lstTipoPersonaNotarioFiltro = new ArrayList<EGeneral>();
 		lstEstadoCivil = new ArrayList<EGeneral>();
 		lstPais = new ArrayList<EGeneral>();
 		lstNivelInstruccion = new ArrayList<EGeneral>();
@@ -1404,7 +1408,27 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 	public void asignarRevisionDocumento() {
 		if(lstRevisionDocumentoFiltroSelected != null){
 	        for (ERevisionDocumento oERevisionDocumento: lstRevisionDocumentoFiltroSelected) {
-	        	lstRevisionDocumentoPorAsignar.add(oERevisionDocumento);
+	        	boolean ind = true;
+	        	//Validar que no exista registro
+		        for (ERevisionDocumento obj1: lstRevisionDocumentoPorAsignar) {
+		        	if(obj1.getCodigoSolicitud() == oERevisionDocumento.getCodigoSolicitud() &&
+		        			obj1.getCodigoMensaje() == oERevisionDocumento.getCodigoMensaje() &&
+		        					obj1.getCodigoDocumento() == oERevisionDocumento.getCodigoDocumento()
+		        			) {
+		        		ind = false;
+		        	}
+		        }
+		        for (ERevisionDocumento obj1: lstRevisionDocumentoAsignado) {
+		        	if(obj1.getCodigoSolicitud() == oERevisionDocumento.getCodigoSolicitud() &&
+		        			obj1.getCodigoMensaje() == oERevisionDocumento.getCodigoMensaje() &&
+		        					obj1.getCodigoDocumento() == oERevisionDocumento.getCodigoDocumento()
+		        			) {
+		        		ind = false;
+		        	}
+		        }
+		        if(ind == true){
+		        	lstRevisionDocumentoPorAsignar.add(oERevisionDocumento);
+		        }
 	        }
 		}
 		RequestContext.getCurrentInstance().execute("PF('dlgRevisionDocumento').hide();");
@@ -2269,7 +2293,7 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 		oETerceroData.setCodigoTipoDocumento(UTipoDocumento.RUC);
 		listarUbigeoNotario();
 		listarUbigeoPostalNotario();
-		obtenerTipoDocumentoNotario();
+		visualizarFrmNotario();
 		RequestContext.getCurrentInstance().execute("PF('dlgMantenimientoNotario').show();");
 	}
 	
@@ -2299,24 +2323,33 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 				oETerceroData.setCodigoEstadoCivil(oEClienteInforPerNatural.getCodigoEstadoCivil());
 				oETerceroData.setCodigoSexo(oEClienteInforPerNatural.getCodigoSexo());
 			}
-			validarClasePersona();
 			listarUbigeoNotario();
 			listarUbigeoPostalNotario();
+			visualizarFrmNotario();
 			RequestContext.getCurrentInstance().execute("PF('dlgMantenimientoNotario').show();");
 		}
 	}
 	
-	public void validarClasePersona(){
-		if(oETerceroData.getCodigoTipoPersona().equals("N")){
-			visualizarFrmNotarioPN = true;
-			visualizarFrmNotarioPJ = false;
-		}else{
-			visualizarFrmNotarioPN = false;
-			visualizarFrmNotarioPJ = true;
+	public void validarTamanioDocumentoNotario(){
+		if(oETerceroData.getCodigoTipoDocumento() != null){
+			if(oETerceroData.getCodigoTipoDocumento().equals(UTipoDocumento.RUC)){
+				maxLgnNumeroDocumentoNotario = UMaximoTamanio.RUC_MAXLGN;
+			}else if(oETerceroData.getCodigoTipoDocumento().equals(UTipoDocumento.DNI) || oETerceroData.getCodigoTipoDocumento().equals(UTipoDocumento.LIBRETA_ELECTORAL)){
+				maxLgnNumeroDocumentoNotario = UMaximoTamanio.DNI_MAXLGN;
+			}else {
+				maxLgnNumeroDocumentoNotario = UMaximoTamanio.OTROS_MAXLGN;
+			}
+		}else {
+			maxLgnNumeroDocumentoNotario = UMaximoTamanio.OTROS_MAXLGN;
 		}
 	}
 	
 	public void obtenerTipoDocumentoNotario(){
+		visualizarFrmNotario();
+		oETerceroData.setDocumento("");
+	}
+	
+	public void visualizarFrmNotario(){
 		switch(oETerceroData.getCodigoTipoDocumento()){
 		case "D": 
 			visualizarFrmNotarioPN = true;
@@ -2337,6 +2370,19 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 			oETerceroData.setApellidoMaterno("");
 			oETerceroData.setNombres("");
 		}
+		
+		if(oETerceroData.getCodigoTipoDocumento().equals(UTipoDocumento.RUC)){
+			lstTipoPersonaNotarioFiltro = lstTipoPersona.stream()
+					.filter(x -> !x.getCodigo().equals(UTipoPersona.MANCOMUNADO))
+					.filter(x -> !x.getCodigo().equals(UTipoPersona.NATURAL))
+					.collect(Collectors.toList());
+		}else{
+			lstTipoPersonaNotarioFiltro = lstTipoPersona.stream()
+					.filter(x -> !x.getCodigo().equals(UTipoPersona.JURIDICA_F_LUCRO))
+					.filter(x -> !x.getCodigo().equals(UTipoPersona.JURIDICA_S_LUCRO))
+					.collect(Collectors.toList());
+		}
+		validarTamanioDocumentoNotario();
 	}
 	
 	public void guardarNotario(){
@@ -2352,7 +2398,7 @@ public class MBRegistroOperacionSolicitudCredito implements Serializable {
 					UFuncionesGenerales.convertirEnteroACadenaUbigeo(codigoDepartamentoPostalNotario) + 
 					UFuncionesGenerales.convertirEnteroACadenaUbigeo(codigoProvinciaPostalNotario) + 
 					UFuncionesGenerales.convertirEnteroACadenaUbigeo(codigoDistritoPostalNotario))));
-			
+			oETercero.setIndicadorTipoPersona(UTipoTerceroPersona.NOTARIO);
 			if(oETercero.getCodigoCliente()!=0){
 				oEMensaje = oBOCliente.modificarTercero(oETercero);
 				

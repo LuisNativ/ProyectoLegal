@@ -981,12 +981,13 @@ public class COperacion {
 				}
 			}
 			
-			if(eOperacionSolicitudCredito.getLstOperacionSolicitudCreditoDocumentoPorAsignar().size() > 0){
-				mensaje = oDAOOperacion.eliminarEvaluacionSolicitudCreditoDocumentoPorAsignar(eOperacionSolicitudCredito.getNumeroSolicitud(), eOperacionSolicitudCredito.getCodigoTipoCliente(), eOperacionSolicitudCredito.getCodigoCliente());
-				if (!UFuncionesGenerales.validaMensaje(mensaje)) {
-					throw new Exception(mensaje.getDescMensaje());
-				}
+			
+			mensaje = oDAOOperacion.eliminarEvaluacionSolicitudCreditoDocumentoPorAsignar(eOperacionSolicitudCredito.getNumeroSolicitud(), eOperacionSolicitudCredito.getCodigoTipoCliente(), eOperacionSolicitudCredito.getCodigoCliente());
+			if (!UFuncionesGenerales.validaMensaje(mensaje)) {
+				throw new Exception(mensaje.getDescMensaje());
+			}
 				
+			if(eOperacionSolicitudCredito.getLstOperacionSolicitudCreditoDocumentoPorAsignar().size() > 0){
 				for(ERevisionDocumento oERevisionDocumento: eOperacionSolicitudCredito.getLstOperacionSolicitudCreditoDocumentoPorAsignar()){
 					mensaje = oDAOOperacion.agregarEvaluacionSolicitudCreditoDocumentoPorAsignar(eOperacionSolicitudCredito, oERevisionDocumento);
 					if (!UFuncionesGenerales.validaMensaje(mensaje)) {

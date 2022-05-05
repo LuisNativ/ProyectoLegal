@@ -62,6 +62,7 @@ import com.abaco.negocio.util.UConstante.UMaximoTamanio;
 import com.abaco.negocio.util.UConstante.UTipoDocumento;
 import com.abaco.negocio.util.UConstante.UTipoEstadoUsuario;
 import com.abaco.negocio.util.UConstante.UTipoGarantia;
+import com.abaco.negocio.util.UConstante.UTipoPersona;
 import com.abaco.negocio.util.UConstante.UTipoTerceroPersona;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
 import com.abaco.negocio.util.UFuncionesGenerales;
@@ -116,6 +117,7 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 	@Getter @Setter private List<EGeneral> lstTipoDocumento;
 	@Getter @Setter private List<EGeneral> lstDepartamentoGarantia,lstDepartamentoGarantiaPostal;
 	@Getter @Setter private List<EGeneral> lstClasePersona;
+	@Getter @Setter private List<EGeneral> lstClasePersonaNotarioFiltro;
 	@Getter @Setter private List<EGeneral> lstProveedor;
 	@Getter @Setter private List<EGeneral> lstAceptante;
 	@Getter @Setter private List<EGeneral> lstComunidad;
@@ -132,7 +134,7 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 	@Getter @Setter private int codigoBuscar;
 	@Getter @Setter private String descripcionBuscar;
 	@Getter @Setter private int indicadorPersona; //Para Buscar el Tipo de Persona (Propietario,Tasador,Depositario)
-	@Getter @Setter private boolean visualizarDatosPersonaNatural;
+	//@Getter @Setter private boolean visualizarDatosPersonaNatural;
 	@Getter @Setter private int maxLgnNumeroDocumentoNotario;
 	
 	private EPersona oEPersonaSelected;
@@ -154,6 +156,7 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 		lstValorSiNo = new ArrayList<EGeneral>();
 		lstTipoDocumento = new ArrayList<EGeneral>();
 		lstClasePersona = new ArrayList<EGeneral>();
+		lstClasePersonaNotarioFiltro = new ArrayList<EGeneral>();
 		lstProveedor = new ArrayList<EGeneral>();
 		lstAceptante = new ArrayList<EGeneral>();
 		lstComunidad = new ArrayList<EGeneral>();
@@ -433,7 +436,7 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 		oETerceroData.setCodigoTipoPersona("");
 		oETerceroData.setTipoProveedor(-1);
 		oETerceroData.setTipoAceptante(-1);
-		oETerceroData.setCodigoTipoDocumento("");
+		oETerceroData.setCodigoTipoDocumento(UTipoDocumento.RUC);
 		 codigoDepartamentoGarantia=0;
 		 codigoDepartamentoGarantiaPostal=0;
 		 codigoProvinciaGarantia=0;
@@ -442,8 +445,7 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 		 codigoDistritoGarantiaPostal=0;
 		 listarUbigeoGarantia();
 		 listarUbigeoGarantiaPostal();
-		 validarClasePersona();
-		 validarDocumentoIdentidad();
+		 visualizarFrmNotario();
 		RequestContext.getCurrentInstance().execute("PF('dlgMantenimientoNotario').show();");
 	}
 	
@@ -471,10 +473,9 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 				oETerceroData.setCodigoEstadoCivil(oEClienteInforPerNatural.getCodigoEstadoCivil());
 				oETerceroData.setCodigoSexo(oEClienteInforPerNatural.getCodigoSexo());
 			}
-			validarClasePersona();
-			validarDocumentoIdentidad();
 			listarUbigeoGarantia();
 			listarUbigeoGarantiaPostal();
+			visualizarFrmNotario();
 			RequestContext.getCurrentInstance().execute("PF('dlgMantenimientoNotario').show();");
 		}
 	}
@@ -518,6 +519,7 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 		}
 	}
 	
+	/*
 	public void validarClasePersona(){
 		if(oETerceroData.getCodigoTipoPersona().equals("N")){
 			visualizarDatosPersonaNatural = true;
@@ -525,8 +527,7 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 			visualizarDatosPersonaNatural = false;
 		}
 	}
-	
-	
+	*/
 	
 	public void generarNuevoAsientoTramite(){
 		inicializarGarantiaTramiteAsiento();
@@ -606,7 +607,27 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 		
 	}
 	
-	public void validarDocumentoIdentidad(){
+	public void validarTamanioDocumentoNotario(){
+		if(oETerceroData.getCodigoTipoDocumento() != null){
+			switch(oETerceroData.getCodigoTipoDocumento()){
+			case UTipoDocumento.RUC: maxLgnNumeroDocumentoNotario = UMaximoTamanio.RUC_MAXLGN; break;
+			case UTipoDocumento.DNI:
+			case UTipoDocumento.LIBRETA_ELECTORAL:
+				maxLgnNumeroDocumentoNotario = UMaximoTamanio.DNI_MAXLGN; break;
+			default: maxLgnNumeroDocumentoNotario = UMaximoTamanio.OTROS_MAXLGN;
+			}
+		}else{
+			maxLgnNumeroDocumentoNotario = UMaximoTamanio.OTROS_MAXLGN;
+		}
+	}
+	
+	public void obtenerTipoDocumentoNotario(){
+		visualizarFrmNotario();
+		oETerceroData.setDocumento("");
+	}
+	
+	//public void validarDocumentoIdentidad(){
+	public void visualizarFrmNotario(){
 		switch(oETerceroData.getCodigoTipoDocumento()){
 		case "D": 
 			visualizarDatosPN = true;
@@ -627,22 +648,19 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 			oETerceroData.setApellidoMaterno("");
 			oETerceroData.setNombres("");
 		}
-		validarTamanioDocumentoNotario();
 		
-	}
-	
-	public void validarTamanioDocumentoNotario(){
-		if(oETerceroData.getCodigoTipoDocumento() != null){
-			switch(oETerceroData.getCodigoTipoDocumento()){
-			case UTipoDocumento.RUC: maxLgnNumeroDocumentoNotario = UMaximoTamanio.RUC_MAXLGN; break;
-			case UTipoDocumento.DNI:
-			case UTipoDocumento.LIBRETA_ELECTORAL:
-				maxLgnNumeroDocumentoNotario = UMaximoTamanio.DNI_MAXLGN; break;
-			default: maxLgnNumeroDocumentoNotario = UMaximoTamanio.OTROS_MAXLGN;
-			}
+		if(oETerceroData.getCodigoTipoDocumento().equals(UTipoDocumento.RUC)){
+			lstClasePersonaNotarioFiltro = lstClasePersona.stream()
+					.filter(x -> !x.getCodigo().equals(UTipoPersona.MANCOMUNADO))
+					.filter(x -> !x.getCodigo().equals(UTipoPersona.NATURAL))
+					.collect(Collectors.toList());
 		}else{
-			maxLgnNumeroDocumentoNotario = UMaximoTamanio.OTROS_MAXLGN;
+			lstClasePersonaNotarioFiltro = lstClasePersona.stream()
+					.filter(x -> !x.getCodigo().equals(UTipoPersona.JURIDICA_F_LUCRO))
+					.filter(x -> !x.getCodigo().equals(UTipoPersona.JURIDICA_S_LUCRO))
+					.collect(Collectors.toList());
 		}
+		validarTamanioDocumentoNotario();
 	}
 
 	public EGarantiaTramite getoEGarantiaTramiteData() {

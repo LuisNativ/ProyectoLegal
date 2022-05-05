@@ -1483,9 +1483,9 @@
 		<div class="ui-g-6">
 			<p:panel styleClass="dsPanel2" widgetVar="pnl17" toggleable="true" collapsed="#{mbregistrooperacionsolicitudcredito.minimizarPnlRevision}" toggleSpeed="500" closeSpeed="500" style="margin-bottom:20px">
 		        <f:facet name="header" >
-		            <i class="fa fa-table"></i> Lista de Documentos Pendientes de Trasladar
+		            <i class="fa fa-table"></i> Lista de Documentos Pendientes por Trasladar
 		        </f:facet>
-				<p:dataTable id="tblRevisionDocumentoPorAsignar" value="#{mbregistrooperacionsolicitudcredito.lstRevisionDocumentoPorAsignar}" var="item" styleClass="dsTabla1" paginator="true" rows="5" paginatorPosition="bottom" rowKey="#{item.codigoMensaje}" reflow="false">
+				<p:dataTable id="tblRevisionDocumentoPorAsignar" value="#{mbregistrooperacionsolicitudcredito.lstRevisionDocumentoPorAsignar}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom" rowKey="#{item.codigoMensaje}" reflow="false">
 		            <f:facet name="header">
 			            <div class="dsCuadrarCentroEspacioentre">
 				            <span></span>
@@ -1604,7 +1604,7 @@
 						<h:outputText value="#{item.nombreDocumento}"/>
 						</div>
 					</p:column>
-					<p:column selectionMode="multiple" exportable="false" styleClass="dsTextoCentro" width="15%" disabledSelection="#{mbregistrooperacionsolicitudcredito.validarRevisionDocumento(item)}"></p:column>
+					<p:column selectionMode="multiple" exportable="false" styleClass="dsTextoCentro" width="15%" visible="#{mbregistrooperacionsolicitudcredito.validarRevisionDocumento(item)}"></p:column>
 				</p:dataTable>
 			</div>
 			<div class="ui-g ui-fluid pie">
@@ -3101,43 +3101,54 @@
 								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionsolicitudcredito.oETerceroData.codigoCliente}" autocomplete="off" disabled="true"></p:inputText>
 					   		</div>
 					   		<div class="ui-g-4">
-								<p:outputLabel  value="Tipo Doc." styleClass="dsLabel1"/>
+								<p:outputLabel value="Tipo Doc." styleClass="dsLabel1"/>
 								<p:selectOneMenu value="#{mbregistrooperacionsolicitudcredito.oETerceroData.codigoTipoDocumento}" >
-									<p:ajax event="change" listener="#{mbregistrooperacionsolicitudcredito.obtenerTipoDocumentoNotario()}" update="frmDlgMantenimientoNotario"/>
+									<p:ajax event="change" listener="#{mbregistrooperacionsolicitudcredito.obtenerTipoDocumentoNotario()}" update=":frmDlgMantenimientoNotario"/>
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbregistrooperacionsolicitudcredito.lstDOI}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
 				            	</p:selectOneMenu>
 							</div>	
 							<div class="ui-g-4">
-								<p:outputLabel  value="Documento:" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionsolicitudcredito.oETerceroData.documento}" autocomplete="off" maxlength="11"></p:inputText>
+								<p:outputLabel for="idNroDocNotaria" value="Documento:" styleClass="dsLabel1"/>
+								<p:inputText id="idNroDocNotaria" type="text" styleClass="dsInput1" 
+								value="#{mbregistrooperacionsolicitudcredito.oETerceroData.documento}" 
+								autocomplete="off" 
+								maxlength="#{mbregistrooperacionsolicitudcredito.maxLgnNumeroDocumentoNotario}"
+								requiredMessage="#{mbregistrooperacionsolicitudcredito.oETerceroData.codigoTipoDocumento eq '4' ? 'validaRuc':mbregistrooperacionsolicitudcredito.oETerceroData.codigoTipoDocumento eq 'D' or mbregistrooperacionsolicitudcredito.oETerceroData.codigoTipoDocumento eq '1' ? 'validaDni':'validaOtros'}"
+								validator="#{vlgeneral.validarDocumento}"
+								></p:inputText>
 					   		</div>
 						</div>
 
 						<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad"  style="#{mbregistrooperacionsolicitudcredito.visualizarFrmNotarioPN ? 'display: block;' : 'display:none;'}">
 							<div class="ui-g-4">
-								<p:outputLabel value="Ape. Paterno" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionsolicitudcredito.oETerceroData.apellidoPaterno}" autocomplete="off" maxlength="40"></p:inputText>
+								<p:outputLabel for="idApePatNotaria" value="Ape. Paterno" styleClass="dsLabel1"/>
+								<p:inputText id="idApePatNotaria" type="text" styleClass="dsInput1" value="#{mbregistrooperacionsolicitudcredito.oETerceroData.apellidoPaterno}" autocomplete="off" maxlength="40" required="true" requiredMessage="Campo Obligatorio" rendered="#{mbregistrooperacionsolicitudcredito.visualizarFrmNotarioPN}"></p:inputText>
+								<p:message for="idApePatNotaria"/>
 					   		</div>
 					   		<div class="ui-g-4">
-								<p:outputLabel value="Ape. Materno" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionsolicitudcredito.oETerceroData.apellidoMaterno}" autocomplete="off" maxlength="40"></p:inputText>
+								<p:outputLabel for="idApeMatNotaria" value="Ape. Materno" styleClass="dsLabel1"/>
+								<p:inputText id="idApeMatNotaria" type="text" styleClass="dsInput1" value="#{mbregistrooperacionsolicitudcredito.oETerceroData.apellidoMaterno}" autocomplete="off" maxlength="40" required="true" requiredMessage="Campo Obligatorio" rendered="#{mbregistrooperacionsolicitudcredito.visualizarFrmNotarioPN}"></p:inputText>
+								<p:message for="idApeMatNotaria"/>
 					   		</div>
 					   		<div class="ui-g-4">
-								<p:outputLabel value="Nombres" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionsolicitudcredito.oETerceroData. nombres}" autocomplete="off" maxlength="60"></p:inputText>
+								<p:outputLabel for="idNombresNotaria" value="Nombres" styleClass="dsLabel1"/>
+								<p:inputText id="idNombresNotaria" type="text" styleClass="dsInput1" value="#{mbregistrooperacionsolicitudcredito.oETerceroData. nombres}" autocomplete="off" maxlength="60" required="true" requiredMessage="Campo Obligatorio" rendered="#{mbregistrooperacionsolicitudcredito.visualizarFrmNotarioPN}"></p:inputText>
+								<p:message for="idNombresNotaria"/>
 					   		</div>
 						</div>
 
 						<div class="ui-g-12 ui-md-12 ui-lg-12" style="#{mbregistrooperacionsolicitudcredito.visualizarFrmNotarioPJ ? 'display: block;' : 'display:none;'}"> 	
-							<p:outputLabel value="Razon Social" styleClass="dsLabel1"/>
-							<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionsolicitudcredito.oETerceroData.nombreSuperLargo}" autocomplete="off" maxlength="140"></p:inputText>
+							<p:outputLabel for="idRzSocialNotaria" value="Razon Social" styleClass="dsLabel1"/>
+							<p:inputText id="idRzSocialNotaria" type="text" styleClass="dsInput1" value="#{mbregistrooperacionsolicitudcredito.oETerceroData.nombreSuperLargo}" autocomplete="off" maxlength="140" required="true" requiredMessage="Campo Obligatorio" rendered="#{mbregistrooperacionsolicitudcredito.visualizarFrmNotarioPJ}"></p:inputText>
+							<p:message for="idRzSocialNotaria"/>
 					    </div>
 
 					    <div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
 							<div class="ui-g-6">
-								<p:outputLabel  value="Dirección" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionsolicitudcredito.oETerceroData.direccion}" autocomplete="off" maxlength="50"></p:inputText>
+								<p:outputLabel for="idDireccionNotaria" value="Dirección" styleClass="dsLabel1"/>
+								<p:inputText id="idDireccionNotaria" type="text" styleClass="dsInput1" value="#{mbregistrooperacionsolicitudcredito.oETerceroData.direccion}" autocomplete="off" maxlength="50" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
+								<p:message for="idDireccionNotaria"/>
 					   		</div>
 					   		<div class="ui-g-3">
 								<p:outputLabel  value="RUC" styleClass="dsLabel1"/>
@@ -3156,7 +3167,7 @@
 					   <div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
 							<div class="ui-g-4">
 								<p:outputLabel for="idDepartamento" value="Departamento" styleClass="dsLabel1"/>
-								<p:selectOneMenu id="idDepartamento" value="#{mbregistrooperacionsolicitudcredito.codigoDepartamentoNotario}">
+								<p:selectOneMenu id="idDepartamento" value="#{mbregistrooperacionsolicitudcredito.codigoDepartamentoNotario}" required="true" requiredMessage="Campo Obligatorio">
 									<p:ajax event="change" listener="#{mbregistrooperacionsolicitudcredito.obtenerDepartamentoNotario()}" update="frmDlgMantenimientoNotario:cbProvincia" />
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbregistrooperacionsolicitudcredito.lstDepartamentoNotario}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
@@ -3164,7 +3175,7 @@
 							</div>				
 							<div class="ui-g-4">
 								<p:outputLabel for="cbProvincia" value="Provincia" styleClass="dsLabel1"/>
-								<p:selectOneMenu id="cbProvincia" value="#{mbregistrooperacionsolicitudcredito.codigoProvinciaNotario}" >
+								<p:selectOneMenu id="cbProvincia" value="#{mbregistrooperacionsolicitudcredito.codigoProvinciaNotario}" required="true" requiredMessage="Campo Obligatorio">
 									<p:ajax event="change" listener="#{mbregistrooperacionsolicitudcredito.obtenerProvinciaNotario()}" update="frmDlgMantenimientoNotario:cbDistrito" />
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbregistrooperacionsolicitudcredito.lstProvinciaNotario}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
@@ -3172,7 +3183,7 @@
 							</div>					
 							<div class="ui-g-4">
 								<p:outputLabel for="cbDistrito" value="Distrito" styleClass="dsLabel1"/>
-								<p:selectOneMenu id="cbDistrito" value="#{mbregistrooperacionsolicitudcredito.codigoDistritoNotario}">
+								<p:selectOneMenu id="cbDistrito" value="#{mbregistrooperacionsolicitudcredito.codigoDistritoNotario}" required="true" requiredMessage="Campo Obligatorio">
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbregistrooperacionsolicitudcredito.lstDistritoNotario}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					            </p:selectOneMenu>
@@ -3195,8 +3206,9 @@
 						</div>
 						<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
 							<div class="ui-g-8">	
-								<p:outputLabel  value="Dirección Postal" styleClass="dsLabel1"/>
-								<p:inputText type="text" styleClass="dsInput1" value="#{mbregistrooperacionsolicitudcredito.oETerceroData.direccionPostal}" autocomplete="off" maxlength="50"></p:inputText>											
+								<p:outputLabel for="idDireccionPostalNotaria" value="Dirección Postal" styleClass="dsLabel1"/>
+								<p:inputText id="idDireccionPostalNotaria" type="text" styleClass="dsInput1" value="#{mbregistrooperacionsolicitudcredito.oETerceroData.direccionPostal}" autocomplete="off" maxlength="50" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
+								<p:message for="idDireccionPostalNotaria"/>											
 					   		</div>
 					   		<div class="ui-g-4">
 								<p:outputLabel  value="Zona Postal" styleClass="dsLabel1"/>
@@ -3210,7 +3222,7 @@
 					    <div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
 							<div class="ui-g-4">
 								<p:outputLabel for="idDepartamentoPostal" value="Departamento P." styleClass="dsLabel1"/>
-								<p:selectOneMenu id="idDepartamentoPostal" value="#{mbregistrooperacionsolicitudcredito.codigoDepartamentoPostalNotario}">
+								<p:selectOneMenu id="idDepartamentoPostal" value="#{mbregistrooperacionsolicitudcredito.codigoDepartamentoPostalNotario}" required="true" requiredMessage="Campo Obligatorio">
 									<p:ajax event="change" listener="#{mbregistrooperacionsolicitudcredito.obtenerDepartamentoPostalNotario()}" update="frmDlgMantenimientoNotario:cbProvinciaPostal" />
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbregistrooperacionsolicitudcredito.lstDepartamentoPostalNotario}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
@@ -3218,7 +3230,7 @@
 							</div>				
 							<div class="ui-g-4">
 								<p:outputLabel for="cbProvinciaPostal" value="Provincia P." styleClass="dsLabel1"/>
-								<p:selectOneMenu id="cbProvinciaPostal" value="#{mbregistrooperacionsolicitudcredito.codigoProvinciaPostalNotario}" >
+								<p:selectOneMenu id="cbProvinciaPostal" value="#{mbregistrooperacionsolicitudcredito.codigoProvinciaPostalNotario}" required="true" requiredMessage="Campo Obligatorio">
 									<p:ajax event="change" listener="#{mbregistrooperacionsolicitudcredito.obtenerProvinciaPostalNotario()}" update="frmDlgMantenimientoNotario:cbDistritoPostal" />
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbregistrooperacionsolicitudcredito.lstProvinciaPostalNotario}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
@@ -3226,7 +3238,7 @@
 							</div>					
 							<div class="ui-g-4">
 								<p:outputLabel for="cbDistritoPostal" value="Distrito P." styleClass="dsLabel1"/>
-								<p:selectOneMenu id="cbDistritoPostal" value="#{mbregistrooperacionsolicitudcredito.codigoDistritoPostalNotario}">
+								<p:selectOneMenu id="cbDistritoPostal" value="#{mbregistrooperacionsolicitudcredito.codigoDistritoPostalNotario}" required="true" requiredMessage="Campo Obligatorio">
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 									<f:selectItems value="#{mbregistrooperacionsolicitudcredito.lstDistritoPostalNotario}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					            </p:selectOneMenu>
@@ -3247,14 +3259,12 @@
 					    	<div class="ui-g-3">
 								<p:outputLabel  value="Proveedor" styleClass="dsLabel1"/>
 								<p:selectOneMenu value="#{mbregistrooperacionsolicitudcredito.oETerceroData.tipoProveedor}">
-									<f:selectItem itemLabel="-Seleccione-" itemValue="-1" />
 									<f:selectItems value="#{mbregistrooperacionsolicitudcredito.lstProveedor}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					            </p:selectOneMenu>
 							</div>	
 							<div class="ui-g-3">
 								<p:outputLabel  value="Aceptante" styleClass="dsLabel1"/>
 								<p:selectOneMenu value="#{mbregistrooperacionsolicitudcredito.oETerceroData.tipoAceptante}">
-									<f:selectItem itemLabel="-Seleccione-" itemValue="-1" />
 									<f:selectItems value="#{mbregistrooperacionsolicitudcredito.lstAceptante}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 					            </p:selectOneMenu>
 							</div>	
@@ -3276,39 +3286,40 @@
 
  						<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
 							<div class="ui-g-4">
-								<p:outputLabel  value="Clase Persona" styleClass="dsLabel1"/>
-								<p:selectOneMenu value="#{mbregistrooperacionsolicitudcredito.oETerceroData.codigoTipoPersona}">
-								<p:ajax event="change" listener="#{mbregistrooperacionsolicitudcredito.validarClasePersona()}" update="frmDlgMantenimientoNotario:pnlPersonaNatural" />
+								<p:outputLabel for="idTipoPersonaNotaria" value="Clase Persona" styleClass="dsLabel1"/>
+								<p:selectOneMenu id="idTipoPersonaNotaria" value="#{mbregistrooperacionsolicitudcredito.oETerceroData.codigoTipoPersona}" required="true" requiredMessage="Campo Obligatorio">
 									<f:selectItem itemLabel="-Seleccione-" itemValue="" />
-									<f:selectItems value="#{mbregistrooperacionsolicitudcredito.lstTipoPersona}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
+									<f:selectItems value="#{mbregistrooperacionsolicitudcredito.lstTipoPersonaNotarioFiltro}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
 					            </p:selectOneMenu>
-							</div>	
-							<h:panelGroup id="pnlPersonaNatural"  layout="block" style="#{mbregistrooperacionsolicitudcredito.visualizarFrmNotarioPN ? 'display:block;' : 'display:none'}">
-								 <div class="ui-g-8 ui-md-8 ui-lg-8 ui-g-nopad">
-								 	<div class="ui-g-6">
-										<p:outputLabel  value="Estado Civ." styleClass="dsLabel1"/>
-										<p:selectOneMenu value="#{mbregistrooperacionsolicitudcredito.oETerceroData.codigoEstadoCivil}">
-											<f:selectItem itemLabel="-Seleccione-" itemValue="" />
-											<f:selectItems value="#{mbregistrooperacionsolicitudcredito.lstEstadoCivil}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
-							            </p:selectOneMenu>
-									</div>	
-									<div class="ui-g-6">
-										<p:outputLabel  value="Sexo" styleClass="dsLabel1"/>
-										<p:selectOneMenu value="#{mbregistrooperacionsolicitudcredito.oETerceroData.codigoSexo}">
-											<f:selectItem itemLabel="-Seleccione-" itemValue="" />
-											<f:selectItems value="#{mbregistrooperacionsolicitudcredito.lstSexo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
-							            </p:selectOneMenu>
-									</div>	
-								 </div>				
-							</h:panelGroup>
+					            <p:message for="idTipoPersonaNotaria"/>
+							</div>
+
+							<div class="ui-g-8 ui-md-8 ui-lg-8 ui-g-nopad" style="#{mbregistrooperacionsolicitudcredito.visualizarFrmNotarioPN ? 'display: block;' : 'display:none;'}">
+							 	<div class="ui-g-6">
+									<p:outputLabel for="idEstCivNotaria" value="Estado Civ." styleClass="dsLabel1"/>
+									<p:selectOneMenu id="idEstCivNotaria" value="#{mbregistrooperacionsolicitudcredito.oETerceroData.codigoEstadoCivil}" required="true" requiredMessage="Campo Obligatorio" rendered="#{mbregistrooperacionsolicitudcredito.visualizarFrmNotarioPN}">
+										<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+										<f:selectItems value="#{mbregistrooperacionsolicitudcredito.lstEstadoCivil}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
+						            </p:selectOneMenu>
+						            <p:message for="idEstCivNotaria"/>
+								</div>	
+								<div class="ui-g-6">
+									<p:outputLabel for="idSexoNotaria" value="Sexo" styleClass="dsLabel1"/>
+									<p:selectOneMenu id="idSexoNotaria" value="#{mbregistrooperacionsolicitudcredito.oETerceroData.codigoSexo}" required="true" requiredMessage="Campo Obligatorio" rendered="#{mbregistrooperacionsolicitudcredito.visualizarFrmNotarioPN}">
+										<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+										<f:selectItems value="#{mbregistrooperacionsolicitudcredito.lstSexo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo}"/>
+						            </p:selectOneMenu>
+						            <p:message for="idSexoNotaria"/>
+								</div>	
+							</div>
 					    </div>
 		           </div>
 				</h:panelGroup>
 			</div>
 			<div class="pie">
 				<p:commandButton styleClass="dsBoton1 secundario" value="Cancelar" onclick="PF('dlgMantenimientoNotario').hide();"></p:commandButton>
-				<p:commandButton styleClass="dsBoton1 tamanio4 principal" value="Grabar" onclick="PF('dlgPreload').hide();"
-				oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperacionsolicitudcredito.guardarNotario()}">
+				<p:commandButton styleClass="dsBoton1 tamanio4 principal" value="Grabar" process="@form" onclick="PF('dlgPreload').hide();"
+				oncomplete="PF('dlgPreload').hide();" action="#{mbregistrooperacionsolicitudcredito.guardarNotario()}" update=":frmDlgMensajeOperacionAjax, :frmDlgMantenimientoNotario">
 				</p:commandButton>
 			</div>
 		</div>
