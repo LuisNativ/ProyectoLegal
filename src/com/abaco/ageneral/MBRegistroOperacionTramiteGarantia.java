@@ -654,11 +654,13 @@ public class MBRegistroOperacionTramiteGarantia implements Serializable {
 					.filter(x -> !x.getCodigo().equals(UTipoPersona.MANCOMUNADO))
 					.filter(x -> !x.getCodigo().equals(UTipoPersona.NATURAL))
 					.collect(Collectors.toList());
-		}else{
+		}else if(oETerceroData.getCodigoTipoDocumento().equals(UTipoDocumento.DNI)){
 			lstClasePersonaNotarioFiltro = lstClasePersona.stream()
 					.filter(x -> !x.getCodigo().equals(UTipoPersona.JURIDICA_F_LUCRO))
 					.filter(x -> !x.getCodigo().equals(UTipoPersona.JURIDICA_S_LUCRO))
 					.collect(Collectors.toList());
+		}else{
+			lstClasePersonaNotarioFiltro = lstClasePersona;
 		}
 		validarTamanioDocumentoNotario();
 	}

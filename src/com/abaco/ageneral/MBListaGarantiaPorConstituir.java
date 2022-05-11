@@ -33,6 +33,7 @@ import com.abaco.negocio.util.UConstante.UClaseGarantia;
 import com.abaco.negocio.util.UConstante.UCriterioBusqueda;
 import com.abaco.negocio.util.UConstante.UEstado;
 import com.abaco.negocio.util.UConstante.UFiltroGarantia;
+import com.abaco.negocio.util.UConstante.UMensajeValidacion;
 import com.abaco.negocio.util.UConstante.UTipoCredito;
 import com.abaco.negocio.util.UConstante.UTipoDocumentoGarantia;
 import com.abaco.negocio.util.UConstante.UVariablesSesion;
@@ -217,7 +218,7 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 		          break;
 		  case 3: cantidadCaracteresBusquedaSolicitud = UCantidadCaracteres.NOMBRE_SOCIO; 
 		          break;
-		  default: cantidadCaracteresBusquedaGarantia= UCantidadCaracteres.POR_DEFECTO;
+		  default: cantidadCaracteresBusquedaSolicitud= UCantidadCaracteres.POR_DEFECTO;
 		}
 	}
 	
@@ -360,11 +361,11 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 					}
 				}
 			}else{
-				oEMensaje.setDescMensaje("Complete el Campo Descripción");
+				oEMensaje.setDescMensaje(UMensajeValidacion.MSJ_15);
 				RequestContext.getCurrentInstance().execute("PF('dlgMensaje').show();");
 			}
 		}else{
-			oEMensaje.setDescMensaje("Seleccione un Tipo de Búsqueda");
+			oEMensaje.setDescMensaje(UMensajeValidacion.MSJ_14);
 			RequestContext.getCurrentInstance().execute("PF('dlgMensaje').show();");
 		}
 	}
@@ -474,6 +475,12 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 			indicadorNuevoTipoGarantia = false;
 			RequestContext.getCurrentInstance().execute("PF('dlgNuevoTipoGarantia').show();");
 		}
+	}
+	
+	public void visualizarConfirmacionTipoGarantia(){
+
+		RequestContext.getCurrentInstance().execute("PF('dlgConfirmacion').show();");
+		
 	}
 	
 	//Método para Registrar un Nuevo Tipo de Garantía
