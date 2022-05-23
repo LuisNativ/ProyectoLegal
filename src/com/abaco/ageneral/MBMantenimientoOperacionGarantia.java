@@ -73,6 +73,7 @@ import com.abaco.negocio.util.UConstante.UEstado;
 import com.abaco.negocio.util.UConstante.UEstadoGarantia;
 import com.abaco.negocio.util.UConstante.UMaximoTamanio;
 import com.abaco.negocio.util.UConstante.UMensajeTabla;
+import com.abaco.negocio.util.UConstante.UMensajeValidacion;
 import com.abaco.negocio.util.UConstante.UModoIngreso;
 import com.abaco.negocio.util.UConstante.UMoneda;
 import com.abaco.negocio.util.UConstante.UPersonaRelacion;
@@ -144,6 +145,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	@Getter @Setter private boolean indicadorPnlDetalleGarantiaFideicomiso;
 	@Getter @Setter private boolean indicadorPnlDetalleGarantiaDocPorCobrar;
 	@Getter @Setter private boolean indicadorPnlDetalleGarantiaOtros;
+	@Getter @Setter private boolean indicadorPnlPlantilla;
 	
 	//Ubigeo para Garantia (Predios)
 	@Getter @Setter private int codigoDepartamentoGarantia,codigoDepartamentoInmueble;
@@ -402,7 +404,9 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				case  UTipoGarantia.INVENTARIO:
 					indicadorPnlDetalleGarantiaOtros = true;
 					break;
-				default:	
+				default:
+					 indicadorPnlPlantilla= false;
+					 deshabilitarBotonEnviar= true;
 					 indicadorPnlDetalleGarantiaPredio= false;
 					 indicadorPnlDetalleGarantiaVehicular= false;
 					 indicadorPnlDetalleGarantiaAcciones=false;
@@ -414,9 +418,12 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 					 indicadorPnlDetalleGarantiaFideicomiso = false;
 					 indicadorPnlDetalleGarantiaDocPorCobrar = false;
 					 
+					 
 				}
 				//Para el caso de Otras Garantías
 				if(oETipoGarantiaLoad.getCodigo2()>21 && oETipoGarantiaLoad.getCodigo2()!=88){
+					indicadorPnlPlantilla= true;
+					deshabilitarBotonEnviar= false;
 					indicadorPnlDetalleGarantiaOtros = true;
 					visualizarCamposOtrasGarantias = true; 
 				}
@@ -498,6 +505,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 					renderizarPolizaGarantia=true;
 					break;
 				default:	
+					 indicadorPnlPlantilla= false;
+					 deshabilitarBotonEnviar= true;
 					 indicadorPnlDetalleGarantiaPredio= false;
 					 indicadorPnlDetalleGarantiaVehicular= false;
 					 indicadorPnlDetalleGarantiaAcciones=false;
@@ -512,6 +521,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				//Para el caso de Otras Garantías
 				if(oEGarantiaData.getCodigoTipoGarantia()>21 && oEGarantiaData.getCodigoTipoGarantia()!=88){
 					indicadorPnlDetalleGarantiaOtros = true;
+					indicadorPnlPlantilla= true;
+					deshabilitarBotonEnviar= false;
 					visualizarCamposOtrasGarantias = true; 
 				}
 				visualizarTabDocumento = true;
@@ -685,6 +696,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	}
 	
 	private void inicializar(){
+		 indicadorPnlPlantilla = true;
 		 indicadorPnlDetalleGarantiaPredio= false;
 		 indicadorPnlDetalleGarantiaVehicular= false;
 		 indicadorPnlDetalleGarantiaAcciones=false;
@@ -827,7 +839,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 						UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 						RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacion').show();");
 					}else{
-						oEMensaje.setDescMensaje("No se permite Grabar en CONJUNTO si no existen Inmuebles Adicionales");
+						oEMensaje.setDescMensaje(UMensajeValidacion.MSJ_16);
 						RequestContext.getCurrentInstance().execute("PF('dlgMensaje').show();");
 					}
 					
@@ -837,8 +849,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 						UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 						RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacion').show();");
 					}else{
-						oEMensaje.setDescMensaje("No se permite Grabar en INDIVIDUAL si aún existen inmuebles adicionales añadidos."+"\n"+
-					    "Elimine los Adicionales e Intente Nuevamente");
+						oEMensaje.setDescMensaje(UMensajeValidacion.MSJ_17);
 						RequestContext.getCurrentInstance().execute("PF('dlgMensaje').show();");
 					}
 				}
@@ -859,7 +870,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 						UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 						RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacion').show();");
 					}else{
-						oEMensaje.setDescMensaje("No se permite Grabar en CONJUNTO si no existen Inmuebles Adicionales");
+						oEMensaje.setDescMensaje(UMensajeValidacion.MSJ_16);
 						RequestContext.getCurrentInstance().execute("PF('dlgMensaje').show();");
 					}
 					
@@ -869,8 +880,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 						UManejadorLog.log(" Guardar: " + oEMensaje.getDescMensaje());
 						RequestContext.getCurrentInstance().execute("PF('dlgMensajeOperacion').show();");
 					}else{
-						oEMensaje.setDescMensaje("No se permite Grabar en INDIVIDUAL si aún existen inmuebles adicionales añadidos."+"\n"+
-							    "Elimine los Adicionales e Intente Nuevamente");
+						oEMensaje.setDescMensaje(UMensajeValidacion.MSJ_17);
 						RequestContext.getCurrentInstance().execute("PF('dlgMensaje').show();");
 					}
 				}
@@ -898,6 +908,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				 oEUsuario.getCodigoArea()  == 104     ||
 				 oEUsuario.getCodigoArea()  == 105){
 			if(UAccionExterna.VER == accionExterna){
+				ruta = "ListaConsultaGarantia.xhtml";
+			}else{
 				ruta = "ListaConsultaGarantia.xhtml";
 			}
 		}else if (oEUsuario.getCodigoArea()  == UArea.CREDITOS){
@@ -1301,10 +1313,10 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 	
 	/*BÚSQUEDA SOCIO(F5101)/TERCERO(F5151)*/
 	public void buscarSocio(){
-		lstPersona = oBOCliente.listarSocioyTercero(codigoBuscar,descripcionBuscar);
+		lstPersona = oBOCliente.listarSocioyTercero(codigoBuscar,descripcionBuscar.trim());
 	}
 	
-	
+	/*
 	public void asignarPersona(){
 		if(oEPersonaSelected != null){						
 			switch (indicadorPersona) {
@@ -1334,6 +1346,7 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			
 		}
 	}
+	*/
 	public void asignarPersona(EPersona ePersonaItem){
 		if(ePersonaItem != null){						
 			switch (indicadorPersona) {
@@ -1342,7 +1355,13 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				oEGarantiaData.setDescripcionTasador(ePersonaItem.getNombreCorte());
 				break;
 			case 2:
-				oEGarantiaData.getLstPropietario().add(ePersonaItem);			
+				if(validarPropietario(ePersonaItem)){
+					oEGarantiaData.getLstPropietario().add(ePersonaItem);
+				}else{
+					oEMensaje.setDescMensaje(UMensajeValidacion.MSJ_18);
+					RequestContext.getCurrentInstance().execute("PF('dlgMensaje').show();");
+				}
+							
 				visualizarBtnAgregarPropietario = oEGarantiaData.getLstPropietario().size() >= 6 ? false: true;
 				break;
 			case 3:
@@ -1363,6 +1382,24 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			
 		}
 	}
+	
+	
+	private boolean validarPropietario(EPersona ePersona){
+		boolean validar = true;
+		if(oEGarantiaData.getLstPropietario() != null){
+			if(oEGarantiaData.getLstPropietario().size()>0){
+				for(int k=0;k<oEGarantiaData.getLstPropietario().size();k++){
+					if(oEGarantiaData.getLstPropietario().get(k).getCodigo() == ePersona.getCodigo()){
+						validar = false;
+						break;
+					}
+				}
+			}
+		}
+		
+		return validar;
+	}
+	
 	public void obtenerEliminarPropietario(EPersona oEPersonaItem){
 		if(oEPersonaItem != null){
 			indexPropietario = oEGarantiaData.getLstPropietario().indexOf(oEPersonaItem);			

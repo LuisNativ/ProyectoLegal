@@ -839,6 +839,10 @@ public class UConstante {
 		String MSJ_13 = "Complete los campos correspondientes al trámite para generar un nuevo asiento para la Garantía";
 		String MSJ_14 = "Seleccione un Tipo de Búsqueda";
 		String MSJ_15 = "Complete el Campo Descripción";
+		String MSJ_16 = "No se permite Grabar en CONJUNTO si no existen Inmuebles Adicionales";
+		String MSJ_17 = "No se permite Grabar en INDIVIDUAL si aún existen inmuebles adicionales añadidos."+"\n"+
+					    "Elimine los Adicionales e Intente Nuevamente";
+		String MSJ_18 = "Ya existe el propietario elegido. Elija otro por favor.";
 	}
 	
 	public static interface UMensajeConfirmacion {
