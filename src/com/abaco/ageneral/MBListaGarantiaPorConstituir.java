@@ -164,6 +164,7 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 		verificarGarantiaSolicitud();
 		listarGarantiaSolicitudNueva();
 		listarGarantiaSolicitudExistente();
+		listarGarantias();
 		listarDesplegable();
 		listarSolicitudDocumento();
 	}
@@ -306,6 +307,9 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 	 * MÉTODOS PARA EL MANTENIMIENTO DE GARANTÍAS (TAB = 2)
 	 *  
 	 */
+	private void listarGarantias(){
+		lstGarantiaVigente = oBOGarantia.listarGarantia(0, "", UFiltroGarantia.VIGENTE);
+	}
 	
     //Listar Garantias Vigentes y Saldo de Servicios del Cliente
 	public void buscarGarantiaVigente(){
@@ -320,6 +324,7 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 				
 				lstGarantiaVigente = oBOGarantia.listarGarantia(codigoBuscarGarantia, descripcionBuscarGarantia.trim(),UFiltroGarantia.VIGENTE);
 				if(lstGarantiaVigente == null || lstGarantiaVigente.isEmpty()){
+					
 					lstGarantiaVigente = new ArrayList<EGarantia>();
 					lstPersona = new ArrayList<EPersona>();
 					if(codigoBuscarGarantia == UCriterioBusqueda.CODIGO_SOCIO){
@@ -365,8 +370,19 @@ public class MBListaGarantiaPorConstituir implements Serializable {
 				RequestContext.getCurrentInstance().execute("PF('dlgMensaje').show();");
 			}
 		}else{
+			listarGarantias();
+			oEGarantiaData.setCodigoCliente(0);
+			oEGarantiaData.setNombreCorto("");
+			creditoDirMonedaNacional =  0;
+			creditoDirMonedaExtranjera = 0;
+			creditoIndMonedaNacional =  0;
+			creditoIndMonedaExtranjera = 0;
+			garantiaMonedaNacional = 0;
+			garantiaMonedaExtranjera = 0; 
+			/*
 			oEMensaje.setDescMensaje(UMensajeValidacion.MSJ_14);
 			RequestContext.getCurrentInstance().execute("PF('dlgMensaje').show();");
+			*/
 		}
 	}
 	

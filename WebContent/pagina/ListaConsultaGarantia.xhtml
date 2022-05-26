@@ -54,7 +54,7 @@
 					<p:ajax event="tabChange" listener="#{mblistaconsultagarantia.onTabChangeGarantiaVL}"/>
 					<p:tab id="tab1-1" title="Garantías Vigentes">
 						<p:dataTable id="tblGarantia" value="#{mblistaconsultagarantia.lstGarantiaVigente}" var="item" styleClass="dsTabla1" paginator="true" rows="12" paginatorPosition="bottom" 
-						 rowKey="#{item.codigoSolicitud}" reflow="false" >
+						 rowKey="#{item.codigoGarantia}" reflow="false" >
 							<p:column headerText="Nro. Garantía" styleClass="dsTextoCentro" responsivePriority="2" width="10%">
 								<h:outputText value="#{item.codigoServicio} - #{item.codigoGarantia}"/>
 							</p:column>
@@ -92,7 +92,7 @@
 					</p:tab>
 					<p:tab id="tab1-2" title="Garantías Liberadas">
 						<p:dataTable id="tblGarantiaLiberadas" value="#{mblistaconsultagarantia.lstGarantiaLiberada}" var="item" styleClass="dsTabla1" paginator="true" rows="12" paginatorPosition="bottom" 
-						 rowKey="#{item.codigoSolicitud}" reflow="false" >
+						 rowKey="#{item.codigoGarantia}" reflow="false" >
 							<p:column headerText="Nro. Garantía" styleClass="dsTextoCentro" responsivePriority="2" width="10%">
 								<h:outputText value="#{item.codigoServicio} - #{item.codigoGarantia}"/>
 							</p:column>

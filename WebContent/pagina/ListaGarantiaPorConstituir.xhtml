@@ -170,7 +170,7 @@
 					<p:outputLabel value="Tipo de Búsqueda" styleClass="dsLabel1"/>				
 					<p:selectOneMenu value="#{mblistagarantiaporconstituir.codigoBuscarGarantia}">
 						<p:ajax event="change" listener="#{mblistagarantiaporconstituir.validarLongitudCaracteresGarantia()}" update=":tabView1:formMantenimiento:idDescripcionGarantia" />
-		            	<f:selectItem itemLabel="[Seleccione]" itemValue="0" />
+		            	<f:selectItem itemLabel="[Todos]" itemValue="0" />
 		            	<f:selectItem itemLabel="Código Socio" itemValue="1" />
 		            	<f:selectItem itemLabel="Nombre Socio" itemValue="2" />
 		            	<f:selectItem itemLabel="Código de Garantía" itemValue="3" />
@@ -179,7 +179,8 @@
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
 					<p:outputLabel value="Descripción" styleClass="dsLabel1"/>
-					<p:inputText id="idDescripcionGarantia" type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.descripcionBuscarGarantia}" autocomplete="off" maxlength="#{mblistagarantiaporconstituir.cantidadCaracteresBusquedaGarantia}" onkeypress="if (event.keyCode == 13) { return false;}">
+					<p:inputText id="idDescripcionGarantia" type="text" styleClass="dsInput1" value="#{mblistagarantiaporconstituir.descripcionBuscarGarantia}" autocomplete="off" maxlength="#{mblistagarantiaporconstituir.cantidadCaracteresBusquedaGarantia}" 
+					  onkeypress="if (event.keyCode == 13) { return false;}">
 						<p:keyFilter regEx="#{mblistagarantiaporconstituir.codigoBuscarGarantia eq 1 or 
 						                      mblistagarantiaporconstituir.codigoBuscarGarantia eq 3 ? '/[0-9]/i' : 
 						                      mblistagarantiaporconstituir.codigoBuscarGarantia eq 4 ? '/[-/.a-zA-Z0-9ñÑáÁéÉÍíÓóúÚ\\s]/i' : 'null'}" preventPaste="true"/>
@@ -246,20 +247,17 @@
 					</div>		   
 				</div>
 			</div>
-			<p:dataTable id="tblGarantiaMantenimiento" value="#{mblistagarantiaporconstituir.lstGarantiaVigente}" var="item" styleClass="dsTabla3" paginator="true" rows="5" paginatorPosition="bottom" 
+			<p:dataTable id="tblGarantiaMantenimiento" value="#{mblistagarantiaporconstituir.lstGarantiaVigente}" var="item" styleClass="dsTabla1" paginator="true" rows="8" paginatorPosition="bottom" 
 						 rowKey="#{item.codigoGarantia}" reflow="true">
-				<p:column headerText="Servicio" styleClass="dsTextoCentro" responsivePriority="5" width="5%">
-					<h:outputText value="#{item.codigoServicio}" />
+				<p:column headerText="Garantía" styleClass="dsTextoCentro" responsivePriority="5" width="10%">
+					<h:outputText value="#{item.codigoServicio} - #{item.codigoGarantia}" />
 				</p:column>
-				<p:column headerText="Garantía" styleClass="dsTextoCentro" responsivePriority="2" width="10%">
-					<h:outputText value="#{item.codigoGarantia}"/>
-				</p:column>
-				<p:column headerText="Descripción" styleClass="dsTextoCentro" responsivePriority="3" width="30%">
+				<p:column headerText="Descripción" styleClass="dsTextoCentro" responsivePriority="3" width="25%">
 				    <div class="dsTextoCorto">
 						<h:outputText value="#{item.descripcionGarantia}"/>
 				    </div>
 				</p:column>
-				<p:column headerText="Tipo" styleClass="dsTextoCentro" responsivePriority="4" width="20%">
+				<p:column headerText="Tipo" styleClass="dsTextoCentro" responsivePriority="4" width="10%">
 				    <div class="dsTextoCorto">
 						<h:outputText value="#{item.descripcionTipoGarantia}"/>
 				    </div>
@@ -277,6 +275,9 @@
 				</p:column>
 				<p:column headerText="Estado" styleClass="dsTextoCentro" width="10%">
 					<h:outputText value="#{item.descripcionEstadoGarantia}"/>
+				</p:column>
+				<p:column headerText="Situación" styleClass="dsTextoCentro" width="10%">
+					<h:outputText value="#{item.descripcionSituacion}"/>
 				</p:column>
 				<p:column headerText="" styleClass="dsTextoCentro" width="10%">
 					<p:commandButton styleClass="dsBoton5 green" icon="fa fa-pencil" title="Editar" onclick="PF('dlgPreload').show();" oncomplete="PF('dlgPreload').hide();" action="#{mblistagarantiaporconstituir.modificarGarantia(item)}"></p:commandButton>

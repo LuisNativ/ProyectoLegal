@@ -368,17 +368,41 @@
 											<p:message for="idMarcaVeh"/>
 								   		</div>
 									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+								    	<div class="ui-g-3">
+											<p:outputLabel for="idPartRegistralVeh" value="Part. Reg." styleClass="dsLabel1"/>
+											<p:inputText id="idPartRegistralVeh" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.partidaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="10" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
+											<p:message for="idPartRegistralVeh"/>
+						          		</div>
+						          		<div class="ui-g-6">
+											<p:outputLabel value="Tipo Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.tipoRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstTipoRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>
+								    	<div class="ui-g-3">
+											<p:outputLabel value="Oficina Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.oficinaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstOficinaRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>						   		
+							    	</div>
 									<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
-										<div class="ui-g-6">
+										<div class="ui-g-4">
 											<p:outputLabel value="Modelo" styleClass="dsLabel1"/>
 											<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.modelo}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"  autocomplete="off" maxlength="20"></p:inputText>
 								   		</div>
-								   		<div class="ui-g-6">
+								   		<div class="ui-g-4">
 											<p:outputLabel value="Carrocería" styleClass="dsLabel1"/>
 											<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.carroceria}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"  autocomplete="off" maxlength="20"></p:inputText>
-											<h:message for="idPlacaVeh" style="visibility: hidden;font-size: 15px;"/>
+											
 								   		</div>					   		
-								   		
+								   		<div class="ui-g-4">
+								    		<p:outputLabel value="Fabricación" styleClass="dsLabel1"/>
+											<p:inputNumber id="idFabricacVeh"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.anioFabricacion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"  autocomplete="off" minValue="0" maxValue="9999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
+								    	</div>
 									</div>
 									<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 										<div class="ui-g-6">
@@ -416,13 +440,8 @@
 													update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
 											</div>
 										</div>	
+										 <h:message for="idTipPrenVeh" style="visibility: hidden;font-size: 15px;"/>
 								    </div>
-								    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
-								    	<div class="ui-g-6">
-								    		<p:outputLabel value="Fabricación" styleClass="dsLabel1"/>
-											<p:inputNumber id="idFabricacVeh"  styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.anioFabricacion}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}"  autocomplete="off" minValue="0" maxValue="9999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
-								    	</div>									
-								   	</div>
 									<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
 										<div class="ui-g-6">
 											<p:dataTable id="tblPropietarioV" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.lstPropietario}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"
@@ -572,6 +591,26 @@
 											 <p:message for="idCertificadoAcc"/>
 								   		</div>
 									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+								    	<div class="ui-g-3">
+											<p:outputLabel value="Part. Reg." styleClass="dsLabel1"/>
+											<p:inputText  type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.partidaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="10"></p:inputText>
+						          		</div>
+						          		<div class="ui-g-6">
+											<p:outputLabel value="Tipo Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.tipoRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstTipoRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>
+								    	<div class="ui-g-3">
+											<p:outputLabel value="Oficina Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.oficinaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstOficinaRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>						   		
+							    	</div>
 									<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 										<div class="ui-g-4">
 											<p:outputLabel for="idCantidadAcciones" value="Cant. Acciones" styleClass="dsLabel1"/>
@@ -716,6 +755,26 @@
 									         <p:message for="idFiadorBancoFian"/>
 								   		</div>
 									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+								    	<div class="ui-g-3">
+											<p:outputLabel value="Part. Reg." styleClass="dsLabel1"/>
+											<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.partidaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="10"></p:inputText>
+						          		</div>
+						          		<div class="ui-g-6">
+											<p:outputLabel value="Tipo Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.tipoRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstTipoRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>
+								    	<div class="ui-g-3">
+											<p:outputLabel value="Oficina Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.oficinaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstOficinaRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>						   		
+							    	</div>
 									<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 										<div class="ui-g-4">
 											<p:outputLabel for="idTipoFiadorFian" value="Tipo de Fiador" styleClass="dsLabel1"/>
@@ -804,7 +863,28 @@
 										<p:outputLabel for="idDescripcionMaq" value="Descripción" styleClass="dsLabel1"/>
 										<p:inputText id="idDescripcionMaq" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionC}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
 										 <p:message for="idDescripcionMaq"/>
-								    </div>	          		
+								    </div>
+								    <div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+								    	<div class="ui-g-3">
+											<p:outputLabel for="idPartRegistralMaq" value="Part. Reg." styleClass="dsLabel1"/>
+											<p:inputText id="idPartRegistralMaq" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.partidaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="10" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
+											<p:message for="idPartRegistralMaq"/>
+						          		</div>
+						          		<div class="ui-g-6">
+											<p:outputLabel value="Tipo Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.tipoRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstTipoRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>
+								    	<div class="ui-g-3">
+											<p:outputLabel value="Oficina Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.oficinaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstOficinaRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>						   		
+							    	</div>	          		
 								    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 										<div class="ui-g-4">
 											<p:outputLabel for="idMarcaMaq" value="Marca" styleClass="dsLabel1"/>
@@ -839,13 +919,23 @@
 										<div class="ui-g-4">
 											<p:outputLabel value="Cantidad" styleClass="dsLabel1"/>
 											<p:inputNumber id="idCantidadMaq" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroVariable2}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" minValue="0" maxValue="999999" thousandSeparator="" placeholder="0" onfocus="this.value == 0 ? this.value='':this.value"></p:inputNumber>
-											<h:message for="idTipPrendMaq" style="visibility: hidden;font-size: 15px;"/>
 								   		</div>
 								   		<div class="ui-g-8">
 								   			<p:outputLabel value="Cobertura" styleClass="dsLabel1"/>
 											<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.comentario}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60"></p:inputText>
 								   		</div>
 									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-6">
+										<p:outputLabel value="Depositario" styleClass="dsLabel1"/>
+										<div class="ui-inputgroup">	
+											<p:inputText id="idDescripcionDepositarioM" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionDepositario}" disabled="true" autocomplete="off"></p:inputText>
+											<div class="ui-inputgroup-addon">
+												<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
+														oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(3)}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" immediate="true"
+														update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
+											</div>
+										</div>	
+								   	</div>	
 									<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 										<div class="ui-g-12">
 											<p:dataTable id="tblPropietarioMaq" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.lstPropietario}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"
@@ -875,17 +965,7 @@
 											</p:dataTable>
 										</div>
 									</div>									
-									<div class="ui-g-12 ui-md-12 ui-lg-6">
-										<p:outputLabel value="Depositario" styleClass="dsLabel1"/>
-										<div class="ui-inputgroup">	
-											<p:inputText id="idDescripcionDepositarioM" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionDepositario}" disabled="true" autocomplete="off"></p:inputText>
-											<div class="ui-inputgroup-addon">
-												<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
-														oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(3)}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" immediate="true"
-														update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
-											</div>
-										</div>	
-								   	</div>	
+									
 				        		</p:fieldset>
 				        		<p:fieldset id="idValoracionGarantiaMaq" legend="Información de Valorización y Tasación" toggleable="false" toggleSpeed="500" styleClass="dsFieldSet1">
 				        			<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
@@ -977,6 +1057,27 @@
 										<p:inputText id="idDescripcionMerc" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionA}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
 										 <p:message for="idDescripcionMerc"/>
 								    </div>	
+								    <div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+								    	<div class="ui-g-3">
+											<p:outputLabel for="idPartRegistralMerc" value="Part. Reg." styleClass="dsLabel1"/>
+											<p:inputText id="idPartRegistralMerc" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.partidaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="10" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
+											<p:message for="idPartRegistralMerc"/>
+						          		</div>
+						          		<div class="ui-g-6">
+											<p:outputLabel value="Tipo Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.tipoRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstTipoRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>
+								    	<div class="ui-g-3">
+											<p:outputLabel value="Oficina Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.oficinaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstOficinaRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>						   		
+							    	</div>	    
 								    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 								    	<div class="ui-g-4">
 											<p:outputLabel value="Cantidad" styleClass="dsLabel1"/>
@@ -996,6 +1097,18 @@
 											<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.comentario}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60"></p:inputText>
 								   		</div>		
 								    </div>
+								    <div class="ui-g-12 ui-md-6 ui-lg-6">
+								    	<p:outputLabel value="Depositario" styleClass="dsLabel1"/>
+								    	<div class="ui-inputgroup">	
+											<p:inputText id="idDescripcionDepositarioME" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionDepositario}" disabled="true" autocomplete="off"></p:inputText>
+											<div class="ui-inputgroup-addon">
+												<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
+														oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(3)}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" immediate="true"
+														update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
+											</div>
+										</div>
+										 <h:message for="idTipPrendMerc" style="visibility: hidden;font-size: 15px;"/>	
+								   	</div>	
 								   	<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 										<div class="ui-g-12">
 											<p:dataTable id="tblPropietarioMer" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.lstPropietario}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"
@@ -1025,17 +1138,7 @@
 											</p:dataTable>
 										</div>
 									</div>	
-									<div class="ui-g-12 ui-md-6 ui-lg-6">
-								    	<p:outputLabel value="Depositario" styleClass="dsLabel1"/>
-								    	<div class="ui-inputgroup">	
-											<p:inputText id="idDescripcionDepositarioME" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionDepositario}" disabled="true" autocomplete="off"></p:inputText>
-											<div class="ui-inputgroup-addon">
-												<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
-														oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(3)}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" immediate="true"
-														update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
-											</div>
-										</div>	
-								   	</div>	
+									
 
 				        		</p:fieldset>
 				        		<p:fieldset id="idValoracionGarantiaMer" legend="Información de Valorización y Tasación" toggleable="false" toggleSpeed="500" styleClass="dsFieldSet1">
@@ -1125,6 +1228,27 @@
 										<p:inputText id="idDescDepoW" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionB}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
 										<p:message for="idDescDepoW"/>
 								    </div>	
+								    <div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+								    	<div class="ui-g-3">
+											<p:outputLabel value="Part. Reg." styleClass="dsLabel1"/>
+											<p:inputText  type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.partidaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="10"></p:inputText>
+											 <h:message for="idDescDepoW" style="visibility: hidden;font-size: 15px;"/>
+						          		</div>
+						          		<div class="ui-g-6">
+											<p:outputLabel value="Tipo Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.tipoRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstTipoRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>
+								    	<div class="ui-g-3">
+											<p:outputLabel value="Oficina Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.oficinaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstOficinaRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>						   		
+							    	</div>	    
 								    <div class="ui-g-12 ui-md-6 ui-lg-6">
 										<p:outputLabel for="idAlmacenW" value="Nombre Almacén" styleClass="dsLabel1"/>
 										<p:inputText  id="idAlmacenW" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionA}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
@@ -1137,6 +1261,7 @@
 												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
 												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstTipoAlmacen}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 									        </p:selectOneMenu>
+									         <h:message for="idAlmacenW" style="visibility: hidden;font-size: 15px;"/>
 								   		</div>
 								   		<div class="ui-g-4">
 											<p:outputLabel  value="Nro. Warrant" styleClass="dsLabel1"/>
@@ -1252,6 +1377,27 @@
 										<p:message for="idDescripcion"/>
 								   </div>
 								   <div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+								    	<div class="ui-g-3">
+											<p:outputLabel value="Part. Reg." styleClass="dsLabel1"/>
+											<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.partidaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="10"></p:inputText>
+											 <h:message for="idDescripcion" style="visibility: hidden;font-size: 15px;"/>
+						          		</div>
+						          		<div class="ui-g-6">
+											<p:outputLabel value="Tipo Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.tipoRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstTipoRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>
+								    	<div class="ui-g-3">
+											<p:outputLabel value="Oficina Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.oficinaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstOficinaRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>						   		
+							    	</div>	  
+								   <div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
 									   	<div class="ui-g-4">
 											<p:outputLabel for="idNumero" value="Número" styleClass="dsLabel1"/>
 											<p:inputText id="idNumero" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.numeroDocumento}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="15" required="true" 
@@ -1275,6 +1421,7 @@
 								    	<div class="ui-g-4">
 											<p:outputLabel value="Fecha Vencimiento" styleClass="dsLabel1"/>
 											<p:calendar value="#{mbmantenimientooperaciongarantia.oEGarantiaData.fechaVencimiento}" navigator="true" pattern="dd-MM-yyyy" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" placeholder="dd-mm-yyyy" autocomplete="off"></p:calendar>
+											 <h:message for="idNumero" style="visibility: hidden;font-size: 15px;"/>
 								   		</div>
 								   		<div class="ui-g-8">
 											<p:outputLabel value="Deudor" styleClass="dsLabel1"/>
@@ -1299,13 +1446,14 @@
 												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstValorSiNo}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>
 								       		</p:selectOneMenu>			       
 										</div>
-								    </div>						    					  													
-									<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
-										<div class="ui-g-6">
+								    </div>	
+								    <div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+								    	<div class="ui-g-12">
 											<p:outputLabel value="Observaciones" styleClass="dsLabel1"/>
 											<p:inputText  type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionC}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60"></p:inputText>	
 								    	</div>	
-
+								    </div>					    					  													
+									<div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">										
 										<div class="ui-g-6">
 											<p:dataTable id="tblPropietarioDocCob" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.lstPropietario}" var="item" styleClass="dsTabla1" paginator="true" rows="3" paginatorPosition="bottom"
 											 	rowKey="#{item.codigo}" reflow="false">
@@ -1388,29 +1536,49 @@
 				        <h:panelGroup layout="block" rendered="#{mbmantenimientooperaciongarantia.indicadorPnlDetalleGarantiaFideicomiso}">
 				           <div class="ui-g ui-fluid ui-g-nopad">
 				           		<p:fieldset id="idInformacionGeneralFID" legend="Información General" toggleable="false" toggleSpeed="500" styleClass="dsFieldSet1">
-				           			<div class="ui-g-12 ui-md-7 ui-lg-7 ui-g-nopad">							    	
-								    	<div class="ui-g-12">
-								    		<p:outputLabel  value="Fideicomitente" styleClass="dsLabel1"/>
-									    	<div class="ui-inputgroup">	
-												<p:inputText id="idDescripcionFideicomitente" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionPropietario}" disabled="true" autocomplete="off" ></p:inputText>	
-												<div class="ui-inputgroup-addon">
-													<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
-																oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(4)}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" immediate="true"
-																update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
-												</div>
-											</div>		
-										</div>
-										<div class="ui-g-12">
-								    		<p:outputLabel  value="Fiduciario" styleClass="dsLabel1"/>
-									    	<div class="ui-inputgroup">	
-												<p:inputText  id="idDescripcionFiduciario" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionDepositario}" disabled="true"  autocomplete="off"></p:inputText>												
-												<div class="ui-inputgroup-addon">
-													<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
-															oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(3)}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" immediate="true"
+				           			<div class="ui-g-12 ui-md-6 ui-lg-6">
+							    		<p:outputLabel  value="Fideicomitente" styleClass="dsLabel1"/>
+								    	<div class="ui-inputgroup">	
+											<p:inputText id="idDescripcionFideicomitente" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionPropietario}" disabled="true" autocomplete="off" ></p:inputText>	
+											<div class="ui-inputgroup-addon">
+												<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
+															oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(4)}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" immediate="true"
 															update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
-												</div>
-											</div>	
-								    	</div>
+											</div>
+										</div>		
+									</div>
+									<div class="ui-g-12 ui-md-6 ui-lg-6">
+							    		<p:outputLabel  value="Fiduciario" styleClass="dsLabel1"/>
+								    	<div class="ui-inputgroup">	
+											<p:inputText  id="idDescripcionFiduciario" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionDepositario}" disabled="true"  autocomplete="off"></p:inputText>												
+											<div class="ui-inputgroup-addon">
+												<p:commandLink styleClass="dsCmdlink1" onclick="PF('dlgPreload').show()" 
+														oncomplete="PF('dlgPreload').hide();"  actionListener="#{mbmantenimientooperaciongarantia.buscarIndicadorPersona(3)}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" immediate="true"
+														update=":frmDlgBuscarSocio"><i class="fas fa-search"></i></p:commandLink>
+											</div>
+										</div>	
+							    	</div>
+							    	<div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+								    	<div class="ui-g-3">
+											<p:outputLabel value="Part. Reg." styleClass="dsLabel1"/>
+											<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.partidaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="10"></p:inputText>
+						          		</div>
+						          		<div class="ui-g-6">
+											<p:outputLabel value="Tipo Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.tipoRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstTipoRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>
+								    	<div class="ui-g-3">
+											<p:outputLabel value="Oficina Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.oficinaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstOficinaRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>						   		
+							    	</div>	  
+				           			<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">							    	
 								    	<div class="ui-g-6">
 											<p:outputLabel  value="Tipo Rango" styleClass="dsLabel1"/>						
 											<p:selectOneMenu  value="#{mbmantenimientooperaciongarantia.oEGarantiaData.codigoTipoBien}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
@@ -1420,13 +1588,14 @@
 								   		</div>																					
 								    </div>
 								    
-								    <div class="ui-g-12 ui-md-5 ui-lg-5 ui-g-nopad">
+								    <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 										<div class="ui-g-12"> 
 											<p:outputLabel value="Observación" styleClass="dsLabel1"/> 
 											<p:inputTextarea id="idObservacionFID" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.obervacionGarantia}"    styleClass="dsInput1" autocomplete="off" counter="displayFID" maxlength="500" counterTemplate="{0} caracteres restantes" autoResize="false" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" ></p:inputTextarea>
 											<p:outputLabel id="displayFID" styleClass="dsLabel1" />
 										</div>
 									</div>	
+									
 						    	</p:fieldset>
 						    	<p:fieldset id="idValoracionGarantiaFID" legend="Información de Valorización y Tasación" toggleable="false" toggleSpeed="500" styleClass="dsFieldSet1">
 						    		<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
@@ -1494,6 +1663,27 @@
 										<p:inputText id="idDescrOtros" type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.descripcionA}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="60" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
 										 <p:message for="idDescrOtros"/>
 							    	</div>	
+							    	<div class="ui-g-12 ui-md-12 ui-lg-6 ui-g-nopad">
+								    	<div class="ui-g-3">
+											<p:outputLabel value="Part. Reg." styleClass="dsLabel1"/>
+											<p:inputText type="text" styleClass="dsInput1" value="#{mbmantenimientooperaciongarantia.oEGarantiaData.partidaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}" autocomplete="off" maxlength="10"></p:inputText>
+											 <h:message for="idDescrOtros" style="visibility: hidden;font-size: 15px;"/>
+						          		</div>
+						          		<div class="ui-g-6">
+											<p:outputLabel value="Tipo Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.tipoRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstTipoRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>
+								    	<div class="ui-g-3">
+											<p:outputLabel value="Oficina Registral" styleClass="dsLabel1"/>						
+											<p:selectOneMenu   value="#{mbmantenimientooperaciongarantia.oEGarantiaData.oficinaRegistral}" disabled="#{mbmantenimientooperaciongarantia.deshabilitarCampo}">
+												<f:selectItem itemLabel="-Seleccione-" itemValue="" />
+												<f:selectItems value="#{mbmantenimientooperaciongarantia.lstOficinaRegistral}" var="lst" itemLabel="#{lst.descripcion}" itemValue="#{lst.codigo2}"/>										
+									        </p:selectOneMenu>
+								   		</div>						   		
+							    	</div>	  
 							    	<div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad">
 							    		<div class="ui-g-4">
 											<p:outputLabel for="idRangoOtros" value="Tipo Rango" styleClass="dsLabel1"/>						
@@ -2175,7 +2365,7 @@
 			        <f:facet name="header" >
 			            <i class="fa fa-table"></i> Préstamos Asociados a la Garantía
 			        </f:facet>
-					<p:dataTable  value="#{mbmantenimientooperaciongarantia.lstCreditoGarantia}" var="item" styleClass="dsTabla1" paginator="true" rows="4" paginatorPosition="bottom" reflow="true" >
+					<p:dataTable  value="#{mbmantenimientooperaciongarantia.lstCreditoGarantia}" var="item" styleClass="dsTabla1" paginator="true" rows="10" paginatorPosition="bottom" reflow="true" >
 						<p:column headerText="Descripción" styleClass="dsTextoCentro" width="8%">
 							<h:outputText value="#{item.descripcionOperacion}"/>
 						</p:column>
