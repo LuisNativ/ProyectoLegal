@@ -547,7 +547,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 				   oEUsuario.getCodigoArea()==103   ||
 				   oEUsuario.getCodigoArea()==104   ||
 				   oEUsuario.getCodigoArea()==105 ||
-				   oEUsuario.getCodigoArea()== UArea.CREDITOS){
+				   oEUsuario.getCodigoArea()== UArea.CREDITOS ||
+				   oEUsuario.getCodigoArea()  == UArea.CALIDAD){
 					if(oEGarantiaLoad.getIndicadorAccion() == 1){
 						deshabilitarCampoTasacion = false;
 						deshabilitarBotonEnviar = false;
@@ -912,7 +913,8 @@ public class MBMantenimientoOperacionGarantia implements Serializable {
 			}else{
 				ruta = "ListaConsultaGarantia.xhtml";
 			}
-		}else if (oEUsuario.getCodigoArea()  == UArea.CREDITOS){
+		}else if (oEUsuario.getCodigoArea()  == UArea.CREDITOS ||
+				  oEUsuario.getCodigoArea()  == UArea.CALIDAD){
 			if(UAccionExterna.EDITARPARCIAL == accionExterna){
 				ruta = "ListaGarantiaTasacion.xhtml";		
 			}else if(UAccionExterna.VER == accionExterna){

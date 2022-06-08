@@ -595,6 +595,7 @@ public class UConstante {
 		int LEGAL = 100;
 		int NEGOCIOS = 102;
 		int CREDITOS = 106;
+		int CALIDAD = 115;
 		
 		String LEGAL_DESC = "LEGAL";
 		String NEGOCIOS_DESC = "NEGOCIOS";

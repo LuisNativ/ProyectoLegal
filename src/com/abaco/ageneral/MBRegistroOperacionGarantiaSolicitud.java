@@ -281,7 +281,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 					}
 					
 					//ACCIONES PARA EL AREA DE CREDITOS
-					if(oEUsuario.getCodigoArea() == UArea.CREDITOS){
+					if(oEUsuario.getCodigoArea() == UArea.CREDITOS ||
+					   oEUsuario.getCodigoArea() == UArea.CALIDAD){
 						
 						renderizarTab3 = false;
 						visualizarBotonInfFinanciera = true;
@@ -604,7 +605,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		
 		//Valida Usuario y se procede a guardar o actualizar la información  
 		if(UAccionExterna.NUEVO == accionExterna){
-			if(oEUsuario.getCodigoArea() == UArea.CREDITOS){
+			if(oEUsuario.getCodigoArea() == UArea.CREDITOS ||
+			   oEUsuario.getCodigoArea() == UArea.CALIDAD){
 				oEGarantiaAsociadaSolicitud.setCodigoEstadoGarantiaSolicitud(UEstado.SOLICITAGARANTIAREGISTRO);
 				oEMensaje = oBOGarantia.modificarGarantiaSolicitudyAgregarDocGarantiaTemporal(oEGarantiaAsociadaSolicitud, elstDocumentoCarga);
 				indicadorSalida = 1;//Redirecciona Lista Solicitudes Asoc. Garantia
@@ -679,7 +681,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 				UFuncionesGenerales.convertirEnteroACadenaUbigeo(codigoDistritoGarantia)));
 		
 		if(UAccionExterna.NUEVO == accionExterna){
-			if(oEUsuario.getCodigoArea() == UArea.CREDITOS){
+			if(oEUsuario.getCodigoArea() == UArea.CREDITOS ||
+			   oEUsuario.getCodigoArea() == UArea.CALIDAD){
 				//Actualizará Datos del Archivo F7325,F7363 y GarantiaAnexoF7325
 				oEMensaje = oBOGarantia.actualizarGarantiaSolicitud(oEGarantiaSolicitud,
 						oEGarantiaDetalleSolicitud,oEGarantiaAsociadaSolicitud,elstDocumentoCarga);
@@ -814,7 +817,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 				ruta = "ListaGarantiaPorConstituir.xhtml";
 			}
 			
-		}else if(oEUsuario.getCodigoArea() == UArea.CREDITOS){
+		}else if(oEUsuario.getCodigoArea() == UArea.CREDITOS ||
+				 oEUsuario.getCodigoArea() == UArea.CALIDAD){
 			if(indicadorSalida == 1){
 				ruta = "ListaGarantiaPorConstituirCredito.xhtml";
 			}else{
@@ -1577,7 +1581,8 @@ public class MBRegistroOperacionGarantiaSolicitud implements Serializable {
 		eGarantiaAsociadaSolicitud = oEGarantiaAsociadaSolicitudData;
 		eGarantiaAsociadaSolicitud.setUsuarioRegistro(oEUsuario);
 		if(UAccionExterna.NUEVO == accionExterna){
-			if(oEUsuario.getCodigoArea() == UArea.CREDITOS){
+			if(oEUsuario.getCodigoArea() == UArea.CREDITOS ||
+			   oEUsuario.getCodigoArea() == UArea.CALIDAD){
 				eGarantiaAsociadaSolicitud.setCodigoEstadoGarantiaSolicitud(UEstado.SOLICITAGARANTIAREGISTRO);
 				oEMensaje = oBOGarantia.modificarGarantiaSolicitud(eGarantiaAsociadaSolicitud);
 						
